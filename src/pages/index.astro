@@ -1,17 +1,401 @@
 ---
-
+import MainLayout from "../layouts/MainLayout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout title="LuliDigital" description="LuliDigital — Digital Studio">
+  <main class="page">
+    <section class="hero">
+      <div class="hero__left">
+        <div class="kicker">LEAD STORY</div>
+
+        <h1 class="hero__title">
+          Built like a newsroom.<br />
+          Run like a lab.
+        </h1>
+
+        <p class="lede">
+          LuliDigital works like an editorial floor. We clarify the story, pressure test it in market, and build systems
+          teams can trust when decisions need to move fast.
+        </p>
+
+        <p class="lede">
+          Our operators blend
+          <span class="kw" data-kw>brand judgment</span>,
+          <span class="kw" data-kw>paid media execution</span>, and
+          <span class="kw" data-kw>AI-assisted workflows</span>
+          so the work feels human.
+        </p>
+
+        <nav class="desk-links" aria-label="Desk links">
+          <a class="desk-link" href="/marketing">OPEN THE MARKETING DESK →</a>
+          <a class="desk-link" href="/ai">OPEN THE AI DESK →</a>
+          <a class="desk-link" href="/virtual-assistant">OPEN THE VIRTUAL ASSISTANT DESK →</a>
+        </nav>
+      </div>
+
+      <aside class="hero__right" aria-label="Editorial note">
+        <div class="kicker">EDITORIAL NOTE</div>
+
+        <p class="note">
+          LuliDigital is the studio you call when guessing is no longer acceptable. We run Marketing, AI Integration, and
+          Virtual Assistant desks — led by skilled professionals and powered by AI — working in sync.
+        </p>
+
+        <p class="note">
+          Whether you’re brand new or things just aren’t clicking, we turn
+          <span class="kw" data-kw>“I don’t know what to fix”</span>
+          into clarity — and clarity into calm execution.
+        </p>
+
+        <p class="note">
+          Marketing, AI integration, and Virtual Assistant desks —
+          <span class="kw" data-kw>running side by side</span>, so you’re not carrying everything alone.
+        </p>
+      </aside>
+    </section>
+
+    <hr class="rule" />
+
+    <section class="front-grid" aria-label="Front page stories">
+      <article class="card">
+        <div class="kicker">FRONT PAGE</div>
+        <h2 class="h2">Jane vs Jando</h2>
+
+        <p>Jane started a brand. She didn’t try to guess everything herself. She got help.</p>
+
+        <p>
+          Someone shaped her brand voice. Someone made sure she had
+          <span class="kw" data-kw>really good product pictures</span>.
+          The kind that makes people pause.
+        </p>
+
+        <p>
+          Her website felt finished. When people searched her name, she showed up. When she posted, it looked consistent.
+        </p>
+
+        <p>People understood her. People trusted her. People bought.</p>
+
+        <p>Jando had a good business idea, but online he was basically invisible.</p>
+
+        <p>No proper website. No clear presence. Customers searched. Nothing.</p>
+
+        <p>
+          Later, he got help too. It got cleaned up. He showed up.
+          <span class="kw" data-kw>It was never too late.</span>
+        </p>
+
+        <a class="desk-link desk-link--inline" href="/marketing">OPEN THE MARKETING DESK →</a>
+      </article>
+
+      <article class="card">
+        <div class="kicker">FRONT PAGE</div>
+        <h2 class="h2">Smart Bob</h2>
+
+        <p>Bob runs a company. His team is sharp. But the same questions kept piling up:</p>
+
+        <blockquote class="quote">
+          “Where’s the return policy?” “What’s the delivery timeline?”<br />
+          “Which document has the updated pricing?”
+        </blockquote>
+
+        <p>
+          So Bob got help. Someone set up a <span class="kw" data-kw>website chatbot</span> that knew his business, so customers
+          could get answers instantly.
+        </p>
+
+        <p>
+          Then Bob added <span class="kw" data-kw>AI agents</span> to handle repetitive work in the background.
+        </p>
+
+        <a class="desk-link desk-link--inline" href="/ai">OPEN THE AI DESK →</a>
+      </article>
+    </section>
+
+    <hr class="rule" />
+
+    <section class="front-grid" aria-label="More front page stories">
+      <article class="card">
+        <div class="kicker">FRONT PAGE</div>
+        <h2 class="h2">Smart Sandy</h2>
+
+        <p>
+          Sandy runs a growing team. Good people. Too many moving parts. Updates lived in chats, files lived in folders,
+          and deadlines lived in someone’s head.
+        </p>
+
+        <p>
+          So Sandy got a single source of truth —
+          <span class="kw" data-kw>clean project tracking</span>,
+          <span class="kw" data-kw>clear owners</span>, and lightweight automations that keep the work moving without meetings multiplying.
+        </p>
+
+        <a class="desk-link desk-link--inline" href="/virtual-assistant">OPEN THE VIRTUAL ASSISTANT DESK →</a>
+      </article>
+
+      <article class="card">
+        <div class="kicker">THE WORKING BEE</div>
+        <h2 class="h2">The Quiet Fix</h2>
+
+        <p>
+          Some businesses don’t need more chaos. They need someone to keep things organized, track tasks, and manage projects.
+        </p>
+
+        <p>It’s the difference between “we’re on it” and “we lost the file again.”</p>
+
+        <p>
+          Quiet systems. Clear ownership. Reliable follow-through.
+          <span class="kw" data-kw>The work moves.</span>
+          <span class="kw" data-kw>Nothing slips.</span>
+        </p>
+
+        <a class="desk-link desk-link--inline" href="/contact">CONTACT →</a>
+      </article>
+    </section>
+
+    <hr class="rule" />
+
+    <section class="contact" aria-label="Contact">
+      <div class="kicker">CONTACT</div>
+      <h2 class="h2 h2--big">Be smart. Get help.</h2>
+
+      <div class="contact-grid">
+        <div class="contact-block">
+          <div class="kicker kicker--tiny">EMAIL</div>
+          <a class="contact-link" href="mailto:info@lulidigital.co.za">INFO@LULIDIGITAL.CO.ZA →</a>
+        </div>
+
+        <div class="contact-block">
+          <div class="kicker kicker--tiny">WHATSAPP</div>
+          <a class="contact-link" href="https://wa.me/27602551513">+27 60 255 1513 →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    :root{
+      --paper: #f4efe6;
+      --ink: #121212;
+      --muted: rgba(18,18,18,.62);
+      --rule: rgba(18,18,18,.14);
+      --red: #b01616;
+      --redSoft: rgba(176, 22, 22, 0.28);
+    }
+
+    .page{
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 64px 24px 72px;
+      color: var(--ink);
+    }
+
+    .hero{
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 64px;
+      padding: 38px 0 48px;
+    }
+
+    .kicker{
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .kicker--tiny{ margin-bottom: 10px; }
+
+    .hero__title{
+      margin: 0 0 18px;
+      font-weight: 700;
+      line-height: 1.03;
+      font-size: clamp(44px, 5.2vw, 64px);
+    }
+
+    .lede, .note{
+      margin: 0 0 16px;
+      color: rgba(18,18,18,.82);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .desk-links{
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 22px;
+    }
+
+    .desk-link{
+      color: var(--red);
+      text-decoration: none;
+      letter-spacing: .6px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 13px;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 3px;
+    }
+
+    .desk-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:1px;
+      background: rgba(176,22,22,.55);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 280ms ease;
+    }
+
+    .desk-link:hover::after{
+      transform: scaleX(1);
+    }
+
+    .desk-link--inline{
+      margin-top: 14px;
+    }
+
+    .rule{
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 0;
+    }
+
+    .front-grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      padding: 46px 0;
+    }
+
+    .card{
+      padding-top: 4px;
+    }
+
+    .h2{
+      margin: 0 0 14px;
+      font-size: 44px;
+      line-height: 1.05;
+      letter-spacing: -0.2px;
+    }
+
+    .h2--big{
+      font-size: 54px;
+    }
+
+    p{
+      margin: 0 0 14px;
+      line-height: 1.75;
+      color: rgba(18,18,18,.82);
+      font-size: 16px;
+    }
+
+    .quote{
+      margin: 14px 0 16px;
+      padding-left: 16px;
+      border-left: 3px solid rgba(176,22,22,.22);
+      color: rgba(18,18,18,.78);
+      font-style: italic;
+      line-height: 1.65;
+    }
+
+    .contact{
+      padding: 46px 0 0;
+    }
+
+    .contact-grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 42px;
+      padding-top: 16px;
+      padding-bottom: 10px;
+    }
+
+    .contact-link{
+      color: rgba(18,18,18,.86);
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: .7px;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 3px;
+    }
+
+    .contact-link::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:1px;
+      background: rgba(176,22,22,.55);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 280ms ease;
+    }
+
+    .contact-link:hover::after{
+      transform: scaleX(1);
+    }
+
+    /* ========= KEYWORD HIGHLIGHT (NO BLOCKS, NO YELLOW) =========
+       - invisible until scroll/hover
+       - subtle red underline that grows left→right
+    */
+    .kw{
+      position: relative;
+      display: inline;
+      padding-bottom: 0.08em;
+      white-space: nowrap;
+    }
+
+    .kw::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-0.08em;
+      height:2px;
+      background: var(--redSoft);
+      transform: scaleX(0);
+      transform-origin: left;
+      opacity: 0;
+      transition: transform 600ms ease, opacity 600ms ease;
+      border-radius: 999px;
+    }
+
+    .kw.is-on::after,
+    .kw:hover::after{
+      transform: scaleX(1);
+      opacity: 1;
+    }
+
+    @media (max-width: 920px){
+      .hero{ grid-template-columns: 1fr; gap: 28px; padding: 28px 0 36px; }
+      .front-grid{ grid-template-columns: 1fr; gap: 34px; }
+      .h2{ font-size: 40px; }
+      .h2--big{ font-size: 46px; }
+      .contact-grid{ grid-template-columns: 1fr; gap: 22px; }
+    }
+  </style>
+
+  <script>
+    // Scroll-triggered keyword underline (toggle on when 60% visible, off when not)
+    const kws = document.querySelectorAll(".kw[data-kw]");
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.intersectionRatio >= 0.6) e.target.classList.add("is-on");
+          else e.target.classList.remove("is-on");
+        }
+      },
+      { threshold: [0, 0.6, 1] }
+    );
+
+    kws.forEach((el) => io.observe(el));
+  </script>
+</MainLayout>
