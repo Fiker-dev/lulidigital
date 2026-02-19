@@ -1,53 +1,427 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<MainLayout title="Virtual Assistant Desk · LuliDigital">
-  <section class="section">
-    <div class="wrap">
-      <div class="inner-head reveal" data-reveal>
-        <div class="eyebrow">VIRTUAL ASSISTANT DESK</div>
-        <h2 class="h1">The Quiet Fix</h2>
-        <p class="p">
-          Systems, coordination, follow-through — designed to feel calm, fast, and reliable.
-        </p>
-      </div>
+<BaseLayout title="Virtual Assistant Desk · LuliDigital" active="virtual-assistant">
+  <section class="va-desk" aria-label="Virtual Assistant Desk">
 
-      <div class="rule rule--spaced"></div>
+    <div class="va-intro">
+      <p class="planner-kicker">VIRTUAL ASSISTANT DESK OPS EDITION</p>
+      <h2>Leadership Support Desk.</h2>
+      <p>
+        Structured execution for leaders who carry the weight.
+        Quiet systems. Clear follow-through.
+      </p>
+      <h3 class="va-transition-title">When everything comes back to you.</h3>
+      <p class="va-transition-body">
+        You’re the final call. The escalation point.<br />
+        Here’s the layer we step into.
+      </p>
+    </div>
 
-      <div class="front-grid">
-        <article class="story reveal" data-reveal>
-          <div class="eyebrow">WHAT IT SOLVES</div>
-          <ul class="list">
-            <li><span class="lux-highlight">Task tracking</span> and weekly reporting</li>
-            <li>Project coordination across people + tools</li>
-            <li>Client comms, follow-ups, reminders, handovers</li>
-            <li>File hygiene: naming, versions, folders, approvals</li>
-          </ul>
-        </article>
-
-        <article class="story reveal" data-reveal>
-          <div class="eyebrow">DELIVERABLES</div>
-          <ul class="list">
-            <li>Project board setup (simple, clean, maintainable)</li>
-            <li>Standard operating checklist for recurring work</li>
-            <li>Weekly priorities + risk list</li>
-            <li>Clean archive + handover pack</li>
-          </ul>
-        </article>
-      </div>
-
-      <div class="rule rule--spaced"></div>
-
-      <div class="callout reveal" data-reveal>
-        <div class="eyebrow">CONTACT</div>
-        <div class="callout-grid">
-          <a class="link link--underline" href="mailto:info@lulidigital.co.za">info@lulidigital.co.za →</a>
-          <a class="link link--underline" href="https://wa.me/27602551513" target="_blank" rel="noreferrer">
-            +27 60 255 1513 →
-          </a>
+    <div class="planner">
+      <div class="planner-cover">
+        <div class="planner-label">
+          <span class="planner-kicker">VIRTUAL ASSISTANT DESK</span>
+          <span class="planner-issue">OPS EDITION</span>
         </div>
+
+        <div class="planner-body">
+          <div class="planner-rings" aria-hidden="true">
+            <span class="ring"></span>
+            <span class="ring"></span>
+            <span class="ring"></span>
+          </div>
+
+          <div class="planner-pages">
+            <div class="planner-tabs" aria-hidden="true">
+              <span class="tab tab-1"></span>
+              <span class="tab tab-2"></span>
+              <span class="tab tab-3"></span>
+              <span class="tab tab-4"></span>
+            </div>
+
+            <div class="planner-sheet">
+              <div class="planner-sheet-inner">
+                <div class="va-grid service-grid">
+
+                  <div class="va-card serviceCard service-card">
+                    <h3 class="cardTitle">Admin & Operations</h3>
+                    <ul>
+                      <li>Inbox managed</li>
+                      <li>Calendar controlled</li>
+                      <li>Follow-ups sent</li>
+                      <li>Reports prepared</li>
+                    </ul>
+                    <p class="va-foot">Quiet execution behind the scenes.</p>
+                  </div>
+
+                  <div class="va-card serviceCard is-featured service-card">
+                    <h3 class="cardTitle">Projects Managed & Moving</h3>
+                    <ul>
+                      <li>Timelines owned</li>
+                      <li>Milestones hit</li>
+                      <li>Teams aligned</li>
+                      <li>Deliverables tracked</li>
+                    </ul>
+                    <p class="va-foot">Hitting milestones. No chasing.</p>
+                  </div>
+
+                  <div class="va-card serviceCard service-card">
+                    <h3 class="cardTitle">Marketing & Visibility</h3>
+                    <ul>
+                      <li>Content created</li>
+                      <li>Campaigns structured</li>
+                      <li>Ads running across platforms</li>
+                      <li>Message refined and distributed</li>
+                    </ul>
+                    <p class="va-foot">Helping you get your message across.</p>
+                  </div>
+
+                  <div class="va-card serviceCard is-featured service-card">
+                    <h3 class="cardTitle">AI & Custom Software</h3>
+                    <ul>
+                      <li>AI assistants built</li>
+                      <li>Workflows automated</li>
+                      <li>Tools tailored to your operations</li>
+                      <li>Software built from simple to enterprise level</li>
+                    </ul>
+                    <p class="va-foot">Built to think with you. Not replace you.</p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="planner-spine" aria-hidden="true"></div>
       </div>
     </div>
+
+    <div class="va-close">
+      <p class="delegatable-line">
+        If it’s digital, it’s delegatable.
+      </p>
+      <p class="va-close__line">Outsource your worries today.</p>
+      <a 
+        href="https://wa.me/27602551513" 
+        class="cta-desk"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contact the desk on WhatsApp"
+      >
+        CONTACT THE DESK <span class="cta-arrow">→</span>
+      </a>
+    </div>
+
   </section>
-</MainLayout>
+
+  <script is:inline>
+    (() => {
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const cards = Array.from(document.querySelectorAll('.service-card'));
+      if (!cards.length) return;
+
+      // If reduced motion: just show immediately
+      if (reduce) {
+        cards.forEach((c) => c.classList.add('is-in'));
+        return;
+      }
+
+      // Set stagger delays
+      cards.forEach((card, i) => {
+        // 70ms stagger feels premium; keep between 60–90ms
+        card.style.setProperty('--reveal-delay', `${i * 70}ms`);
+      });
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        });
+      }, {
+        threshold: 0.18,
+        rootMargin: '0px 0px -10% 0px'
+      });
+
+      cards.forEach((card) => io.observe(card));
+    })();
+  </script>
+
+  <style>
+    .va-desk{
+      margin-top:60px;
+    }
+
+    .va-intro h2{
+      font-family:var(--font-serif);
+      font-size:2.4rem;
+      margin-bottom:12px;
+    }
+
+    .va-intro p{
+      max-width:620px;
+      opacity:0.8;
+      line-height:1.7;
+    }
+
+    .va-transition-title{
+      margin:18px 0 8px;
+      font-family:var(--font-serif);
+      font-size:1.15rem;
+      line-height:1.35;
+    }
+
+    .va-transition-body{
+      margin-top:0;
+      margin-bottom:0;
+    }
+
+    /* Planner shell */
+    .planner{
+      margin-top:34px;
+      max-width:980px;
+    }
+
+    .planner-cover{
+      position:relative;
+      border-radius:30px;
+      border:1px solid rgba(20,20,19,0.18);
+      background:rgba(255,255,255,0.12);
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.10),
+        0 8px 20px rgba(0,0,0,0.06);
+      padding:22px 22px 24px;
+      overflow:hidden;
+    }
+
+    /* subtle “leather” depth */
+    .planner-cover::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(0,0,0,0.06), transparent 55%),
+        radial-gradient(700px 500px at 90% 30%, rgba(0,0,0,0.05), transparent 55%),
+        linear-gradient(to bottom, rgba(255,255,255,0.18), rgba(255,255,255,0.04));
+      pointer-events:none;
+    }
+
+    /* spine edge */
+    .planner-spine{
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:20px;
+      background:rgba(0,0,0,0.03);
+      border-right:1px solid rgba(20,20,19,0.10);
+    }
+
+    /* top label plate */
+    .planner-label{
+      position:relative;
+      display:flex;
+      gap:10px;
+      align-items:baseline;
+      justify-content:space-between;
+      padding:10px 14px;
+      border-radius:18px;
+      background:rgba(255,255,255,0.35);
+      border:1px solid rgba(20,20,19,0.16);
+      margin-bottom:16px;
+    }
+
+    .planner-kicker{
+      letter-spacing:0.18em;
+      font-size:0.75rem;
+      opacity:0.75;
+    }
+
+    .planner-issue{
+      letter-spacing:0.14em;
+      font-size:0.72rem;
+      opacity:0.65;
+    }
+
+    /* inner layout: rings + pages */
+    .planner-body{
+      position:relative;
+      display:grid;
+      grid-template-columns:56px 1fr;
+      gap:14px;
+    }
+
+    @media(max-width:700px){
+      .planner-body{
+        grid-template-columns:40px 1fr;
+      }
+    }
+
+    /* rings */
+    .planner-rings{
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:26px;
+      padding-top:26px;
+    }
+
+    .ring{
+      width:28px;
+      height:28px;
+      border-radius:999px;
+      border:1px solid rgba(20,20,19,0.22);
+      background:rgba(255,255,255,0.45);
+      box-shadow:
+        inset 0 2px 6px rgba(0,0,0,0.10),
+        0 6px 14px rgba(0,0,0,0.06);
+    }
+
+    .ring::after{
+      content:"";
+      display:block;
+      width:10px;
+      height:10px;
+      margin:8px auto 0;
+      border-radius:999px;
+      background:rgba(0,0,0,0.06);
+    }
+
+    /* page stack */
+    .planner-pages{
+      position:relative;
+    }
+
+    .planner-sheet{
+      position:relative;
+      border-radius:26px;
+      background:rgba(255,255,255,0.55);
+      border:1px solid rgba(20,20,19,0.16);
+      overflow:hidden;
+    }
+
+    /* ruled paper lines */
+    .planner-sheet::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(0,0,0,0.00) 0px,
+          rgba(0,0,0,0.00) 26px,
+          rgba(20,20,19,0.05) 27px
+        );
+      opacity:0.35;
+      pointer-events:none;
+    }
+
+    /* inner padding */
+    .planner-sheet-inner{
+      position:relative;
+      padding:22px 22px 18px;
+    }
+
+    /* tabs */
+    .planner-tabs{
+      position:absolute;
+      top:26px;
+      right:-8px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      pointer-events:none;
+    }
+
+    .tab{
+      width:22px;
+      height:38px;
+      border-radius:12px;
+      border:1px solid rgba(20,20,19,0.16);
+      background:rgba(255,255,255,0.40);
+      box-shadow:0 10px 18px rgba(0,0,0,0.06);
+    }
+
+    .tab-1{ transform:rotate(-1deg); }
+    .tab-2{ transform:rotate(1deg); }
+    .tab-3{ transform:rotate(-1deg); }
+    .tab-4{ transform:rotate(1deg); }
+
+    @media(max-width:700px){
+      .planner-tabs{ display:none; }
+    }
+
+    /* content grid inside planner */
+    .va-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    @media(max-width:700px){
+      .va-grid{ grid-template-columns:1fr; }
+    }
+
+    /* cards become “notes” on the page */
+    .va-card{
+      padding:18px 18px;
+      border-radius:20px;
+      background:rgba(255,255,255,0.35);
+      border:1px solid rgba(20,20,19,0.14);
+      box-shadow:
+        0 18px 40px rgba(0,0,0,0.08),
+        0 6px 12px rgba(0,0,0,0.04);
+    }
+
+    .va-card h3{
+      font-family:var(--font-serif);
+      font-size:1.12rem;
+      margin-bottom:10px;
+    }
+
+    .va-card ul{
+      padding-left:18px;
+      line-height:1.7;
+      margin:0;
+    }
+
+    .va-foot{
+      margin-top:10px;
+      font-size:0.9rem;
+      opacity:0.7;
+    }
+
+    .va-close{
+      margin-top:34px;
+      text-align:center;
+    }
+
+    .va-close__line{
+      margin:0 0 12px;
+      font-family:var(--font-serif);
+      font-size:clamp(1.2rem, 2vw, 1.6rem);
+      line-height:1.3;
+    }
+
+    .va-close__cta{
+      display:inline-block;
+      text-decoration:none;
+      color:rgba(20,20,19,0.88);
+      letter-spacing:0.1em;
+      text-transform:uppercase;
+      font-size:0.76rem;
+      border-bottom:1px solid rgba(20,20,19,0.22);
+      padding-bottom:4px;
+      transition:opacity 180ms ease;
+    }
+
+    .va-close__cta:hover{
+      opacity:0.72;
+    }
+  </style>
+</BaseLayout>

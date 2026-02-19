@@ -1,30 +1,478 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<MainLayout title="AI Desk — LuliDigital">
-  <header class="masthead" data-reveal>
-    <div class="masthead-topline">LULIDIGITAL TIMES • EDITION 001</div>
-    <h1 class="brand"><span class="brand-word">LuliDigital</span></h1>
-    <div class="brand-sub">AI DESK</div>
+<BaseLayout title="AI Desk · LuliDigital" active="ai">
+  <section class="ai-page">
+    <div class="ai-grid">
+      <!-- LEFT: editorial story -->
+      <article class="ai-story" data-reveal>
+        <p class="kicker">AI DESK</p>
 
-    <nav class="nav">
-      <a href="/" class="nav-link">HOME</a>
-      <a href="/marketing" class="nav-link">MARKETING</a>
-      <a href="/ai" class="nav-link is-active">AI</a>
-      <a href="/contact" class="nav-link">CONTACT</a>
-    </nav>
+        <h1 class="headline">
+          A lab on the desk.<br />
+          Calm systems that do the work.
+        </h1>
 
-    <div class="rule"></div>
-  </header>
+        <p class="lede">
+          We help teams add intelligence without the chaos. Assistants that answer questions, agents that move tasks
+          forward, and workflows that keep everything organized.
+        </p>
 
-  <main class="page">
-    <section class="simple" data-reveal>
-      <div class="kicker">AI DESK</div>
-      <h2 class="headline">Automation that stays human.</h2>
-      <p class="body">
-        We build assistants, agents, and workflows that reduce busywork and keep teams aligned.
-      </p>
-    </section>
-  </main>
-</MainLayout>
+        <p class="body">
+          Think practical. A customer asks <span class="ink-hl" data-delay="0">“Where’s the return policy?”</span> and gets the right
+          answer instantly. Your team asks <span class="ink-hl" data-delay="90">“Where’s that contract?”</span> and finds it in seconds.
+          Quiet wins like that stack up.
+        </p>
+
+        <p class="body">
+          We keep humans in control. The system drafts, routes, and suggests. Your people approve, publish, and decide.
+          That’s how it stays <span class="ink-hl" data-delay="0">safe</span>, <span class="ink-hl" data-delay="90">useful</span>, and
+          <span class="ink-hl" data-delay="180">consistent</span>.
+        </p>
+
+        <div class="mini-note" data-reveal>
+          <p class="mini-note__title">Editorial Note</p>
+          <p class="mini-note__text">
+            LuliDigital runs with skilled humans and AI working hand in hand to make ideas great reality.
+          </p>
+        </div>
+      </article>
+
+      <!-- RIGHT: “lab desk” -->
+      <aside class="ai-desk" aria-label="AI desk bench" data-reveal>
+        <div class="desk-top">
+          <!-- subtle lab objects -->
+          <div class="bench-objects" aria-hidden="true">
+            <svg class="obj obj-laptop" viewBox="0 0 240 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M52 46c0-8 6-14 14-14h108c8 0 14 6 14 14v66H52V46Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M34 118h172c0 8-6 14-14 14H48c-8 0-14-6-14-14Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M88 126h64" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+            </svg>
+
+            <svg class="obj obj-notebook" viewBox="0 0 240 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M70 38h104c10 0 18 8 18 18v72c0 10-8 18-18 18H70c-10 0-18-8-18-18V56c0-10 8-18 18-18Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M78 56h88M78 72h78M78 88h86M78 104h74" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+              <path d="M62 48v84" stroke="currentColor" stroke-width="2" opacity="0.35"/>
+            </svg>
+          </div>
+
+          <!-- stamp -->
+          <div class="lab-stamp" aria-hidden="true">
+            <div class="lab-stamp__inner">
+              <span class="lab-stamp__brand">LuliDigital</span>
+              <span class="lab-stamp__word">CALIBRATED</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bot-grid">
+
+          <div class="bot">
+            <div class="bot-head">
+              <div class="bot-antenna"></div>
+              <div class="bot-face">
+                <div class="bot-eyes">
+                  <span></span><span></span>
+                </div>
+                <div class="bot-mouth"></div>
+              </div>
+              <h3>Never lose a lead again.</h3>
+              <ul>
+                <li>Website messages answered instantly</li>
+                <li>Leads routed to the right person</li>
+                <li>Follow-ups sent automatically</li>
+              </ul>
+              <p class="bot-foot">While you sleep, it replies.</p>
+            </div>
+          </div>
+
+          <div class="bot">
+            <div class="bot-head">
+              <div class="bot-antenna"></div>
+              <div class="bot-face">
+                <div class="bot-eyes">
+                  <span></span><span></span>
+                </div>
+                <div class="bot-mouth"></div>
+              </div>
+              <h3>Stop asking “Where’s that file?”</h3>
+              <ul>
+                <li>Search contracts in seconds</li>
+                <li>Pull SOPs instantly</li>
+                <li>Answer staff questions automatically</li>
+              </ul>
+              <p class="bot-foot">It remembers everything.</p>
+            </div>
+          </div>
+
+          <div class="bot bot-wide">
+            <div class="bot-head">
+              <div class="bot-antenna"></div>
+              <div class="bot-face">
+                <div class="bot-eyes">
+                  <span></span><span></span>
+                </div>
+                <div class="bot-mouth"></div>
+              </div>
+              <h3>Your inbox runs itself.</h3>
+              <ul>
+                <li>Emails sorted and labeled</li>
+                <li>Tasks created automatically</li>
+                <li>Reports generated weekly</li>
+              </ul>
+              <p class="bot-foot">Less noise. More control.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="bench-links" data-reveal>
+          <a class="desk-link" href="/marketing">Visit the Marketing Desk →</a>
+          <a class="desk-link" href="/#contact">Talk to the Desk →</a>
+          <a class="desk-link" href="/virtual-assistant">Visit the Virtual Assistant Desk →</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <style>
+    .ai-page{
+      --wine: #6b2f3a;
+      --ink: rgba(20,20,19,0.92);
+      --paper-2: #f1ede3;
+      --rule: rgba(20,20,19,0.12);
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 18px 80px;
+      position: relative;
+    }
+
+    .ai-grid{
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    @media (max-width: 980px){
+      .ai-grid{ grid-template-columns: 1fr; }
+    }
+
+    .kicker{
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(20,20,19,0.62);
+      margin: 0 0 10px;
+    }
+
+    .headline{
+      font-family: var(--font-serif, ui-serif);
+      color: var(--ink);
+      font-size: clamp(34px, 4.2vw, 52px);
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      margin: 0 0 14px;
+    }
+
+    .lede{
+      font-size: 1.08rem;
+      line-height: 1.72;
+      color: rgba(20,20,19,0.86);
+      margin: 0 0 14px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      max-width: 56ch;
+    }
+
+    .body{
+      font-size: 1.02rem;
+      line-height: 1.78;
+      color: rgba(20,20,19,0.84);
+      margin: 0 0 14px;
+      max-width: 60ch;
+    }
+
+    .mini-note{
+      margin-top: 18px;
+      border: 1px solid var(--rule);
+      background: rgba(247,243,234,0.72);
+      padding: 14px 14px 12px;
+      border-radius: 14px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
+    }
+    .mini-note__title{
+      margin: 0 0 8px;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(20,20,19,0.6);
+    }
+    .mini-note__text{
+      margin: 0;
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: rgba(20,20,19,0.86);
+      font-weight: 500;
+      letter-spacing: -0.008em;
+    }
+
+    /* Desk panel */
+    .ai-desk{
+      position: relative;
+      border: 1px solid var(--rule);
+      background: linear-gradient(180deg, rgba(247,243,234,0.92), rgba(241,237,227,0.82));
+      border-radius: 18px;
+      padding: 18px 16px 16px;
+      box-shadow: 0 18px 46px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.55);
+      overflow: hidden;
+    }
+
+    /* faint grain */
+    .ai-desk::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(0,0,0,0.03), transparent 55%),
+        radial-gradient(circle at 78% 28%, rgba(0,0,0,0.02), transparent 60%),
+        radial-gradient(circle at 40% 88%, rgba(0,0,0,0.02), transparent 60%);
+      opacity: 0.55;
+      pointer-events:none;
+    }
+
+    .desk-top{
+      position: relative;
+      display: grid;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .bench-objects{
+      position: absolute;
+      right: -10px;
+      top: -6px;
+      width: 200px;
+      height: 140px;
+      color: rgba(20,20,19,0.16);
+      z-index: 1;
+      pointer-events:none;
+    }
+    .obj{
+      position: absolute;
+      opacity: 0.92;
+    }
+    .obj-laptop{
+      right: 0;
+      top: 10px;
+      width: 175px;
+      transform: rotate(1.2deg);
+    }
+    .obj-notebook{
+      left: 8px;
+      top: 62px;
+      width: 160px;
+      transform: rotate(-2deg);
+      opacity: 0.85;
+    }
+
+    /* Calibrated stamp */
+    .lab-stamp{
+      position: absolute;
+      right: 14px;
+      top: 64%;
+      transform: rotate(-10deg);
+      z-index: 2;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0.72;
+    }
+    .lab-stamp__inner{
+      display: grid;
+      gap: 4px;
+      padding: 10px 14px;
+      border: 1px solid rgba(20,20,19,0.22);
+      border-radius: 16px;
+      background: rgba(248,245,239,0.78);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.60);
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+    }
+    .lab-stamp__brand{
+      font-size: 10px;
+      opacity: 0.86;
+      color: rgba(20,20,19,0.84);
+      font-family: var(--font-serif, ui-serif);
+    }
+    .lab-stamp__word{
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(20,20,19,0.86);
+      font-family: var(--font-serif, ui-serif);
+    }
+
+    .bot-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:22px;
+      margin-top:24px;
+    }
+
+    @media(max-width:600px){
+      .bot-grid{ grid-template-columns:1fr; }
+    }
+
+    .bot-wide{
+      grid-column: 1 / -1;
+    }
+
+    .bot-head{
+      position: relative;
+      padding:28px 24px 24px;
+      border-radius:32px;
+      background:rgba(255,255,255,0.6);
+      border:1px solid rgba(20,20,19,0.18);
+      box-shadow:
+        0 35px 60px rgba(0,0,0,0.12),
+        0 8px 16px rgba(0,0,0,0.06);
+      transition:transform 0.3s ease;
+    }
+
+    .bot-head:hover{
+      transform:translateY(-6px);
+    }
+
+    .bot-antenna{
+      position:absolute;
+      top:-10px;
+      left:50%;
+      transform:translateX(-50%);
+      width:4px;
+      height:18px;
+      background:#6b2f3a;
+      border-radius:4px;
+    }
+
+    .bot-face{
+      background:rgba(107,47,58,0.06);
+      padding:14px;
+      border-radius:20px;
+      margin-bottom:18px;
+    }
+
+    .bot-head::after{
+      content:"";
+      position:absolute;
+      bottom:-18px;
+      left:50%;
+      transform:translateX(-50%);
+      width:65%;
+      height:20px;
+      background:radial-gradient(ellipse at center, rgba(0,0,0,0.18), transparent 70%);
+      filter:blur(8px);
+    }
+
+    .bot-eyes{
+      display:flex;
+      gap:14px;
+      margin-bottom:14px;
+    }
+
+    .bot-eyes span{
+      width:14px;
+      height:14px;
+      border-radius:50%;
+      background:#6b2f3a;
+      opacity:0.4;
+    }
+
+    .bot-mouth{
+      height:4px;
+      width:40%;
+      background:#6b2f3a;
+      opacity:0.3;
+      border-radius:4px;
+    }
+
+    .bot-head h3{
+      font-family:var(--font-serif);
+      margin-bottom:10px;
+      font-size:1.25rem;
+    }
+
+    .bot-head ul{
+      padding-left:18px;
+      line-height:1.7;
+    }
+
+    .bot-foot{
+      margin-top:12px;
+      font-size:0.9rem;
+      opacity:0.7;
+    }
+
+    @media (max-width: 560px){
+      .bench-objects{ display:none; }
+      .lab-stamp{ position: relative; right:auto; top:auto; transform:none; opacity:0.6; margin: 10px 0 0; display:flex; justify-content:center; }
+    }
+
+    .bench-links{
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 6px;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule);
+      margin-top: 14px;
+    }
+    .desk-link{
+      font-size: 0.86rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: rgba(20,20,19,0.82);
+      border-bottom: 1px solid rgba(107,47,58,0.28);
+      width: fit-content;
+      padding-bottom: 3px;
+      transition: opacity 200ms ease, border-color 200ms ease;
+    }
+    .desk-link:hover{
+      opacity: 0.75;
+      border-color: rgba(107,47,58,0.45);
+    }
+
+    /* reveal animation */
+    [data-reveal]{
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 480ms ease, transform 520ms ease;
+      will-change: opacity, transform;
+    }
+    [data-reveal].is-in{
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+
+  <script is:inline>
+    // reveal blocks
+    const reveals = Array.from(document.querySelectorAll("[data-reveal]"));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach((el) => io.observe(el));
+
+  </script>
+
+  <script type="module">
+    import { initInkHighlights } from "../scripts/inkHighlight.js";
+    initInkHighlights();
+  </script>
+</BaseLayout>

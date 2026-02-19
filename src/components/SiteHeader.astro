@@ -1,0 +1,110 @@
+---
+const { active = "" } = Astro.props;
+
+const nav = [
+  { label: "HOME", href: "/" , key: "home" },
+  { label: "MARKETING", href: "/marketing", key: "marketing" },
+  { label: "AI", href: "/ai", key: "ai" },
+  { label: "VIRTUAL ASSISTANT", href: "/virtual-assistant", key: "virtual-assistant" },
+  { label: "CONTACT", href: "/contact", key: "contact" },
+];
+---
+
+<header class="mast">
+  <div class="topline">LULIDIGITAL TIMES • EDITION 001</div>
+
+  <div class="logoBlock">
+    <a class="logo" href="/" aria-label="LuliDigital home">
+      <span class="luli">Luli</span><span class="digital">Digital</span>
+    </a>
+    <div class="sub">DIGITAL STUDIO</div>
+  </div>
+
+  <nav class="nav" aria-label="Primary">
+    {nav.map((item) => (
+      <a
+        href={item.href}
+        class:list={["navItem", item.key === active && "isActive"]}
+      >
+        {item.label}
+      </a>
+    ))}
+  </nav>
+
+  <div class="rule"></div>
+</header>
+
+<style>
+  .mast{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 38px 20px 16px;
+    text-align: center;
+  }
+  .topline{
+    font-size: 12px;
+    letter-spacing: .22em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .logoBlock{ margin: 6px 0 14px; }
+  .logo{
+    display: inline-block;
+    font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+    font-weight: 700;
+    font-size: clamp(44px, 5vw, 56px);
+    line-height: 1;
+    text-decoration: none;
+  }
+  .luli{ color: var(--brand); }
+  .digital{ color: var(--ink); }
+  .sub{
+    margin-top: 8px;
+    font-size: 11px;
+    letter-spacing: .26em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .nav{
+    display: flex;
+    justify-content: center;
+    gap: clamp(18px, 3vw, 42px);
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .navItem{
+    font-size: 12px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: .9;
+    padding: 8px 6px;
+    position: relative;
+  }
+  .navItem:hover{ opacity: 1; }
+  .isActive{ opacity: 1; }
+  .isActive::after{
+    content: "";
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: 2px;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .rule{
+    margin: 18px auto 0;
+    height: 1px;
+    background: var(--rule);
+    width: 100%;
+  }
+
+  @media (max-width: 520px){
+    .mast{ padding-top: 28px; }
+    .nav{ gap: 14px 18px; }
+  }
+</style>

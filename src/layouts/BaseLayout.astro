@@ -1,0 +1,29 @@
+---
+import "../styles/theme.css";
+import SiteHeader from "../components/SiteHeader.astro";
+
+const { title = "LuliDigital", active = "" } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+  </head>
+
+  <body>
+    <SiteHeader active={active} />
+    <main class="page">
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style>
+  .page{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 26px 20px 88px;
+  }
+</style>

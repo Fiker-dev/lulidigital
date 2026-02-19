@@ -1,8 +1,8 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<MainLayout title="LuliDigital" description="LuliDigital — Digital Studio">
+<BaseLayout title="LuliDigital" active="home">
   <main class="page">
     <section class="hero">
       <div class="hero__left">
@@ -37,19 +37,26 @@ import MainLayout from "../layouts/MainLayout.astro";
         <div class="kicker">EDITORIAL NOTE</div>
 
         <p class="note">
-          LuliDigital is the studio you call when guessing is no longer acceptable. We run Marketing, AI Integration, and
-          Virtual Assistant desks — led by skilled professionals and powered by AI — working in sync.
+          LuliDigital is where guessing stops.
         </p>
 
         <p class="note">
-          Whether you’re brand new or things just aren’t clicking, we turn
-          <span class="kw" data-kw>“I don’t know what to fix”</span>
-          into clarity — and clarity into calm execution.
+          Marketing. AI. Virtual Assistants.
         </p>
 
         <p class="note">
-          Marketing, AI integration, and Virtual Assistant desks —
-          <span class="kw" data-kw>running side by side</span>, so you’re not carrying everything alone.
+          Led by sharp humans.<br/>
+          Powered by intelligent systems.
+        </p>
+
+        <p class="note">
+          Unclear? We bring clarity.<br/>
+          Overwhelmed? We simplify.
+        </p>
+
+        <p class="note">
+          Side by side.<br/>
+          So you don’t carry it alone.
         </p>
       </aside>
     </section>
@@ -61,28 +68,50 @@ import MainLayout from "../layouts/MainLayout.astro";
         <div class="kicker">FRONT PAGE</div>
         <h2 class="h2">Jane vs Jando</h2>
 
-        <p>Jane started a brand. She didn’t try to guess everything herself. She got help.</p>
+        <div class="jj">
+          <div class="jj__body">
+            <p>Jane started a brand. She didn’t try to guess everything herself. She got help.</p>
 
-        <p>
-          Someone shaped her brand voice. Someone made sure she had
-          <span class="kw" data-kw>really good product pictures</span>.
-          The kind that makes people pause.
-        </p>
+            <p>Someone shaped her brand voice. Someone made sure she had really good product pictures — the kind that makes people pause.</p>
 
-        <p>
-          Her website felt finished. When people searched her name, she showed up. When she posted, it looked consistent.
-        </p>
+            <p>Her website felt finished. When people searched her name, she showed up. When she posted, it looked consistent.</p>
 
-        <p>People understood her. People trusted her. People bought.</p>
+            <p>People understood her. People trusted her. People bought.</p>
+          </div>
 
-        <p>Jando had a good business idea, but online he was basically invisible.</p>
+          <aside class="jj__aside" aria-label="Exhibit: visibility check">
+            <div class="evidence-card exhibit-card missing-card">
+              <span class="corner-curl"></span>
+              <div class="evidence-inner">
 
-        <p>No proper website. No clear presence. Customers searched. Nothing.</p>
+                <div class="evidence-header">
+                  <span class="exhibit exhibit-kicker">EXHIBIT A</span>
+                  <span class="stamp exhibit-stamp">MISSING</span>
+                </div>
 
-        <p>
-          Later, he got help too. It got cleaned up. He showed up.
-          <span class="kw" data-kw>It was never too late.</span>
-        </p>
+                <h4 class="evidence-title exhibit-title">Online Presence</h4>
+
+                <div class="evidence-row exhibit-row">
+                  <span class="label exhibit-kicker">Query</span>
+                  <span class="value">“Jando”</span>
+                </div>
+
+                <div class="evidence-row exhibit-row">
+                  <span class="label exhibit-kicker">Result</span>
+                  <span class="value bold">NOT FOUND</span>
+                </div>
+
+                <div class="evidence-divider"></div>
+
+                <p class="evidence-copy exhibit-punch">
+                  Visibility vs invisible.<br />
+                  <strong class="big">Unseen is unforgivable.</strong>
+                </p>
+
+              </div>
+            </div>
+          </aside>
+        </div>
 
         <a class="desk-link desk-link--inline" href="/marketing">OPEN THE MARKETING DESK →</a>
       </article>
@@ -119,14 +148,13 @@ import MainLayout from "../layouts/MainLayout.astro";
         <h2 class="h2">Smart Sandy</h2>
 
         <p>
-          Sandy runs a growing team. Good people. Too many moving parts. Updates lived in chats, files lived in folders,
-          and deadlines lived in someone’s head.
+          Smart Sandy has a talented team. Good people. Big ideas. But updates lived in chats. Files hid in folders.
+          Deadlines stayed in her head.
         </p>
 
         <p>
-          So Sandy got a single source of truth —
-          <span class="kw" data-kw>clean project tracking</span>,
-          <span class="kw" data-kw>clear owners</span>, and lightweight automations that keep the work moving without meetings multiplying.
+          So she simplified. One source of truth. Clear ownership. Light automation that keeps work moving. No chaos. No
+          extra meetings. Just momentum.
         </p>
 
         <a class="desk-link desk-link--inline" href="/virtual-assistant">OPEN THE VIRTUAL ASSISTANT DESK →</a>
@@ -173,16 +201,13 @@ import MainLayout from "../layouts/MainLayout.astro";
   </main>
 
   <style>
-    :root{
-      --paper: #f4efe6;
+    .page{
       --ink: #121212;
       --muted: rgba(18,18,18,.62);
       --rule: rgba(18,18,18,.14);
       --red: #b01616;
-      --redSoft: rgba(176, 22, 22, 0.28);
-    }
-
-    .page{
+      --redSoft: rgba(176, 22, 22, 0.12);
+      --redLine: rgba(176, 22, 22, 0.34);
       max-width: 1040px;
       margin: 0 auto;
       padding: 64px 24px 72px;
@@ -192,7 +217,7 @@ import MainLayout from "../layouts/MainLayout.astro";
     .hero{
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
-      gap: 64px;
+      gap: 7rem;
       padding: 38px 0 48px;
     }
 
@@ -213,17 +238,17 @@ import MainLayout from "../layouts/MainLayout.astro";
     }
 
     .lede, .note{
-      margin: 0 0 16px;
+      margin: 0 0 18px;
       color: rgba(18,18,18,.82);
-      line-height: 1.7;
+      line-height: 1.76;
       font-size: 16px;
     }
 
     .desk-links{
-      margin-top: 18px;
+      margin-top: 20px;
       display: flex;
       flex-wrap: wrap;
-      gap: 14px 22px;
+      gap: 15px 24px;
     }
 
     .desk-link{
@@ -269,7 +294,7 @@ import MainLayout from "../layouts/MainLayout.astro";
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 56px;
-      padding: 46px 0;
+      padding: 50px 0;
     }
 
     .card{
@@ -279,6 +304,7 @@ import MainLayout from "../layouts/MainLayout.astro";
     .h2{
       margin: 0 0 14px;
       font-size: 44px;
+      font-weight: 700;
       line-height: 1.05;
       letter-spacing: -0.2px;
     }
@@ -288,30 +314,30 @@ import MainLayout from "../layouts/MainLayout.astro";
     }
 
     p{
-      margin: 0 0 14px;
-      line-height: 1.75;
+      margin: 0 0 16px;
+      line-height: 1.82;
       color: rgba(18,18,18,.82);
       font-size: 16px;
     }
 
     .quote{
-      margin: 14px 0 16px;
+      margin: 16px 0 20px;
       padding-left: 16px;
       border-left: 3px solid rgba(176,22,22,.22);
       color: rgba(18,18,18,.78);
       font-style: italic;
-      line-height: 1.65;
+      line-height: 1.72;
     }
 
     .contact{
-      padding: 46px 0 0;
+      padding: 50px 0 0;
     }
 
     .contact-grid{
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 42px;
-      padding-top: 16px;
+      gap: 46px;
+      padding-top: 18px;
       padding-bottom: 10px;
     }
 
@@ -342,36 +368,101 @@ import MainLayout from "../layouts/MainLayout.astro";
       transform: scaleX(1);
     }
 
-    /* ========= KEYWORD HIGHLIGHT (NO BLOCKS, NO YELLOW) =========
-       - invisible until scroll/hover
-       - subtle red underline that grows left→right
-    */
-    .kw{
+    /* Jane vs Jando: reduce text-wall with an exhibit visual */
+    .jj{
+      display: grid;
+      grid-template-columns: 1fr 0.72fr;
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 16px;
+    }
+
+    .jj__body p{
+      max-width: 52ch;
+    }
+
+    .jj__aside{
       position: relative;
-      display: inline;
-      padding-bottom: 0.08em;
-      white-space: nowrap;
+      margin-top: 30px;
     }
 
-    .kw::after{
-      content:"";
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:-0.08em;
-      height:2px;
-      background: var(--redSoft);
-      transform: scaleX(0);
-      transform-origin: left;
-      opacity: 0;
-      transition: transform 600ms ease, opacity 600ms ease;
-      border-radius: 999px;
+    .evidence-card {
+      position: relative;
+      margin-left: 2rem;
+      transform: rotate(-1.2deg);
+      background: #f5f2ed;
+      border-radius: 14px;
+      padding: 1.8rem 1.6rem;
+      max-width: 260px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.05);
     }
 
-    .kw.is-on::after,
-    .kw:hover::after{
-      transform: scaleX(1);
-      opacity: 1;
+    .evidence-inner {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #1a1a1a;
+    }
+
+    .evidence-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .exhibit {
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    .stamp {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #b23a2f;
+      border: 1px solid #b23a2f;
+      padding: 3px 8px;
+      border-radius: 4px;
+      transform: rotate(-8deg);
+      opacity: 0.9;
+    }
+
+    .evidence-title {
+      font-size: 1rem;
+      margin: 0.3rem 0 1rem 0;
+    }
+
+    .evidence-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    .label {
+      opacity: 0.5;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.65rem;
+    }
+
+    .value.bold {
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .evidence-divider {
+      height: 1px;
+      background: rgba(0,0,0,0.08);
+      margin: 1rem 0;
+    }
+
+    .evidence-copy {
+      font-size: 0.85rem;
+      line-height: 1.4;
+      margin: 0;
     }
 
     @media (max-width: 920px){
@@ -380,22 +471,22 @@ import MainLayout from "../layouts/MainLayout.astro";
       .h2{ font-size: 40px; }
       .h2--big{ font-size: 46px; }
       .contact-grid{ grid-template-columns: 1fr; gap: 22px; }
+      .jj{
+        grid-template-columns: 1fr;
+        gap: 18px;
+        margin-bottom: 16px;
+      }
+      .jj__body p{
+        max-width: 60ch;
+      }
+      .jj__aside{
+        margin-top: 0;
+      }
+      .evidence-card {
+        margin-left: 0;
+        transform: none;
+        max-width: 100%;
+      }
     }
   </style>
-
-  <script>
-    // Scroll-triggered keyword underline (toggle on when 60% visible, off when not)
-    const kws = document.querySelectorAll(".kw[data-kw]");
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.intersectionRatio >= 0.6) e.target.classList.add("is-on");
-          else e.target.classList.remove("is-on");
-        }
-      },
-      { threshold: [0, 0.6, 1] }
-    );
-
-    kws.forEach((el) => io.observe(el));
-  </script>
-</MainLayout>
+</BaseLayout>

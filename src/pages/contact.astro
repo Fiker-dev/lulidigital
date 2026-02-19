@@ -1,38 +1,165 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<MainLayout title="Contact — LuliDigital">
-  <header class="masthead" data-reveal>
-    <div class="masthead-topline">LULIDIGITAL TIMES • EDITION 001</div>
-    <h1 class="brand"><span class="brand-word">LuliDigital</span></h1>
-    <div class="brand-sub">CONTACT</div>
+<BaseLayout title="Contact — LuliDigital" active="contact">
+  <section class="contact-wrap">
+    <header class="contact-head">
+      <div class="kicker">CONTACT DESK</div>
+      <h1 class="headline">Reach the desk.</h1>
+      <p class="subhead">
+        For campaigns, systems, or something you're building &mdash; send a note or message the desk.
+      </p>
+    </header>
 
-    <nav class="nav">
-      <a href="/" class="nav-link">HOME</a>
-      <a href="/marketing" class="nav-link">MARKETING</a>
-      <a href="/ai" class="nav-link">AI</a>
-      <a href="/contact" class="nav-link is-active">CONTACT</a>
-    </nav>
+    <div class="contact-card">
+      <a class="contact-row" href="mailto:info@lulidigital.co.za">
+        <span class="glyph" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="10" y="18" width="44" height="28" rx="3"></rect>
+            <path d="M12 20l20 16L52 20"></path>
+          </svg>
+        </span>
+        <span class="contact-text">
+          <span class="label">Editorial Mail</span>
+          <span class="value">info@lulidigital.co.za</span>
+        </span>
+      </a>
 
-    <div class="rule"></div>
-  </header>
+      <div class="divider"></div>
 
-  <main class="page">
-    <section class="contact" data-reveal>
-      <h2 class="big-cta">Be smart. Get help. you can also contact us :)</h2>
+      <a class="contact-row" href="https://wa.me/27602551513" target="_blank" rel="noreferrer">
+        <span class="glyph" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 10c6 6 8 10 6 14l-4 6c4 8 10 14 18 18l6-4c4-2 8 0 14 6l-6 8c-3 4-8 6-13 4C25 56 8 39 4 19c-2-5 0-10 4-13l8-6z"></path>
+          </svg>
+        </span>
+        <span class="contact-text">
+          <span class="label">WhatsApp Desk</span>
+          <span class="value">+27 60 255 1513</span>
+        </span>
+      </a>
+    </div>
 
-      <div class="contact-grid">
-        <div class="contact-item">
-          <div class="kicker">EMAIL</div>
-          <a class="editorial-link" href="mailto:info@lulidigital.co.za">info@lulidigital.co.za →</a>
-        </div>
+    <p class="fineprint">Fastest reply: WhatsApp.</p>
+  </section>
 
-        <div class="contact-item">
-          <div class="kicker">WHATSAPP</div>
-          <a class="editorial-link" href="https://wa.me/27602551513" target="_blank">+27 60 255 1513 →</a>
-        </div>
-      </div>
-    </section>
-  </main>
-</MainLayout>
+  <style>
+    .contact-wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+      color: rgba(20,20,20,.92);
+    }
+
+    .contact-head{ text-align:center; margin-bottom: 28px; }
+    .contact-head .kicker{
+      letter-spacing: .22em;
+      font-size: 12px;
+      color: rgba(20,20,20,.55);
+      margin-bottom: 14px;
+    }
+    .contact-head .headline{
+      font-size: clamp(44px, 5vw, 66px);
+      line-height: .96;
+      margin: 0 0 10px;
+      font-weight: 700;
+    }
+    .contact-head .subhead{
+      margin: 0 auto;
+      max-width: 620px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(20,20,20,.70);
+    }
+
+    .contact-card{
+      margin: 34px auto 0;
+      max-width: 760px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(30,30,30,.14);
+      border-radius: 18px;
+      box-shadow:
+        0 18px 40px rgba(20,20,20,.08),
+        inset 0 1px 0 rgba(255,255,255,.65);
+      backdrop-filter: blur(6px);
+      padding: 6px;
+    }
+
+    /* OVERRIDE GLOBAL LINK STYLES INSIDE THE CARD */
+    .contact-card a,
+    .contact-card a:visited{
+      color: inherit !important;
+      text-decoration: none !important;
+    }
+
+    .contact-row{
+      display:flex;
+      align-items:center;
+      gap: 16px;
+      padding: 18px 18px;
+      border-radius: 14px;
+      transition: transform .12s ease, background .12s ease;
+      position: relative;
+    }
+    .contact-row:hover{
+      background: rgba(255,255,255,.52);
+      transform: translateY(-1px);
+    }
+
+    /* Arrow without HTML characters (prevents â†’ encoding issues) */
+    .contact-row::after{
+      content: "→";
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(20,20,20,.55);
+      font-size: 18px;
+    }
+
+    .glyph{
+      width: 44px; height: 44px;
+      display:grid; place-items:center;
+      border-radius: 12px;
+      background: rgba(245,241,232,.85);
+      border: 1px solid rgba(30,30,30,.10);
+      color: rgba(20,20,20,.86);
+    }
+
+    .contact-text{ display:flex; flex-direction:column; gap: 4px; min-width: 0; padding-right: 28px; }
+    .label{
+      font-size: 12px;
+      letter-spacing: .18em;
+      color: rgba(20,20,20,.55);
+      text-transform: uppercase;
+    }
+    .value{
+      font-size: 20px;
+      line-height: 1.15;
+      font-weight: 600;
+      color: rgba(20,20,20,.90);
+      word-break: break-word;
+    }
+
+    .divider{
+      height: 1px;
+      margin: 0 18px;
+      background: rgba(20,20,20,.10);
+    }
+
+    .fineprint{
+      text-align:center;
+      margin: 14px 0 0;
+      font-size: 12px;
+      letter-spacing: .12em;
+      color: rgba(20,20,20,.55);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 560px){
+      .contact-wrap{ padding: 44px 16px 60px; }
+      .value{ font-size: 18px; }
+    }
+  </style>
+</BaseLayout>
