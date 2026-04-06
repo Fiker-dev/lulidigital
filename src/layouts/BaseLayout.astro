@@ -1,6 +1,7 @@
 ---
 import "../styles/theme.css";
 import SiteHeader from "../components/SiteHeader.astro";
+import LanaChat from "../components/LanaChat.astro";
 
 const { title = "LuliDigital", active = "" } = Astro.props;
 ---
@@ -17,6 +18,7 @@ const { title = "LuliDigital", active = "" } = Astro.props;
     <main class="page">
       <slot />
     </main>
+    <LanaChat />
   </body>
 </html>
 
