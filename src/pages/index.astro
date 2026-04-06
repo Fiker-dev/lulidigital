@@ -127,23 +127,21 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </blockquote>
 
         <p>
-          So Bob got help. Someone built him a system that knew his business and answered for him.
+          Someone built him a system that knew his business and answered for him.
         </p>
 
-        <p>
-          Customers stopped waiting. His team stopped repeating themselves. Bob stopped being the one everyone came
-          to for things that didn&apos;t need him.
-        </p>
-
-        <p>The work that actually needed him? He could finally do it.</p>
+        <div class="story-points" aria-label="Bob outcomes">
+          <p>Customers stopped waiting.</p>
+          <p>His team stopped repeating themselves.</p>
+          <p>Bob got back to the work that actually needed him.</p>
+        </div>
 
         <div class="kicker">THE BOB FIX</div>
         <p>That&apos;s what Bob got.</p>
 
         <p>
           Some businesses are sitting on a mountain of repeated questions. The answer isn&apos;t more staff. It&apos;s a smarter
-          system. A chatbot that knows your business. AI agents that handle the repetitive work in the background. Quiet,
-          invisible, always on.
+          system: a chatbot that knows your business, and AI agents that handle repetitive work quietly in the background.
         </p>
 
         <a class="desk-link desk-link--inline" href="/ai">OPEN THE AI DESK →</a>
@@ -158,23 +156,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <h2 class="h2">Sandy</h2>
 
         <p>
-          Sandy&apos;s team was talented. The ideas were good. But nothing moved cleanly.
+          Sandy&apos;s team was talented. The ideas were good. But nothing moved cleanly. Updates lived in chats. Files hid in
+          folders. Deadlines lived in Sandy&apos;s head, which meant they were always one bad week away from being missed.
         </p>
 
-        <p>
-          Updates lived in chats. Files hid in folders. Deadlines lived in Sandy&apos;s head, which meant they were always
-          one bad week away from being missed.
-        </p>
+        <div class="story-points" aria-label="Sandy outcomes">
+          <p>One source of truth.</p>
+          <p>Clear ownership.</p>
+          <p>Light systems that kept work moving without chasing it.</p>
+        </div>
 
-        <p>
-          So Sandy simplified. Someone came in and built one source of truth. Clear ownership. Light systems that kept
-          work moving without chasing it.
-        </p>
-
-        <p>
-          No more status meetings that should&apos;ve been a message. No more lost files. No more Sandy carrying everything.
-          The team finally worked like she always knew they could.
-        </p>
+        <p>No more status meetings that should&apos;ve been a message. No more lost files. No more Sandy carrying everything.</p>
 
         <a class="desk-link desk-link--inline" href="/virtual-assistant">OPEN THE VIRTUAL ASSISTANT DESK →</a>
       </article>
@@ -192,7 +184,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           projects without being asked twice.
         </p>
 
-        <p>It&apos;s the difference between “we&apos;re on it” and “we lost the file again.”</p>
+        <p class="quiet-pull">It&apos;s the difference between “we&apos;re on it” and “we lost the file again.”</p>
 
         <p>Quiet systems. Clear ownership. Reliable follow-through. The work moves. Nothing slips.</p>
 
@@ -304,6 +296,21 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       margin-top: 14px;
     }
 
+    .story-points{
+      display: grid;
+      gap: 10px;
+      margin: 16px 0 18px;
+      padding-left: 16px;
+      border-left: 2px solid rgba(176,22,22,.18);
+    }
+
+    .story-points p{
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.62;
+      color: rgba(18,18,18,.78);
+    }
+
     .rule{
       border: none;
       border-top: 1px solid var(--rule);
@@ -347,6 +354,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       color: rgba(18,18,18,.78);
       font-style: italic;
       line-height: 1.72;
+    }
+
+    .quiet-pull{
+      font-style: italic;
+      color: rgba(18,18,18,.74);
     }
 
     .contact{

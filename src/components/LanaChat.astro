@@ -65,10 +65,22 @@ const starters = [
     const messagesEl = root.querySelector("[data-lana-messages]");
     const sendButton = root.querySelector("[data-lana-send]");
     const starters = Array.from(root.querySelectorAll("[data-lana-starter]"));
+    const getTimeAwareGreeting = () => {
+      const hour = new Date().getHours();
+      if (hour < 12) return "Good morning";
+      if (hour < 18) return "Good afternoon";
+      return "Good evening";
+    };
+    const initialGreeting = `${getTimeAwareGreeting()}, I’m Lana. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.`;
+    messagesEl.innerHTML = "";
+    const initialMessage = document.createElement("article");
+    initialMessage.className = "lana-chat__message lana-chat__message--assistant";
+    initialMessage.textContent = initialGreeting;
+    messagesEl.appendChild(initialMessage);
     const history = [
       {
         role: "assistant",
-        content: "Hi, I'm Lana. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.",
+        content: initialGreeting,
       },
     ];
 
@@ -181,11 +193,14 @@ const starters = [
     right: 20px;
     bottom: 20px;
     z-index: 40;
-    width: min(380px, calc(100vw - 24px));
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
 
   .lana-chat__toggle{
-    width: 100%;
+    width: auto;
     border: 1px solid rgba(20, 19, 18, 0.15);
     background: linear-gradient(180deg, rgba(250, 247, 240, 0.98), rgba(244, 239, 230, 0.98));
     color: var(--ink);
@@ -222,6 +237,7 @@ const starters = [
 
   .lana-chat__panel{
     margin-top: 12px;
+    width: min(344px, calc(100vw - 24px));
     border-radius: 28px;
     border: 1px solid rgba(20, 19, 18, 0.14);
     background: linear-gradient(180deg, rgba(249, 245, 238, 0.98), rgba(243, 238, 230, 0.98));
@@ -356,6 +372,10 @@ const starters = [
     .lana-chat{
       right: 12px;
       bottom: 12px;
+    }
+
+    .lana-chat__toggle,
+    .lana-chat__panel{
       width: min(100vw - 24px, 380px);
     }
 
