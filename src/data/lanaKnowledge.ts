@@ -58,6 +58,11 @@ function tokenize(input: string) {
     .filter(Boolean);
 }
 
+function hasAnyTerm(query: string, terms: string[]) {
+  const normalized = query.toLowerCase();
+  return terms.some((term) => normalized.includes(term));
+}
+
 export function getKnowledgeContext(query: string, limit = 4) {
   const terms = tokenize(query);
   const scored = chunks
@@ -77,3 +82,26 @@ export function getKnowledgeContext(query: string, limit = 4) {
   return selected.map((chunk) => `${chunk.title}: ${chunk.text}`).join("\n\n");
 }
 
+export function getFallbackReply(query: string) {
+  if (hasAnyTerm(query, ["contact", "email", "whatsapp", "phone", "call", "reach"])) {
+    return "You can reach LuliDigital on WhatsApp at +27 60 255 1513 or by email at info@lulidigital.co.za. WhatsApp is usually the fastest way to get a reply.";
+  }
+
+  if (hasAnyTerm(query, ["marketing", "brand", "ads", "visibility", "rebrand", "launch"])) {
+    return "The Marketing Desk helps with brand positioning, creative direction, and paid media. It is best for launches, rebrands, growth sprints, and getting your visibility sharper.";
+  }
+
+  if (hasAnyTerm(query, ["ai", "chatbot", "bot", "assistant", "automation", "workflow"])) {
+    return "The AI Desk helps with chatbots, AI assistants, and practical workflows that answer questions and move repetitive work in the background. The goal is calmer systems, with humans still in control.";
+  }
+
+  if (hasAnyTerm(query, ["virtual assistant", "operations", "admin", "project", "calendar", "inbox"])) {
+    return "The Virtual Assistant Desk supports operations, inbox and calendar management, follow-through, and project coordination. It is built for calmer execution and clearer ownership.";
+  }
+
+  if (hasAnyTerm(query, ["what do you do", "services", "help with", "what does lulidigital"])) {
+    return "LuliDigital works across Marketing, AI, and Virtual Assistant support. The focus is clear positioning, practical systems, and follow-through that helps work move cleanly.";
+  }
+
+  return "LuliDigital helps with Marketing, AI systems, and Virtual Assistant support. If you want, ask about a specific area, or contact the desk on WhatsApp at +27 60 255 1513.";
+}

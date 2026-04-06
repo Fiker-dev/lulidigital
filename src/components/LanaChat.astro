@@ -21,9 +21,7 @@ const starters = [
       <button class="lana-chat__close" type="button" aria-label="Close chat" data-lana-close>×</button>
     </header>
 
-    <div class="lana-chat__intro">
-      Warm, friendly help with LuliDigital services, systems, and next steps.
-    </div>
+    <div class="lana-chat__intro">Ask about services or contact details.</div>
 
     <div class="lana-chat__messages" data-lana-messages aria-live="polite">
       <article class="lana-chat__message lana-chat__message--assistant">
@@ -65,6 +63,22 @@ const starters = [
     const messagesEl = root.querySelector("[data-lana-messages]");
     const sendButton = root.querySelector("[data-lana-send]");
     const starters = Array.from(root.querySelectorAll("[data-lana-starter]"));
+    const localFallbackReply = (message) => {
+      const query = message.toLowerCase();
+      if (query.includes("contact") || query.includes("email") || query.includes("whatsapp") || query.includes("phone")) {
+        return "You can reach the desk on WhatsApp at +27 60 255 1513 or by email at info@lulidigital.co.za. WhatsApp is usually the fastest.";
+      }
+      if (query.includes("marketing") || query.includes("brand") || query.includes("ads")) {
+        return "The Marketing Desk helps with brand positioning, creative direction, and paid media. It is a good fit for launches, rebrands, and stronger visibility.";
+      }
+      if (query.includes("ai") || query.includes("chatbot") || query.includes("assistant") || query.includes("automation")) {
+        return "The AI Desk helps with chatbots, assistants, and practical workflows that answer questions and take repetitive work off your team.";
+      }
+      if (query.includes("virtual assistant") || query.includes("operations") || query.includes("admin") || query.includes("project")) {
+        return "The Virtual Assistant Desk supports operations, admin, follow-through, and project coordination so work moves more cleanly.";
+      }
+      return "LuliDigital helps with Marketing, AI systems, and Virtual Assistant support. If you want, ask about one area, or contact the desk on WhatsApp at +27 60 255 1513.";
+    };
     const getTimeAwareGreeting = () => {
       const hour = new Date().getHours();
       if (hour < 12) return "Good morning";
@@ -136,12 +150,12 @@ const starters = [
         const data = await response.json();
         const reply = response.ok && typeof data.reply === "string" && data.reply.trim()
           ? data.reply.trim()
-          : "I’m having trouble answering properly right now. You can still reach the desk on WhatsApp at +27 60 255 1513 or email info@lulidigital.co.za.";
+          : localFallbackReply(message);
 
         appendMessage("assistant", reply);
         history.push({ role: "assistant", content: reply });
       } catch {
-        const fallback = "I’m having trouble connecting right now. You can still reach the desk on WhatsApp at +27 60 255 1513 or email info@lulidigital.co.za.";
+        const fallback = localFallbackReply(message);
         appendMessage("assistant", fallback);
         history.push({ role: "assistant", content: fallback });
       } finally {
@@ -278,28 +292,29 @@ const starters = [
   }
 
   .lana-chat__intro{
-    padding: 0 18px 14px;
-    color: rgba(20, 19, 18, 0.72);
-    font-size: 14px;
-    line-height: 1.55;
+    padding: 0 18px 12px;
+    color: rgba(20, 19, 18, 0.66);
+    font-size: 13px;
+    line-height: 1.45;
   }
 
   .lana-chat__messages{
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    max-height: 320px;
+    gap: 8px;
+    max-height: 300px;
     overflow-y: auto;
     padding: 0 18px 14px;
   }
 
   .lana-chat__message{
-    max-width: 88%;
-    padding: 12px 14px;
-    border-radius: 18px;
-    font-size: 14px;
-    line-height: 1.55;
+    max-width: 100%;
+    padding: 11px 13px;
+    border-radius: 16px;
+    font-size: 13px;
+    line-height: 1.48;
     white-space: pre-wrap;
+    text-wrap: pretty;
   }
 
   .lana-chat__message--assistant{
@@ -384,7 +399,7 @@ const starters = [
     }
 
     .lana-chat__messages{
-      max-height: 280px;
+      max-height: 250px;
     }
   }
 </style>
