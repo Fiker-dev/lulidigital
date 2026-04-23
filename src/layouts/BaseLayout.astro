@@ -3,13 +3,18 @@ import "../styles/theme.css";
 import SiteHeader from "../components/SiteHeader.astro";
 import LanaChat from "../components/LanaChat.astro";
 
-const { title = "LuliDigital", active = "" } = Astro.props;
+const {
+  title = "LuliDigital",
+  description = "LuliDigital — Digital Studio",
+  active = "",
+} = Astro.props;
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
     <title>{title}</title>
   </head>
 
