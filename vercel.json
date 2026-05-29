@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.lulidigital.com"
+        }
+      ],
+      "destination": "https://lulidigital.com/:path*",
+      "permanent": true
+    }
+  ]
+}
