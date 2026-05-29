@@ -9,7 +9,6 @@ type ContactBody = {
   company?: string;
   looking_for: string;
   timeline: string;
-  budget?: string;
   preferred_channel?: string;
   message: string;
 };
@@ -33,7 +32,7 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const { name, email, company, looking_for, timeline, budget, preferred_channel, message } = body;
+  const { name, email, company, looking_for, timeline, preferred_channel, message } = body;
 
   if (!name || !email || !looking_for || !timeline || !message) {
     return new Response(JSON.stringify({ error: "Missing required fields." }), {
@@ -84,8 +83,7 @@ export const POST: APIRoute = async ({ request }) => {
     <div style="padding:28px 36px 0">
       <table style="width:100%;border-collapse:collapse">
         ${row("Service", looking_for)}
-        ${row("Budget", budget || "Not specified")}
-        ${row("Contact via", preferred_channel || "Email reply")}
+          ${row("Contact via", preferred_channel || "Email reply")}
         ${row("Reply to", `<a href="mailto:${email}" style="color:#141414;text-decoration:underline">${email}</a>`)}
       </table>
     </div>
