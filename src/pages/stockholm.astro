@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LocalizedStudioLanding from "../components/LocalizedStudioLanding.astro";
+import { localizedOrganizationSchema, markets, regionalAlternates } from "../data/localizedMarkets";
+
+const market = markets.stockholm;
+---
+
+<BaseLayout
+  title={market.title}
+  description={market.description}
+  canonicalPath="/stockholm"
+  serviceSchema={market.serviceSchema}
+  localBusinessSchema={market.localBusinessSchema}
+  organizationSchemaOverride={localizedOrganizationSchema}
+  hreflangLinks={regionalAlternates}
+>
+  <LocalizedStudioLanding market={market} />
+</BaseLayout>

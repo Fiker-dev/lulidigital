@@ -1,0 +1,833 @@
+---
+const { market } = Astro.props;
+const isAmsterdam = market.variant === "amsterdam";
+const isMunich = market.variant === "munich";
+const isStockholm = market.variant === "stockholm";
+---
+
+<section class:list={["local-landing", `local-landing--${market.variant}`]}>
+  <section class="local-hero reveal-block">
+    <div class="local-hero__copy">
+      <p class="local-eyebrow">{market.eyebrow}</p>
+      <h1>{market.h1}</h1>
+      <p class="local-positioning">{market.positioning}</p>
+      <p class="local-intro">{market.intro}</p>
+      <div class="local-actions">
+        <a class="local-btn local-btn--primary" href="#local-contact">{market.primaryCta}</a>
+        <a class="local-btn local-btn--ghost" href="#capabilities">{market.secondaryCta}</a>
+      </div>
+    </div>
+
+    <aside class="hero-visual" aria-label={`${market.city} campaign system preview`}>
+      {isAmsterdam && (
+        <div class="ams-console">
+          <div class="ams-console__top">
+            <span>Global Campaign OS</span>
+            <strong>AMS / LIVE</strong>
+          </div>
+          <div class="ams-console__grid">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div class="ams-console__metric">
+            <strong>4.8x</strong>
+            <span>asset velocity</span>
+          </div>
+        </div>
+      )}
+
+      {isMunich && (
+        <div class="munich-dashboard">
+          <div class="dash-row">
+            <span>Pipeline</span>
+            <strong>42%</strong>
+          </div>
+          <div class="dash-bars" aria-hidden="true">
+            <span style="--h:72%"></span>
+            <span style="--h:46%"></span>
+            <span style="--h:88%"></span>
+            <span style="--h:58%"></span>
+            <span style="--h:78%"></span>
+          </div>
+          <div class="dash-grid">
+            <span>Automation</span>
+            <span>Optimization</span>
+            <span>Brand QA</span>
+            <span>Reporting</span>
+          </div>
+        </div>
+      )}
+
+      {isStockholm && (
+        <div class="stockholm-glass" data-tilt-card>
+          <div class="glass-orbit" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <p>Asset Engine</p>
+          <strong>cinematic / automated / exact</strong>
+          <div class="asset-strip" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      )}
+    </aside>
+  </section>
+
+  <section id="capabilities" class="local-section reveal-block">
+    <div class="section-head">
+      <p class="local-eyebrow">Studio Capabilities</p>
+      <h2>{market.h2}</h2>
+    </div>
+
+    <div class:list={["capability-grid", isAmsterdam && "capability-grid--bento", isMunich && "capability-grid--catalog", isStockholm && "capability-grid--minimal"]}>
+      {market.capabilities.map((item, index) => (
+        <article class="capability-card" style={`--i:${index}`}>
+          <span>{item.label}</span>
+          <h3>{item.title}</h3>
+          <p>{item.copy}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  {isMunich && (
+    <section class="munich-timeline reveal-block" aria-label="Enterprise production timeline">
+      <div class="timeline-track">
+        {[
+          ["01", "Audit", "Campaign stack, brand standards, conversion paths."],
+          ["02", "Architecture", "Automated marketing infrastructure and lead quality rules."],
+          ["03", "Production", "High-end brand design Munich teams can deploy globally."],
+          ["04", "Optimization", "Performance marketing optimization across paid and owned channels."],
+        ].map(([step, title, copy]) => (
+          <article class="timeline-card">
+            <span>{step}</span>
+            <h3>{title}</h3>
+            <p>{copy}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class:list={["local-proof", isStockholm && "local-proof--dark"]}>
+    <div class="proof-copy reveal-block">
+      <p class="local-eyebrow">{isAmsterdam ? "Case Study" : isMunich ? "Global Collaboration" : "Client Signal"}</p>
+      <h2>{market.proofTitle}</h2>
+      <p>{market.proofCopy}</p>
+    </div>
+
+    <div class="review-carousel reveal-block" data-review-carousel>
+      <div class="review-track">
+        {market.reviews.map((review, index) => (
+          <article class:list={["review-card", index === 0 && "is-active"]}>
+            <p>{review}</p>
+            <span>LuliDigital client review</span>
+          </article>
+        ))}
+      </div>
+      <div class="review-controls" aria-label="Review controls">
+        <button type="button" data-review-prev aria-label="Previous review">‹</button>
+        <button type="button" data-review-next aria-label="Next review">›</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="local-contact" class="local-contact reveal-block">
+    <div>
+      <p class="local-eyebrow">{isMunich ? "Corporate Lead Desk" : isStockholm ? "Consultation" : "Contact"}</p>
+      <h2>{market.formTitle}</h2>
+      <p>{market.formCopy}</p>
+      {isStockholm && (
+        <a class="quick-consult" href="https://wa.me/27602551513" target="_blank" rel="noopener noreferrer">
+          Quick-action consultation
+        </a>
+      )}
+    </div>
+
+    <form class="lead-form" action="mailto:info@lulidigital.co.za" method="post" enctype="text/plain">
+      <label>
+        <span>Name</span>
+        <input name="name" autocomplete="name" required />
+      </label>
+      <label>
+        <span>{isMunich ? "Corporate email" : "Email"}</span>
+        <input name="email" type="email" autocomplete="email" required />
+      </label>
+      <label>
+        <span>{isMunich ? "Company / enterprise unit" : "Company"}</span>
+        <input name="company" autocomplete="organization" />
+      </label>
+      <label>
+        <span>What are you looking for?</span>
+        <select name="looking_for" required>
+          <option value="">Select one</option>
+          <option>Automated marketing campaign</option>
+          <option>Premium brand asset production</option>
+          <option>AI-driven production workflow</option>
+          <option>Website or landing page system</option>
+          <option>Enterprise campaign optimization</option>
+        </select>
+      </label>
+      <div class="form-grid">
+        <label>
+          <span>Timeline</span>
+          <select name="timeline" required>
+            <option value="">Select one</option>
+            <option>ASAP / this month</option>
+            <option>1-3 months</option>
+            <option>3-6 months</option>
+            <option>Planning ahead</option>
+          </select>
+        </label>
+        <label>
+          <span>Budget range</span>
+          <select name="budget">
+            <option value="">Select one</option>
+            <option>Under $2,500</option>
+            <option>$2,500-$7,500</option>
+            <option>$7,500-$20,000</option>
+            <option>$20,000+</option>
+          </select>
+        </label>
+      </div>
+      <label>
+        <span>Preferred consult channel</span>
+        <select name="preferred_channel">
+          <option>Email reply</option>
+          <option>WhatsApp</option>
+          <option>Video call</option>
+        </select>
+      </label>
+      <label>
+        <span>Campaign priority</span>
+        <textarea name="message" rows="4" placeholder="Tell us the market, offer, asset need, or campaign bottleneck." required></textarea>
+      </label>
+      <button type="submit">{isMunich ? "Send Corporate Brief" : "Send Brief"}</button>
+    </form>
+  </section>
+</section>
+
+<script>
+  const revealBlocks = Array.from(document.querySelectorAll(".reveal-block"));
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18 });
+
+    revealBlocks.forEach((block) => observer.observe(block));
+  } else {
+    revealBlocks.forEach((block) => block.classList.add("is-visible"));
+  }
+
+  document.querySelectorAll("[data-review-carousel]").forEach((carousel) => {
+    const cards = Array.from(carousel.querySelectorAll(".review-card"));
+    const previous = carousel.querySelector("[data-review-prev]");
+    const next = carousel.querySelector("[data-review-next]");
+    let active = 0;
+
+    const show = (index) => {
+      active = (index + cards.length) % cards.length;
+      cards.forEach((card, cardIndex) => {
+        card.classList.toggle("is-active", cardIndex === active);
+      });
+    };
+
+    previous?.addEventListener("click", () => show(active - 1));
+    next?.addEventListener("click", () => show(active + 1));
+  });
+
+  document.querySelectorAll("[data-tilt-card]").forEach((card) => {
+    card.addEventListener("pointermove", (event) => {
+      const rect = card.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width - 0.5) * 10;
+      const y = ((event.clientY - rect.top) / rect.height - 0.5) * -10;
+      card.style.setProperty("--rx", `${y}deg`);
+      card.style.setProperty("--ry", `${x}deg`);
+    });
+
+    card.addEventListener("pointerleave", () => {
+      card.style.removeProperty("--rx");
+      card.style.removeProperty("--ry");
+    });
+  });
+</script>
+
+<style>
+  .local-landing{
+    --local-bg: var(--paper);
+    --local-card: var(--paper-card);
+    --local-ink: var(--ink);
+    --local-muted: var(--muted);
+    --local-line: var(--rule);
+    --local-accent: var(--brand);
+    color: var(--local-ink);
+    padding: 16px 0 72px;
+  }
+
+  .local-landing--stockholm{
+    --local-accent: var(--wine-strong);
+  }
+
+  .reveal-block{
+    opacity: 0;
+    transform: translateY(18px) scale(.992);
+    transition: opacity 760ms ease, transform 760ms cubic-bezier(.16,1,.3,1);
+  }
+
+  .reveal-block.is-visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .local-hero{
+    min-height: 650px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, .82fr);
+    gap: clamp(34px, 6vw, 76px);
+    align-items: center;
+  }
+
+  .local-hero h1{
+    margin: 0;
+    max-width: 11ch;
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+    font-size: clamp(56px, 8vw, 106px);
+    line-height: .88;
+    letter-spacing: 0;
+  }
+
+  .local-landing--stockholm .local-hero h1{
+    max-width: 10ch;
+  }
+
+  .local-eyebrow{
+    margin: 0 0 16px;
+    font-size: 12px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--local-accent);
+  }
+
+  .local-positioning{
+    margin: 26px 0 0;
+    max-width: 740px;
+    font-size: clamp(19px, 2.2vw, 27px);
+    line-height: 1.36;
+  }
+
+  .local-intro{
+    max-width: 650px;
+    margin: 18px 0 0;
+    color: var(--local-muted);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .local-actions{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+  }
+
+  .local-btn,
+  .lead-form button,
+  .quick-consult{
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--local-line);
+    padding: 0 18px;
+    border-radius: 0;
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+  }
+
+  .local-btn:hover,
+  .lead-form button:hover,
+  .quick-consult:hover{
+    transform: translateY(-2px);
+    border-color: var(--local-accent);
+  }
+
+  .local-btn--primary,
+  .lead-form button{
+    background: var(--local-ink);
+    color: var(--local-bg);
+  }
+
+  .hero-visual{
+    min-height: 460px;
+    display: grid;
+    place-items: center;
+  }
+
+  .ams-console,
+  .munich-dashboard,
+  .stockholm-glass{
+    width: min(100%, 440px);
+    border: 1px solid var(--local-line);
+  }
+
+  .ams-console{
+    padding: 18px;
+    background: var(--local-ink);
+    color: var(--local-bg);
+    box-shadow: 18px 18px 0 rgba(123,45,45,.18);
+    animation: studioFloat 7s ease-in-out infinite;
+  }
+
+  .ams-console__top,
+  .dash-row{
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+
+  .ams-console__grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 26px 0;
+  }
+
+  .ams-console__grid span{
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, rgba(255,255,255,.22), rgba(255,255,255,.04));
+    animation: consolePulse 2.8s ease-in-out infinite;
+    animation-delay: calc(var(--pulse, 0) * 120ms);
+  }
+
+  .ams-console__grid span:nth-child(2n){ --pulse: 2; }
+  .ams-console__grid span:nth-child(3n){ --pulse: 4; }
+
+  .ams-console__metric{
+    border-top: 1px solid rgba(255,255,255,.18);
+    padding-top: 18px;
+  }
+
+  .ams-console__metric strong{
+    display: block;
+    font-size: 72px;
+    line-height: .9;
+  }
+
+  .munich-dashboard{
+    padding: 22px;
+    background: var(--local-card);
+    box-shadow: 0 28px 70px rgba(0,0,0,.12);
+    animation: studioFloat 8s ease-in-out infinite;
+  }
+
+  .dash-bars{
+    height: 230px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    align-items: end;
+    margin: 34px 0;
+  }
+
+  .dash-bars span{
+    height: var(--h);
+    background: linear-gradient(180deg, var(--local-ink), var(--local-accent));
+    transform-origin: bottom;
+    animation: barRise 900ms cubic-bezier(.16,1,.3,1) both;
+  }
+
+  .dash-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .dash-grid span{
+    padding: 14px;
+    border: 1px solid var(--local-line);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  .stockholm-glass{
+    --rx: 0deg;
+    --ry: 0deg;
+    position: relative;
+    min-height: 430px;
+    overflow: hidden;
+    padding: 28px;
+    border-color: var(--local-line);
+    background:
+      linear-gradient(135deg, rgba(107, 47, 58, .16), rgba(255,255,255,.22)),
+      var(--local-card);
+    backdrop-filter: blur(18px);
+    transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
+    box-shadow: 0 28px 70px rgba(0,0,0,.10);
+  }
+
+  .stockholm-glass p{
+    margin: 0 0 10px;
+    color: var(--local-accent);
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    font-size: 12px;
+  }
+
+  .stockholm-glass strong{
+    display: block;
+    max-width: 8ch;
+    font-size: clamp(42px, 5vw, 76px);
+    line-height: .9;
+    text-transform: uppercase;
+  }
+
+  .glass-orbit span{
+    position: absolute;
+    border: 1px solid rgba(107,47,58,.28);
+    border-radius: 50%;
+    inset: auto;
+  }
+
+  .glass-orbit span:nth-child(1){ width: 260px; height: 260px; right: -70px; top: 34px; }
+  .glass-orbit span:nth-child(2){ width: 150px; height: 150px; right: 92px; bottom: 70px; }
+  .glass-orbit span:nth-child(3){ width: 90px; height: 90px; left: 34px; bottom: 42px; }
+
+  .asset-strip{
+    position: absolute;
+    left: 28px;
+    right: 28px;
+    bottom: 26px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .asset-strip span{
+    height: 72px;
+    border: 1px solid var(--local-line);
+    background: rgba(255,255,255,.22);
+    animation: consolePulse 3s ease-in-out infinite;
+  }
+
+  .local-section,
+  .local-proof,
+  .local-contact{
+    padding: 86px 0;
+    border-top: 1px solid var(--local-line);
+  }
+
+  .section-head{
+    display: grid;
+    grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr);
+    gap: 28px;
+    align-items: end;
+    margin-bottom: 34px;
+  }
+
+  .section-head h2,
+  .proof-copy h2,
+  .local-contact h2{
+    margin: 0;
+    font-size: clamp(34px, 5vw, 66px);
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .capability-grid{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .capability-grid--bento{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .capability-grid--bento .capability-card:nth-child(1),
+  .capability-grid--bento .capability-card:nth-child(4){
+    grid-column: span 3;
+  }
+
+  .capability-grid--bento .capability-card:nth-child(2),
+  .capability-grid--bento .capability-card:nth-child(3){
+    grid-column: span 3;
+  }
+
+  .capability-card{
+    min-height: 245px;
+    padding: 22px;
+    border: 1px solid var(--local-line);
+    background: rgba(255,255,255,.32);
+    transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+  }
+
+  .local-landing--stockholm .capability-card{
+    background: rgba(255,255,255,.32);
+  }
+
+  .capability-card:hover{
+    transform: translateY(-4px);
+    border-color: var(--local-accent);
+    background: rgba(255,255,255,.52);
+  }
+
+  .local-landing--stockholm .capability-card:hover{
+    background: rgba(255,255,255,.52);
+  }
+
+  .capability-card span{
+    display: inline-flex;
+    margin-bottom: 24px;
+    color: var(--local-accent);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .16em;
+  }
+
+  .capability-card h3{
+    margin: 0;
+    font-size: clamp(21px, 2vw, 30px);
+    line-height: 1.05;
+  }
+
+  .capability-card p,
+  .proof-copy p,
+  .local-contact p{
+    color: var(--local-muted);
+    line-height: 1.7;
+  }
+
+  .munich-timeline{
+    overflow-x: auto;
+    padding: 0 0 62px;
+  }
+
+  .timeline-track{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(280px, 360px);
+    gap: 14px;
+    min-width: max-content;
+    padding-bottom: 10px;
+  }
+
+  .timeline-card{
+    padding: 22px;
+    border: 1px solid var(--local-line);
+    background: rgba(255,255,255,.45);
+  }
+
+  .timeline-card span{
+    color: var(--local-accent);
+    font-size: 12px;
+    letter-spacing: .18em;
+  }
+
+  .local-proof{
+    display: grid;
+    grid-template-columns: minmax(0, .9fr) minmax(320px, .72fr);
+    gap: clamp(28px, 5vw, 64px);
+    align-items: start;
+  }
+
+  .review-carousel{
+    position: relative;
+    min-height: 260px;
+  }
+
+  .review-card{
+    display: none;
+    min-height: 230px;
+    padding: 24px;
+    border: 1px solid var(--local-line);
+    background: rgba(255,255,255,.36);
+  }
+
+  .review-card.is-active{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .local-landing--stockholm .review-card{
+    background: rgba(255,255,255,.36);
+  }
+
+  .review-card p{
+    margin: 0;
+    font-size: clamp(22px, 3vw, 34px);
+    line-height: 1.15;
+  }
+
+  .review-card span{
+    color: var(--local-muted);
+    font-size: 12px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+
+  .review-controls{
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .review-controls button{
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--local-line);
+    background: transparent;
+    color: var(--local-ink);
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .local-contact{
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(320px, .75fr);
+    gap: clamp(30px, 6vw, 72px);
+  }
+
+  .lead-form{
+    display: grid;
+    gap: 12px;
+  }
+
+  .form-grid{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .lead-form label{
+    display: grid;
+    gap: 7px;
+  }
+
+  .lead-form span{
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--local-muted);
+  }
+
+  .lead-form input,
+  .lead-form select,
+  .lead-form textarea{
+    width: 100%;
+    border: 1px solid var(--local-line);
+    border-radius: 0;
+    background: rgba(255,255,255,.34);
+    color: var(--local-ink);
+    padding: 14px;
+    font: inherit;
+  }
+
+  .local-landing--stockholm .lead-form input,
+  .local-landing--stockholm .lead-form select,
+  .local-landing--stockholm .lead-form textarea{
+    background: rgba(255,255,255,.34);
+  }
+
+  .quick-consult{
+    margin-top: 18px;
+    background: transparent;
+    color: var(--local-accent);
+  }
+
+  @keyframes studioFloat{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(-10px); }
+  }
+
+  @keyframes consolePulse{
+    0%, 100%{ opacity: .55; }
+    50%{ opacity: 1; }
+  }
+
+  @keyframes barRise{
+    from{ transform: scaleY(.15); opacity: .45; }
+    to{ transform: scaleY(1); opacity: 1; }
+  }
+
+  @media (max-width: 900px){
+    .local-hero,
+    .local-proof,
+    .local-contact,
+    .section-head{
+      grid-template-columns: 1fr;
+    }
+
+    .local-hero{
+      min-height: auto;
+      padding: 46px 0 70px;
+    }
+
+    .capability-grid,
+    .capability-grid--bento{
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .capability-grid--bento .capability-card:nth-child(n){
+      grid-column: span 1;
+    }
+
+    .form-grid{
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 620px){
+    .local-hero h1{
+      font-size: clamp(46px, 14vw, 70px);
+    }
+
+    .capability-grid,
+    .capability-grid--bento{
+      grid-template-columns: 1fr;
+    }
+
+    .hero-visual{
+      min-height: 360px;
+    }
+
+    .stockholm-glass{
+      min-height: 360px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal-block,
+    .local-btn,
+    .lead-form button,
+    .quick-consult,
+    .capability-card,
+    .stockholm-glass,
+    .ams-console,
+    .munich-dashboard,
+    .ams-console__grid span,
+    .dash-bars span,
+    .asset-strip span{
+      animation: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
+
+    .reveal-block{
+      opacity: 1 !important;
+    }
+  }
+</style>

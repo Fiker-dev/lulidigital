@@ -9,6 +9,9 @@ const {
   active = "",
   canonicalPath,
   serviceSchema,
+  localBusinessSchema,
+  organizationSchemaOverride,
+  hreflangLinks = [],
 } = Astro.props;
 
 const siteUrl = "https://lulidigital.com";
@@ -99,6 +102,12 @@ const organizationSchema = {
   },
 };
 
+const resolvedOrganizationSchema = {
+  ...organizationSchema,
+  ...(organizationSchemaOverride ?? {}),
+  "@id": `${siteUrl}/#organization`,
+};
+
 const websiteSchema = {
   "@type": "WebSite",
   "@id": `${siteUrl}/#website`,
@@ -120,10 +129,16 @@ const webpageSchema = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    organizationSchema,
+    resolvedOrganizationSchema,
     websiteSchema,
     webpageSchema,
     breadcrumbSchema,
+    localBusinessSchema ? {
+      "@type": "LocalBusiness",
+      "@id": `${canonicalUrl}#localbusiness`,
+      "url": canonicalUrl,
+      ...localBusinessSchema,
+    } : null,
     serviceSchema ? {
       "@type": "Service",
       "provider": { "@id": `${siteUrl}/#organization` },
@@ -142,6 +157,9 @@ const jsonLd = {
     <meta name="description" content={description} />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href={canonicalUrl} />
+    {hreflangLinks.map((link) => (
+      <link rel="alternate" hreflang={link.hreflang} href={link.href} />
+    ))}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="google-site-verification" content="xbGV7pvPZoypa6X-2gd1dI1AeDPSke4sn0gCtwTS80Y" />
