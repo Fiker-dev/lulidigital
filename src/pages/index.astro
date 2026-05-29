@@ -1,8 +1,24 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const serviceSchema = {
+  "name": "Digital Operations, Marketing, AI Automation, and Virtual Assistant Services",
+  "serviceType": [
+    "Executive virtual assistant services",
+    "Digital marketing services",
+    "AI integration services",
+    "Business workflow automation",
+  ],
+  "description": "LuliDigital helps founders and executives with remote executive assistant support, digital marketing, SEO, paid media, brand strategy, and AI automation systems.",
+};
 ---
 
-<BaseLayout title="LuliDigital — Digital Studio" description="The operations partner for founders and executives in the UK, Canada, UAE, and Australia. VA, digital marketing, and AI — built to give your time back and your business an edge." active="home">
+<BaseLayout
+  title="LuliDigital | Virtual Assistant, Digital Marketing & AI Automation"
+  description="LuliDigital helps founders and executives with executive virtual assistant support, digital marketing, SEO, paid media, brand strategy, and AI automation for business."
+  active="home"
+  serviceSchema={serviceSchema}
+>
   <main class="page">
     <section class="hero">
       <div class="hero__left">

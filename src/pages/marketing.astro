@@ -1,8 +1,26 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const serviceSchema = {
+  "name": "Digital Marketing Services",
+  "serviceType": [
+    "Digital marketing services",
+    "Small business marketing agency",
+    "SEO services",
+    "Paid media management",
+    "Brand strategy",
+    "Content marketing",
+  ],
+  "description": "Digital marketing services for small businesses and founders, including SEO, paid media, brand strategy, content systems, campaign planning, and creative direction.",
+};
 ---
 
-<BaseLayout title="Digital Marketing Services · LuliDigital" description="We shape the story, run the paid media, and make sure the right people find you. Premium brand architecture for executives in the UK, Canada, UAE, and Australia." active="marketing">
+<BaseLayout
+  title="Digital Marketing Services, SEO & Paid Ads | LuliDigital"
+  description="Digital marketing services for founders and small businesses: SEO, paid ads, brand strategy, content marketing, campaign planning, and clear reporting."
+  active="marketing"
+  serviceSchema={serviceSchema}
+>
   <main class="page">
     <section class="mast">
       <div class="left">

@@ -1,8 +1,26 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const serviceSchema = {
+  "name": "Executive Virtual Assistant Services",
+  "serviceType": [
+    "Executive virtual assistant services",
+    "Remote executive assistant",
+    "Virtual assistant for founders",
+    "Inbox and calendar management",
+    "Administrative support",
+    "Project coordination",
+  ],
+  "description": "Executive virtual assistant services for founders, CEOs, and busy teams, including remote admin support, inbox management, calendar control, follow-ups, reporting, and project coordination.",
+};
 ---
 
-<BaseLayout title="Virtual Assistant Services · LuliDigital" description="Your inbox managed. Your calendar protected. Your operations running without you holding it up. Executive support for founders and CEOs in the UK, Canada, Dubai, and Australia." active="virtual-assistant">
+<BaseLayout
+  title="Executive Virtual Assistant Services for Founders | LuliDigital"
+  description="Executive virtual assistant services for founders and CEOs: remote admin support, inbox management, calendar control, follow-ups, reports, and project coordination."
+  active="virtual-assistant"
+  serviceSchema={serviceSchema}
+>
   <section class="va-desk" aria-label="Virtual Assistant Desk">
 
     <div class="va-intro">

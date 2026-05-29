@@ -1,8 +1,25 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const serviceSchema = {
+  "name": "AI Integration and Automation Services",
+  "serviceType": [
+    "AI integration services",
+    "AI automation for business",
+    "AI workflow automation",
+    "Custom AI assistants",
+    "AI chatbot implementation",
+  ],
+  "description": "Practical AI integration services for businesses that need custom AI assistants, AI workflow automation, chatbot support, and agent systems that keep teams organized.",
+};
 ---
 
-<BaseLayout title="AI Integration for Business · LuliDigital" description="Your business shouldn't need you to answer the same question twice. AI systems for founders and executives in the UK, Canada, Dubai, and Australia. Smarter operations. More of your time back." active="ai">
+<BaseLayout
+  title="AI Integration Services & Business Automation | LuliDigital"
+  description="AI integration services for businesses: custom AI assistants, workflow automation, AI chatbots, and practical agent systems for founders, executives, and teams."
+  active="ai"
+  serviceSchema={serviceSchema}
+>
   <section class="ai-page">
     <div class="ai-grid">
       <!-- LEFT: editorial story -->
