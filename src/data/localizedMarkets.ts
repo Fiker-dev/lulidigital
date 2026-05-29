@@ -55,6 +55,10 @@ export const markets = {
         "AI-driven production workflows",
         "premium brand styling",
         "Amsterdam digital agency alternative",
+        "AI chatbot integration Amsterdam",
+        "business automation Amsterdam",
+        "virtual assistant services Amsterdam",
+        "executive operations support Amsterdam",
       ],
       description:
         "Digital campaign production for Amsterdam technology companies, enterprise marketing teams, and global brands that need automated digital marketing campaigns, premium brand styling, and English-first execution.",
@@ -129,6 +133,10 @@ export const markets = {
         "automated marketing infrastructure",
         "high-end brand design Munich",
         "performance marketing optimization",
+        "AI integration Munich",
+        "enterprise chatbot Munich",
+        "virtual assistant Munich",
+        "executive operations support Munich",
       ],
       description:
         "Corporate-grade digital campaign production for Munich enterprises, including automated marketing infrastructure, high-end brand design, and performance marketing optimization.",
@@ -203,6 +211,10 @@ export const markets = {
         "automated brand campaigns",
         "modern web experiences",
         "Stockholm startup marketing partner",
+        "AI integration Stockholm",
+        "AI chatbot Stockholm",
+        "virtual assistant Stockholm",
+        "executive support Stockholm",
       ],
       description:
         "Design-forward digital production for Stockholm startups and lifestyle brands, including cutting-edge digital asset production, automated brand campaigns, and modern web experiences.",

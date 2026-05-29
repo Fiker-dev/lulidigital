@@ -13,6 +13,10 @@
     "@astrojs/vercel": "^8.1.0",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.17.1",
+    "resend": "^6.12.4",
     "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
   }
 }
