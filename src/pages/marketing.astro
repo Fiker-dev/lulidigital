@@ -2,22 +2,30 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const serviceSchema = {
-  "name": "Digital Marketing Services",
+  "name": "Digital Marketing, Performance Marketing & Brand Strategy Services",
   "serviceType": [
-    "Digital marketing services",
-    "Small business marketing agency",
-    "SEO services",
-    "Paid media management",
-    "Brand strategy",
-    "Content marketing",
+    "digital marketing services",
+    "performance marketing agency",
+    "brand strategy services",
+    "paid media management",
+    "social media marketing agency",
+    "content marketing services",
+    "SEO services for small business",
+    "Meta ads management",
+    "Google ads management",
+    "TikTok marketing agency",
+    "campaign management services",
+    "creative direction services",
+    "growth marketing services",
+    "digital marketing agency for founders",
   ],
-  "description": "Digital marketing services for small businesses and founders, including SEO, paid media, brand strategy, content systems, campaign planning, and creative direction.",
+  "description": "Digital marketing services for founders and growing brands: paid media management, brand strategy, SEO, content marketing, and performance campaigns across Meta, Google, and TikTok.",
 };
 ---
 
 <BaseLayout
-  title="Digital Marketing Services, SEO & Paid Ads | LuliDigital"
-  description="Digital marketing services for founders and small businesses: SEO, paid ads, brand strategy, content marketing, campaign planning, and clear reporting."
+  title="Digital Marketing Services, Performance Marketing & Brand Strategy | LuliDigital"
+  description="Digital marketing services for founders and growing brands: paid media management, brand strategy, SEO, content marketing, and performance campaigns across Meta, Google, and TikTok."
   active="marketing"
   serviceSchema={serviceSchema}
 >
@@ -27,14 +35,15 @@ const serviceSchema = {
         <div class="kicker">MARKETING DESK</div>
 
         <h1 class="headline">
-          Brand built in<br />
-          public.
+          Brand strategy,<br />
+          performance marketing<br />
+          &amp; paid media.
         </h1>
 
         <p class="lede">
-          We shape <span class="ink-hl" data-delay="0">brand voice</span>, design
+          We build <span class="ink-hl" data-delay="0">brand strategy</span>, design
           <span class="ink-hl" data-delay="90">creative direction</span>, and run
-          <span class="ink-hl" data-delay="180">paid media</span> like a disciplined newsroom.
+          <span class="ink-hl" data-delay="180">performance marketing campaigns</span> across Meta, Google, and TikTok like a disciplined newsroom.
           Clean story. Clear offer. Measurable lift.
         </p>
 
@@ -64,7 +73,7 @@ const serviceSchema = {
         <div class="rule"></div>
 
         <p class="note">
-          If it needs to look premium and perform like it means it — we build the system behind it.
+          From brand positioning and content strategy to paid media management and SEO — we build the full digital marketing system so your business gets found, understood, and chosen.
         </p>
       </div>
 
@@ -172,6 +181,36 @@ const serviceSchema = {
               </article>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mkt-services">
+      <p class="mkt-services__label">What We Do</p>
+      <div class="mkt-services__grid">
+        <div class="mkt-service-item">
+          <span class="mkt-service-item__name">Brand strategy &amp; positioning</span>
+          <p class="mkt-service-item__copy">Messaging architecture, brand voice, competitive positioning, and visual identity systems built to win in your market.</p>
+        </div>
+        <div class="mkt-service-item">
+          <span class="mkt-service-item__name">Paid media management</span>
+          <p class="mkt-service-item__copy">Performance campaigns across Meta, Google, and TikTok — audience strategy, creative testing, budget management, and weekly reporting.</p>
+        </div>
+        <div class="mkt-service-item">
+          <span class="mkt-service-item__name">Content marketing &amp; SEO</span>
+          <p class="mkt-service-item__copy">Content systems, editorial calendars, and SEO strategy that build organic visibility and keep your brand present at every stage of the buyer journey.</p>
+        </div>
+        <div class="mkt-service-item">
+          <span class="mkt-service-item__name">Creative direction</span>
+          <p class="mkt-service-item__copy">On-brand visual direction, campaign angles, shoot-day planning, and consistency audits so every asset earns its place.</p>
+        </div>
+        <div class="mkt-service-item">
+          <span class="mkt-service-item__name">Performance optimisation</span>
+          <p class="mkt-service-item__copy">Conversion rate testing, landing page strategy, tracking setup, and monthly iteration cycles that compound results over time.</p>
+        </div>
+        <div class="mkt-service-item">
+          <span class="mkt-service-item__name">Campaign production</span>
+          <p class="mkt-service-item__copy">Full-funnel campaign builds — from positioning and hooks to creative assets, launch management, and post-campaign reporting.</p>
         </div>
       </div>
     </section>
@@ -738,6 +777,55 @@ const serviceSchema = {
 
     @media (prefers-reduced-motion: reduce){
       .action::after{ transition: none; }
+    }
+
+    /* What We Do strip */
+    .mkt-services{
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .mkt-services__label{
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(20,20,19,.5);
+      margin: 0 0 24px;
+    }
+
+    .mkt-services__grid{
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 1px;
+      background: rgba(20,20,19,.1);
+      border: 1px solid rgba(20,20,19,.1);
+    }
+
+    .mkt-service-item{
+      padding: 24px 22px;
+      background: var(--paper, #f5f1e8);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .mkt-service-item__name{
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -.01em;
+      color: rgba(20,20,19,.92);
+    }
+
+    .mkt-service-item__copy{
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.65;
+      color: rgba(20,20,19,.58);
+    }
+
+    @media (max-width: 760px){
+      .mkt-services__grid{ grid-template-columns: 1fr; }
     }
   </style>
 </BaseLayout>
