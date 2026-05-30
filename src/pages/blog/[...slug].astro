@@ -1,0 +1,266 @@
+---
+export const prerender = true;
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+}
+---
+
+<BaseLayout
+  title={`${post.data.title} | LuliDigital`}
+  description={post.data.description}
+  active="blog"
+>
+  <main class="post-page">
+    <nav class="post-back">
+      <a href="/blog">← The Desk Report</a>
+    </nav>
+
+    <header class="post-header">
+      <div class="post-header__meta">
+        <span class="post-category">{post.data.category}</span>
+        {post.data.readingTime && <span class="post-time">{post.data.readingTime}</span>}
+        <time class="post-date" datetime={post.data.pubDate.toISOString()}>
+          {formatDate(post.data.pubDate)}
+        </time>
+      </div>
+      <h1 class="post-title">{post.data.title}</h1>
+      <p class="post-description">{post.data.description}</p>
+    </header>
+
+    <hr class="rule" />
+
+    <article class="post-body prose">
+      <Content />
+    </article>
+
+    <hr class="rule rule--bottom" />
+
+    <footer class="post-footer">
+      <div class="post-footer__cta">
+        <p class="footer-kicker">LuliDigital</p>
+        <p class="footer-line">Marketing, AI automation, and executive virtual assistant services for founders and growing teams.</p>
+        <div class="footer-links">
+          <a href="/ai">AI Desk →</a>
+          <a href="/marketing">Marketing Desk →</a>
+          <a href="/virtual-assistant">Virtual Assistant Desk →</a>
+        </div>
+      </div>
+      <a class="back-link" href="/blog">← Back to The Desk Report</a>
+    </footer>
+  </main>
+
+  <style>
+    .post-page{
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+      color: rgba(18,18,18,.9);
+    }
+
+    .post-back a{
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(18,18,18,.5);
+      text-decoration: none;
+      transition: color 180ms ease;
+    }
+
+    .post-back a:hover{ color: rgba(18,18,18,.85); }
+
+    .post-header{
+      margin-top: 32px;
+    }
+
+    .post-header__meta{
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .post-category{
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #b01616;
+      font-weight: 600;
+    }
+
+    .post-time, .post-date{
+      font-size: 11px;
+      letter-spacing: .08em;
+      color: rgba(18,18,18,.45);
+    }
+
+    .post-title{
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -.03em;
+      margin: 0 0 16px;
+    }
+
+    .post-description{
+      font-size: 17px;
+      line-height: 1.72;
+      color: rgba(18,18,18,.65);
+      margin: 0;
+      font-style: italic;
+    }
+
+    .rule{
+      border: none;
+      border-top: 1px solid rgba(18,18,18,.12);
+      margin: 32px 0;
+    }
+
+    .rule--bottom{
+      margin: 48px 0 32px;
+    }
+
+    /* Post body typography */
+    .prose{
+      font-size: 17px;
+      line-height: 1.82;
+      color: rgba(18,18,18,.86);
+    }
+
+    .prose :global(h2){
+      font-size: clamp(20px, 2.6vw, 26px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.2;
+      margin: 42px 0 14px;
+      color: rgba(18,18,18,.95);
+    }
+
+    .prose :global(h3){
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -.01em;
+      margin: 28px 0 10px;
+      color: rgba(18,18,18,.92);
+    }
+
+    .prose :global(p){
+      margin: 0 0 20px;
+    }
+
+    .prose :global(ul), .prose :global(ol){
+      padding-left: 22px;
+      margin: 0 0 20px;
+    }
+
+    .prose :global(li){
+      margin-bottom: 8px;
+      line-height: 1.72;
+    }
+
+    .prose :global(a){
+      color: #b01616;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .prose :global(a:hover){
+      opacity: .75;
+    }
+
+    .prose :global(strong){
+      font-weight: 700;
+      color: rgba(18,18,18,.95);
+    }
+
+    .prose :global(blockquote){
+      margin: 24px 0;
+      padding-left: 18px;
+      border-left: 3px solid rgba(176,22,22,.22);
+      font-style: italic;
+      color: rgba(18,18,18,.72);
+    }
+
+    .prose :global(hr){
+      border: none;
+      border-top: 1px solid rgba(18,18,18,.12);
+      margin: 36px 0;
+    }
+
+    /* Footer CTA */
+    .post-footer{
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .post-footer__cta{
+      background: rgba(245,241,232,.7);
+      border: 1px solid rgba(18,18,18,.1);
+      border-radius: 14px;
+      padding: 28px 28px 24px;
+    }
+
+    .footer-kicker{
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(18,18,18,.5);
+      margin: 0 0 10px;
+    }
+
+    .footer-line{
+      font-size: 15px;
+      line-height: 1.65;
+      color: rgba(18,18,18,.78);
+      margin: 0 0 18px;
+    }
+
+    .footer-links{
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a{
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #b01616;
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 180ms ease;
+    }
+
+    .footer-links a:hover{ opacity: .7; }
+
+    .back-link{
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(18,18,18,.5);
+      text-decoration: none;
+      transition: color 180ms ease;
+    }
+
+    .back-link:hover{ color: rgba(18,18,18,.85); }
+
+    @media (max-width: 600px){
+      .post-page{ padding: 40px 18px 60px; }
+    }
+  </style>
+</BaseLayout>

@@ -1,0 +1,184 @@
+---
+export const prerender = true;
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+}
+---
+
+<BaseLayout
+  title="The Desk Report — Insights on AI, Marketing & Business Operations | LuliDigital"
+  description="Practical insights on AI automation, digital marketing, brand strategy, and virtual assistant services for founders and executives."
+  active="blog"
+>
+  <main class="blog-page">
+    <header class="blog-header">
+      <p class="kicker">THE DESK REPORT</p>
+      <h1 class="blog-title">Insights from the desk.</h1>
+      <p class="blog-sub">Practical thinking on AI automation, digital marketing, and business operations — for founders and executives who move fast.</p>
+    </header>
+
+    <hr class="rule" />
+
+    <section class="posts-grid" aria-label="Blog posts">
+      {posts.map((post) => (
+        <article class="post-card">
+          <div class="post-meta">
+            <span class="post-category">{post.data.category}</span>
+            {post.data.readingTime && <span class="post-time">{post.data.readingTime}</span>}
+          </div>
+          <h2 class="post-title">
+            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+          </h2>
+          <p class="post-excerpt">{post.data.description}</p>
+          <div class="post-footer">
+            <time class="post-date" datetime={post.data.pubDate.toISOString()}>
+              {formatDate(post.data.pubDate)}
+            </time>
+            <a class="post-link" href={`/blog/${post.slug}`}>Read →</a>
+          </div>
+        </article>
+      ))}
+    </section>
+  </main>
+
+  <style>
+    .blog-page{
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+      color: rgba(18,18,18,.9);
+    }
+
+    .blog-header{
+      padding-bottom: 40px;
+    }
+
+    .kicker{
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(18,18,18,.5);
+      margin: 0 0 14px;
+    }
+
+    .blog-title{
+      font-size: clamp(44px, 5vw, 66px);
+      font-weight: 700;
+      line-height: .96;
+      letter-spacing: -.03em;
+      margin: 0 0 16px;
+    }
+
+    .blog-sub{
+      max-width: 640px;
+      font-size: 16px;
+      line-height: 1.72;
+      color: rgba(18,18,18,.65);
+      margin: 0;
+    }
+
+    .rule{
+      border: none;
+      border-top: 1px solid rgba(18,18,18,.12);
+      margin: 0 0 48px;
+    }
+
+    .posts-grid{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px 56px;
+    }
+
+    @media (max-width: 720px){
+      .posts-grid{ grid-template-columns: 1fr; gap: 36px; }
+    }
+
+    .post-card{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 4px;
+      border-top: 2px solid rgba(18,18,18,.1);
+    }
+
+    .post-meta{
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .post-category{
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #b01616;
+      font-weight: 600;
+    }
+
+    .post-time{
+      font-size: 11px;
+      letter-spacing: .1em;
+      color: rgba(18,18,18,.45);
+    }
+
+    .post-title{
+      font-size: clamp(20px, 2.4vw, 26px);
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -.02em;
+      margin: 0;
+    }
+
+    .post-title a{
+      color: inherit;
+      text-decoration: none;
+      transition: opacity 180ms ease;
+    }
+
+    .post-title a:hover{
+      opacity: .7;
+    }
+
+    .post-excerpt{
+      font-size: 14px;
+      line-height: 1.72;
+      color: rgba(18,18,18,.65);
+      margin: 0;
+      flex: 1;
+    }
+
+    .post-footer{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 10px;
+      border-top: 1px solid rgba(18,18,18,.08);
+      margin-top: 4px;
+    }
+
+    .post-date{
+      font-size: 11px;
+      letter-spacing: .08em;
+      color: rgba(18,18,18,.45);
+    }
+
+    .post-link{
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #b01616;
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 180ms ease;
+    }
+
+    .post-link:hover{ opacity: .7; }
+  </style>
+</BaseLayout>
