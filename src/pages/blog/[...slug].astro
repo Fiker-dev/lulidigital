@@ -1,17 +1,15 @@
 ---
-export const prerender = true;
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getCollection } from "astro:content";
+import { getEntry } from "astro:content";
 
-export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+const { slug } = Astro.params;
+
+const post = await getEntry("blog", slug as string);
+
+if (!post) {
+  return Astro.redirect("/blog");
 }
 
-const { post } = Astro.props;
 const { Content } = await post.render();
 
 function formatDate(date: Date) {
