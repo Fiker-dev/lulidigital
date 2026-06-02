@@ -96,6 +96,7 @@ console.log(`Post written to: src/content/blog/${post.slug}.md`);
 writeFileSync("/tmp/post_title.txt", post.title);
 writeFileSync("/tmp/post_slug.txt", post.slug);
 writeFileSync("/tmp/post_category.txt", topic.category);
+writeFileSync("/tmp/post_description.txt", post.description);
 
 // Update published count
 topicsData.published_count += 1;
