@@ -15,6 +15,7 @@ const customCategory = process.env.BLOG_CATEGORY?.trim();
 const customPainPoint = process.env.BLOG_PAIN_POINT?.trim();
 const customAngle = process.env.BLOG_ANGLE?.trim();
 const customToneNotes = process.env.BLOG_TONE_NOTES?.trim();
+const isDraft = process.env.BLOG_DRAFT === "true";
 const isCustomTopic = Boolean(customTitle);
 const topic = isCustomTopic
   ? {
@@ -102,6 +103,7 @@ description: "${post.description.replace(/"/g, '\\"')}"
 pubDate: ${today}
 category: "${topic.category}"
 readingTime: "${post.readingTime}"
+draft: ${isDraft}
 ---
 
 `;

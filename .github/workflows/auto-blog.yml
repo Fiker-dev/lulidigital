@@ -30,6 +30,14 @@ on:
         description: 'Tone notes, e.g. funny, relatable, pain relief, practical'
         required: false
         type: string
+      publish_status:
+        description: 'Publish immediately or save as hidden draft'
+        required: false
+        default: 'publish'
+        type: choice
+        options:
+          - publish
+          - draft
 
 jobs:
   generate-and-publish:
@@ -58,6 +66,7 @@ jobs:
           BLOG_PAIN_POINT: ${{ github.event.inputs.pain_point }}
           BLOG_ANGLE: ${{ github.event.inputs.angle }}
           BLOG_TONE_NOTES: ${{ github.event.inputs.tone_notes }}
+          BLOG_DRAFT: ${{ github.event.inputs.publish_status == 'draft' }}
 
       - name: Commit and push new post
         run: |
@@ -69,6 +78,7 @@ jobs:
           git push
 
       - name: Publish Google Business Profile post
+        if: ${{ github.event.inputs.publish_status != 'draft' }}
         run: |
           TITLE=$(cat /tmp/post_title.txt)
           DESCRIPTION=$(cat /tmp/post_description.txt)
@@ -82,6 +92,7 @@ jobs:
           GOOGLE_LOCATION_ID: ${{ secrets.GOOGLE_LOCATION_ID }}
 
       - name: Send Telegram notification
+        if: ${{ github.event.inputs.publish_status != 'draft' }}
         run: |
           TITLE=$(cat /tmp/post_title.txt)
           SLUG=$(cat /tmp/post_slug.txt)

@@ -6,7 +6,7 @@ const { slug } = Astro.params;
 
 const post = await getEntry("blog", slug as string);
 
-if (!post) {
+if (!post || post.data.draft) {
   return Astro.redirect("/blog");
 }
 

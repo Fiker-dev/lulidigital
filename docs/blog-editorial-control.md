@@ -10,8 +10,25 @@ When you want to steer Lana manually, run the `Auto Blog Post` workflow from Git
 - `pain_point`
 - `angle`
 - `tone_notes`
+- `publish_status`
 
 If `topic` is filled, the workflow writes a custom article and does not advance the scheduled topic queue.
+
+Use `publish_status: draft` when you want to moderate the article first. Draft posts are committed to the repo but hidden from the blog index, direct blog URLs, Telegram notifications, and Google Business Profile posting.
+
+To approve a draft, edit the generated markdown file in `src/content/blog/` and change:
+
+```yaml
+draft: true
+```
+
+to:
+
+```yaml
+draft: false
+```
+
+Then commit and push the change.
 
 ## Recommended Tone Formula
 
