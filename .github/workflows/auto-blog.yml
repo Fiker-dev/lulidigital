@@ -78,7 +78,7 @@ jobs:
           git push
 
       - name: Publish Google Business Profile post
-        if: ${{ github.event.inputs.publish_status != 'draft' }}
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.publish_status != 'draft' }}
         run: |
           TITLE=$(cat /tmp/post_title.txt)
           DESCRIPTION=$(cat /tmp/post_description.txt)
@@ -92,12 +92,47 @@ jobs:
           GOOGLE_LOCATION_ID: ${{ secrets.GOOGLE_LOCATION_ID }}
 
       - name: Send Telegram notification
-        if: ${{ github.event.inputs.publish_status != 'draft' }}
+        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.publish_status != 'draft' }}
         run: |
           TITLE=$(cat /tmp/post_title.txt)
           SLUG=$(cat /tmp/post_slug.txt)
           CATEGORY=$(cat /tmp/post_category.txt)
           URL="https://lulidigital.com/blog/${SLUG}"
-          MESSAGE="New article published on LuliDigital%0A%0A${CATEGORY}%0A${TITLE}%0A%0A${URL}"
+          MESSAGE=$(cat <<EOF
+          New article published on LuliDigital
+
+          ${CATEGORY}
+          ${TITLE}
+
+          ${URL}
+          EOF
+          )
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}&text=${MESSAGE}&parse_mode=HTML"
+            --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            --data-urlencode "text=${MESSAGE}"
+
+      - name: Send Telegram draft preview
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.publish_status == 'draft' }}
+        run: |
+          TITLE=$(cat /tmp/post_title.txt)
+          SLUG=$(cat /tmp/post_slug.txt)
+          CATEGORY=$(cat /tmp/post_category.txt)
+          DESCRIPTION=$(cat /tmp/post_description.txt)
+          MESSAGE=$(cat <<EOF
+          Draft ready for review
+
+          ${CATEGORY}
+          ${TITLE}
+
+          ${DESCRIPTION}
+
+          Approve now:
+          /publish ${SLUG}
+
+          Schedule:
+          /schedule ${SLUG} YYYY-MM-DD
+          EOF
+          )
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            --data-urlencode "text=${MESSAGE}"

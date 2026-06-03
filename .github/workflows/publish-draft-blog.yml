@@ -1,0 +1,66 @@
+name: Publish Draft Blog Post
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'Draft blog slug to publish'
+        required: true
+        type: string
+      publish_date:
+        description: 'Publish date, YYYY-MM-DD. Use today for immediate publishing.'
+        required: false
+        type: string
+
+jobs:
+  publish-draft:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Publish draft
+        run: node scripts/publish-draft-post.mjs "${{ github.event.inputs.slug }}" "${{ github.event.inputs.publish_date }}"
+
+      - name: Commit and push published draft
+        run: |
+          git config user.name "LuliDigital Bot"
+          git config user.email "bot@lulidigital.com"
+          git add src/content/blog/
+          git diff --staged --quiet && echo "No draft changes" && exit 0
+          git commit -m "Publish draft blog post ${{ github.event.inputs.slug }}"
+          git push
+
+      - name: Send Telegram notification
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          DATE="${{ github.event.inputs.publish_date }}"
+          URL="https://lulidigital.com/blog/${SLUG}"
+          if [ -z "$DATE" ]; then
+            MESSAGE=$(cat <<EOF
+            Draft approved and published
+
+            ${URL}
+            EOF
+            )
+          else
+            MESSAGE=$(cat <<EOF
+            Draft approved for ${DATE}
+
+            ${URL}
+            EOF
+            )
+          fi
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            --data-urlencode "text=${MESSAGE}"

@@ -30,6 +30,48 @@ draft: false
 
 Then commit and push the change.
 
+## Telegram Control
+
+The `/api/lana-telegram` endpoint lets the Telegram bot control draft creation and approval.
+
+Required Vercel environment variables:
+
+- `TELEGRAM_BOT_TOKEN`
+- `TELEGRAM_CHAT_ID`
+- `TELEGRAM_WEBHOOK_SECRET`
+- `GITHUB_WORKFLOW_TOKEN`
+
+`GITHUB_WORKFLOW_TOKEN` should be a GitHub token that can dispatch workflows for `Fiker-dev/lulidigital`.
+
+Set the Telegram webhook:
+
+```bash
+curl "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/setWebhook?url=https://lulidigital.com/api/lana-telegram&secret_token=$TELEGRAM_WEBHOOK_SECRET"
+```
+
+Telegram commands:
+
+```text
+/blog Why founders keep hiring help and still feel overwhelmed
+```
+
+```text
+topic: Why founders keep hiring help and still feel overwhelmed
+keyword: founder delegation mistakes
+category: Virtual Assistant
+pain point: They hired someone but still chase everything.
+angle: The missing operating system is the real problem.
+tone notes: Funny, relatable, pain relief, practical.
+```
+
+```text
+/publish how-to-hire-virtual-assistant-guide-founders-ceos
+```
+
+```text
+/schedule how-to-hire-virtual-assistant-guide-founders-ceos 2026-06-10
+```
+
 ## Recommended Tone Formula
 
 Use this style for LuliDigital posts:

@@ -6,7 +6,7 @@ const { slug } = Astro.params;
 
 const post = await getEntry("blog", slug as string);
 
-if (!post || post.data.draft) {
+if (!post || post.data.draft || post.data.pubDate.valueOf() > Date.now()) {
   return Astro.redirect("/blog");
 }
 
