@@ -4,6 +4,32 @@ on:
   schedule:
     - cron: '0 8 * * 1,3,5'  # Mon, Wed, Fri at 8am UTC
   workflow_dispatch:           # Allow manual trigger from GitHub UI
+    inputs:
+      topic:
+        description: 'Optional custom blog topic'
+        required: false
+        type: string
+      keyword:
+        description: 'Optional primary keyword'
+        required: false
+        type: string
+      category:
+        description: 'Optional category'
+        required: false
+        default: 'AI Automation'
+        type: string
+      pain_point:
+        description: 'Reader pain point to solve'
+        required: false
+        type: string
+      angle:
+        description: 'Specific angle or story direction'
+        required: false
+        type: string
+      tone_notes:
+        description: 'Tone notes, e.g. funny, relatable, pain relief, practical'
+        required: false
+        type: string
 
 jobs:
   generate-and-publish:
@@ -26,6 +52,12 @@ jobs:
         run: node scripts/generate-post.mjs
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BLOG_TOPIC: ${{ github.event.inputs.topic }}
+          BLOG_KEYWORD: ${{ github.event.inputs.keyword }}
+          BLOG_CATEGORY: ${{ github.event.inputs.category }}
+          BLOG_PAIN_POINT: ${{ github.event.inputs.pain_point }}
+          BLOG_ANGLE: ${{ github.event.inputs.angle }}
+          BLOG_TONE_NOTES: ${{ github.event.inputs.tone_notes }}
 
       - name: Commit and push new post
         run: |
