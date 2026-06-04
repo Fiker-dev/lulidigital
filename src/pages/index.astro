@@ -1,9 +1,14 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getDailySeoRecommendation } from "../lib/seoAgent.js";
+
+const seoRecommendation = await getDailySeoRecommendation();
+const dailyKeyword = seoRecommendation.keyword;
 
 const serviceSchema = {
   "name": "Digital Marketing, AI Automation & Executive Virtual Assistant Services",
   "serviceType": [
+    dailyKeyword,
     "executive virtual assistant services",
     "remote executive assistant",
     "virtual assistant for founders",
@@ -20,533 +25,393 @@ const serviceSchema = {
     "business process automation",
     "AI integration services",
   ],
-  "description": "LuliDigital helps founders and executives with performance marketing, brand strategy, AI workflow automation, conversational AI assistants, and executive virtual assistant services.",
+  "description": `LuliDigital helps founders and executives with ${dailyKeyword}, performance marketing, brand strategy, AI workflow automation, conversational AI assistants, and executive virtual assistant services.`,
 };
 ---
 
 <BaseLayout
-  title="LuliDigital | Performance Marketing, AI Automation & Executive Virtual Assistant"
-  description="LuliDigital helps founders and executives with performance marketing, brand strategy, AI workflow automation, conversational AI assistants, and remote executive virtual assistant services."
-  active="home"
+  title={`LuliDigital | Performance Marketing, AI Automation & Executive Virtual Assistant`}
+  description={`LuliDigital helps founders and executives with ${dailyKeyword}, brand strategy, AI workflow automation, conversational AI assistants, and remote executive virtual assistant services.`}
   serviceSchema={serviceSchema}
 >
-  <main class="page">
-    <section class="hero">
-      <div class="hero__left">
-        <div class="kicker">LEAD STORY</div>
 
-        <h1 class="hero__title">
-          Built like a newsroom.<br />
-          Run like a lab.
-        </h1>
+  <!-- ═══════════════════════════════════════════════════════ HERO -->
+  <section class="hero" aria-label="Introduction">
+    <div class="hero-orb orb-a" aria-hidden="true"></div>
+    <div class="hero-orb orb-b" aria-hidden="true"></div>
 
-        <p class="lede">
-          LuliDigital works like an editorial floor. We clarify the story, pressure test it in market, and build systems
-          teams can trust when decisions need to move fast.
-        </p>
+    <div class="hero-inner">
+      <span class="eyebrow" data-blur-in>Digital Studio</span>
 
-        <p class="lede">
-          Our operators blend
-          <span class="kw" data-kw>brand strategy</span>,
-          <span class="kw" data-kw>performance marketing</span>, and
-          <span class="kw" data-kw>AI workflow automation</span>
-          so the work feels human and the systems run themselves.
-        </p>
+      <h1 class="hero-title" data-word-reveal>
+        We run your brand, operations, and AI.
+      </h1>
 
-        <nav class="desk-links" aria-label="Desk links">
-          <a class="desk-link" href="/marketing">OPEN THE MARKETING DESK →</a>
-          <a class="desk-link" href="/ai">OPEN THE AI DESK →</a>
-          <a class="desk-link" href="/virtual-assistant">OPEN THE VIRTUAL ASSISTANT DESK →</a>
-        </nav>
+      <p class="hero-sub" data-blur-in data-blur-delay="180">
+        Marketing. Virtual Assistant. AI Automation.
+        LuliDigital works behind the scenes so you focus on what moves the needle.
+      </p>
+
+      <div class="hero-ctas" data-stagger data-stagger-gap="90">
+        <a class="cta-link" href="/marketing">Marketing Desk <span class="arr">→</span></a>
+        <a class="cta-link" href="/ai">AI Desk <span class="arr">→</span></a>
+        <a class="cta-link" href="/virtual-assistant">Virtual Assistant <span class="arr">→</span></a>
       </div>
 
-      <aside class="hero__right" aria-label="Editorial note">
-        <div class="kicker">EDITORIAL NOTE</div>
-
-        <p class="note">
-          LuliDigital is where guessing stops.
+      {dailyKeyword && (
+        <p class="seo-chip" aria-label={`Today's content focus: ${dailyKeyword}`}>
+          Focus: <span>{dailyKeyword}</span>
         </p>
+      )}
+    </div>
+  </section>
 
-        <p class="note">
-          Performance marketing. AI automation.<br/>
-          Executive virtual assistant services.
-        </p>
+  <!-- ══════════════════════════════════════════════ SERVICES BENTO -->
+  <section class="bento-section" aria-label="Services" data-reveal="up">
+    <span class="eyebrow">What We Do</span>
+    <div class="bento-grid" data-stagger data-stagger-gap="90">
 
-        <p class="note">
-          Led by sharp humans.<br/>
-          Powered by intelligent systems.
-        </p>
-
-        <p class="note">
-          Unclear on strategy? We bring clarity.<br/>
-          Drowning in operations? We step in.
-        </p>
-
-        <p class="note">
-          Side by side.<br/>
-          So you don’t carry it alone.
-        </p>
-      </aside>
-    </section>
-
-    <hr class="rule" />
-
-    <section class="front-grid" aria-label="Front page stories">
-      <article class="card">
-        <div class="kicker">FRONT PAGE</div>
-        <h2 class="h2">Jane vs Jando</h2>
-
-        <div class="jj">
-          <div class="jj__body">
-            <p>Jane started a brand. She didn’t try to guess everything herself. She got help.</p>
-
-            <p>Someone shaped her brand voice. Someone made sure she had really good product pictures — the kind that makes people pause.</p>
-
-            <p>Her website felt finished. When people searched her name, she showed up. When she posted, it looked consistent.</p>
-
-            <p>People understood her. People trusted her. People bought.</p>
-          </div>
-
-          <aside class="jj__aside" aria-label="Exhibit: visibility check">
-            <div class="evidence-card exhibit-card missing-card">
-              <span class="corner-curl"></span>
-              <div class="evidence-inner">
-
-                <div class="evidence-header">
-                  <span class="exhibit exhibit-kicker">EXHIBIT A</span>
-                  <span class="stamp exhibit-stamp">MISSING</span>
-                </div>
-
-                <h4 class="evidence-title exhibit-title">Online Presence</h4>
-
-                <div class="evidence-row exhibit-row">
-                  <span class="label exhibit-kicker">Query</span>
-                  <span class="value">“Jando”</span>
-                </div>
-
-                <div class="evidence-row exhibit-row">
-                  <span class="label exhibit-kicker">Result</span>
-                  <span class="value bold">NOT FOUND</span>
-                </div>
-
-                <div class="evidence-divider"></div>
-
-                <p class="evidence-copy exhibit-punch">
-                  Visibility vs invisible.<br />
-                  <strong class="big">Unseen is unforgivable.</strong>
-                </p>
-
-              </div>
-            </div>
-          </aside>
+      <article class="glow-card bento-card" aria-label="Marketing services">
+        <div class="bento-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
         </div>
-
-        <a class="desk-link desk-link--inline" href="/marketing">OPEN THE MARKETING DESK →</a>
+        <h2 class="bento-title">Marketing</h2>
+        <ul class="bento-list">
+          <li>Brand strategy &amp; positioning</li>
+          <li>Paid media: Meta, Google, TikTok</li>
+          <li>Content systems &amp; SEO</li>
+        </ul>
+        <a class="cta-link" href="/marketing">Explore <span class="arr">→</span></a>
       </article>
 
-      <article class="card">
-        <div class="kicker">FRONT PAGE</div>
-        <h2 class="h2">Bob</h2>
-
-        <p>Bob runs a company. His team is good. But they were spending half their day answering the same questions.</p>
-
-        <blockquote class="quote">
-          “Where&apos;s the return policy? What&apos;s the delivery timeline? Which document has the updated pricing?”
-        </blockquote>
-
-        <p>
-          Someone built him a system that knew his business and answered for him.
-        </p>
-
-        <div class="story-points" aria-label="Bob outcomes">
-          <p>Customers stopped waiting.</p>
-          <p>His team stopped repeating themselves.</p>
-          <p>Bob got back to the work that actually needed him.</p>
+      <article class="glow-card bento-card" aria-label="AI Automation services">
+        <div class="bento-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><circle cx="12" cy="14" r="2"/></svg>
         </div>
-
-        <div class="kicker">THE BOB FIX</div>
-        <p>That&apos;s what Bob got.</p>
-
-        <p>
-          Some businesses are sitting on a mountain of repeated questions. The answer isn&apos;t more staff. It&apos;s a smarter
-          system: a chatbot that knows your business, and AI agents that handle repetitive work quietly in the background.
-        </p>
-
-        <a class="desk-link desk-link--inline" href="/ai">OPEN THE AI DESK →</a>
-      </article>
-    </section>
-
-    <hr class="rule" />
-
-    <section class="front-grid" aria-label="More front page stories">
-      <article class="card">
-        <div class="kicker">FRONT PAGE</div>
-        <h2 class="h2">Sandy</h2>
-
-        <p>
-          Sandy&apos;s team was talented. The ideas were good. But nothing moved cleanly. Updates lived in chats. Files hid in
-          folders. Deadlines lived in Sandy&apos;s head, which meant they were always one bad week away from being missed.
-        </p>
-
-        <div class="story-points" aria-label="Sandy outcomes">
-          <p>One source of truth.</p>
-          <p>Clear ownership.</p>
-          <p>Light systems that kept work moving without chasing it.</p>
-        </div>
-
-        <p>No more status meetings that should&apos;ve been a message. No more lost files. No more Sandy carrying everything.</p>
-
-        <a class="desk-link desk-link--inline" href="/virtual-assistant">OPEN THE VIRTUAL ASSISTANT DESK →</a>
+        <h2 class="bento-title">AI Automation</h2>
+        <ul class="bento-list">
+          <li>Conversational AI assistants</li>
+          <li>Workflow automation end-to-end</li>
+          <li>AI agent implementation</li>
+        </ul>
+        <a class="cta-link" href="/ai">Explore <span class="arr">→</span></a>
       </article>
 
-      <article class="card">
-        <div class="kicker">THE WORKING BEE</div>
-        <h2 class="h2">The Quiet Fix</h2>
-
-        <p>
-          That&apos;s what Sandy got.
-        </p>
-
-        <p>
-          Some businesses don&apos;t need more chaos. They need someone to keep things organised, track tasks, and manage
-          projects without being asked twice.
-        </p>
-
-        <p class="quiet-pull">It&apos;s the difference between “we&apos;re on it” and “we lost the file again.”</p>
-
-        <p>Quiet systems. Clear ownership. Reliable follow-through. The work moves. Nothing slips.</p>
-
-        <a class="desk-link desk-link--inline" href="/contact">CONTACT →</a>
+      <article class="glow-card bento-card" aria-label="Virtual Assistant services">
+        <div class="bento-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h2 class="bento-title">Virtual Assistant</h2>
+        <ul class="bento-list">
+          <li>Inbox &amp; calendar management</li>
+          <li>Project coordination</li>
+          <li>Operations follow-through</li>
+        </ul>
+        <a class="cta-link" href="/virtual-assistant">Explore <span class="arr">→</span></a>
       </article>
-    </section>
 
-    <hr class="rule" />
+    </div>
+  </section>
 
-    <section class="contact" aria-label="Contact">
-      <div class="kicker">CONTACT</div>
-      <h2 class="h2 h2--big">Be smart. Get help.</h2>
+  <!-- ════════════════════════════════════════ HOW IT WORKS (ASCII) -->
+  <section class="how-section" aria-label="How LuliDigital works" data-reveal="up">
+    <span class="eyebrow">How It Works</span>
+    <h2 class="section-title">Three desks. One studio.</h2>
 
-      <div class="contact-grid">
-        <div class="contact-block">
-          <div class="kicker kicker--tiny">EMAIL</div>
-          <a class="contact-link" href="mailto:info@lulidigital.co.za">INFO@LULIDIGITAL.CO.ZA →</a>
-        </div>
+    <pre class="ascii-diagram" role="img" aria-label="Three connected service desks: Marketing leads to Virtual Assistant which leads to AI">
+<span class="dim">┌──────────────┐    ┌──────────────┐    ┌──────────────┐</span>
+│  <span class="hi">MARKETING</span>   │    │   <span class="hi">VIRTUAL</span>    │    │     <span class="hi">AI</span>       │
+│    <span class="hi">DESK</span>     │<span class="hi">───▶</span>│  <span class="hi">ASSISTANT</span>  │<span class="hi">───▶</span>│    <span class="hi">DESK</span>     │
+│              │    │     <span class="hi">DESK</span>     │    │              │
+<span class="dim">└──────────────┘    └──────────────┘    └──────────────┘</span>
+  Brand. Story.       Ops. Clarity.     Systems. Scale.</pre>
 
-        <div class="contact-block">
-          <div class="kicker kicker--tiny">WHATSAPP</div>
-          <a class="contact-link" href="https://wa.me/27602551513">+27 60 255 1513 →</a>
-        </div>
+    <p class="how-desc">Each desk is distinct but connected. Marketing builds the signal. The VA keeps operations clean. AI scales what works — without scaling headcount.</p>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ STATS ROW -->
+  <section class="stats-section" aria-label="Key statistics" data-reveal="fade">
+    <div class="stats-grid" data-stagger data-stagger-gap="120">
+      <div class="stat">
+        <span class="stat-number" data-count="48" data-count-suffix="h">0h</span>
+        <span class="stat-label">Average time to first deliverable</span>
       </div>
-    </section>
-  </main>
+      <div class="stat">
+        <span class="stat-number" data-count="3" data-count-suffix="x">0x</span>
+        <span class="stat-label">Services under one studio roof</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number" data-count="100" data-count-suffix="%">0%</span>
+        <span class="stat-label">Remote — global founders served</span>
+      </div>
+    </div>
+  </section>
 
-  <style>
-    .page{
-      --ink: #121212;
-      --muted: rgba(18,18,18,.62);
-      --rule: rgba(18,18,18,.14);
-      --red: #b01616;
-      --redSoft: rgba(176, 22, 22, 0.12);
-      --redLine: rgba(176, 22, 22, 0.34);
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 64px 24px 72px;
-      color: var(--ink);
-    }
+  <!-- ═══════════════════════════════════════════════ CASE STUDIES -->
+  <section class="cases-section" aria-label="Client stories" data-reveal="up">
+    <span class="eyebrow">In Practice</span>
+    <div class="cases-grid" data-stagger data-stagger-gap="70">
 
-    .hero{
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 7rem;
-      padding: 38px 0 48px;
-    }
+      <article class="case-card glow-card">
+        <div class="case-label">Marketing</div>
+        <h3 class="case-name">Jane</h3>
+        <p class="case-summary">Brand built. Visible online. Customers found her.</p>
+        <p class="case-detail">She got brand voice, creative direction, a finished website, and SEO that made her show up. Jando never caught up.</p>
+        <a class="cta-link" href="/marketing">Marketing Desk <span class="arr">→</span></a>
+      </article>
 
-    .kicker{
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
-    .kicker--tiny{ margin-bottom: 10px; }
+      <article class="case-card glow-card">
+        <div class="case-label">AI Automation</div>
+        <h3 class="case-name">Bob</h3>
+        <p class="case-summary">Team stopped repeating. Customers stopped waiting.</p>
+        <p class="case-detail">An AI assistant trained on his business answered questions 24/7. His team's time freed up for work that actually needed them.</p>
+        <a class="cta-link" href="/ai">AI Desk <span class="arr">→</span></a>
+      </article>
 
-    .hero__title{
-      margin: 0 0 18px;
-      font-weight: 700;
-      line-height: 1.03;
-      font-size: clamp(44px, 5.2vw, 64px);
-    }
+      <article class="case-card glow-card">
+        <div class="case-label">Virtual Assistant</div>
+        <h3 class="case-name">Sandy</h3>
+        <p class="case-summary">One source of truth. Nothing slips anymore.</p>
+        <p class="case-detail">A VA brought order: owned timelines, managed the inbox, tracked deliverables — so Sandy could lead instead of chase.</p>
+        <a class="cta-link" href="/virtual-assistant">VA Desk <span class="arr">→</span></a>
+      </article>
 
-    .lede, .note{
-      margin: 0 0 18px;
-      color: rgba(18,18,18,.82);
-      line-height: 1.76;
-      font-size: 16px;
-    }
+    </div>
+  </section>
 
-    .desk-links{
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px 24px;
-    }
+  <!-- ═══════════════════════════════════════════════════════ CTA -->
+  <section class="final-cta" aria-label="Contact" data-reveal="fade">
+    <h2 class="cta-title" data-blur-in>Be smart. Get help.</h2>
+    <p class="cta-sub" data-blur-in data-blur-delay="150">Side by side, so you don't carry it alone.</p>
+    <div class="cta-links" data-stagger data-stagger-gap="80">
+      <a class="cta-link" href="mailto:info@lulidigital.co.za">Email the desk <span class="arr">→</span></a>
+      <a class="cta-link" href="https://wa.me/27602551513">WhatsApp <span class="arr">→</span></a>
+    </div>
+  </section>
 
-    .desk-link{
-      color: var(--red);
-      text-decoration: none;
-      letter-spacing: .6px;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 13px;
-      position: relative;
-      display: inline-block;
-      padding-bottom: 3px;
-    }
-
-    .desk-link::after{
-      content:"";
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:0;
-      height:1px;
-      background: rgba(176,22,22,.55);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 280ms ease;
-    }
-
-    .desk-link:hover::after{
-      transform: scaleX(1);
-    }
-
-    .desk-link--inline{
-      margin-top: 14px;
-    }
-
-    .story-points{
-      display: grid;
-      gap: 10px;
-      margin: 16px 0 18px;
-      padding-left: 16px;
-      border-left: 2px solid rgba(176,22,22,.18);
-    }
-
-    .story-points p{
-      margin: 0;
-      font-size: 15px;
-      line-height: 1.62;
-      color: rgba(18,18,18,.78);
-    }
-
-    .rule{
-      border: none;
-      border-top: 1px solid var(--rule);
-      margin: 0;
-    }
-
-    .front-grid{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 56px;
-      padding: 50px 0;
-    }
-
-    .card{
-      padding-top: 4px;
-    }
-
-    .h2{
-      margin: 0 0 14px;
-      font-size: 44px;
-      font-weight: 700;
-      line-height: 1.05;
-      letter-spacing: -0.2px;
-    }
-
-    .h2--big{
-      font-size: 54px;
-    }
-
-    p{
-      margin: 0 0 16px;
-      line-height: 1.82;
-      color: rgba(18,18,18,.82);
-      font-size: 16px;
-    }
-
-    .quote{
-      margin: 16px 0 20px;
-      padding-left: 16px;
-      border-left: 3px solid rgba(176,22,22,.22);
-      color: rgba(18,18,18,.78);
-      font-style: italic;
-      line-height: 1.72;
-    }
-
-    .quiet-pull{
-      font-style: italic;
-      color: rgba(18,18,18,.74);
-    }
-
-    .contact{
-      padding: 50px 0 0;
-    }
-
-    .contact-grid{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 46px;
-      padding-top: 18px;
-      padding-bottom: 10px;
-    }
-
-    .contact-link{
-      color: rgba(18,18,18,.86);
-      text-decoration: none;
-      font-weight: 600;
-      letter-spacing: .7px;
-      position: relative;
-      display: inline-block;
-      padding-bottom: 3px;
-    }
-
-    .contact-link::after{
-      content:"";
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:0;
-      height:1px;
-      background: rgba(176,22,22,.55);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 280ms ease;
-    }
-
-    .contact-link:hover::after{
-      transform: scaleX(1);
-    }
-
-    /* Jane vs Jando: reduce text-wall with an exhibit visual */
-    .jj{
-      display: grid;
-      grid-template-columns: 1fr 0.72fr;
-      gap: 28px;
-      align-items: start;
-      margin-bottom: 16px;
-    }
-
-    .jj__body p{
-      max-width: 52ch;
-    }
-
-    .jj__aside{
-      position: relative;
-      margin-top: 30px;
-    }
-
-    .evidence-card {
-      position: relative;
-      margin-left: 2rem;
-      transform: rotate(-1.2deg);
-      background: #f5f2ed;
-      border-radius: 14px;
-      padding: 1.8rem 1.6rem;
-      max-width: 260px;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.06);
-      border: 1px solid rgba(0,0,0,0.05);
-    }
-
-    .evidence-inner {
-      font-size: 0.95rem;
-      line-height: 1.5;
-      color: #1a1a1a;
-    }
-
-    .evidence-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.6rem;
-    }
-
-    .exhibit {
-      font-size: 0.65rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      opacity: 0.6;
-    }
-
-    .stamp {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #b23a2f;
-      border: 1px solid #b23a2f;
-      padding: 3px 8px;
-      border-radius: 4px;
-      transform: rotate(-8deg);
-      opacity: 0.9;
-    }
-
-    .evidence-title {
-      font-size: 1rem;
-      margin: 0.3rem 0 1rem 0;
-    }
-
-    .evidence-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.4rem;
-      font-size: 0.85rem;
-    }
-
-    .label {
-      opacity: 0.5;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-size: 0.65rem;
-    }
-
-    .value.bold {
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .evidence-divider {
-      height: 1px;
-      background: rgba(0,0,0,0.08);
-      margin: 1rem 0;
-    }
-
-    .evidence-copy {
-      font-size: 0.85rem;
-      line-height: 1.4;
-      margin: 0;
-    }
-
-    @media (max-width: 920px){
-      .hero{ grid-template-columns: 1fr; gap: 28px; padding: 28px 0 36px; }
-      .front-grid{ grid-template-columns: 1fr; gap: 34px; }
-      .h2{ font-size: 40px; }
-      .h2--big{ font-size: 46px; }
-      .contact-grid{ grid-template-columns: 1fr; gap: 22px; }
-      .jj{
-        grid-template-columns: 1fr;
-        gap: 18px;
-        margin-bottom: 16px;
-      }
-      .jj__body p{
-        max-width: 60ch;
-      }
-      .jj__aside{
-        margin-top: 0;
-      }
-      .evidence-card {
-        margin-left: 0;
-        transform: none;
-        max-width: 100%;
-      }
-    }
-  </style>
 </BaseLayout>
+
+<script>
+  import { initMotion } from "../scripts/motion.js";
+  document.addEventListener("DOMContentLoaded", () => initMotion());
+</script>
+
+<style>
+  /* ── Hero ───────────────────────────────────────────────────── */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    padding: 88px 0 100px;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 740px;
+    margin: 0 auto;
+  }
+  .orb-a {
+    width: 560px; height: 560px;
+    top: -120px; right: -180px;
+    animation-delay: 0s;
+  }
+  .orb-b {
+    width: 380px; height: 380px;
+    bottom: -60px; left: -140px;
+    animation-delay: -3.5s;
+  }
+  .hero-title {
+    font-size: clamp(40px, 6vw, 80px);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -.035em;
+    margin: 14px 0 22px;
+    font-family: ui-serif, Georgia, serif;
+    color: var(--ink, #141312);
+  }
+  .hero-sub {
+    font-size: clamp(15px, 1.8vw, 19px);
+    line-height: 1.65;
+    color: var(--muted, rgba(20,19,18,.66));
+    margin: 0 0 36px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-ctas {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .seo-chip {
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted, rgba(20,19,18,.55));
+    margin: 0;
+  }
+  .seo-chip span { color: var(--brand, #7b2d2d); font-weight: 600; }
+
+  /* ── Bento grid ─────────────────────────────────────────────── */
+  .bento-section { padding: 72px 0 80px; }
+  .bento-card {
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 260px;
+  }
+  .bento-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: rgba(123,45,45,.1);
+    display: grid;
+    place-items: center;
+    color: var(--brand, #7b2d2d);
+    flex-shrink: 0;
+  }
+  .bento-title {
+    font-size: clamp(20px, 2.4vw, 28px);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    margin: 0;
+    line-height: 1.15;
+    font-family: ui-serif, Georgia, serif;
+    color: var(--ink, #141312);
+  }
+  .bento-list {
+    list-style: none;
+    padding: 0; margin: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .bento-list li {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--muted, rgba(20,19,18,.66));
+    padding-left: 14px;
+    position: relative;
+  }
+  .bento-list li::before {
+    content: "–";
+    position: absolute;
+    left: 0;
+    color: var(--brand, #7b2d2d);
+    opacity: .55;
+  }
+
+  /* ── How it works ───────────────────────────────────────────── */
+  .how-section { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
+  .how-section .ascii-diagram { margin: 28px 0; }
+  .how-desc {
+    font-size: 15px;
+    line-height: 1.72;
+    color: var(--muted, rgba(20,19,18,.66));
+    max-width: 600px;
+    margin: 0;
+  }
+
+  /* ── Stats ──────────────────────────────────────────────────── */
+  .stats-section {
+    padding: 56px 0;
+    border-top: 1px solid rgba(30,24,22,.1);
+    border-bottom: 1px solid rgba(30,24,22,.1);
+    margin-bottom: 80px;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    text-align: center;
+  }
+  .stat { display: flex; flex-direction: column; gap: 10px; }
+  .stat-number { font-size: clamp(44px, 6vw, 72px); }
+  .stat-label {
+    font-size: 13px;
+    color: var(--muted, rgba(20,19,18,.6));
+    line-height: 1.5;
+    max-width: 18ch;
+    margin: 0 auto;
+  }
+
+  /* ── Case studies ───────────────────────────────────────────── */
+  .cases-section { padding: 0 0 80px; }
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .case-card { padding: 28px 24px; display: flex; flex-direction: column; gap: 10px; }
+  .case-label {
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--brand, #7b2d2d);
+    font-weight: 600;
+  }
+  .case-name {
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -.02em;
+    font-family: ui-serif, Georgia, serif;
+    line-height: 1.1;
+    color: var(--ink, #141312);
+  }
+  .case-summary {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink, #141312);
+    font-weight: 500;
+    margin: 0;
+  }
+  .case-detail {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--muted, rgba(20,19,18,.62));
+    margin: 0;
+    flex: 1;
+  }
+
+  /* ── Final CTA ──────────────────────────────────────────────── */
+  .final-cta {
+    text-align: center;
+    padding: 80px 0 40px;
+    border-top: 1px solid rgba(30,24,22,.1);
+  }
+  .cta-title {
+    font-size: clamp(32px, 4.5vw, 56px);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    margin: 0 0 12px;
+    font-family: ui-serif, Georgia, serif;
+    line-height: 1.05;
+  }
+  .cta-sub {
+    font-size: 16px;
+    color: var(--muted, rgba(20,19,18,.62));
+    margin: 0 0 32px;
+  }
+  .cta-links {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 720px) {
+    .cases-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr; gap: 36px; }
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 60px 0 72px; }
+    .hero-ctas { gap: 20px; }
+    .how-section .ascii-diagram { font-size: 9px; padding: 20px 16px; }
+  }
+</style>

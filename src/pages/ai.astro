@@ -27,555 +27,287 @@ const serviceSchema = {
   active="ai"
   serviceSchema={serviceSchema}
 >
-  <section class="ai-page">
-    <div class="ai-grid">
-      <!-- LEFT: editorial story -->
-      <article class="ai-story" data-reveal>
-        <p class="kicker">AI DESK</p>
 
-        <h1 class=”headline”>
-          AI automation,<br />
-          conversational AI &amp;<br />
-          agent implementation.
-        </h1>
+  <!-- ═══════════════════════════════════════════════════════ HERO -->
+  <section class="ai-hero" aria-label="AI services">
+    <div class="hero-orb orb-a" aria-hidden="true"></div>
+    <span class="eyebrow" data-blur-in>AI Desk</span>
+    <h1 class="ai-title" data-word-reveal>
+      AI automation that ships in weeks, not months.
+    </h1>
+    <p class="ai-sub" data-blur-in data-blur-delay="200">
+      Conversational AI assistants, workflow automation, and agent implementation —
+      practical, managed, and live without the enterprise overhead.
+    </p>
+    <div class="ai-hero-ctas" data-stagger data-stagger-gap="80">
+      <a class="cta-link" href="https://wa.me/27602551513">Talk to us <span class="arr">→</span></a>
+      <a class="cta-link" href="/marketing">Marketing Desk <span class="arr">→</span></a>
+    </div>
+  </section>
 
-        <p class=”lede”>
-          We build and manage AI automation systems for founders, executives, and growing teams — conversational AI assistants,
-          end-to-end workflow automation, and AI agent implementation without the enterprise overhead or the 12-month timelines.
-        </p>
+  <!-- ════════════════════════════════════════ ASCII WORKFLOW DIAGRAM -->
+  <section class="diagram-section" aria-label="How AI works for your business" data-reveal="up">
+    <span class="eyebrow">How It Works</span>
+    <h2 class="section-title">Your business. Smarter systems.</h2>
 
-        <p class=”body”>
-          Think practical AI integration. A customer asks a question and a <span class=”ink-hl” data-delay=”0”>conversational AI assistant</span> — trained on your business — answers instantly. Your team queries an <span class=”ink-hl” data-delay=”90”>internal AI agent</span> and gets the exact document in seconds. An <span class=”ink-hl” data-delay=”180”>AI workflow automation</span> system routes leads, triggers follow-ups, and generates weekly reports — without a single manual step. These aren’t experiments. They’re live, managed systems.
-        </p>
+    <pre class="ascii-diagram" role="img" aria-label="AI workflow: Your business inputs go into AI processing which outputs answers, actions and reports">
+  <span class="dim">YOUR BUSINESS</span>           <span class="dim">LANA AI</span>                 <span class="dim">OUTPUT</span>
+  ┌───────────┐       ┌────────────────┐       ┌──────────┐
+  │ <span class="hi">Question</span>  │ <span class="hi">────▶</span> │   <span class="hi">AI Process</span>   │ <span class="hi">────▶</span> │ <span class="hi">Answer</span>   │
+  │ <span class="hi">Task</span>      │       │   <span class="hi">+ Memory</span>    │       │ <span class="hi">Action</span>   │
+  │ <span class="hi">Data</span>      │       │   <span class="hi">+ Context</span>   │       │ <span class="hi">Report</span>   │
+  └───────────┘       └────────────────┘       └──────────┘</pre>
+  </section>
 
-        <p class=”body”>
-          Every AI implementation we deliver keeps your team in control. The system drafts, routes, and suggests. Your people approve, publish, and decide. That’s how intelligent business automation stays <span class=”ink-hl” data-delay=”0”>safe</span>, <span class=”ink-hl” data-delay=”90”>scalable</span>, and
-          <span class=”ink-hl” data-delay=”180”>consistent</span> across your operations.
-        </p>
+  <!-- ═══════════════════════════════════════════════ AI LOOP SVG -->
+  <section class="loop-section" aria-label="The AI learning loop" data-reveal="up">
+    <span class="eyebrow">The AI Loop</span>
+    <h2 class="section-title">Always learning. Always on.</h2>
 
-        <div class=”mini-note” data-reveal>
-          <p class=”mini-note__title”>Delivery Note</p>
-          <p class=”mini-note__text”>
-            From scoping your automation opportunities to building, testing, and deploying — we manage the full AI implementation. Most systems ship in 2–6 weeks.
-          </p>
-        </div>
+    <div class="loop-wrap">
+      <svg class="loop-svg" viewBox="0 0 400 400" aria-label="Circular workflow showing Query, Process, Response and Learn stages connected in a loop">
+        <defs>
+          <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="rgba(123,45,45,.55)"/>
+          </marker>
+        </defs>
+        <!-- Guide circle -->
+        <circle cx="200" cy="200" r="130" fill="none" stroke="rgba(123,45,45,.1)" stroke-width="1" stroke-dasharray="4 6"/>
+        <!-- Nodes -->
+        <circle cx="200" cy="70"  r="44" fill="var(--paper-card,#f6f2ea)" stroke="rgba(123,45,45,.3)" stroke-width="1.5"/>
+        <circle cx="330" cy="200" r="44" fill="rgba(123,45,45,.9)"        stroke="none"/>
+        <circle cx="200" cy="330" r="44" fill="var(--paper-card,#f6f2ea)" stroke="rgba(123,45,45,.3)" stroke-width="1.5"/>
+        <circle cx="70"  cy="200" r="44" fill="var(--paper-card,#f6f2ea)" stroke="rgba(123,45,45,.3)" stroke-width="1.5"/>
+        <!-- Arrows -->
+        <path d="M238 84 A130 130 0 0 1 316 162"  fill="none" stroke="rgba(123,45,45,.4)" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <path d="M330 244 A130 130 0 0 1 238 316" fill="none" stroke="rgba(123,45,45,.4)" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <path d="M162 316 A130 130 0 0 1 84 244"  fill="none" stroke="rgba(123,45,45,.4)" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <path d="M70 156 A130 130 0 0 1 162 84"   fill="none" stroke="rgba(123,45,45,.4)" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <!-- Labels -->
+        <text x="200" y="65"  text-anchor="middle" dominant-baseline="middle" class="node-label">Query</text>
+        <text x="330" y="195" text-anchor="middle" dominant-baseline="middle" class="node-label-inv">Process</text>
+        <text x="200" y="325" text-anchor="middle" dominant-baseline="middle" class="node-label">Response</text>
+        <text x="70"  y="195" text-anchor="middle" dominant-baseline="middle" class="node-label">Learn</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════ SERVICE BENTO GRID -->
+  <section class="services-section" aria-label="AI services we build" data-reveal="up">
+    <span class="eyebrow">What We Build</span>
+    <div class="bento-grid" data-stagger data-stagger-gap="80">
+
+      <article class="glow-card svc-card">
+        <h3 class="svc-title">Conversational AI assistant</h3>
+        <ul class="bento-list">
+          <li>Customer questions answered 24/7</li>
+          <li>Leads qualified, scored &amp; routed</li>
+          <li>Follow-ups triggered automatically</li>
+        </ul>
+        <p class="svc-footer">Always on. Always on-brand.</p>
       </article>
 
-      <!-- RIGHT: “lab desk” -->
-      <aside class="ai-desk" aria-label="AI desk bench" data-reveal>
-        <div class="desk-top">
-          <!-- subtle lab objects -->
-          <div class="bench-objects" aria-hidden="true">
-            <svg class="obj obj-laptop" viewBox="0 0 240 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M52 46c0-8 6-14 14-14h108c8 0 14 6 14 14v66H52V46Z" stroke="currentColor" stroke-width="2"/>
-              <path d="M34 118h172c0 8-6 14-14 14H48c-8 0-14-6-14-14Z" stroke="currentColor" stroke-width="2"/>
-              <path d="M88 126h64" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-            </svg>
+      <article class="glow-card svc-card">
+        <h3 class="svc-title">Internal AI agent</h3>
+        <ul class="bento-list">
+          <li>Contracts &amp; SOPs found in seconds</li>
+          <li>Staff questions answered automatically</li>
+          <li>Knowledge bases made queryable</li>
+        </ul>
+        <p class="svc-footer">Your team's second brain.</p>
+      </article>
 
-            <svg class="obj obj-notebook" viewBox="0 0 240 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M70 38h104c10 0 18 8 18 18v72c0 10-8 18-18 18H70c-10 0-18-8-18-18V56c0-10 8-18 18-18Z" stroke="currentColor" stroke-width="2"/>
-              <path d="M78 56h88M78 72h78M78 88h86M78 104h74" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
-              <path d="M62 48v84" stroke="currentColor" stroke-width="2" opacity="0.35"/>
-            </svg>
-          </div>
+      <article class="glow-card svc-card bento-card--wide">
+        <h3 class="svc-title">AI workflow automation</h3>
+        <ul class="bento-list bento-list--cols">
+          <li>Repetitive tasks automated end-to-end</li>
+          <li>Reports generated &amp; distributed on schedule</li>
+          <li>Approvals, routing &amp; follow-ups handled without input</li>
+        </ul>
+        <p class="svc-footer">Less manual work. More capacity.</p>
+      </article>
 
-          <!-- stamp -->
-          <div class="lab-stamp" aria-hidden="true">
-            <div class="lab-stamp__inner">
-              <span class="lab-stamp__brand">LuliDigital</span>
-              <span class="lab-stamp__word">CALIBRATED</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="bot-grid">
-
-          <div class="bot">
-            <div class="bot-head">
-              <div class="bot-antenna"></div>
-              <div class="bot-face">
-                <div class="bot-eyes">
-                  <span></span><span></span>
-                </div>
-                <div class="bot-mouth"></div>
-              </div>
-              <h3>Conversational AI assistant.</h3>
-              <ul>
-                <li>Customer questions answered 24/7</li>
-                <li>Leads qualified, scored &amp; routed</li>
-                <li>Follow-ups triggered automatically</li>
-              </ul>
-              <p class="bot-foot">Always on. Always on-brand.</p>
-            </div>
-          </div>
-
-          <div class="bot">
-            <div class="bot-head">
-              <div class="bot-antenna"></div>
-              <div class="bot-face">
-                <div class="bot-eyes">
-                  <span></span><span></span>
-                </div>
-                <div class="bot-mouth"></div>
-              </div>
-              <h3>Internal AI agent.</h3>
-              <ul>
-                <li>Contracts &amp; SOPs found in seconds</li>
-                <li>Staff questions answered automatically</li>
-                <li>Knowledge bases made queryable instantly</li>
-              </ul>
-              <p class=”bot-foot”>Your team’s second brain.</p>
-            </div>
-          </div>
-
-          <div class="bot bot-wide">
-            <div class="bot-head">
-              <div class="bot-antenna"></div>
-              <div class="bot-face">
-                <div class="bot-eyes">
-                  <span></span><span></span>
-                </div>
-                <div class="bot-mouth"></div>
-              </div>
-              <h3>AI workflow automation.</h3>
-              <ul>
-                <li>Repetitive tasks automated end-to-end</li>
-                <li>Reports generated &amp; distributed on schedule</li>
-                <li>Approvals, routing &amp; follow-ups handled without input</li>
-              </ul>
-              <p class="bot-foot">Less manual work. More capacity.</p>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="bench-links" data-reveal>
-          <a class="desk-link" href="/marketing">Visit the Marketing Desk →</a>
-          <a class="desk-link" href="/#contact">Talk to the Desk →</a>
-          <a class="desk-link" href="/virtual-assistant">Visit the Virtual Assistant Desk →</a>
-        </div>
-      </aside>
     </div>
   </section>
 
-  <section class="ai-services" data-reveal>
-    <p class="ai-services__label">What We Build</p>
-    <div class="ai-services__grid">
-      <div class="ai-service-item">
-        <span class="ai-service-item__name">AI workflow automation</span>
-        <p class="ai-service-item__copy">End-to-end automation of repetitive business processes — reporting, routing, approvals, and follow-ups.</p>
-      </div>
-      <div class="ai-service-item">
-        <span class="ai-service-item__name">Conversational AI assistants</span>
-        <p class="ai-service-item__copy">Custom AI chatbots and assistants trained on your business, deployed on your website, tools, or internal platforms.</p>
-      </div>
-      <div class="ai-service-item">
-        <span class="ai-service-item__name">AI agent implementation</span>
-        <p class="ai-service-item__copy">Autonomous AI agents that execute multi-step tasks, make decisions, and move work forward without manual input.</p>
-      </div>
-      <div class="ai-service-item">
-        <span class="ai-service-item__name">Business process automation</span>
-        <p class="ai-service-item__copy">Mapping, redesigning, and automating high-friction business processes across operations, sales, and support.</p>
-      </div>
-      <div class="ai-service-item">
-        <span class="ai-service-item__name">AI integration services</span>
-        <p class="ai-service-item__copy">Connecting AI systems to your existing tools — CRMs, inboxes, databases, and platforms — without rebuilding your stack.</p>
-      </div>
-      <div class="ai-service-item">
-        <span class="ai-service-item__name">Custom AI assistant development</span>
-        <p class="ai-service-item__copy">Bespoke AI assistants built around your brand, knowledge base, and operational workflows — not generic off-the-shelf tools.</p>
-      </div>
+  <!-- ═══════════════════════════════════════════ FULL SERVICE LIST -->
+  <section class="full-services" aria-label="Full list of AI services" data-reveal="up">
+    <span class="eyebrow">All Services</span>
+    <div class="bento-grid" data-stagger data-stagger-gap="60">
+      {[
+        { name: "AI workflow automation", desc: "End-to-end automation of repetitive business processes — reporting, routing, approvals, and follow-ups." },
+        { name: "Conversational AI assistants", desc: "Custom AI chatbots trained on your business, deployed on your website, tools, or internal platforms." },
+        { name: "AI agent implementation", desc: "Autonomous AI agents that execute multi-step tasks, make decisions, and move work forward without manual input." },
+        { name: "Business process automation", desc: "Mapping, redesigning, and automating high-friction processes across operations, sales, and support." },
+        { name: "AI integration services", desc: "Connecting AI systems to your existing tools — CRMs, inboxes, databases, and platforms." },
+        { name: "Custom AI assistant development", desc: "Bespoke AI assistants built around your brand, knowledge base, and operational workflows." },
+      ].map(({ name, desc }) => (
+        <article class="glow-card mini-card">
+          <h4 class="mini-title">{name}</h4>
+          <p class="mini-desc">{desc}</p>
+        </article>
+      ))}
     </div>
   </section>
 
-  <style>
-    .ai-page{
-      --wine: #6b2f3a;
-      --ink: rgba(20,20,19,0.92);
-      --paper-2: #f1ede3;
-      --rule: rgba(20,20,19,0.12);
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 40px 18px 80px;
-      position: relative;
-    }
+  <!-- ═══════════════════════════════════════════════════════ CTA -->
+  <section class="ai-cta" aria-label="Get started with AI" data-reveal="fade">
+    <h2 class="cta-title" data-blur-in>Ready to automate?</h2>
+    <p class="cta-sub">Most systems ship in 2–6 weeks.</p>
+    <div data-stagger data-stagger-gap="80" class="cta-links">
+      <a class="cta-link" href="https://wa.me/27602551513">Talk to the desk <span class="arr">→</span></a>
+      <a class="cta-link" href="/virtual-assistant">Visit VA Desk <span class="arr">→</span></a>
+    </div>
+  </section>
 
-    .ai-grid{
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 28px;
-      align-items: start;
-    }
-
-    @media (max-width: 980px){
-      .ai-grid{ grid-template-columns: 1fr; }
-    }
-
-    .kicker{
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(20,20,19,0.62);
-      margin: 0 0 10px;
-    }
-
-    .headline{
-      font-family: var(--font-serif, ui-serif);
-      color: var(--ink);
-      font-size: clamp(34px, 4.2vw, 52px);
-      line-height: 1.06;
-      letter-spacing: -0.03em;
-      margin: 0 0 14px;
-    }
-
-    .lede{
-      font-size: 1.08rem;
-      line-height: 1.72;
-      color: rgba(20,20,19,0.86);
-      margin: 0 0 14px;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-      max-width: 56ch;
-    }
-
-    .body{
-      font-size: 1.02rem;
-      line-height: 1.78;
-      color: rgba(20,20,19,0.84);
-      margin: 0 0 14px;
-      max-width: 60ch;
-    }
-
-    .mini-note{
-      margin-top: 18px;
-      border: 1px solid var(--rule);
-      background: rgba(247,243,234,0.72);
-      padding: 14px 14px 12px;
-      border-radius: 14px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
-    }
-    .mini-note__title{
-      margin: 0 0 8px;
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(20,20,19,0.6);
-    }
-    .mini-note__text{
-      margin: 0;
-      font-size: 0.98rem;
-      line-height: 1.7;
-      color: rgba(20,20,19,0.86);
-      font-weight: 500;
-      letter-spacing: -0.008em;
-    }
-
-    /* Desk panel */
-    .ai-desk{
-      position: relative;
-      border: 1px solid var(--rule);
-      background: linear-gradient(180deg, rgba(247,243,234,0.92), rgba(241,237,227,0.82));
-      border-radius: 18px;
-      padding: 18px 16px 16px;
-      box-shadow: 0 18px 46px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.55);
-      overflow: hidden;
-    }
-
-    /* faint grain */
-    .ai-desk::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(circle at 18% 20%, rgba(0,0,0,0.03), transparent 55%),
-        radial-gradient(circle at 78% 28%, rgba(0,0,0,0.02), transparent 60%),
-        radial-gradient(circle at 40% 88%, rgba(0,0,0,0.02), transparent 60%);
-      opacity: 0.55;
-      pointer-events:none;
-    }
-
-    .desk-top{
-      position: relative;
-      display: grid;
-      gap: 10px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .bench-objects{
-      position: absolute;
-      right: -10px;
-      top: -6px;
-      width: 200px;
-      height: 140px;
-      color: rgba(20,20,19,0.16);
-      z-index: 1;
-      pointer-events:none;
-    }
-    .obj{
-      position: absolute;
-      opacity: 0.92;
-    }
-    .obj-laptop{
-      right: 0;
-      top: 10px;
-      width: 175px;
-      transform: rotate(1.2deg);
-    }
-    .obj-notebook{
-      left: 8px;
-      top: 62px;
-      width: 160px;
-      transform: rotate(-2deg);
-      opacity: 0.85;
-    }
-
-    /* Calibrated stamp */
-    .lab-stamp{
-      position: absolute;
-      right: 14px;
-      top: 64%;
-      transform: rotate(-10deg);
-      z-index: 2;
-      pointer-events: none;
-      user-select: none;
-      opacity: 0.72;
-    }
-    .lab-stamp__inner{
-      display: grid;
-      gap: 4px;
-      padding: 10px 14px;
-      border: 1px solid rgba(20,20,19,0.22);
-      border-radius: 16px;
-      background: rgba(248,245,239,0.78);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.60);
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-    }
-    .lab-stamp__brand{
-      font-size: 10px;
-      opacity: 0.86;
-      color: rgba(20,20,19,0.84);
-      font-family: var(--font-serif, ui-serif);
-    }
-    .lab-stamp__word{
-      font-size: 13px;
-      font-weight: 700;
-      color: rgba(20,20,19,0.86);
-      font-family: var(--font-serif, ui-serif);
-    }
-
-    .bot-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:22px;
-      margin-top:24px;
-    }
-
-    @media(max-width:600px){
-      .bot-grid{ grid-template-columns:1fr; }
-    }
-
-    .bot-wide{
-      grid-column: 1 / -1;
-    }
-
-    .bot-head{
-      position: relative;
-      padding:28px 24px 24px;
-      border-radius:32px;
-      background:rgba(255,255,255,0.6);
-      border:1px solid rgba(20,20,19,0.18);
-      box-shadow:
-        0 35px 60px rgba(0,0,0,0.12),
-        0 8px 16px rgba(0,0,0,0.06);
-      transition:transform 0.3s ease;
-    }
-
-    .bot-head:hover{
-      transform:translateY(-6px);
-    }
-
-    .bot-antenna{
-      position:absolute;
-      top:-10px;
-      left:50%;
-      transform:translateX(-50%);
-      width:4px;
-      height:18px;
-      background:#6b2f3a;
-      border-radius:4px;
-    }
-
-    .bot-face{
-      background:rgba(107,47,58,0.06);
-      padding:14px;
-      border-radius:20px;
-      margin-bottom:18px;
-    }
-
-    .bot-head::after{
-      content:"";
-      position:absolute;
-      bottom:-18px;
-      left:50%;
-      transform:translateX(-50%);
-      width:65%;
-      height:20px;
-      background:radial-gradient(ellipse at center, rgba(0,0,0,0.18), transparent 70%);
-      filter:blur(8px);
-    }
-
-    .bot-eyes{
-      display:flex;
-      gap:14px;
-      margin-bottom:14px;
-    }
-
-    .bot-eyes span{
-      width:14px;
-      height:14px;
-      border-radius:50%;
-      background:#6b2f3a;
-      opacity:0.4;
-    }
-
-    .bot-mouth{
-      height:4px;
-      width:40%;
-      background:#6b2f3a;
-      opacity:0.3;
-      border-radius:4px;
-    }
-
-    .bot-head h3{
-      font-family:var(--font-serif);
-      margin-bottom:10px;
-      font-size:1.25rem;
-    }
-
-    .bot-head ul{
-      padding-left:18px;
-      line-height:1.7;
-    }
-
-    .bot-foot{
-      margin-top:12px;
-      font-size:0.9rem;
-      opacity:0.7;
-    }
-
-    @media (max-width: 560px){
-      .bench-objects{ display:none; }
-      .lab-stamp{ position: relative; right:auto; top:auto; transform:none; opacity:0.6; margin: 10px 0 0; display:flex; justify-content:center; }
-    }
-
-    .bench-links{
-      position: relative;
-      z-index: 2;
-      display: grid;
-      gap: 6px;
-      padding-top: 14px;
-      border-top: 1px solid var(--rule);
-      margin-top: 14px;
-    }
-    .desk-link{
-      font-size: 0.86rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: rgba(20,20,19,0.82);
-      border-bottom: 1px solid rgba(107,47,58,0.28);
-      width: fit-content;
-      padding-bottom: 3px;
-      transition: opacity 200ms ease, border-color 200ms ease;
-    }
-    .desk-link:hover{
-      opacity: 0.75;
-      border-color: rgba(107,47,58,0.45);
-    }
-
-    /* What We Build strip */
-    .ai-services{
-      max-width: 1100px;
-      margin: 56px auto 0;
-      padding: 0 18px;
-    }
-
-    .ai-services__label{
-      font-size: 11px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(20,20,19,.5);
-      margin: 0 0 24px;
-    }
-
-    .ai-services__grid{
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 1px;
-      background: rgba(20,20,19,.1);
-      border: 1px solid rgba(20,20,19,.1);
-    }
-
-    .ai-service-item{
-      padding: 24px 22px;
-      background: var(--paper, #f5f1e8);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .ai-service-item__name{
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: -.01em;
-      color: rgba(20,20,19,.92);
-    }
-
-    .ai-service-item__copy{
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.65;
-      color: rgba(20,20,19,.58);
-    }
-
-    @media (max-width: 760px){
-      .ai-services__grid{
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* reveal animation */
-    [data-reveal]{
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 480ms ease, transform 520ms ease;
-      will-change: opacity, transform;
-    }
-    [data-reveal].is-in{
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
-
-  <script is:inline>
-    // reveal blocks
-    const reveals = Array.from(document.querySelectorAll("[data-reveal]"));
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-in");
-        }
-      });
-    }, { threshold: 0.12 });
-
-    reveals.forEach((el) => io.observe(el));
-
-  </script>
-
-  <script>
-    import { initInkHighlights } from "../scripts/inkHighlight.js";
-    initInkHighlights();
-  </script>
 </BaseLayout>
+
+<script>
+  import { initMotion } from "../scripts/motion.js";
+  document.addEventListener("DOMContentLoaded", () => initMotion());
+</script>
+
+<style>
+  /* ── Hero ───────────────────────────────────────────────────── */
+  .ai-hero {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    padding: 88px 0 80px;
+  }
+  .orb-a { width: 500px; height: 500px; top: -80px; right: -160px; }
+  .ai-title {
+    font-size: clamp(36px, 5.5vw, 72px);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -.035em;
+    margin: 14px 0 20px;
+    font-family: ui-serif, Georgia, serif;
+    color: var(--ink, #141312);
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .ai-sub {
+    font-size: clamp(15px, 1.8vw, 18px);
+    line-height: 1.65;
+    color: var(--muted, rgba(20,19,18,.66));
+    margin: 0 auto 32px;
+    max-width: 560px;
+  }
+  .ai-hero-ctas { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
+
+  /* ── Diagram ────────────────────────────────────────────────── */
+  .diagram-section {
+    padding: 72px 0 80px;
+    border-top: 1px solid rgba(30,24,22,.1);
+  }
+  .diagram-section .ascii-diagram { margin: 24px 0; }
+
+  /* ── AI Loop SVG ────────────────────────────────────────────── */
+  .loop-section {
+    padding: 72px 0 80px;
+    border-top: 1px solid rgba(30,24,22,.1);
+  }
+  .loop-wrap { display: flex; justify-content: center; margin-top: 28px; }
+  .loop-svg {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    display: block;
+  }
+  .loop-svg .node-label {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 11px;
+    fill: rgba(20,19,18,.8);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .loop-svg .node-label-inv {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 11px;
+    fill: rgba(243,239,231,.92);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* ── Service cards ──────────────────────────────────────────── */
+  .services-section {
+    padding: 72px 0 80px;
+    border-top: 1px solid rgba(30,24,22,.1);
+  }
+  .svc-card {
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .svc-title {
+    font-size: clamp(18px, 2vw, 22px);
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -.015em;
+    font-family: ui-serif, Georgia, serif;
+    line-height: 1.2;
+    color: var(--ink, #141312);
+  }
+  .svc-footer {
+    font-size: 12px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--brand, #7b2d2d);
+    font-weight: 600;
+    margin: 0;
+    margin-top: auto;
+  }
+  .bento-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+  .bento-list li { font-size: 13.5px; line-height: 1.55; color: var(--muted, rgba(20,19,18,.66)); padding-left: 14px; position: relative; }
+  .bento-list li::before { content: "–"; position: absolute; left: 0; color: var(--brand, #7b2d2d); opacity: .55; }
+  .bento-list--cols { columns: 2; gap: 16px; display: block; }
+  .bento-list--cols li { break-inside: avoid; }
+
+  /* ── Full services ──────────────────────────────────────────── */
+  .full-services {
+    padding: 72px 0 80px;
+    border-top: 1px solid rgba(30,24,22,.1);
+  }
+  .mini-card { padding: 24px 22px; display: flex; flex-direction: column; gap: 10px; }
+  .mini-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -.01em;
+    color: var(--ink, #141312);
+  }
+  .mini-desc {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--muted, rgba(20,19,18,.62));
+    margin: 0;
+  }
+
+  /* ── CTA ────────────────────────────────────────────────────── */
+  .ai-cta {
+    text-align: center;
+    padding: 80px 0 40px;
+    border-top: 1px solid rgba(30,24,22,.1);
+  }
+  .cta-title {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    margin: 0 0 10px;
+    font-family: ui-serif, Georgia, serif;
+  }
+  .cta-sub { font-size: 15px; color: var(--muted, rgba(20,19,18,.62)); margin: 0 0 28px; }
+  .cta-links { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .ai-hero { padding: 60px 0 60px; }
+    .diagram-section .ascii-diagram { font-size: 9px; padding: 18px 14px; }
+    .bento-list--cols { columns: 1; }
+  }
+</style>

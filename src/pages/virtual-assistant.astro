@@ -29,427 +29,256 @@ const serviceSchema = {
   active="virtual-assistant"
   serviceSchema={serviceSchema}
 >
-  <section class="va-desk" aria-label="Virtual Assistant Desk">
 
-    <div class="va-intro">
-      <p class="planner-kicker">VIRTUAL ASSISTANT DESK OPS EDITION</p>
-      <h1>Executive virtual assistant &amp; remote operations support.</h1>
-      <p>
-        Dedicated virtual assistant services for founders, CEOs, and executives who need reliable remote support — inbox management, calendar control, project coordination, and operational follow-through without the overhead of a full-time hire.
-      </p>
-      <h3 class="va-transition-title">When it all lands on your desk.</h3>
-      <p class="va-transition-body">
-        You’re the decision-maker, the escalation point, the final call.<br />
-        Our virtual assistant services step in to handle the rest.
-      </p>
+  <!-- ═══════════════════════════════════════════════════════ HERO -->
+  <section class="va-hero" aria-label="Virtual Assistant services">
+    <div class="hero-orb orb-a" aria-hidden="true"></div>
+    <span class="eyebrow" data-blur-in>Virtual Assistant Desk</span>
+    <h1 class="va-title" data-word-reveal>
+      Executive support without the full-time overhead.
+    </h1>
+    <p class="va-sub" data-blur-in data-blur-delay="200">
+      Dedicated remote support for founders and CEOs — inbox, calendar, operations, and projects handled so you can lead.
+    </p>
+    <div class="va-ctas" data-stagger data-stagger-gap="80">
+      <a class="cta-link" href="https://wa.me/27602551513">Hire your VA <span class="arr">→</span></a>
+      <a class="cta-link" href="/ai">AI Desk <span class="arr">→</span></a>
     </div>
-
-    <div class="planner">
-      <div class="planner-cover">
-        <div class="planner-label">
-          <span class="planner-kicker">VIRTUAL ASSISTANT DESK</span>
-          <span class="planner-issue">OPS EDITION</span>
-        </div>
-
-        <div class="planner-body">
-          <div class="planner-rings" aria-hidden="true">
-            <span class="ring"></span>
-            <span class="ring"></span>
-            <span class="ring"></span>
-          </div>
-
-          <div class="planner-pages">
-            <div class="planner-tabs" aria-hidden="true">
-              <span class="tab tab-1"></span>
-              <span class="tab tab-2"></span>
-              <span class="tab tab-3"></span>
-              <span class="tab tab-4"></span>
-            </div>
-
-            <div class="planner-sheet">
-              <div class="planner-sheet-inner">
-                <div class="va-grid service-grid">
-
-                  <div class="va-card serviceCard service-card">
-                    <h3 class="cardTitle">Admin &amp; Operations Support</h3>
-                    <ul>
-                      <li>Inbox managed &amp; organised</li>
-                      <li>Calendar controlled &amp; optimised</li>
-                      <li>Follow-ups sent on schedule</li>
-                      <li>Reports prepared &amp; distributed</li>
-                    </ul>
-                    <p class="va-foot">Quiet execution behind the scenes.</p>
-                  </div>
-
-                  <div class="va-card serviceCard is-featured service-card">
-                    <h3 class="cardTitle">Project Management &amp; Coordination</h3>
-                    <ul>
-                      <li>Timelines owned &amp; maintained</li>
-                      <li>Milestones tracked and hit</li>
-                      <li>Teams aligned without chasing</li>
-                      <li>Deliverables managed end-to-end</li>
-                    </ul>
-                    <p class="va-foot">Nothing slips. Nothing gets lost.</p>
-                  </div>
-
-                  <div class="va-card serviceCard service-card">
-                    <h3 class="cardTitle">Marketing &amp; Content Support</h3>
-                    <ul>
-                      <li>Content created and scheduled</li>
-                      <li>Campaigns structured and briefed</li>
-                      <li>Social media managed across platforms</li>
-                      <li>Brand message refined and distributed</li>
-                    </ul>
-                    <p class="va-foot">Your message out. Consistently.</p>
-                  </div>
-
-                  <div class="va-card serviceCard is-featured service-card">
-                    <h3 class="cardTitle">AI Automation &amp; Custom Tools</h3>
-                    <ul>
-                      <li>AI assistants built for your business</li>
-                      <li>Workflows automated end-to-end</li>
-                      <li>Tools tailored to your operations</li>
-                      <li>Systems that grow with your team</li>
-                    </ul>
-                    <p class="va-foot">Built to work with you. Not replace you.</p>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="planner-spine" aria-hidden="true"></div>
-      </div>
-    </div>
-
-    <div class="va-close">
-      <p class="delegatable-line">
-        If it takes your time, it can be delegated.
-      </p>
-      <p class="va-close__line">Hire your virtual assistant today.</p>
-      <a
-        href="https://wa.me/27602551513"
-        class="cta-desk"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Contact the desk on WhatsApp"
-      >
-        HIRE YOUR VIRTUAL ASSISTANT <span class="cta-arrow">→</span>
-      </a>
-    </div>
-
   </section>
 
-  <script is:inline>
-    (() => {
-      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const cards = Array.from(document.querySelectorAll('.service-card'));
-      if (!cards.length) return;
+  <!-- ═══════════════════════════════════════════ DELEGATION SVG -->
+  <section class="delegation-section" aria-label="How delegation works" data-reveal="up">
+    <span class="eyebrow">How Delegation Works</span>
+    <h2 class="section-title">If it takes your time, it can be delegated.</h2>
 
-      // If reduced motion: just show immediately
-      if (reduce) {
-        cards.forEach((c) => c.classList.add('is-in'));
-        return;
-      }
+    <div class="delegation-wrap">
+      <svg class="delegation-svg" viewBox="0 0 660 180" aria-label="Delegation flow: You hand tasks to the Virtual Assistant who handles them, resulting in Done">
+        <defs>
+          <marker id="arr-del" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="rgba(123,45,45,.55)"/>
+          </marker>
+        </defs>
+        <!-- You -->
+        <rect x="10" y="40" width="140" height="100" rx="16" fill="var(--paper-card,#f6f2ea)" stroke="rgba(123,45,45,.28)" stroke-width="1.5"/>
+        <text x="80" y="72"  text-anchor="middle" class="del-big">You</text>
+        <text x="80" y="92"  text-anchor="middle" class="del-small">Founder / CEO</text>
+        <text x="80" y="110" text-anchor="middle" class="del-small">Decision maker</text>
+        <!-- Arrow 1 -->
+        <path d="M154 90 L210 90" stroke="rgba(123,45,45,.45)" stroke-width="1.5" marker-end="url(#arr-del)"/>
+        <!-- VA -->
+        <rect x="215" y="40" width="230" height="100" rx="16" fill="rgba(123,45,45,.88)" stroke="none"/>
+        <text x="330" y="72"  text-anchor="middle" class="del-big-inv">Virtual Assistant</text>
+        <text x="330" y="92"  text-anchor="middle" class="del-small-inv">Inbox · Calendar · Tasks</text>
+        <text x="330" y="110" text-anchor="middle" class="del-small-inv">Projects · Follow-ups</text>
+        <!-- Arrow 2 -->
+        <path d="M450 90 L506 90" stroke="rgba(123,45,45,.45)" stroke-width="1.5" marker-end="url(#arr-del)"/>
+        <!-- Done -->
+        <rect x="511" y="40" width="140" height="100" rx="16" fill="var(--paper-card,#f6f2ea)" stroke="rgba(123,45,45,.28)" stroke-width="1.5"/>
+        <text x="581" y="82"  text-anchor="middle" class="del-big">Done.</text>
+        <text x="581" y="102" text-anchor="middle" class="del-small">You focus on what</text>
+        <text x="581" y="118" text-anchor="middle" class="del-small">only you can do.</text>
+      </svg>
 
-      // Set stagger delays
-      cards.forEach((card, i) => {
-        // 70ms stagger feels premium; keep between 60–90ms
-        card.style.setProperty('--reveal-delay', `${i * 70}ms`);
-      });
+      <!-- ASCII fallback for very small screens -->
+      <pre class="delegation-ascii ascii-diagram" aria-hidden="true">
+<span class="hi">You</span> ──────▶ <span class="hi">Virtual Assistant</span> ──────▶ <span class="hi">Done.</span>
+Founder       Inbox · Calendar · Tasks     You focus on
+/ CEO         Projects · Follow-ups        what matters.</pre>
+    </div>
+  </section>
 
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-in');
-          io.unobserve(entry.target);
-        });
-      }, {
-        threshold: 0.18,
-        rootMargin: '0px 0px -10% 0px'
-      });
+  <!-- ══════════════════════════════════════════ SERVICE BENTO GRID -->
+  <section class="va-services" aria-label="VA services" data-reveal="up">
+    <span class="eyebrow">What We Handle</span>
+    <div class="bento-grid" data-stagger data-stagger-gap="80">
 
-      cards.forEach((card) => io.observe(card));
-    })();
-  </script>
+      <article class="glow-card svc-card">
+        <h3 class="svc-title">Admin &amp; Operations</h3>
+        <ul class="bento-list">
+          <li>Inbox managed &amp; organised</li>
+          <li>Calendar controlled &amp; optimised</li>
+          <li>Follow-ups sent on schedule</li>
+          <li>Reports prepared &amp; distributed</li>
+        </ul>
+        <p class="svc-footer">Quiet execution behind the scenes.</p>
+      </article>
 
-  <style>
-    .va-desk{
-      margin-top:60px;
-    }
+      <article class="glow-card svc-card">
+        <h3 class="svc-title">Project Management</h3>
+        <ul class="bento-list">
+          <li>Timelines owned &amp; maintained</li>
+          <li>Milestones tracked and hit</li>
+          <li>Teams aligned without chasing</li>
+          <li>Deliverables managed end-to-end</li>
+        </ul>
+        <p class="svc-footer">Nothing slips. Nothing gets lost.</p>
+      </article>
 
-    .va-intro h1{
-      font-family:var(--font-serif);
-      font-size:clamp(1.8rem, 3vw, 2.4rem);
-      margin-bottom:12px;
-      font-weight:700;
-      line-height:1.15;
-      letter-spacing:-.02em;
-    }
+      <article class="glow-card svc-card">
+        <h3 class="svc-title">Marketing &amp; Content Support</h3>
+        <ul class="bento-list">
+          <li>Content created and scheduled</li>
+          <li>Campaigns structured and briefed</li>
+          <li>Social media managed</li>
+          <li>Brand message distributed</li>
+        </ul>
+        <p class="svc-footer">Your message out. Consistently.</p>
+      </article>
 
-    .va-intro p{
-      max-width:620px;
-      opacity:0.8;
-      line-height:1.7;
-    }
+      <article class="glow-card svc-card">
+        <h3 class="svc-title">AI &amp; Custom Tools</h3>
+        <ul class="bento-list">
+          <li>AI assistants built for your business</li>
+          <li>Workflows automated end-to-end</li>
+          <li>Tools tailored to your operations</li>
+          <li>Systems that grow with your team</li>
+        </ul>
+        <p class="svc-footer">Built to work with you.</p>
+      </article>
 
-    .va-transition-title{
-      margin:18px 0 8px;
-      font-family:var(--font-serif);
-      font-size:1.15rem;
-      line-height:1.35;
-    }
+    </div>
+  </section>
 
-    .va-transition-body{
-      margin-top:0;
-      margin-bottom:0;
-    }
+  <!-- ═══════════════════════════════════════════════════════ CTA -->
+  <section class="va-cta-section" aria-label="Hire a virtual assistant" data-reveal="fade">
+    <h2 class="cta-title" data-blur-in>Hire your virtual assistant today.</h2>
+    <p class="cta-sub" data-blur-in data-blur-delay="150">Side by side. So you don't carry it alone.</p>
+    <div data-stagger data-stagger-gap="80" class="cta-links">
+      <a class="cta-link" href="https://wa.me/27602551513">WhatsApp us <span class="arr">→</span></a>
+      <a class="cta-link" href="mailto:info@lulidigital.co.za">Email the desk <span class="arr">→</span></a>
+    </div>
+  </section>
 
-    /* Planner shell */
-    .planner{
-      margin-top:34px;
-      max-width:980px;
-    }
-
-    .planner-cover{
-      position:relative;
-      border-radius:30px;
-      border:1px solid rgba(20,20,19,0.18);
-      background:rgba(255,255,255,0.12);
-      box-shadow:
-        0 30px 80px rgba(0,0,0,0.10),
-        0 8px 20px rgba(0,0,0,0.06);
-      padding:22px 22px 24px;
-      overflow:hidden;
-    }
-
-    /* subtle “leather” depth */
-    .planner-cover::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(900px 500px at 20% 10%, rgba(0,0,0,0.06), transparent 55%),
-        radial-gradient(700px 500px at 90% 30%, rgba(0,0,0,0.05), transparent 55%),
-        linear-gradient(to bottom, rgba(255,255,255,0.18), rgba(255,255,255,0.04));
-      pointer-events:none;
-    }
-
-    /* spine edge */
-    .planner-spine{
-      position:absolute;
-      left:0;
-      top:0;
-      bottom:0;
-      width:20px;
-      background:rgba(0,0,0,0.03);
-      border-right:1px solid rgba(20,20,19,0.10);
-    }
-
-    /* top label plate */
-    .planner-label{
-      position:relative;
-      display:flex;
-      gap:10px;
-      align-items:baseline;
-      justify-content:space-between;
-      padding:10px 14px;
-      border-radius:18px;
-      background:rgba(255,255,255,0.35);
-      border:1px solid rgba(20,20,19,0.16);
-      margin-bottom:16px;
-    }
-
-    .planner-kicker{
-      letter-spacing:0.18em;
-      font-size:0.75rem;
-      opacity:0.75;
-    }
-
-    .planner-issue{
-      letter-spacing:0.14em;
-      font-size:0.72rem;
-      opacity:0.65;
-    }
-
-    /* inner layout: rings + pages */
-    .planner-body{
-      position:relative;
-      display:grid;
-      grid-template-columns:56px 1fr;
-      gap:14px;
-    }
-
-    @media(max-width:700px){
-      .planner-body{
-        grid-template-columns:40px 1fr;
-      }
-    }
-
-    /* rings */
-    .planner-rings{
-      position:relative;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:26px;
-      padding-top:26px;
-    }
-
-    .ring{
-      width:28px;
-      height:28px;
-      border-radius:999px;
-      border:1px solid rgba(20,20,19,0.22);
-      background:rgba(255,255,255,0.45);
-      box-shadow:
-        inset 0 2px 6px rgba(0,0,0,0.10),
-        0 6px 14px rgba(0,0,0,0.06);
-    }
-
-    .ring::after{
-      content:"";
-      display:block;
-      width:10px;
-      height:10px;
-      margin:8px auto 0;
-      border-radius:999px;
-      background:rgba(0,0,0,0.06);
-    }
-
-    /* page stack */
-    .planner-pages{
-      position:relative;
-    }
-
-    .planner-sheet{
-      position:relative;
-      border-radius:26px;
-      background:rgba(255,255,255,0.55);
-      border:1px solid rgba(20,20,19,0.16);
-      overflow:hidden;
-    }
-
-    /* ruled paper lines */
-    .planner-sheet::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(0,0,0,0.00) 0px,
-          rgba(0,0,0,0.00) 26px,
-          rgba(20,20,19,0.05) 27px
-        );
-      opacity:0.35;
-      pointer-events:none;
-    }
-
-    /* inner padding */
-    .planner-sheet-inner{
-      position:relative;
-      padding:22px 22px 18px;
-    }
-
-    /* tabs */
-    .planner-tabs{
-      position:absolute;
-      top:26px;
-      right:-8px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      pointer-events:none;
-    }
-
-    .tab{
-      width:22px;
-      height:38px;
-      border-radius:12px;
-      border:1px solid rgba(20,20,19,0.16);
-      background:rgba(255,255,255,0.40);
-      box-shadow:0 10px 18px rgba(0,0,0,0.06);
-    }
-
-    .tab-1{ transform:rotate(-1deg); }
-    .tab-2{ transform:rotate(1deg); }
-    .tab-3{ transform:rotate(-1deg); }
-    .tab-4{ transform:rotate(1deg); }
-
-    @media(max-width:700px){
-      .planner-tabs{ display:none; }
-    }
-
-    /* content grid inside planner */
-    .va-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-    }
-
-    @media(max-width:700px){
-      .va-grid{ grid-template-columns:1fr; }
-    }
-
-    /* cards become “notes” on the page */
-    .va-card{
-      padding:18px 18px;
-      border-radius:20px;
-      background:rgba(255,255,255,0.35);
-      border:1px solid rgba(20,20,19,0.14);
-      box-shadow:
-        0 18px 40px rgba(0,0,0,0.08),
-        0 6px 12px rgba(0,0,0,0.04);
-    }
-
-    .va-card h3{
-      font-family:var(--font-serif);
-      font-size:1.12rem;
-      margin-bottom:10px;
-    }
-
-    .va-card ul{
-      padding-left:18px;
-      line-height:1.7;
-      margin:0;
-    }
-
-    .va-foot{
-      margin-top:10px;
-      font-size:0.9rem;
-      opacity:0.7;
-    }
-
-    .va-close{
-      margin-top:34px;
-      text-align:center;
-    }
-
-    .va-close__line{
-      margin:0 0 12px;
-      font-family:var(--font-serif);
-      font-size:clamp(1.2rem, 2vw, 1.6rem);
-      line-height:1.3;
-    }
-
-    .va-close__cta{
-      display:inline-block;
-      text-decoration:none;
-      color:rgba(20,20,19,0.88);
-      letter-spacing:0.1em;
-      text-transform:uppercase;
-      font-size:0.76rem;
-      border-bottom:1px solid rgba(20,20,19,0.22);
-      padding-bottom:4px;
-      transition:opacity 180ms ease;
-    }
-
-    .va-close__cta:hover{
-      opacity:0.72;
-    }
-  </style>
 </BaseLayout>
+
+<script>
+  import { initMotion } from "../scripts/motion.js";
+  document.addEventListener("DOMContentLoaded", () => initMotion());
+</script>
+
+<style>
+  /* ── Hero ───────────────────────────────────────────────────── */
+  .va-hero {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    padding: 88px 0 80px;
+  }
+  .orb-a { width: 480px; height: 480px; top: -100px; left: -160px; }
+  .va-title {
+    font-size: clamp(36px, 5.5vw, 68px);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -.035em;
+    margin: 14px auto 20px;
+    font-family: ui-serif, Georgia, serif;
+    color: var(--ink, #141312);
+    max-width: 780px;
+  }
+  .va-sub {
+    font-size: clamp(15px, 1.8vw, 18px);
+    line-height: 1.65;
+    color: var(--muted, rgba(20,19,18,.66));
+    margin: 0 auto 32px;
+    max-width: 520px;
+  }
+  .va-ctas { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
+
+  /* ── Delegation ─────────────────────────────────────────────── */
+  .delegation-section {
+    padding: 72px 0 80px;
+    border-top: 1px solid rgba(30,24,22,.1);
+  }
+  .delegation-wrap { margin-top: 28px; }
+  .delegation-svg {
+    width: 100%;
+    max-width: 680px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .delegation-svg .del-big {
+    font-family: ui-serif, Georgia, serif;
+    font-size: 15px;
+    font-weight: 700;
+    fill: rgba(20,19,18,.9);
+  }
+  .delegation-svg .del-big-inv {
+    font-family: ui-serif, Georgia, serif;
+    font-size: 14px;
+    font-weight: 700;
+    fill: rgba(243,239,231,.95);
+  }
+  .delegation-svg .del-small {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 10px;
+    fill: rgba(20,19,18,.5);
+    letter-spacing: .04em;
+  }
+  .delegation-svg .del-small-inv {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 10px;
+    fill: rgba(243,239,231,.7);
+    letter-spacing: .04em;
+  }
+  .delegation-ascii { display: none; }
+
+  /* ── Services ───────────────────────────────────────────────── */
+  .va-services {
+    padding: 72px 0 80px;
+    border-top: 1px solid rgba(30,24,22,.1);
+  }
+  .svc-card {
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .svc-title {
+    font-size: clamp(17px, 2vw, 21px);
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -.015em;
+    font-family: ui-serif, Georgia, serif;
+    line-height: 1.2;
+    color: var(--ink, #141312);
+  }
+  .bento-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+  .bento-list li { font-size: 13.5px; line-height: 1.55; color: var(--muted, rgba(20,19,18,.66)); padding-left: 14px; position: relative; }
+  .bento-list li::before { content: "–"; position: absolute; left: 0; color: var(--brand, #7b2d2d); opacity: .55; }
+  .svc-footer {
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--brand, #7b2d2d);
+    font-weight: 600;
+    margin: 0;
+    margin-top: auto;
+  }
+
+  /* ── CTA ────────────────────────────────────────────────────── */
+  .va-cta-section {
+    text-align: center;
+    padding: 80px 0 40px;
+    border-top: 1px solid rgba(30,24,22,.1);
+  }
+  .cta-title {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    letter-spacing: -.03em;
+    margin: 0 0 10px;
+    font-family: ui-serif, Georgia, serif;
+  }
+  .cta-sub { font-size: 15px; color: var(--muted, rgba(20,19,18,.62)); margin: 0 0 28px; }
+  .cta-links { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 520px) {
+    .delegation-svg { display: none; }
+    .delegation-ascii { display: block; font-size: 10px; padding: 18px 14px; }
+    .va-hero { padding: 60px 0 60px; }
+  }
+  @media (max-width: 600px) {
+    .bento-grid { grid-template-columns: 1fr; }
+  }
+</style>

@@ -2,110 +2,180 @@
 const { active = "" } = Astro.props;
 
 const nav = [
-  { label: "HOME", href: "/" , key: "home" },
-  { label: "MARKETING", href: "/marketing", key: "marketing" },
-  { label: "AI", href: "/ai", key: "ai" },
-  { label: "VIRTUAL ASSISTANT", href: "/virtual-assistant", key: "virtual-assistant" },
-  { label: "THE DESK REPORT", href: "/blog", key: "blog" },
-  { label: "CONTACT", href: "/contact", key: "contact" },
+  { href: "/marketing",         label: "Marketing",         key: "marketing" },
+  { href: "/ai",                label: "AI",                key: "ai" },
+  { href: "/virtual-assistant", label: "Virtual Assistant", key: "virtual-assistant" },
+  { href: "/blog",              label: "Blog",              key: "blog" },
 ];
 ---
 
-<header class="mast">
-  <div class="topline">PERFORMANCE MARKETING • AI AUTOMATION • EXECUTIVE SUPPORT</div>
-
-  <div class="logoBlock">
+<header class="site-header mast">
+  <div class="header-inner">
     <a class="logo" href="/" aria-label="LuliDigital home">
       <span class="luli">Luli</span><span class="digital">Digital</span>
     </a>
-    <div class="sub">DIGITAL STUDIO</div>
+
+    <nav class="nav" aria-label="Primary navigation">
+      {nav.map(({ href, label, key }) => (
+        <a class={`nav-item${active === key ? " is-active" : ""}`} href={href}>
+          {label}
+        </a>
+      ))}
+    </nav>
+
+    <a class="header-cta" href="/contact">Get Started</a>
+
+    <details class="nav-mobile">
+      <summary class="nav-burger" aria-label="Open navigation menu">
+        <span class="burger-icon" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </summary>
+      <div class="nav-mobile__panel">
+        {nav.map(({ href, label }) => (
+          <a class="nav-mobile__link" href={href}>{label}</a>
+        ))}
+        <a class="nav-mobile__cta" href="/contact">Get Started →</a>
+      </div>
+    </details>
   </div>
-
-  <nav class="nav" aria-label="Primary">
-    {nav.map((item) => (
-      <a
-        href={item.href}
-        class:list={["navItem", item.key === active && "isActive"]}
-      >
-        {item.label}
-      </a>
-    ))}
-  </nav>
-
-  <div class="rule"></div>
 </header>
 
 <style>
-  .mast{
-    max-width: var(--max);
+  .mast {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(243, 239, 231, .88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    padding: 18px 20px;
+  }
+
+  .header-inner {
+    max-width: var(--max, 1120px);
     margin: 0 auto;
-    padding: 38px 20px 16px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 24px;
   }
-  .topline{
-    font-size: 12px;
-    letter-spacing: .22em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .logoBlock{ margin: 6px 0 14px; }
-  .logo{
-    display: inline-block;
-    font-family: ui-serif, Georgia, "Times New Roman", Times, serif;
+
+  .logo {
+    font-family: ui-serif, Georgia, serif;
+    font-size: clamp(20px, 2.6vw, 28px);
     font-weight: 700;
-    font-size: clamp(44px, 5vw, 56px);
     line-height: 1;
     text-decoration: none;
+    flex-shrink: 0;
+    letter-spacing: -.02em;
+    transition: opacity 200ms ease;
   }
-  .luli{ color: var(--brand); }
-  .digital{ color: var(--ink); }
-  .sub{
-    margin-top: 8px;
-    font-size: 11px;
-    letter-spacing: .26em;
-    color: var(--muted);
-    text-transform: uppercase;
+  .logo:hover { opacity: .75; }
+  .luli    { color: var(--brand, #7b2d2d); }
+  .digital { color: var(--ink, #141312); }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(16px, 2.5vw, 32px);
+    margin-left: auto;
   }
 
-  .nav{
-    display: flex;
-    justify-content: center;
-    gap: clamp(18px, 3vw, 42px);
-    flex-wrap: wrap;
-    margin-top: 16px;
-  }
-  .navItem{
-    font-size: 12px;
-    letter-spacing: .22em;
+  .nav-item {
+    font-size: 11px;
+    letter-spacing: .16em;
     text-transform: uppercase;
-    color: var(--ink);
+    font-weight: 600;
+    color: var(--ink, #141312);
     text-decoration: none;
-    opacity: .9;
-    padding: 8px 6px;
+    opacity: .65;
     position: relative;
+    padding-bottom: 2px;
+    transition: opacity 180ms ease;
   }
-  .navItem:hover{ opacity: 1; }
-  .isActive{ opacity: 1; }
-  .isActive::after{
+  .nav-item::after {
     content: "";
     position: absolute;
-    left: 10%;
-    right: 10%;
-    bottom: 2px;
-    height: 1px;
-    background: var(--rule);
+    left: 0; right: 0; bottom: -2px;
+    height: 1.5px;
+    background: var(--brand, #7b2d2d);
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 220ms cubic-bezier(.16, 1, .3, 1);
+  }
+  .nav-item:hover { opacity: 1; }
+  .nav-item:hover::after,
+  .nav-item.is-active::after { transform: scaleX(1); }
+  .nav-item.is-active { opacity: 1; color: var(--brand, #7b2d2d); }
+
+  .header-cta {
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1.5px solid var(--brand, #7b2d2d);
+    color: var(--brand, #7b2d2d);
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 200ms ease, color 200ms ease;
+  }
+  .header-cta:hover {
+    background: var(--brand, #7b2d2d);
+    color: var(--paper, #f3efe7);
   }
 
-  .rule{
-    margin: 18px auto 0;
-    height: 1px;
-    background: var(--rule);
-    width: 100%;
+  .nav-mobile { display: none; }
+  .nav-burger { list-style: none; cursor: pointer; padding: 4px; background: none; border: none; }
+  .nav-burger::-webkit-details-marker { display: none; }
+  .burger-icon { display: flex; flex-direction: column; gap: 5px; width: 22px; }
+  .burger-icon span {
+    display: block; height: 1.5px;
+    background: var(--ink, #141312);
+    border-radius: 2px;
+    transition: transform 220ms ease, opacity 180ms ease;
+  }
+  details[open] .burger-icon span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+  details[open] .burger-icon span:nth-child(2) { opacity: 0; }
+  details[open] .burger-icon span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+
+  .nav-mobile__panel {
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    background: rgba(243, 239, 231, .97);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(30, 24, 22, .12);
+    padding: 16px 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .nav-mobile__link {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink, #141312);
+    text-decoration: none;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(30, 24, 22, .08);
+    transition: color 160ms ease;
+  }
+  .nav-mobile__link:hover { color: var(--brand, #7b2d2d); }
+  .nav-mobile__cta {
+    margin-top: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--brand, #7b2d2d);
+    text-decoration: none;
   }
 
-  @media (max-width: 520px){
-    .mast{ padding-top: 28px; }
-    .nav{ gap: 14px 18px; }
+  @media (max-width: 680px) {
+    .nav, .header-cta { display: none; }
+    .nav-mobile { display: block; margin-left: auto; position: relative; }
   }
 </style>

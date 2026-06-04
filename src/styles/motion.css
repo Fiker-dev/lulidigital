@@ -1,0 +1,240 @@
+/* ============================================================
+   MOTION SYSTEM — LuliDigital
+   All animation primitives. JS in motion.js adds .is-in.
+   ============================================================ */
+
+/* ── Scroll Reveal ──────────────────────────────────────────── */
+[data-reveal] {
+  opacity: 0;
+  will-change: opacity, transform;
+  transition:
+    opacity 600ms cubic-bezier(.16, 1, .3, 1),
+    transform 640ms cubic-bezier(.16, 1, .3, 1);
+}
+[data-reveal="up"]    { transform: translateY(28px); }
+[data-reveal="down"]  { transform: translateY(-20px); }
+[data-reveal="left"]  { transform: translateX(28px); }
+[data-reveal="right"] { transform: translateX(-28px); }
+[data-reveal="fade"]  { transform: none; }
+[data-reveal].is-in   { opacity: 1; transform: translate(0, 0); }
+
+/* ── Stagger Children ───────────────────────────────────────── */
+[data-stagger] > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 560ms cubic-bezier(.16, 1, .3, 1),
+    transform 600ms cubic-bezier(.16, 1, .3, 1);
+  transition-delay: var(--stagger-delay, 0ms);
+}
+[data-stagger].is-in > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Blur-in Text ───────────────────────────────────────────── */
+[data-blur-in] {
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(10px);
+  transition:
+    opacity 700ms cubic-bezier(.16, 1, .3, 1),
+    filter 700ms cubic-bezier(.16, 1, .3, 1),
+    transform 700ms cubic-bezier(.16, 1, .3, 1);
+  transition-delay: var(--blur-delay, 0ms);
+}
+[data-blur-in].is-in {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* ── Word-by-word Reveal ────────────────────────────────────── */
+[data-word-reveal] .word {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateY(8px);
+  transition:
+    opacity 550ms cubic-bezier(.16, 1, .3, 1),
+    filter 550ms cubic-bezier(.16, 1, .3, 1),
+    transform 550ms cubic-bezier(.16, 1, .3, 1);
+  transition-delay: var(--word-delay, 0ms);
+}
+[data-word-reveal].is-in .word {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* ── Glow Card ──────────────────────────────────────────────── */
+.glow-card {
+  position: relative;
+  border-radius: 20px;
+  border: 1px solid var(--border-ink-soft, rgba(30,24,22,.16));
+  background: var(--paper-card, #f6f2ea);
+  transition:
+    box-shadow 300ms ease,
+    transform 280ms cubic-bezier(.16, 1, .3, 1);
+}
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--glow-angle, 0deg) at var(--glow-x, 50%) var(--glow-y, 50%),
+    transparent 0%,
+    rgba(123, 45, 45, .35) 20%,
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+  z-index: 0;
+}
+.glow-card:hover::before { opacity: 1; }
+.glow-card:hover {
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, .12),
+    0 4px 12px rgba(123, 45, 45, .08);
+  transform: translateY(-4px);
+}
+.glow-card > * { position: relative; z-index: 1; }
+
+/* ── Hero Orb ───────────────────────────────────────────────── */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(123,45,45,.1) 0%, transparent 70%);
+  animation: orbFloat 8s ease-in-out infinite;
+  pointer-events: none;
+  will-change: transform;
+}
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(24px, -18px) scale(1.04); }
+  66%       { transform: translate(-16px, 12px) scale(.97); }
+}
+
+/* ── Eyebrow Label ──────────────────────────────────────────── */
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--muted, rgba(20,19,18,.66));
+  display: block;
+  margin-bottom: 12px;
+}
+
+/* ── CTA Link ───────────────────────────────────────────────── */
+.cta-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--brand, #7b2d2d);
+  text-decoration: none;
+  padding-bottom: 6px;
+}
+.cta-link::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--brand, #7b2d2d);
+  transform-origin: left;
+  transform: scaleX(.3);
+  opacity: .6;
+  transition:
+    transform 280ms cubic-bezier(.16, 1, .3, 1),
+    opacity 280ms ease;
+}
+.cta-link:hover::after { transform: scaleX(1); opacity: .85; }
+.cta-link .arr {
+  display: inline-block;
+  transition: transform 220ms cubic-bezier(.16, 1, .3, 1);
+}
+.cta-link:hover .arr { transform: translateX(3px); }
+
+/* ── Bento Grid ─────────────────────────────────────────────── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 900px) { .bento-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .bento-grid { grid-template-columns: 1fr; } }
+.bento-card--wide { grid-column: span 2; }
+.bento-card--hero { grid-column: 1 / -1; }
+
+/* ── Stat Number ────────────────────────────────────────────── */
+.stat-number {
+  font-family: ui-serif, Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -.04em;
+  line-height: 1;
+  color: var(--brand, #7b2d2d);
+}
+
+/* ── ASCII Diagram ──────────────────────────────────────────── */
+.ascii-diagram {
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
+  font-size: clamp(10px, 1.4vw, 13px);
+  line-height: 1.6;
+  color: var(--ink, #141312);
+  background: rgba(243, 239, 231, .6);
+  border: 1px solid var(--border-ink-soft, rgba(30,24,22,.16));
+  border-radius: 14px;
+  padding: 28px 32px;
+  overflow-x: auto;
+  white-space: pre;
+}
+.ascii-diagram .hi  { color: var(--brand, #7b2d2d); font-weight: 700; }
+.ascii-diagram .dim { opacity: .45; }
+
+/* ── Section Title ──────────────────────────────────────────── */
+.section-title {
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 700;
+  letter-spacing: -.025em;
+  line-height: 1.1;
+  margin: 0 0 32px;
+}
+
+/* ── Sticky Header States (set by motion.js) ────────────────── */
+.site-header {
+  transition:
+    padding 280ms cubic-bezier(.16, 1, .3, 1),
+    transform 280ms cubic-bezier(.4, 0, .2, 1),
+    border-color 200ms ease,
+    background 200ms ease;
+}
+.site-header.is-scrolled {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  border-bottom-color: var(--border-ink-soft, rgba(30,24,22,.16)) !important;
+  background: rgba(243, 239, 231, .97) !important;
+}
+.site-header.is-hidden {
+  transform: translateY(-100%);
+}
+
+/* ── Reduced Motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-blur-in],
+  [data-word-reveal] .word,
+  [data-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+  .hero-orb { animation: none !important; }
+  .glow-card:hover { transform: none; }
+}

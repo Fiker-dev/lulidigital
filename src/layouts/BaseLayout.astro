@@ -1,5 +1,6 @@
 ---
 import "../styles/theme.css";
+import "../styles/motion.css";
 import SiteHeader from "../components/SiteHeader.astro";
 import LanaChat from "../components/LanaChat.astro";
 
@@ -185,9 +186,10 @@ const jsonLd = {
 </html>
 
 <style>
+  :global(html) { scroll-padding-top: 70px; }
   .page{
     max-width: var(--max);
     margin: 0 auto;
-    padding: 26px 20px 88px;
+    padding: 0 20px 88px;
   }
 </style>
