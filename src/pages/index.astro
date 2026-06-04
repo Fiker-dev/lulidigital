@@ -1,14 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { getDailySeoRecommendation } from "../lib/seoAgent.js";
-
-const seoRecommendation = await getDailySeoRecommendation();
-const dailyKeyword = seoRecommendation.keyword;
 
 const serviceSchema = {
   "name": "Digital Marketing, AI Automation & Executive Virtual Assistant Services",
   "serviceType": [
-    dailyKeyword,
     "executive virtual assistant services",
     "remote executive assistant",
     "virtual assistant for founders",
@@ -25,13 +20,13 @@ const serviceSchema = {
     "business process automation",
     "AI integration services",
   ],
-  "description": `LuliDigital helps founders and executives with ${dailyKeyword}, performance marketing, brand strategy, AI workflow automation, conversational AI assistants, and executive virtual assistant services.`,
+  "description": "LuliDigital helps founders and executives with performance marketing, brand strategy, AI workflow automation, conversational AI assistants, and executive virtual assistant services.",
 };
 ---
 
 <BaseLayout
-  title={`LuliDigital | Performance Marketing, AI Automation & Executive Virtual Assistant`}
-  description={`LuliDigital helps founders and executives with ${dailyKeyword}, brand strategy, AI workflow automation, conversational AI assistants, and remote executive virtual assistant services.`}
+  title="LuliDigital | Performance Marketing, AI Automation & Executive Virtual Assistant"
+  description="LuliDigital helps founders and executives with performance marketing, brand strategy, AI workflow automation, conversational AI assistants, and remote executive virtual assistant services."
   serviceSchema={serviceSchema}
 >
 
@@ -58,11 +53,6 @@ const serviceSchema = {
         <a class="cta-link" href="/virtual-assistant">Virtual Assistant <span class="arr">→</span></a>
       </div>
 
-      {dailyKeyword && (
-        <p class="seo-chip" aria-label={`Today's content focus: ${dailyKeyword}`}>
-          Focus: <span>{dailyKeyword}</span>
-        </p>
-      )}
     </div>
   </section>
 
