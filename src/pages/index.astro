@@ -103,6 +103,12 @@ const serviceSchema = {
     </div>
   </section>
 
+  <!-- ══════════════════════════════════════════════════ DROP GUIDE -->
+  <div class="drop-guide" aria-hidden="true">
+    <div class="drop-guide__line"></div>
+    <div class="drop-guide__ball"></div>
+  </div>
+
   <!-- ════════════════════════════════════════ HOW IT WORKS (ASCII) -->
   <section class="how-section" aria-label="How LuliDigital works" data-reveal="up">
     <span class="eyebrow">How It Works</span>
@@ -119,23 +125,29 @@ const serviceSchema = {
     <p class="how-desc">Each desk is distinct but connected. Marketing builds the signal. The VA keeps operations clean. AI scales what works — without scaling headcount.</p>
   </section>
 
-  <!-- ════════════════════════════════════════════════════ STATS ROW -->
-  <section class="stats-section" aria-label="Key statistics" data-reveal="fade">
-    <div class="stats-grid" data-stagger data-stagger-gap="120">
-      <div class="stat">
-        <span class="stat-number" data-count="48" data-count-suffix="h">0h</span>
-        <span class="stat-label">Average time to first deliverable</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number" data-count="3" data-count-suffix="x">0x</span>
-        <span class="stat-label">Services under one studio roof</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number" data-count="100" data-count-suffix="%">0%</span>
-        <span class="stat-label">Remote — global founders served</span>
-      </div>
-    </div>
-  </section>
+  <!-- ═══════════════════════════════════════════ WAVE + DROP GUIDE -->
+  <div class="wave-guide" aria-hidden="true">
+    <svg class="wave-svg" viewBox="0 0 1200 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="wave-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="rgba(123,45,45,0)" />
+          <stop offset="20%"  stop-color="rgba(123,45,45,0.25)" />
+          <stop offset="50%"  stop-color="rgba(123,45,45,0.4)" />
+          <stop offset="80%"  stop-color="rgba(123,45,45,0.25)" />
+          <stop offset="100%" stop-color="rgba(123,45,45,0)" />
+        </linearGradient>
+      </defs>
+      <!-- Wave path -->
+      <path class="wave-line" d="M0,35 C150,5 350,65 600,35 C850,5 1050,65 1200,35"
+            fill="none" stroke="url(#wave-grad)" stroke-width="1.5"/>
+      <!-- Traveling ball -->
+      <circle class="wave-dot" r="5" fill="rgba(123,45,45,0.75)">
+        <animateMotion dur="3.6s" repeatCount="indefinite" calcMode="spline"
+          keyTimes="0;1" keySplines="0.4 0 0.6 1"
+          path="M0,35 C150,5 350,65 600,35 C850,5 1050,65 1200,35"/>
+      </circle>
+    </svg>
+  </div>
 
   <!-- ═══════════════════════════════════════════════ CASE STUDIES -->
   <section class="cases-section" aria-label="Client stories" data-reveal="up">
@@ -168,6 +180,12 @@ const serviceSchema = {
 
     </div>
   </section>
+
+  <!-- ═══════════════════════════════════════════════ DROP GUIDE 2 -->
+  <div class="drop-guide" aria-hidden="true">
+    <div class="drop-guide__line"></div>
+    <div class="drop-guide__ball"></div>
+  </div>
 
   <!-- ═══════════════════════════════════════════════════════ CTA -->
   <section class="final-cta" aria-label="Contact" data-reveal="fade">
@@ -305,31 +323,57 @@ const serviceSchema = {
     margin: 0;
   }
 
-  /* ── Stats ──────────────────────────────────────────────────── */
-  .stats-section {
-    padding: 56px 0;
-    border-top: 1px solid rgba(30,24,22,.1);
-    border-bottom: 1px solid rgba(30,24,22,.1);
-    margin-bottom: 80px;
+  /* ── Drop guide ─────────────────────────────────────────────── */
+  .drop-guide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 88px;
+    position: relative;
+    margin: 4px 0;
   }
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    text-align: center;
+  .drop-guide__line {
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(to bottom,
+      rgba(123,45,45,0) 0%,
+      rgba(123,45,45,0.3) 40%,
+      rgba(123,45,45,0.3) 60%,
+      rgba(123,45,45,0) 100%);
   }
-  .stat { display: flex; flex-direction: column; gap: 10px; }
-  .stat-number { font-size: clamp(44px, 6vw, 72px); }
-  .stat-label {
-    font-size: 13px;
-    color: var(--muted, rgba(20,19,18,.6));
-    line-height: 1.5;
-    max-width: 18ch;
-    margin: 0 auto;
+  .drop-guide__ball {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--brand, #7b2d2d);
+    box-shadow: 0 0 14px rgba(123,45,45,0.55), 0 0 4px rgba(123,45,45,0.8);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: ballDrop 2.2s cubic-bezier(0.3, 0, 0.7, 1) infinite;
+  }
+  @keyframes ballDrop {
+    0%   { top: 0;             opacity: 0; transform: translateX(-50%) scale(0.5); }
+    12%  { opacity: 1;         transform: translateX(-50%) scale(1); }
+    88%  { opacity: 0.7;       transform: translateX(-50%) scale(0.85); }
+    100% { top: calc(100% - 9px); opacity: 0; transform: translateX(-50%) scale(0.3); }
+  }
+
+  /* ── Wave guide ─────────────────────────────────────────────── */
+  .wave-guide {
+    padding: 16px 0;
+    overflow: hidden;
+  }
+  .wave-svg {
+    width: 100%;
+    height: 70px;
+    display: block;
+  }
+  .wave-dot {
+    filter: drop-shadow(0 0 5px rgba(123,45,45,0.7));
   }
 
   /* ── Case studies ───────────────────────────────────────────── */
-  .cases-section { padding: 0 0 80px; }
+  .cases-section { padding: 20px 0 80px; }
   .cases-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
