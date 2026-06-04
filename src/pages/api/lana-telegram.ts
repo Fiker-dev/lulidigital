@@ -15,7 +15,7 @@ type TelegramUpdate = {
 };
 
 type LanaDecision = {
-  action: "draft" | "publish" | "schedule" | "chat";
+  action: "draft" | "publish" | "schedule" | "unpublish" | "chat";
   reply: string;
   topic?: string;
   keyword?: string;
@@ -63,7 +63,7 @@ Personality: direct, warm, like a smart colleague. Keep replies short — this i
 Analyze Fiker's message and reply with a JSON object ONLY (no extra text, no markdown):
 
 {
-  "action": "draft" | "publish" | "schedule" | "chat",
+  "action": "draft" | "publish" | "schedule" | "unpublish" | "chat",
   "reply": "your short conversational reply",
 
   // include these only for action "draft":
@@ -79,14 +79,19 @@ Analyze Fiker's message and reply with a JSON object ONLY (no extra text, no mar
 
   // include for action "schedule":
   "slug": "the post slug",
-  "date": "YYYY-MM-DD"
+  "date": "YYYY-MM-DD",
+
+  // include for action "unpublish":
+  "slug": "the post slug to remove"
 }
 
 Rules:
-- Use "draft" when Fiker gives any blog idea, topic, or content request.
+- Use "draft" when Fiker gives any blog idea, topic, or content request — including "write something else instead".
 - Use "publish" when he says to post/publish a specific draft now.
 - Use "schedule" when he wants to post on a specific date (convert relative dates like "next Tuesday" to YYYY-MM-DD).
+- Use "unpublish" when he says to take down, remove, hide, or revoke a post. Extract the slug from his message.
 - Use "chat" for questions, strategy talk, or anything else.
+- If Fiker says "take it down" or "remove it" without a slug, ask which post and remind him the slug was in the notification.
 - For "chat" replies, be helpful and direct. If he's asking about a draft status, tell him to check GitHub Actions.
 - Never mention JSON, commands, or internal workings in your reply.`;
 
@@ -191,6 +196,8 @@ export const POST: APIRoute = async ({ request }) => {
       await dispatchWorkflow("publish-draft-blog.yml", { slug: decision.slug, publish_date: "" });
     } else if (decision.action === "schedule" && decision.slug && decision.date) {
       await dispatchWorkflow("publish-draft-blog.yml", { slug: decision.slug, publish_date: decision.date });
+    } else if (decision.action === "unpublish" && decision.slug) {
+      await dispatchWorkflow("unpublish-post.yml", { slug: decision.slug });
     }
 
     await sendTelegram(chatId, decision.reply);

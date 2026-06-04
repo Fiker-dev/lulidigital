@@ -99,12 +99,14 @@ jobs:
           CATEGORY=$(cat /tmp/post_category.txt)
           URL="https://lulidigital.com/blog/${SLUG}"
           MESSAGE=$(cat <<EOF
-          New article published on LuliDigital
+          New post live on LuliDigital
 
           ${CATEGORY}
           ${TITLE}
 
           ${URL}
+
+          Not happy with it? Reply "take down ${SLUG}" and I'll remove it.
           EOF
           )
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
