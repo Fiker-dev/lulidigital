@@ -101,6 +101,9 @@ function parseSchedule(text: string) {
 
 const helpText = `Lana blog commands:
 
+/myid
+Shows this Telegram chat ID.
+
 /blog your idea
 Creates a hidden draft and sends a review note back here.
 
@@ -147,6 +150,11 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
+    if (/^\/?myid$/i.test(text)) {
+      await sendTelegram(chatId, `This Telegram chat ID is:\n\n${chatId}\n\nUse it as TELEGRAM_CHAT_ID.`);
+      return new Response("OK");
+    }
+
     if (/^\/?(help|commands)$/i.test(text)) {
       await sendTelegram(chatId, helpText);
       return new Response("OK");
