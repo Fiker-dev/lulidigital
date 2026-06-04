@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LocalizedStudioLanding from "../components/LocalizedStudioLanding.astro";
+import { localizedOrganizationSchema, markets, regionalAlternates } from "../data/localizedMarkets";
+import { getDailySeoRecommendation } from "../lib/seoAgent.js";
+
+const seoRecommendation = await getDailySeoRecommendation({ geo: "ZA", market: "south-africa" });
+const market = {
+  ...markets.southAfrica,
+  title: `${seoRecommendation.keyword} | South Africa Digital Marketing, AI Automation & Virtual Assistant | LuliDigital`,
+  description: `LuliDigital helps South African founders and teams with ${seoRecommendation.keyword}, performance marketing, AI automation, SEO, and executive virtual assistant services.`,
+  seoRecommendation,
+  serviceSchema: {
+    ...markets.southAfrica.serviceSchema,
+    serviceType: [seoRecommendation.keyword, ...markets.southAfrica.serviceSchema.serviceType],
+    description: `South Africa digital marketing agency offering ${seoRecommendation.keyword}, SEO, paid media, brand strategy, AI workflow automation, and executive virtual assistant services.`,
+  },
+};
+---
+
+<BaseLayout
+  title={market.title}
+  description={market.description}
+  canonicalPath="/south-africa"
+  serviceSchema={market.serviceSchema}
+  localBusinessSchema={market.localBusinessSchema}
+  organizationSchemaOverride={localizedOrganizationSchema}
+  hreflangLinks={regionalAlternates}
+>
+  <LocalizedStudioLanding market={market} />
+</BaseLayout>

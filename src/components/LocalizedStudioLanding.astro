@@ -73,6 +73,25 @@ const isStockholm = market.variant === "stockholm";
     </aside>
   </section>
 
+  {market.seoRecommendation && (
+    <section class="local-seo-pulse reveal-block" aria-label={`${market.city} daily search focus`}>
+      <div>
+        <p class="local-eyebrow">Daily Search Focus</p>
+        <p class="local-seo-pulse__source">
+          {market.city} market signal, refreshed from {market.seoRecommendation.source}
+        </p>
+      </div>
+
+      <div>
+        <h2>{market.seoRecommendation.keyword}</h2>
+        <p>
+          The SEO agent checks country-level search trends each morning, then keeps this landing page aligned with the
+          strongest relevant demand for {market.city} across marketing, AI automation, and executive operations.
+        </p>
+      </div>
+    </section>
+  )}
+
   <section id="capabilities" class="local-section reveal-block">
     <div class="section-head">
       <p class="local-eyebrow">Studio Capabilities</p>
@@ -598,6 +617,33 @@ const isStockholm = market.variant === "stockholm";
     border-top: 1px solid var(--local-line);
   }
 
+  .local-seo-pulse{
+    display: grid;
+    grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr);
+    gap: 28px;
+    padding: 48px 0;
+    border-top: 1px solid var(--local-line);
+  }
+
+  .local-seo-pulse h2{
+    margin: 0 0 12px;
+    font-size: clamp(30px, 4vw, 52px);
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: capitalize;
+  }
+
+  .local-seo-pulse p{
+    margin: 0;
+    max-width: 68ch;
+    color: var(--local-muted);
+    line-height: 1.7;
+  }
+
+  .local-seo-pulse__source{
+    font-size: 13px;
+  }
+
   .section-head{
     display: grid;
     grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr);
@@ -834,6 +880,7 @@ const isStockholm = market.variant === "stockholm";
 
   @media (max-width: 900px){
     .local-hero,
+    .local-seo-pulse,
     .local-proof,
     .local-contact,
     .section-head{

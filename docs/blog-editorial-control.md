@@ -2,6 +2,27 @@
 
 The scheduled blog workflow still runs every Monday, Wednesday, and Friday.
 
+It can now use the SEO agent keyword research instead of the fixed topic queue. Set:
+
+```text
+BLOG_USE_SEO_AGENT=true
+```
+
+When that is enabled and no manual `topic` is supplied, `scripts/generate-post.mjs` researches the daily keyword across the configured region set, builds the post around that keyword, infers the category, and does not advance `scripts/blog-topics.json`.
+
+The default region set is:
+
+```text
+BLOG_SEO_AGENT_GEOS=NL,DE,SE,ZA
+```
+
+SEO-agent posts also receive one natural internal link to the matching local landing page:
+
+- `ZA` links to `/south-africa`
+- `NL` links to `/amsterdam`
+- `DE` links to `/munich`
+- `SE` links to `/stockholm`
+
 When you want to steer Lana manually, run the `Auto Blog Post` workflow from GitHub Actions and fill any of these optional inputs:
 
 - `topic`
@@ -11,8 +32,9 @@ When you want to steer Lana manually, run the `Auto Blog Post` workflow from Git
 - `angle`
 - `tone_notes`
 - `publish_status`
+- `use_seo_agent`
 
-If `topic` is filled, the workflow writes a custom article and does not advance the scheduled topic queue.
+If `topic` is filled, the workflow writes a custom article and does not advance the scheduled topic queue. Manual topics take priority over the SEO agent.
 
 Use `publish_status: draft` when you want to moderate the article first. Draft posts are committed to the repo but hidden from the blog index, direct blog URLs, Telegram notifications, and Google Business Profile posting.
 

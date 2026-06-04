@@ -1,6 +1,7 @@
 const siteUrl = "https://lulidigital.com";
 
 export const regionalAlternates = [
+  { hreflang: "en-za", href: `${siteUrl}/south-africa` },
   { hreflang: "en-nl", href: `${siteUrl}/amsterdam` },
   { hreflang: "en-de", href: `${siteUrl}/munich` },
   { hreflang: "en-se", href: `${siteUrl}/stockholm` },
@@ -21,6 +22,7 @@ export const localizedOrganizationSchema = {
     "addressCountry": "ZA",
   },
   "areaServed": [
+    { "@type": "Country", "name": "South Africa" },
     { "@type": "Country", "name": "Netherlands" },
     { "@type": "Country", "name": "Germany" },
     { "@type": "Country", "name": "Sweden" },
@@ -48,6 +50,86 @@ export const localizedOrganizationSchema = {
 };
 
 export const markets = {
+  southAfrica: {
+    city: "South Africa",
+    variant: "south-africa",
+    title: "South Africa Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    description:
+      "LuliDigital helps South African founders and growing teams with digital marketing, AI automation, SEO, paid media, and executive virtual assistant services.",
+    h1: "South Africa digital marketing agency. AI automation. Virtual assistant services.",
+    h2: "For South African founders, service businesses, startups, and growing teams.",
+    eyebrow: "South Africa Digital Marketing Agency",
+    positioning:
+      "A Johannesburg-led digital studio helping South African businesses get found, look credible, and run cleaner systems across marketing, AI automation, and executive operations.",
+    intro:
+      "LuliDigital helps South African founders and growing teams with paid media, SEO, brand strategy, AI workflow automation, conversational AI assistants, and executive virtual assistant services from one focused desk.",
+    primaryCta: "Start a South Africa Project",
+    secondaryCta: "View All Services",
+    serviceSchema: {
+      name: "South Africa Digital Marketing Agency — AI Automation & Virtual Assistant Services",
+      serviceType: [
+        "digital marketing agency South Africa",
+        "digital marketing agency Johannesburg",
+        "performance marketing South Africa",
+        "paid media management South Africa",
+        "brand strategy South Africa",
+        "SEO services South Africa",
+        "AI automation South Africa",
+        "AI workflow automation South Africa",
+        "conversational AI assistant South Africa",
+        "virtual assistant services South Africa",
+        "remote executive assistant South Africa",
+      ],
+      description:
+        "South Africa digital marketing agency offering performance marketing, SEO, paid media, brand strategy, AI workflow automation, conversational AI assistants, and executive virtual assistant services.",
+      areaServed: { "@type": "Country", name: "South Africa" },
+    },
+    localBusinessSchema: {
+      name: "LuliDigital South Africa",
+      logo: `${siteUrl}/favicon.svg`,
+      telephone: sharedTelephone,
+      openingHours,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Johannesburg",
+        addressCountry: "ZA",
+      },
+      description:
+        "South Africa digital marketing agency for founders and growing teams: performance marketing, SEO, AI automation, and executive virtual assistant services.",
+    },
+    capabilities: [
+      {
+        label: "Marketing",
+        title: "Digital marketing that makes the business searchable",
+        copy: "SEO, paid media, campaign planning, and brand positioning built for South African businesses that need visibility without wasting spend.",
+      },
+      {
+        label: "AI Automation",
+        title: "AI systems for lean teams",
+        copy: "AI assistants, workflow automation, and internal tools that answer questions, route work, and reduce repetitive admin.",
+      },
+      {
+        label: "Brand & Web",
+        title: "Credible brand and landing page systems",
+        copy: "Clear messaging, polished pages, and conversion-focused assets that help local and international customers trust the business faster.",
+      },
+      {
+        label: "Virtual Assistant",
+        title: "Executive virtual assistant services",
+        copy: "Inbox, calendar, follow-ups, project coordination, and admin support for founders who need operational follow-through.",
+      },
+    ],
+    proofTitle: "Built in South Africa, ready for global work",
+    proofCopy:
+      "South African businesses often need to compete locally and internationally at the same time. We build the marketing, automation, and operations layer that helps the business look serious, respond faster, and keep work moving without adding more chaos.",
+    reviews: [
+      "They helped us make the business look as sharp online as the work we do in real life.",
+      "The AI and admin systems gave our team breathing room without hiring another full-time person.",
+      "Clear strategy, cleaner execution, and no vague marketing theatre.",
+    ],
+    formTitle: "Start your South Africa project",
+    formCopy: "Send the service, market, or operations bottleneck. We will map the next practical move.",
+  },
   amsterdam: {
     city: "Amsterdam",
     variant: "amsterdam",

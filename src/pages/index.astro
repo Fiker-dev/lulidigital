@@ -36,9 +36,6 @@ const marqueeItems = [
   serviceSchema={serviceSchema}
 >
 
-  <!-- ══════════════════════════════════════════════ SCROLL PROGRESS -->
-  <div class="scroll-bar" aria-hidden="true"></div>
-
   <!-- ═══════════════════════════════════════════════════════ HERO -->
   <section class="hero" aria-label="Introduction">
     <div class="hero-orb orb-a" aria-hidden="true"></div>
@@ -253,55 +250,35 @@ const marqueeItems = [
 </BaseLayout>
 
 <script>
-  import { initMotion } from "../scripts/motion.js";
+  // initMotion, magnetic, and scroll progress run globally from BaseLayout.
+  // This page only needs its homepage-specific effects.
 
   document.addEventListener("DOMContentLoaded", () => {
-    initMotion();
     initTypewriter();
-    initMagnetic();
     initParallaxOrbs();
-    initScrollProgress();
   });
 
   // ── Typewriter ────────────────────────────────────────────────
   function initTypewriter() {
-    const el = document.getElementById("typewriter") as HTMLElement | null;
-    if (!el) return;
+    const el = document.getElementById("typewriter");
+    if (!(el instanceof HTMLElement)) return;
+    const node = el; // non-null, narrowed
     const words = ["brand.", "systems.", "AI.", "future."];
     let wi = 0, ci = 0, deleting = false;
 
     function tick() {
       const word = words[wi];
       if (!deleting) {
-        el.textContent = word.slice(0, ++ci);
+        node.textContent = word.slice(0, ++ci);
         if (ci === word.length) { deleting = true; setTimeout(tick, 1900); return; }
         setTimeout(tick, 95);
       } else {
-        el.textContent = word.slice(0, --ci);
+        node.textContent = word.slice(0, --ci);
         if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; setTimeout(tick, 320); return; }
         setTimeout(tick, 48);
       }
     }
     tick();
-  }
-
-  // ── Magnetic buttons ──────────────────────────────────────────
-  function initMagnetic() {
-    document.querySelectorAll<HTMLElement>(".magnetic").forEach((el) => {
-      const STRENGTH = 0.28;
-      el.addEventListener("mousemove", (ev) => {
-        const e = ev as MouseEvent;
-        const r = el.getBoundingClientRect();
-        const x = e.clientX - (r.left + r.width  / 2);
-        const y = e.clientY - (r.top  + r.height / 2);
-        el.style.transform = `translate(${x * STRENGTH}px, ${y * STRENGTH}px)`;
-      });
-      el.addEventListener("mouseleave", () => {
-        el.style.transform = "";
-        el.style.transition = "transform 500ms cubic-bezier(.16,1,.3,1)";
-        setTimeout(() => { el.style.transition = ""; }, 500);
-      });
-    });
   }
 
   // ── Parallax orbs on mouse ────────────────────────────────────
@@ -316,16 +293,6 @@ const marqueeItems = [
         const f = i === 0 ? 22 : i === 1 ? -16 : 10;
         orb.style.transform = `translate(${cx * f}px, ${cy * f}px)`;
       });
-    }, { passive: true });
-  }
-
-  // ── Scroll progress bar ───────────────────────────────────────
-  function initScrollProgress() {
-    const bar = document.querySelector<HTMLElement>(".scroll-bar");
-    if (!bar) return;
-    window.addEventListener("scroll", () => {
-      const max = document.body.scrollHeight - window.innerHeight;
-      bar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
     }, { passive: true });
   }
 </script>

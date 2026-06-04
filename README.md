@@ -1,43 +1,41 @@
-# Astro Starter Kit: Minimal
+# LuliDigital Website
+
+Astro site for `lulidigital.com`, deployed on Vercel.
+
+## Commands
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev
+npm run build
+npm run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## SEO Agent
 
-## 🚀 Project Structure
+The homepage, South Africa landing page, and European landing pages use a small SEO agent that researches Google Trends every morning and renders selected keywords server-side for crawlers.
 
-Inside of your Astro project, you'll see the following folders and files:
+Files:
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+- `src/lib/seoAgent.js` researches Google Trends RSS, filters for LuliDigital-relevant keywords, and falls back to rotating service keywords when trends are noisy or irrelevant.
+- `src/pages/api/seo-keyword.ts` returns the current recommendation as JSON.
+- `src/pages/api/cron/seo-agent.ts` refreshes the South Africa, Amsterdam, Munich, and Stockholm recommendations for Vercel Cron.
+- `vercel.json` schedules the cron at `0 4 * * *`, which is 06:00 in Johannesburg.
+- `scripts/generate-post.mjs` can use the same multi-region keyword research for automatic blog posts when `BLOG_USE_SEO_AGENT=true`.
+
+Environment variables:
+
+- `CRON_SECRET`: protects the cron route. Vercel Cron should call the route with `Authorization: Bearer <CRON_SECRET>`.
+- `SEO_AGENT_GEO`: optional Google Trends country code. Defaults to `ZA`.
+- `BLOG_USE_SEO_AGENT`: optional. Set to `true` in the auto-blog workflow to generate the next blog from the researched daily keyword.
+- `BLOG_SEO_AGENT_GEOS`: optional comma-separated list for blog keyword research. Defaults to `NL,DE,SE,ZA`.
+
+Manual test:
+
+```sh
+curl http://localhost:4321/api/seo-keyword
+curl "http://localhost:4321/api/seo-keyword?geo=ZA&market=south-africa"
+curl "http://localhost:4321/api/seo-keyword?geo=NL&market=amsterdam"
+curl "http://localhost:4321/api/seo-keyword?all=true"
+curl -H "Authorization: Bearer $CRON_SECRET" http://localhost:4321/api/cron/seo-agent
 ```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

@@ -38,6 +38,14 @@ on:
         options:
           - publish
           - draft
+      use_seo_agent:
+        description: 'Use daily SEO agent keyword when no topic is supplied'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 jobs:
   generate-and-publish:
@@ -67,6 +75,9 @@ jobs:
           BLOG_ANGLE: ${{ github.event.inputs.angle }}
           BLOG_TONE_NOTES: ${{ github.event.inputs.tone_notes }}
           BLOG_DRAFT: ${{ github.event.inputs.publish_status == 'draft' }}
+          BLOG_USE_SEO_AGENT: ${{ github.event_name == 'schedule' || github.event.inputs.use_seo_agent == 'true' }}
+          SEO_AGENT_GEO: ${{ vars.SEO_AGENT_GEO || 'ZA' }}
+          BLOG_SEO_AGENT_GEOS: ${{ vars.BLOG_SEO_AGENT_GEOS || 'NL,DE,SE,ZA' }}
 
       - name: Commit and push new post
         run: |
