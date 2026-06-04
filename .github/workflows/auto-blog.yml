@@ -77,7 +77,7 @@ jobs:
           BLOG_DRAFT: ${{ github.event.inputs.publish_status == 'draft' }}
           BLOG_USE_SEO_AGENT: ${{ github.event_name == 'schedule' || github.event.inputs.use_seo_agent == 'true' }}
           SEO_AGENT_GEO: ${{ vars.SEO_AGENT_GEO || 'ZA' }}
-          BLOG_SEO_AGENT_GEOS: ${{ vars.BLOG_SEO_AGENT_GEOS || 'NL,DE,SE,ZA' }}
+          BLOG_SEO_AGENT_GEOS: ${{ vars.BLOG_SEO_AGENT_GEOS || 'AFRICA,NL,DE,SE,ZA' }}
 
       - name: Commit and push new post
         run: |

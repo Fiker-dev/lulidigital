@@ -28,6 +28,55 @@ const serviceSchema = {
   serviceSchema={serviceSchema}
 >
 
+  <!-- ══════════════════════════ PAGE SIGNATURE CHARACTER ════════ -->
+  <div class="page-sig" aria-hidden="true" data-reveal="fade">
+    <div class="sig-chars">
+
+      <!-- Thinking robot -->
+      <div class="sig-char">
+        <pre class="sig-pre">
+<span class="sh">  ┌─────────┐</span>
+<span class="ai-ant sh">  │ ◉  ◉  │</span>
+<span class="sh">  │   ▲   │</span>
+<span class="sh">  └────┬────┘</span>
+<span class="sm">    ┌──┴──┐</span>
+<span class="sm">    │ CPU │</span>
+<span class="ai-think sm">    │▓▓▓▓▓│</span>
+<span class="sm">    └──┬──┘</span>
+<span class="sm">    /     \</span></pre>
+        <span class="sig-label">always processing</span>
+      </div>
+
+      <!-- Human + AI chat -->
+      <div class="sig-char">
+        <pre class="sig-pre">
+<span class="sh">╭──╮       ╔═════╗</span>
+<span class="ai-talk sh">│◕‿│  ───▶  ║ <span class="sm">AI</span>  ║</span>
+<span class="sh">╰──╯       ╚══╤══╝</span>
+<span class="sm">/│\           │</span>
+<span class="sm">/ \       ╔══╧══╗</span>
+<span class="ai-reply sm">          ║ ✓✓✓ ║</span>
+<span class="sm">          ╚═════╝</span></pre>
+        <span class="sig-label">instant answers</span>
+      </div>
+
+      <!-- Neural nodes -->
+      <div class="sig-char">
+        <pre class="sig-pre">
+<span class="sh">  ◉ ─── ◉</span>
+<span class="ai-pulse sm"> ╱ ╲   ╱ ╲</span>
+<span class="sh">◉   ◉─◉   ◉</span>
+<span class="ai-pulse sm"> ╲ ╱   ╲ ╱</span>
+<span class="sh">  ◉ ─── ◉</span>
+<span class="sm">  │       │</span>
+<span class="sh">  ◎ ─── ◎</span></pre>
+        <span class="sig-label">neural networks</span>
+      </div>
+
+    </div>
+    <p class="sig-tagline">— <em>Practical AI. Ships in weeks, not quarters.</em> —</p>
+  </div>
+
   <!-- ═══════════════════════════════════════════════════════ HERO -->
   <section class="ai-hero" aria-label="AI services">
     <div class="hero-orb orb-a" aria-hidden="true"></div>
@@ -300,10 +349,39 @@ const serviceSchema = {
   .cta-sub { font-size: 15px; color: var(--muted, rgba(20,19,18,.62)); margin: 0 0 28px; }
   .cta-links { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
 
+  /* ── Fonts ──────────────────────────────────────────────────── */
+  .ai-title, .svc-title, .cta-title, .section-title, .mini-title { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
+  .ai-sub, .svc-footer, .mini-desc, .cta-sub { font-family: var(--font-body, "DM Sans", sans-serif); }
+
+  /* ── Page signature (shared) ────────────────────────────────── */
+  .page-sig { padding: 48px 0 20px; text-align: center; }
+  .sig-chars { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 20px; }
+  .sig-char { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .sig-pre { font-family: var(--font-mono, "SF Mono", ui-monospace, monospace); font-size: 13px; line-height: 1.45; margin: 0; white-space: pre; background: none; border: none; padding: 0; text-align: left; }
+  .sh { color: var(--brand, #7b2d2d); }
+  .sm { color: rgba(20,19,18,.42); }
+  .sig-label { font-family: var(--font-body, "DM Sans", sans-serif); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted, rgba(20,19,18,.4)); font-weight: 600; }
+  .sig-tagline { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); font-size: clamp(14px, 2vw, 18px); font-style: italic; color: var(--muted, rgba(20,19,18,.5)); margin: 0; }
+
+  /* AI character animations */
+  .ai-ant   { display: block; animation: aiAntenna 1.8s ease-in-out infinite; }
+  .ai-think { display: block; animation: aiThink 1.2s step-end infinite; }
+  .ai-talk  { display: block; animation: aiTalk 2.4s ease-in-out infinite; }
+  .ai-reply { display: block; animation: aiReply 2.4s ease-in-out infinite; animation-delay: 1s; }
+  .ai-pulse { display: block; animation: aiPulse 1.6s ease-in-out infinite; }
+
+  @keyframes aiAntenna { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+  @keyframes aiThink   { 0%,40%,100%{opacity:1} 50%,90%{opacity:.3} }
+  @keyframes aiTalk    { 0%,100%{transform:translateX(0)} 40%{transform:translateX(4px)} }
+  @keyframes aiReply   { 0%,100%{opacity:0;transform:translateY(4px)} 20%,80%{opacity:1;transform:translateY(0)} }
+  @keyframes aiPulse   { 0%,100%{opacity:.3} 50%{opacity:1} }
+
   /* ── Responsive ─────────────────────────────────────────────── */
   @media (max-width: 600px) {
     .ai-hero { padding: 60px 0 60px; }
     .diagram-section .ascii-diagram { font-size: 9px; padding: 18px 14px; }
     .bento-list--cols { columns: 1; }
+    .sig-chars { gap: 20px; }
+    .sig-pre { font-size: 11px; }
   }
 </style>

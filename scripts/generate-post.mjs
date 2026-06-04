@@ -20,6 +20,7 @@ const useSeoAgent = process.env.BLOG_USE_SEO_AGENT === "true";
 const isDraft = process.env.BLOG_DRAFT === "true";
 const seoRecommendation = !customTitle && useSeoAgent ? await getBestRegionalSeoRecommendation({ forceRefresh: true }) : null;
 const localTargets = {
+  AFRICA: { label: "Africa Growth Desk", path: "/africa" },
   ZA: { label: "South Africa", path: "/south-africa" },
   NL: { label: "Amsterdam", path: "/amsterdam" },
   DE: { label: "Munich", path: "/munich" },

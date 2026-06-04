@@ -7,12 +7,65 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   description="Contact LuliDigital for executive virtual assistant support, digital marketing, SEO, paid media, brand strategy, and AI automation services."
   active="contact"
 >
+
+  <!-- ══════════════════════════ PAGE SIGNATURE CHARACTER ════════ -->
+  <div class="page-sig" aria-hidden="true" data-reveal="fade">
+    <div class="sig-chars">
+
+      <!-- Greeter at door -->
+      <div class="sig-char">
+        <pre class="sig-pre">
+<span class="sh">         ┌──┐</span>
+<span class="sh">      ╔══╡  ╞══╗</span>
+<span class="sh">      ║  └──┘  ║</span>
+<span class="sm">      ║  <span class="con-head">╭──╮</span>  ║</span>
+<span class="con-head sm">      ║  │◕‿│  ║</span>
+<span class="sm">      ║  ╰──╯  ║</span>
+<span class="con-wave sm">    <span class="sh">╲</span> ║  /│╲  ║ <span class="sh">╱</span></span>
+<span class="sm">      ║ ╱ │ ╲ ║</span>
+<span class="sm">      ╚═══════╝</span></pre>
+        <span class="sig-label">open door</span>
+      </div>
+
+      <!-- Phone / message -->
+      <div class="sig-char">
+        <pre class="sig-pre">
+<span class="sm">  ╭─────────────╮</span>
+<span class="sm">  │ <span class="sh">hello there!</span> │</span>
+<span class="sm">  ╰──────┬──────╯</span>
+<span class="sm">         │</span>
+<span class="sh">  ╭────╮</span>
+<span class="con-head sh">  │◕‿◕ │</span>
+<span class="sh">  ╰────╯</span>
+<span class="sm">   /│╲</span>
+<span class="sm">  ╱ │ ╲</span></pre>
+        <span class="sig-label">we're listening</span>
+      </div>
+
+      <!-- Coffee + notepad -->
+      <div class="sig-char">
+        <pre class="sig-pre">
+<span class="sh">  ╭────╮</span>
+<span class="con-head sh">  │ ◠‿◠│</span>
+<span class="sh">  ╰────╯</span>
+<span class="sm">   /│╲  ╔═══╗</span>
+<span class="sm">  ╱ │ ╲ ║ ✎ ║</span>
+<span class="con-write sm">       ║~~~║</span>
+<span class="sm">       ╚═══╝</span>
+<span class="con-cup sm">    ☕</span></pre>
+        <span class="sig-label">let's talk</span>
+      </div>
+
+    </div>
+    <p class="sig-tagline">— <em>Fastest reply: WhatsApp. We actually pick up.</em> —</p>
+  </div>
+
   <section class="contact-wrap">
     <header class="contact-head">
-      <div class="kicker">CONTACT DESK</div>
+      <div class="kicker">Contact Desk</div>
       <h1 class="headline">Reach the desk.</h1>
       <p class="subhead">
-        For campaigns, systems, or something you're building &mdash; send a note or message the desk.
+        For campaigns, systems, or something you're building — send a note or message the desk.
       </p>
     </header>
 
@@ -49,121 +102,106 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   </section>
 
   <style>
-    .contact-wrap{
+    /* ── Fonts ────────────────────────────────────────────────── */
+    .headline { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
+    .subhead, .label, .value, .fineprint, .kicker { font-family: var(--font-body, "DM Sans", sans-serif); }
+
+    /* ── Page signature ────────────────────────────────────────── */
+    .page-sig { padding: 48px 0 20px; text-align: center; }
+    .sig-chars { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 20px; }
+    .sig-char { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .sig-pre { font-family: var(--font-mono, "SF Mono", ui-monospace, monospace); font-size: 13px; line-height: 1.45; margin: 0; white-space: pre; background: none; border: none; padding: 0; text-align: left; }
+    .sh { color: var(--brand, #7b2d2d); }
+    .sm { color: rgba(20,19,18,.42); }
+    .sig-label { font-family: var(--font-body, "DM Sans", sans-serif); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted, rgba(20,19,18,.4)); font-weight: 600; }
+    .sig-tagline { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); font-size: clamp(14px, 2vw, 18px); font-style: italic; color: var(--muted, rgba(20,19,18,.5)); margin: 0; }
+
+    /* Contact character animations */
+    .con-head  { display: block; animation: conBob 3s ease-in-out infinite; }
+    .con-wave  { display: block; animation: conWave 1.4s ease-in-out infinite; }
+    .con-write { display: block; animation: conWrite 2s step-end infinite; }
+    .con-cup   { display: block; animation: conCup 4s ease-in-out infinite; }
+
+    @keyframes conBob   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+    @keyframes conWave  { 0%,100%{transform:rotate(0)} 30%{transform:rotate(-12deg)} 60%{transform:rotate(8deg)} }
+    @keyframes conWrite { 0%,60%,100%{opacity:1} 65%{opacity:.3} }
+    @keyframes conCup   { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+
+    /* ── Contact layout ────────────────────────────────────────── */
+    .contact-wrap {
       max-width: 980px;
       margin: 0 auto;
-      padding: 64px 24px 80px;
+      padding: 40px 24px 80px;
       color: rgba(20,20,20,.92);
     }
-
-    .contact-head{ text-align:center; margin-bottom: 28px; }
-    .contact-head .kicker{
+    .contact-head { text-align: center; margin-bottom: 28px; }
+    .kicker {
       letter-spacing: .22em;
-      font-size: 12px;
-      color: rgba(20,20,20,.55);
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--muted, rgba(20,19,18,.5));
       margin-bottom: 14px;
+      font-weight: 600;
     }
-    .contact-head .headline{
-      font-size: clamp(44px, 5vw, 66px);
+    .headline {
+      font-size: clamp(44px, 5vw, 80px);
       line-height: .96;
       margin: 0 0 10px;
       font-weight: 700;
+      letter-spacing: -.04em;
     }
-    .contact-head .subhead{
+    .subhead {
       margin: 0 auto;
-      max-width: 620px;
+      max-width: 520px;
       font-size: 16px;
-      line-height: 1.6;
-      color: rgba(20,20,20,.70);
+      line-height: 1.65;
+      color: rgba(20,20,20,.65);
     }
 
-    .contact-card{
+    .contact-card {
       margin: 34px auto 0;
-      max-width: 760px;
+      max-width: 720px;
       background: rgba(255,255,255,.62);
       border: 1px solid rgba(30,30,30,.14);
-      border-radius: 18px;
-      box-shadow:
-        0 18px 40px rgba(20,20,20,.08),
-        inset 0 1px 0 rgba(255,255,255,.65);
-      backdrop-filter: blur(6px);
+      border-radius: 20px;
+      box-shadow: 0 18px 40px rgba(20,20,20,.08), inset 0 1px 0 rgba(255,255,255,.65);
+      backdrop-filter: blur(8px);
       padding: 6px;
     }
+    .contact-card a, .contact-card a:visited { color: inherit !important; text-decoration: none !important; }
 
-    /* OVERRIDE GLOBAL LINK STYLES INSIDE THE CARD */
-    .contact-card a,
-    .contact-card a:visited{
-      color: inherit !important;
-      text-decoration: none !important;
-    }
-
-    .contact-row{
-      display:flex;
-      align-items:center;
+    .contact-row {
+      display: flex;
+      align-items: center;
       gap: 16px;
-      padding: 18px 18px;
-      border-radius: 14px;
-      transition: transform .12s ease, background .12s ease;
+      padding: 20px 20px;
+      border-radius: 16px;
+      transition: transform .15s ease, background .15s ease;
       position: relative;
     }
-    .contact-row:hover{
-      background: rgba(255,255,255,.52);
-      transform: translateY(-1px);
-    }
+    .contact-row:hover { background: rgba(255,255,255,.55); transform: translateY(-2px); }
+    .contact-row::after { content: "→"; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: rgba(20,20,20,.45); font-size: 18px; }
 
-    /* Arrow without HTML characters (prevents â†’ encoding issues) */
-    .contact-row::after{
-      content: "→";
-      position: absolute;
-      right: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: rgba(20,20,20,.55);
-      font-size: 18px;
-    }
-
-    .glyph{
-      width: 44px; height: 44px;
-      display:grid; place-items:center;
-      border-radius: 12px;
-      background: rgba(245,241,232,.85);
+    .glyph {
+      width: 48px; height: 48px;
+      display: grid; place-items: center;
+      border-radius: 14px;
+      background: rgba(245,241,232,.9);
       border: 1px solid rgba(30,30,30,.10);
-      color: rgba(20,20,20,.86);
+      color: var(--brand, #7b2d2d);
+      flex-shrink: 0;
     }
+    .contact-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; padding-right: 28px; }
+    .label { font-size: 11px; letter-spacing: .18em; color: rgba(20,20,20,.5); text-transform: uppercase; font-weight: 600; }
+    .value { font-size: 20px; line-height: 1.2; font-weight: 600; color: rgba(20,20,20,.9); word-break: break-word; }
+    .divider { height: 1px; margin: 0 20px; background: rgba(20,20,20,.08); }
+    .fineprint { text-align: center; margin: 14px 0 0; font-size: 11px; letter-spacing: .14em; color: rgba(20,20,20,.45); text-transform: uppercase; }
 
-    .contact-text{ display:flex; flex-direction:column; gap: 4px; min-width: 0; padding-right: 28px; }
-    .label{
-      font-size: 12px;
-      letter-spacing: .18em;
-      color: rgba(20,20,20,.55);
-      text-transform: uppercase;
-    }
-    .value{
-      font-size: 20px;
-      line-height: 1.15;
-      font-weight: 600;
-      color: rgba(20,20,20,.90);
-      word-break: break-word;
-    }
-
-    .divider{
-      height: 1px;
-      margin: 0 18px;
-      background: rgba(20,20,20,.10);
-    }
-
-    .fineprint{
-      text-align:center;
-      margin: 14px 0 0;
-      font-size: 12px;
-      letter-spacing: .12em;
-      color: rgba(20,20,20,.55);
-      text-transform: uppercase;
-    }
-
-    @media (max-width: 560px){
-      .contact-wrap{ padding: 44px 16px 60px; }
-      .value{ font-size: 18px; }
+    @media (max-width: 560px) {
+      .contact-wrap { padding: 24px 16px 60px; }
+      .value { font-size: 17px; }
+      .sig-chars { gap: 20px; }
+      .sig-pre { font-size: 11px; }
     }
   </style>
 </BaseLayout>

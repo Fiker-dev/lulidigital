@@ -1,6 +1,7 @@
 const siteUrl = "https://lulidigital.com";
 
 export const regionalAlternates = [
+  { hreflang: "en-001", href: `${siteUrl}/africa` },
   { hreflang: "en-za", href: `${siteUrl}/south-africa` },
   { hreflang: "en-nl", href: `${siteUrl}/amsterdam` },
   { hreflang: "en-de", href: `${siteUrl}/munich` },
@@ -23,6 +24,10 @@ export const localizedOrganizationSchema = {
   },
   "areaServed": [
     { "@type": "Country", "name": "South Africa" },
+    { "@type": "Place", "name": "Africa" },
+    { "@type": "Country", "name": "Nigeria" },
+    { "@type": "Country", "name": "Kenya" },
+    { "@type": "Country", "name": "Ghana" },
     { "@type": "Country", "name": "Netherlands" },
     { "@type": "Country", "name": "Germany" },
     { "@type": "Country", "name": "Sweden" },
@@ -50,6 +55,86 @@ export const localizedOrganizationSchema = {
 };
 
 export const markets = {
+  africa: {
+    city: "Africa",
+    variant: "africa",
+    title: "Digital Marketing, AI Automation & Virtual Assistant Services for African Companies | LuliDigital",
+    description:
+      "LuliDigital helps international companies, African startups, and dollar-earning service businesses with digital marketing, AI automation, SEO, and executive virtual assistant services.",
+    h1: "Digital marketing, AI automation, and executive support for ambitious African companies.",
+    h2: "For international teams, funded startups, exporters, agencies, and dollar-earning service businesses across Africa.",
+    eyebrow: "Africa Growth Desk",
+    positioning:
+      "An Africa-based international studio helping companies that sell beyond borders build sharper marketing, cleaner automation, and stronger executive operations.",
+    intro:
+      "LuliDigital works with African companies serving global clients, international teams operating on the continent, and founders who need their digital presence, systems, and execution to match a dollar-paying market.",
+    primaryCta: "Start an Africa Project",
+    secondaryCta: "View All Services",
+    serviceSchema: {
+      name: "Digital Marketing, AI Automation & Virtual Assistant Services for African Companies",
+      serviceType: [
+        "digital marketing agency Africa",
+        "digital marketing agency for African startups",
+        "performance marketing agency Africa",
+        "SEO services Africa",
+        "AI automation Africa",
+        "AI automation for African companies",
+        "virtual assistant services Africa",
+        "remote executive assistant Africa",
+        "digital marketing for international companies in Africa",
+        "marketing agency for dollar earning African businesses",
+        "AI workflow automation for African businesses",
+      ],
+      description:
+        "Digital marketing, SEO, AI automation, paid media, brand strategy, and executive virtual assistant services for African companies, international teams, and dollar-earning service businesses.",
+      areaServed: { "@type": "Place", name: "Africa" },
+    },
+    localBusinessSchema: {
+      name: "LuliDigital Africa",
+      logo: `${siteUrl}/favicon.svg`,
+      telephone: sharedTelephone,
+      openingHours,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Johannesburg",
+        addressCountry: "ZA",
+      },
+      description:
+        "Africa-focused digital studio for international companies, funded startups, exporters, and dollar-earning service businesses.",
+    },
+    capabilities: [
+      {
+        label: "International Growth",
+        title: "Marketing for companies selling beyond borders",
+        copy: "Positioning, SEO, paid media, and landing pages for African companies that need to look credible to buyers in Europe, the US, the Middle East, and across the continent.",
+      },
+      {
+        label: "AI Automation",
+        title: "Lean systems for cross-border teams",
+        copy: "AI assistants, reporting workflows, lead routing, and internal knowledge tools for teams that cannot afford messy handoffs or slow response times.",
+      },
+      {
+        label: "Brand & Web",
+        title: "Premium digital presence for serious buyers",
+        copy: "Brand systems, conversion pages, and campaign assets built for trust with international customers, investors, partners, and procurement teams.",
+      },
+      {
+        label: "Executive Support",
+        title: "Remote executive assistant services",
+        copy: "Inbox, calendar, follow-ups, research, coordination, and operational support for founders and leadership teams working across time zones.",
+      },
+    ],
+    proofTitle: "Africa-based does not mean local-only",
+    proofCopy:
+      "Many African companies are already serving international customers, pitching global partners, or working with remote teams. The problem is often not ambition. It is that the website, follow-up system, campaign engine, and operations layer do not yet match the market they want to win.",
+    reviews: [
+      "They understood the gap between local execution and international expectations immediately.",
+      "The systems helped us respond faster to overseas leads without hiring a bigger admin team.",
+      "Our brand finally looked like it belonged in the same room as the clients we wanted.",
+    ],
+    formTitle: "Start your Africa growth project",
+    formCopy: "Send the market, service, or operations bottleneck. We will map the most direct route to a cleaner international-facing system.",
+  },
   southAfrica: {
     city: "South Africa",
     variant: "south-africa",

@@ -13,11 +13,12 @@ When that is enabled and no manual `topic` is supplied, `scripts/generate-post.m
 The default region set is:
 
 ```text
-BLOG_SEO_AGENT_GEOS=NL,DE,SE,ZA
+BLOG_SEO_AGENT_GEOS=AFRICA,NL,DE,SE,ZA
 ```
 
 SEO-agent posts also receive one natural internal link to the matching local landing page:
 
+- `AFRICA` links to `/africa`
 - `ZA` links to `/south-africa`
 - `NL` links to `/amsterdam`
 - `DE` links to `/munich`

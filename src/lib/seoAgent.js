@@ -15,6 +15,15 @@ const fallbackKeywords = [
 ];
 
 const regionalFallbackKeywords = {
+  AFRICA: [
+    "digital marketing agency for African startups",
+    "AI automation for African companies",
+    "virtual assistant services for African businesses",
+    "performance marketing agency Africa",
+    "SEO services for African companies",
+    "remote executive assistant Africa",
+    "digital marketing agency for international companies in Africa",
+  ],
   ZA: [
     "digital marketing agency South Africa",
     "AI automation South Africa",
@@ -54,6 +63,10 @@ const serviceSignals = [
   "marketing",
   "seo",
   "business",
+  "companies",
+  "international",
+  "global",
+  "remote",
   "small business",
   "startup",
   "founder",
@@ -70,6 +83,13 @@ const serviceSignals = [
   "south africa",
   "johannesburg",
   "cape town",
+  "africa",
+  "nigeria",
+  "kenya",
+  "ghana",
+  "lagos",
+  "nairobi",
+  "accra",
 ];
 
 const decodeXml = (value) =>

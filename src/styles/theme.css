@@ -1,4 +1,9 @@
 :root{
+  /* Fonts */
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-body:    "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    "SF Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
+
   /* Old-money paper palette */
   --paper: #f3efe7;         /* page background */
   --paper-card: #f6f2ea;    /* cards/panels */
@@ -30,6 +35,22 @@ html, body{
   color: var(--ink);
   margin: 0;
   padding: 0;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Global heading style — Fraunces display serif */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: "WONK" 1;
+  letter-spacing: -.03em;
+}
+
+/* Body text — DM Sans */
+p, li, label, input, textarea, span, a {
+  font-family: var(--font-body);
 }
 
 *{ box-sizing: border-box; }

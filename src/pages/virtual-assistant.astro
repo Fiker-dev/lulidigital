@@ -30,6 +30,57 @@ const serviceSchema = {
   serviceSchema={serviceSchema}
 >
 
+  <!-- ══════════════════════════ PAGE SIGNATURE CHARACTER ════════ -->
+  <div class="page-sig" aria-hidden="true" data-reveal="fade">
+    <div class="sig-chars">
+
+      <!-- Inbox tamer -->
+      <div class="sig-char">
+        <pre class="sig-pre">
+<span class="sh">  ╭────╮</span>
+<span class="va-head sh">  │◕‿◕ │</span>
+<span class="sh">  ╰────╯</span>
+<span class="sm">   /│╲  ╔═══════╗</span>
+<span class="sm">  ╱ │ ╲ ║ INBOX ║</span>
+<span class="va-check sm">       ║ ✓ ✓ ✓ ║</span>
+<span class="sm">       ║ ✓ ✓   ║</span>
+<span class="sm">       ╚═══════╝</span></pre>
+        <span class="sig-label">inbox zero</span>
+      </div>
+
+      <!-- Calendar keeper -->
+      <div class="sig-char">
+        <pre class="sig-pre">
+<span class="sh">  ╭────╮</span>
+<span class="va-head sh">  │ˆ ‿ˆ│</span>
+<span class="sh">  ╰────╯</span>
+<span class="sm">  ╱│╲  ┌───────┐</span>
+<span class="sm"> ╱ │ ╲ │Mo Tu W│</span>
+<span class="va-cal sm">       │<span class="sh">◈</span>  <span class="sh">◈</span>  <span class="sh">◈</span>│</span>
+<span class="sm">       │Th Fr Sa│</span>
+<span class="va-cal sm">       │<span class="sh">◈</span>  <span class="sh">◈</span>  · │</span>
+<span class="sm">       └───────┘</span></pre>
+        <span class="sig-label">calendar mastery</span>
+      </div>
+
+      <!-- Task runner -->
+      <div class="sig-char">
+        <pre class="sig-pre">
+<span class="sh">  ╭────╮</span>
+<span class="va-head sh">  │◉ ‿◉│</span>
+<span class="sh">  ╰────╯</span>
+<span class="sm">   /│╲</span>
+<span class="sm">  ╱ │ ╲  [<span class="sh">✓</span>] done</span>
+<span class="va-tasks sm">         [<span class="sh">✓</span>] done</span>
+<span class="va-tasks sm">         [<span class="sh">✓</span>] done</span>
+<span class="sm">         [ ] next</span></pre>
+        <span class="sig-label">nothing slips</span>
+      </div>
+
+    </div>
+    <p class="sig-tagline">— <em>If it takes your time, it can be delegated.</em> —</p>
+  </div>
+
   <!-- ═══════════════════════════════════════════════════════ HERO -->
   <section class="va-hero" aria-label="Virtual Assistant services">
     <div class="hero-orb orb-a" aria-hidden="true"></div>
@@ -268,6 +319,31 @@ Founder       Inbox · Calendar · Tasks     You focus on
   .cta-sub { font-size: 15px; color: var(--muted, rgba(20,19,18,.62)); margin: 0 0 28px; }
   .cta-links { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
 
+  /* ── Fonts ──────────────────────────────────────────────────── */
+  .va-title, .svc-title, .cta-title, .section-title { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
+  .va-sub, .svc-footer, .cta-sub { font-family: var(--font-body, "DM Sans", sans-serif); }
+
+  /* ── Page signature ─────────────────────────────────────────── */
+  .page-sig { padding: 48px 0 20px; text-align: center; }
+  .sig-chars { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 20px; }
+  .sig-char { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .sig-pre { font-family: var(--font-mono, "SF Mono", ui-monospace, monospace); font-size: 13px; line-height: 1.45; margin: 0; white-space: pre; background: none; border: none; padding: 0; text-align: left; }
+  .sh { color: var(--brand, #7b2d2d); }
+  .sm { color: rgba(20,19,18,.42); }
+  .sig-label { font-family: var(--font-body, "DM Sans", sans-serif); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted, rgba(20,19,18,.4)); font-weight: 600; }
+  .sig-tagline { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); font-size: clamp(14px, 2vw, 18px); font-style: italic; color: var(--muted, rgba(20,19,18,.5)); margin: 0; }
+
+  /* VA character animations */
+  .va-head  { display: block; animation: vaNod 4s ease-in-out infinite; }
+  .va-check { display: block; animation: vaCheck 3s ease-in-out infinite; }
+  .va-cal   { display: block; animation: vaCal 2s step-end infinite; }
+  .va-tasks { display: block; animation: vaTasks 4s ease-in-out infinite; }
+
+  @keyframes vaNod   { 0%,100%{transform:rotate(0)} 30%{transform:rotate(3deg) translateY(-2px)} }
+  @keyframes vaCheck { 0%,100%{opacity:1} 50%{opacity:.5} 55%{opacity:1} }
+  @keyframes vaCal   { 0%,70%,100%{opacity:1} 75%{opacity:.4} }
+  @keyframes vaTasks { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+
   /* ── Responsive ─────────────────────────────────────────────── */
   @media (max-width: 520px) {
     .delegation-svg { display: none; }
@@ -276,5 +352,7 @@ Founder       Inbox · Calendar · Tasks     You focus on
   }
   @media (max-width: 600px) {
     .bento-grid { grid-template-columns: 1fr; }
+    .sig-chars { gap: 20px; }
+    .sig-pre { font-size: 11px; }
   }
 </style>

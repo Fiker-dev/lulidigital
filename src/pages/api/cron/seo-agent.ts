@@ -15,6 +15,7 @@ export const GET: APIRoute = async ({ request }) => {
   }
 
   const markets = await Promise.all([
+    getDailySeoRecommendation({ forceRefresh: true, geo: "AFRICA", market: "africa" }),
     getDailySeoRecommendation({ forceRefresh: true, geo: "ZA", market: "south-africa" }),
     getDailySeoRecommendation({ forceRefresh: true, geo: "NL", market: "amsterdam" }),
     getDailySeoRecommendation({ forceRefresh: true, geo: "DE", market: "munich" }),

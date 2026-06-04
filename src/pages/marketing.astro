@@ -30,6 +30,56 @@ const serviceSchema = {
   serviceSchema={serviceSchema}
 >
 
+  <!-- ══════════════════════════ PAGE SIGNATURE CHARACTER ════════ -->
+  <div class="page-sig" aria-hidden="true" data-reveal="fade">
+    <div class="sig-chars">
+
+      <!-- Megaphone person -->
+      <div class="sig-char">
+        <pre class="sig-pre">
+<span class="sh">  ╭────╮</span>
+<span class="sig-head sh">  │◕ ◕ │</span>
+<span class="sh">  ╰──┬─╯</span>
+<span class="sm">  ╱ │╲  ╔══╗</span>
+<span class="sig-arm sm"> ╱  │ ╲╔╝▶▶║</span>
+<span class="sm">╱   │  ╚╗  ║</span>
+<span class="sm">    │   ╚══╝</span>
+<span class="sm">   ╱ ╲</span></pre>
+        <span class="sig-label">broadcasting</span>
+      </div>
+
+      <!-- Billboard painter -->
+      <div class="sig-char">
+        <pre class="sig-pre">
+<span class="sh">     ╭───╮</span>
+<span class="sig-head sh">     │ ◠‿◠│</span>
+<span class="sh">     ╰───╯</span>
+<span class="sm">  ╱╲ /│╲</span>
+<span class="sig-brush sm"> ╱  ╲  │  ╲</span>
+<span class="sm">   ┌────────────┐</span>
+<span class="sig-board sm">   │  <span class="sh">YOUR BRAND</span> │</span>
+<span class="sig-board sm">   │   ∿∿∿∿∿∿   │</span>
+<span class="sm">   └────────────┘</span></pre>
+        <span class="sig-label">painting stories</span>
+      </div>
+
+      <!-- Camera person -->
+      <div class="sig-char">
+        <pre class="sig-pre">
+<span class="sh">  ╭────╮</span>
+<span class="sig-head sh">  │◕‿◕ │</span>
+<span class="sh">  ╰────╯</span>
+<span class="sm">   /│╲  ╔══════╗</span>
+<span class="sig-cam sm">  ╱ │ ╲─║ ◎REC ║</span>
+<span class="sm">      ╲  ╚══════╝</span>
+<span class="sm">      ╱╲</span></pre>
+        <span class="sig-label">capturing moments</span>
+      </div>
+
+    </div>
+    <p class="sig-tagline">— <em>You built it. We broadcast it.</em> —</p>
+  </div>
+
   <!-- ═══════════════════════════════════════════════════════ HERO -->
   <section class="mkt-hero" aria-label="Marketing services">
     <div class="hero-orb orb-a" aria-hidden="true"></div>
@@ -42,8 +92,8 @@ const serviceSchema = {
       and create content systems that make your business get found, understood, and chosen.
     </p>
     <div class="mkt-ctas" data-stagger data-stagger-gap="80">
-      <a class="cta-link" href="https://wa.me/27602551513">Request a walkthrough <span class="arr">→</span></a>
-      <a class="cta-link" href="/ai">Visit AI Desk <span class="arr">→</span></a>
+      <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">Request a walkthrough</a>
+      <a class="pill pill--outline magnetic" href="/ai">Visit AI Desk</a>
     </div>
   </section>
 
@@ -299,6 +349,79 @@ const serviceSchema = {
   .cta-sub { font-size: 15px; color: var(--muted, rgba(20,19,18,.62)); margin: 0 0 28px; }
   .cta-links { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
 
+  /* ── Fonts ──────────────────────────────────────────────────── */
+  .mkt-title, .svc-title, .cta-title, .section-title { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
+
+  /* ── Page signature ─────────────────────────────────────────── */
+  .page-sig {
+    padding: 48px 0 20px;
+    text-align: center;
+  }
+  .sig-chars {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .sig-char { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .sig-pre {
+    font-family: var(--font-mono, "SF Mono", ui-monospace, monospace);
+    font-size: 13px;
+    line-height: 1.45;
+    margin: 0;
+    white-space: pre;
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+  }
+  .sh { color: var(--brand, #7b2d2d); }
+  .sm { color: rgba(20,19,18,.42); }
+  .sig-label {
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted, rgba(20,19,18,.4));
+    font-weight: 600;
+  }
+  .sig-tagline {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(14px, 2vw, 18px);
+    font-style: italic;
+    color: var(--muted, rgba(20,19,18,.5));
+    margin: 0;
+    letter-spacing: .02em;
+  }
+
+  /* Marketing character animations */
+  .sig-head  { display: block; animation: mktNod 3.5s ease-in-out infinite; }
+  .sig-arm   { display: block; animation: mktArm 1.4s ease-in-out infinite; transform-origin: top center; }
+  .sig-brush { display: block; animation: mktBrush 2s ease-in-out infinite; }
+  .sig-board { display: block; animation: mktBoard 4s ease-in-out infinite; }
+  .sig-cam   { display: block; animation: mktCam 2.8s ease-in-out infinite; }
+
+  @keyframes mktNod   { 0%,100%{transform:rotate(0)} 40%{transform:rotate(4deg) translateY(-2px)} 70%{transform:rotate(-2deg)} }
+  @keyframes mktArm   { 0%,100%{transform:rotate(0) scaleX(1)} 50%{transform:rotate(-8deg) scaleX(1.05)} }
+  @keyframes mktBrush { 0%,100%{transform:translateX(0)} 50%{transform:translateX(6px)} }
+  @keyframes mktBoard { 0%,100%{opacity:1} 50%{opacity:.7} 60%{opacity:1} }
+  @keyframes mktCam   { 0%,100%{transform:translateX(0)} 30%{transform:translateX(-3px) rotate(-2deg)} 70%{transform:translateX(3px) rotate(2deg)} }
+
+  /* Pills on this page */
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 26px; border-radius: 999px;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700;
+    text-decoration: none; cursor: pointer; will-change: transform;
+    transition: box-shadow 250ms ease, background 200ms ease, color 200ms ease;
+  }
+  .pill--filled { background: var(--brand, #7b2d2d); color: #f9f5ef; box-shadow: 0 8px 28px rgba(123,45,45,.35); }
+  .pill--filled:hover { box-shadow: 0 14px 36px rgba(123,45,45,.45); background: #6a2828; }
+  .pill--outline { border: 1.5px solid var(--brand, #7b2d2d); color: var(--brand, #7b2d2d); }
+  .pill--outline:hover { background: rgba(123,45,45,.06); }
+
   /* ── Responsive ─────────────────────────────────────────────── */
   @media (max-width: 720px) {
     .timeline { flex-direction: column; align-items: flex-start; }
@@ -306,5 +429,7 @@ const serviceSchema = {
     .timeline-connector { width: 1px; height: 24px; margin: 0 6px 0 5px; }
     .mkt-hero { padding: 60px 0 60px; }
     .strategy-section .ascii-diagram { font-size: 10px; padding: 20px 16px; }
+    .sig-chars { gap: 20px; }
+    .sig-pre { font-size: 11px; }
   }
 </style>
