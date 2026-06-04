@@ -144,17 +144,17 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (!chatId || !text) return new Response("OK");
 
+  if (/^\/?myid$/i.test(text)) {
+    await sendTelegram(chatId, `This Telegram chat ID is:\n\n${chatId}\n\nUse it as TELEGRAM_CHAT_ID.`);
+    return new Response("OK");
+  }
+
   if (allowedChatId && chatId !== String(allowedChatId)) {
     await sendTelegram(chatId, "This Lana command channel is private.");
     return new Response("OK");
   }
 
   try {
-    if (/^\/?myid$/i.test(text)) {
-      await sendTelegram(chatId, `This Telegram chat ID is:\n\n${chatId}\n\nUse it as TELEGRAM_CHAT_ID.`);
-      return new Response("OK");
-    }
-
     if (/^\/?(help|commands)$/i.test(text)) {
       await sendTelegram(chatId, helpText);
       return new Response("OK");
