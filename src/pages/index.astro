@@ -78,6 +78,20 @@ const marqueeItems = [
         <span class="scroll-hint__dot"></span>
       </div>
     </div>
+
+    <!-- ── ASCII Fisher (hero corner) ── -->
+    <div class="char-scene fisher-scene" aria-hidden="true">
+      <pre class="char-pre fisher-pre">
+<span class="c-dim">         ·</span>
+<span class="c-dim">         │</span>
+<span class="c-dim">   ┌─────┤</span>
+<span class="fisher-body"><span class="c-hi">  ( ◕‿◕ )</span></span>
+<span class="fisher-body"><span class="c-muted">   /│╲</span></span>
+<span class="fisher-body"><span class="c-muted">  ╱ │ ╲</span></span>
+<span class="c-muted">    └┘</span>
+<span class="water-line">≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈</span>
+<span class="fish-char"><span class="c-hi">      »=(°ᴥ°)=»</span></span></pre>
+    </div>
   </section>
 
   <!-- ══════════════════════════════════════════════════ MARQUEE -->
@@ -143,28 +157,47 @@ const marqueeItems = [
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════ DROP GUIDE -->
-  <div class="drop-guide" aria-hidden="true">
-    <div class="drop-guide__line"></div>
-    <div class="drop-guide__ball"></div>
-  </div>
+  <!-- ══════════════════════════════════ ASCII NEWSPAPER READER SCENE -->
+  <section class="reader-scene-section" aria-label="The LuliDigital studio" data-reveal="up">
+    <div class="reader-scene-inner">
 
-  <!-- ════════════════════════════════════════ HOW IT WORKS -->
-  <section class="how-section" aria-label="How LuliDigital works" data-reveal="up">
-    <span class="eyebrow">How It Works</span>
+      <!-- Left: reader character -->
+      <div class="char-scene reader-scene" aria-hidden="true">
+        <pre class="char-pre reader-pre">
+<span class="reader-head"><span class="c-hi">  ╭──────╮</span></span>
+<span class="reader-head"><span class="c-hi">  │ ◕  ◕│</span></span>
+<span class="reader-head"><span class="c-hi">  │  ‿  │</span></span>
+<span class="reader-head"><span class="c-hi">  ╰──────╯</span></span>
+<span class="c-muted">  ╱│╲  ╔═══════════════╗</span>
+<span class="c-muted"> ╱ │ ╲ ║  <span class="c-hi">LULI DIGEST</span>   ║</span>
+<span class="c-muted">   │   ║ ▮▮▮▮▮  ▮▮▮▮▮▮ ║</span>
+<span class="c-muted">  ╱╲  ║ ▮▮▮▮▮▮▮▮▮▮▮▮▮ ║</span>
+<span class="c-muted">       ║ ▮▮▮▮  ▮▮▮  ▮▮ ║</span>
+<span class="reader-paper"><span class="c-muted">       ╚═══════════════╝</span></span></pre>
+      </div>
 
-    <pre class="ascii-diagram" role="img" aria-label="Three connected service desks: Marketing leads to Virtual Assistant which leads to AI">
-<span class="dim">┌──────────────┐    ┌──────────────┐    ┌──────────────┐</span>
-│  <span class="hi">MARKETING</span>   │    │   <span class="hi">VIRTUAL</span>    │    │     <span class="hi">AI</span>       │
-│    <span class="hi">DESK</span>     │<span class="hi">───▶</span>│  <span class="hi">ASSISTANT</span>  │<span class="hi">───▶</span>│    <span class="hi">DESK</span>     │
-│              │    │     <span class="hi">DESK</span>     │    │              │
-<span class="dim">└──────────────┘    └──────────────┘    └──────────────┘</span>
-  Brand. Story.       Ops. Clarity.     Systems. Scale.</pre>
+      <!-- Right: copy -->
+      <div class="reader-copy">
+        <span class="eyebrow">How It Works</span>
+        <h2 class="section-title">Three desks.<br/>One studio.</h2>
+        <pre class="ascii-diagram how-diagram" role="img" aria-label="Three service desks connected">
+<span class="dim">┌─────────────┐</span>
+│ <span class="hi">MARKETING</span>   │<span class="hi">──▶</span>
+<span class="dim">└─────────────┘</span>
+        <span class="dim">┌─────────────┐</span>
+        │  <span class="hi">VIRTUAL</span>   │<span class="hi">──▶</span>
+        │  <span class="hi">ASSISTANT</span> │
+        <span class="dim">└─────────────┘</span>
+                <span class="dim">┌─────────────┐</span>
+                │     <span class="hi">AI</span>    │
+                <span class="dim">└─────────────┘</span></pre>
+        <p class="how-desc">Marketing builds the signal. The VA keeps operations clean. AI scales what works — without scaling headcount.</p>
+      </div>
 
-    <p class="how-desc">Each desk is distinct but connected. Marketing builds the signal. The VA keeps operations clean. AI scales what works — without scaling headcount.</p>
+    </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════ WAVE GUIDE -->
+  <!-- ══════════════════════════════════════════════ WAVE GUIDE -->
   <div class="wave-guide" aria-hidden="true">
     <svg class="wave-svg" viewBox="0 0 1200 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -196,6 +229,12 @@ const marqueeItems = [
     <div class="cases-grid" data-stagger data-stagger-gap="80">
 
       <article class="case-card glow-card">
+        <div class="case-char" aria-hidden="true"><pre class="char-mini megaphone-char">
+<span class="c-hi"> ╭─╮</span>
+<span class="c-hi"> │◕│╲╲╲</span>
+<span class="c-hi"> ╰─╯╱╱╱</span>
+<span class="c-muted"> /│\</span>
+<span class="c-muted"> / \</span></pre></div>
         <div class="case-label">Marketing</div>
         <h3 class="case-name">Jane</h3>
         <p class="case-summary">Brand built. Visible online. Customers found her.</p>
@@ -204,6 +243,12 @@ const marqueeItems = [
       </article>
 
       <article class="case-card glow-card">
+        <div class="case-char" aria-hidden="true"><pre class="char-mini robot-char">
+<span class="c-hi"> ╔═══╗</span>
+<span class="c-hi"> ║◉ ◉║</span>
+<span class="c-hi"> ╚═▪═╝</span>
+<span class="c-muted">  ┃┃</span>
+<span class="c-muted"> ┌┴┴┐</span></pre></div>
         <div class="case-label">AI Automation</div>
         <h3 class="case-name">Bob</h3>
         <p class="case-summary">Team stopped repeating. Customers stopped waiting.</p>
@@ -212,6 +257,12 @@ const marqueeItems = [
       </article>
 
       <article class="case-card glow-card">
+        <div class="case-char" aria-hidden="true"><pre class="char-mini desk-char">
+<span class="c-hi"> ╭──╮</span>
+<span class="c-hi"> │◕‿│ ✓</span>
+<span class="c-hi"> ╰──╯</span>
+<span class="c-muted"> /│\ ╔══╗</span>
+<span class="c-muted"> / \ ║▮▮║</span></pre></div>
         <div class="case-label">Virtual Assistant</div>
         <h3 class="case-name">Sandy</h3>
         <p class="case-summary">One source of truth. Nothing slips anymore.</p>
@@ -222,7 +273,7 @@ const marqueeItems = [
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════ DROP GUIDE 2 -->
+  <!-- ════════════════════════════════ ASCII DROP GUIDE ══════════ -->
   <div class="drop-guide" aria-hidden="true">
     <div class="drop-guide__line"></div>
     <div class="drop-guide__ball"></div>
@@ -231,6 +282,18 @@ const marqueeItems = [
   <!-- ═══════════════════════════════════════════════════════ CTA -->
   <section class="final-cta" aria-label="Contact">
     <div class="cta-inner" data-reveal="up">
+
+      <!-- ASCII waving character -->
+      <div class="char-scene waver-scene" aria-hidden="true">
+        <pre class="char-pre waver-pre">
+<span class="waver-head"><span class="c-hi">  ╭────╮</span></span>
+<span class="waver-head"><span class="c-hi">  │◕‿◕│</span></span>
+<span class="waver-head"><span class="c-hi">  ╰────╯</span></span>
+<span class="c-muted"><span class="waver-arm">╲</span> /│\ <span class="waver-arm2">/</span></span>
+<span class="c-muted">  ╱ │ ╲</span>
+<span class="c-muted">   / \</span></pre>
+      </div>
+
       <span class="eyebrow">Ready?</span>
       <h2 class="cta-big" data-blur-in>Be smart.<br/>Get help.</h2>
       <p class="cta-sub" data-blur-in data-blur-delay="150">Side by side, so you don't carry it alone.</p>
@@ -250,22 +313,17 @@ const marqueeItems = [
 </BaseLayout>
 
 <script>
-  // initMotion, magnetic, and scroll progress run globally from BaseLayout.
-  // This page only needs its homepage-specific effects.
-
   document.addEventListener("DOMContentLoaded", () => {
     initTypewriter();
     initParallaxOrbs();
   });
 
-  // ── Typewriter ────────────────────────────────────────────────
   function initTypewriter() {
     const el = document.getElementById("typewriter");
     if (!(el instanceof HTMLElement)) return;
-    const node = el; // non-null, narrowed
+    const node = el;
     const words = ["brand.", "systems.", "AI.", "future."];
     let wi = 0, ci = 0, deleting = false;
-
     function tick() {
       const word = words[wi];
       if (!deleting) {
@@ -281,7 +339,6 @@ const marqueeItems = [
     tick();
   }
 
-  // ── Parallax orbs on mouse ────────────────────────────────────
   function initParallaxOrbs() {
     const orbs = document.querySelectorAll<HTMLElement>(".hero-orb");
     if (!orbs.length) return;
@@ -298,19 +355,141 @@ const marqueeItems = [
 </script>
 
 <style>
-  /* ── Scroll bar ─────────────────────────────────────────────── */
-  .scroll-bar {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 2.5px;
-    background: var(--brand, #7b2d2d);
-    transform-origin: left;
-    transform: scaleX(0);
-    z-index: 200;
+  /* ─── Shared character font ─────────────────────────────────── */
+  .char-pre {
+    font-family: "SF Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
+    line-height: 1.45;
+    margin: 0;
+    white-space: pre;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 15px;
+  }
+  .char-mini {
+    font-family: "SF Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
+    line-height: 1.4;
+    margin: 0;
+    white-space: pre;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 12px;
+  }
+  .c-hi    { color: var(--brand, #7b2d2d); }
+  .c-muted { color: rgba(20,19,18,.45); }
+  .c-dim   { color: rgba(20,19,18,.25); }
+
+  /* ─── Fisher scene ──────────────────────────────────────────── */
+  .fisher-scene {
+    position: absolute;
+    bottom: 60px;
+    right: clamp(16px, 5vw, 80px);
+    z-index: 2;
     pointer-events: none;
   }
+  .fisher-body { display: block; animation: charBob 3.2s ease-in-out infinite; }
+  .water-line  { display: block; animation: waterDrift 2s linear infinite; color: rgba(123,45,45,.35); }
+  .fish-char   { display: block; animation: fishJump 6s ease-in-out infinite; animation-delay: 2.4s; }
 
-  /* ── Hero ───────────────────────────────────────────────────── */
+  @keyframes charBob {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-7px); }
+  }
+  @keyframes waterDrift {
+    0%   { letter-spacing: 0; opacity: .7; }
+    50%  { letter-spacing: 1px; opacity: 1; }
+    100% { letter-spacing: 0; opacity: .7; }
+  }
+  @keyframes fishJump {
+    0%, 70%, 100% { transform: translateY(0) scaleX(1); }
+    75%           { transform: translateY(-18px) scaleX(-1); }
+    82%           { transform: translateY(-10px) scaleX(-1); }
+    86%           { transform: translateY(0) scaleX(1); }
+  }
+
+  /* ─── Newspaper reader scene ────────────────────────────────── */
+  .reader-scene-section {
+    padding: 80px 0 72px;
+    border-top: 1px solid rgba(30,24,22,.1);
+  }
+  .reader-scene-inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 56px;
+    align-items: center;
+    max-width: 900px;
+  }
+  .reader-scene { position: relative; flex-shrink: 0; }
+  .reader-head  { display: block; animation: readerNod 4s ease-in-out infinite; transform-origin: bottom center; }
+  .reader-paper { display: block; animation: paperRustle 3s ease-in-out infinite; transform-origin: left center; }
+
+  @keyframes readerNod {
+    0%, 100% { transform: rotate(0deg); }
+    25%       { transform: rotate(2deg) translateY(-2px); }
+    75%       { transform: rotate(-1deg) translateY(1px); }
+  }
+  @keyframes paperRustle {
+    0%, 100% { transform: rotate(0deg) scaleX(1); }
+    40%       { transform: rotate(1.5deg) scaleX(1.01); }
+    70%       { transform: rotate(-0.5deg) scaleX(0.99); }
+  }
+
+  .how-diagram {
+    font-size: 12px;
+    padding: 18px 20px;
+    margin: 20px 0;
+  }
+  .how-desc {
+    font-size: 14px;
+    line-height: 1.72;
+    color: var(--muted, rgba(20,19,18,.6));
+    max-width: 400px;
+    margin: 0;
+  }
+  .reader-copy { display: flex; flex-direction: column; gap: 12px; }
+
+  /* ─── Case study mini characters ───────────────────────────── */
+  .case-char {
+    margin-bottom: 4px;
+  }
+  .megaphone-char { animation: megaphonePulse 2.8s ease-in-out infinite; }
+  .robot-char     { animation: robotBlink 3s step-end infinite; }
+  .desk-char      { animation: deskType 1.4s step-end infinite; }
+
+  @keyframes megaphonePulse {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.05) translateX(2px); }
+  }
+  @keyframes robotBlink {
+    0%, 90%, 100% { opacity: 1; }
+    95%           { opacity: .4; }
+  }
+  @keyframes deskType {
+    0%, 45%, 100% { opacity: 1; }
+    50%           { opacity: .6; }
+  }
+
+  /* ─── Waver scene ───────────────────────────────────────────── */
+  .waver-scene { margin-bottom: 28px; }
+  .waver-head  { display: block; animation: waverBob 2.6s ease-in-out infinite; }
+  .waver-arm   { display: inline; animation: waveLeft 1.2s ease-in-out infinite; transform-origin: right center; }
+  .waver-arm2  { display: inline; animation: waveRight 1.2s ease-in-out infinite; animation-delay: .6s; transform-origin: left center; }
+
+  @keyframes waverBob {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-5px); }
+  }
+  @keyframes waveLeft {
+    0%, 100% { transform: rotate(0deg); }
+    50%       { transform: rotate(-18deg) translateY(-3px); }
+  }
+  @keyframes waveRight {
+    0%, 100% { transform: rotate(0deg); }
+    50%       { transform: rotate(18deg) translateY(-3px); }
+  }
+
+  /* ─── Hero ──────────────────────────────────────────────────── */
   .hero {
     position: relative;
     min-height: 92vh;
@@ -329,15 +508,11 @@ const marqueeItems = [
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0;
   }
-
-  /* Orbs */
   .orb-a { width: 640px; height: 640px; top: -180px; right: -200px; animation-delay: 0s; }
   .orb-b { width: 420px; height: 420px; bottom: -80px; left: -160px; animation-delay: -3.5s; }
-  .orb-c { width: 280px; height: 280px; top: 30%;    left: 10%;    animation-delay: -6s; opacity: .5; }
+  .orb-c { width: 280px; height: 280px; top: 30%; left: 10%; animation-delay: -6s; opacity: .5; }
 
-  /* Badge */
   .hero-badge {
     display: inline-flex;
     align-items: center;
@@ -359,14 +534,13 @@ const marqueeItems = [
     border-radius: 50%;
     background: #22c55e;
     box-shadow: 0 0 8px rgba(34,197,94,.7);
-    animation: pulse 2s ease-in-out infinite;
+    animation: badgePulse 2s ease-in-out infinite;
   }
-  @keyframes pulse {
+  @keyframes badgePulse {
     0%, 100% { box-shadow: 0 0 6px rgba(34,197,94,.6); }
     50%       { box-shadow: 0 0 14px rgba(34,197,94,.9); }
   }
 
-  /* Hero title */
   .hero-title {
     font-size: clamp(52px, 8vw, 108px);
     font-weight: 700;
@@ -378,7 +552,6 @@ const marqueeItems = [
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0;
   }
   .hero-line-1, .hero-line-2 { display: block; }
   .hero-cycling {
@@ -392,20 +565,15 @@ const marqueeItems = [
   .hero-typed { display: inline; }
   .hero-cursor {
     display: inline-block;
-    width: 4px;
-    height: .8em;
+    width: 4px; height: .8em;
     background: var(--brand, #7b2d2d);
     border-radius: 2px;
     margin-left: 5px;
     vertical-align: middle;
     animation: blink .85s step-end infinite;
   }
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0; }
-  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-  /* Sub */
   .hero-sub {
     font-size: clamp(15px, 1.8vw, 19px);
     line-height: 1.65;
@@ -413,8 +581,6 @@ const marqueeItems = [
     margin: 0 0 40px;
     max-width: 480px;
   }
-
-  /* CTAs */
   .hero-ctas {
     display: flex;
     align-items: center;
@@ -445,266 +611,74 @@ const marqueeItems = [
     color: #f9f5ef;
     box-shadow: 0 8px 28px rgba(123,45,45,.35), 0 2px 8px rgba(123,45,45,.2);
   }
-  .pill--filled:hover {
-    box-shadow: 0 14px 36px rgba(123,45,45,.45), 0 4px 12px rgba(123,45,45,.25);
-    background: #6a2828;
-  }
-  .pill--outline {
-    border: 1.5px solid var(--brand, #7b2d2d);
-    color: var(--brand, #7b2d2d);
-  }
-  .pill--outline:hover {
-    background: rgba(123,45,45,.06);
-  }
-  .pill--ghost {
-    color: var(--muted, rgba(20,19,18,.6));
-    font-size: 12px;
-    letter-spacing: .1em;
-    text-decoration: none;
-    padding: 13px 16px;
-    transition: color 200ms ease;
-  }
+  .pill--filled:hover { box-shadow: 0 14px 36px rgba(123,45,45,.45); background: #6a2828; }
+  .pill--outline { border: 1.5px solid var(--brand, #7b2d2d); color: var(--brand, #7b2d2d); }
+  .pill--outline:hover { background: rgba(123,45,45,.06); }
+  .pill--ghost { color: var(--muted, rgba(20,19,18,.6)); font-size: 12px; letter-spacing: .1em; text-decoration: none; padding: 13px 16px; transition: color 200ms ease; }
   .pill--ghost:hover { color: var(--ink, #141312); }
 
   /* Scroll hint */
-  .scroll-hint {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    opacity: .5;
-  }
-  .scroll-hint__line {
-    width: 1px;
-    height: 28px;
-    background: var(--brand, #7b2d2d);
-    display: block;
-  }
-  .scroll-hint__dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--brand, #7b2d2d);
-    animation: scrollBounce 1.8s cubic-bezier(.4,0,.2,1) infinite;
-  }
-  @keyframes scrollBounce {
-    0%        { transform: translateY(0); opacity: .5; }
-    60%       { transform: translateY(12px); opacity: 1; }
-    100%      { transform: translateY(0); opacity: .5; }
-  }
+  .scroll-hint { display: flex; flex-direction: column; align-items: center; gap: 6px; opacity: .5; }
+  .scroll-hint__line { width: 1px; height: 28px; background: var(--brand, #7b2d2d); display: block; }
+  .scroll-hint__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand, #7b2d2d); animation: scrollBounce 1.8s cubic-bezier(.4,0,.2,1) infinite; }
+  @keyframes scrollBounce { 0%, 100% { transform: translateY(0); opacity: .5; } 60% { transform: translateY(12px); opacity: 1; } }
 
-  /* ── Marquee ────────────────────────────────────────────────── */
-  .marquee-wrap {
-    overflow: hidden;
-    border-top: 1px solid rgba(30,24,22,.1);
-    border-bottom: 1px solid rgba(30,24,22,.1);
-    padding: 16px 0;
-    background: rgba(243,239,231,.5);
-  }
-  .marquee-track {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    width: max-content;
-    animation: marqueeScroll 28s linear infinite;
-  }
+  /* ─── Marquee ───────────────────────────────────────────────── */
+  .marquee-wrap { overflow: hidden; border-top: 1px solid rgba(30,24,22,.1); border-bottom: 1px solid rgba(30,24,22,.1); padding: 16px 0; background: rgba(243,239,231,.5); }
+  .marquee-track { display: flex; align-items: center; width: max-content; animation: marqueeScroll 28s linear infinite; }
   .marquee-track:hover { animation-play-state: paused; }
-  @keyframes marqueeScroll {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-  .marquee-item {
-    font-size: 11px;
-    letter-spacing: .22em;
-    text-transform: uppercase;
-    color: var(--muted, rgba(20,19,18,.5));
-    font-weight: 600;
-    padding: 0 28px;
-    position: relative;
-  }
-  .marquee-item::after {
-    content: "·";
-    position: absolute;
-    right: -2px;
-    color: var(--brand, #7b2d2d);
-    opacity: .4;
-  }
+  @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-item { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted, rgba(20,19,18,.5)); font-weight: 600; padding: 0 28px; position: relative; }
+  .marquee-item::after { content: "·"; position: absolute; right: -2px; color: var(--brand, #7b2d2d); opacity: .4; }
 
-  /* ── Bento section ──────────────────────────────────────────── */
+  /* ─── Bento ─────────────────────────────────────────────────── */
   .bento-section { padding: 88px 0 80px; }
   .section-header { margin-bottom: 48px; }
-  .section-header .section-title { margin-top: 10px; }
-  .bento-card {
-    padding: 36px 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    min-height: 280px;
-  }
-  .bento-num {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .16em;
-    color: var(--brand, #7b2d2d);
-    opacity: .5;
-  }
-  .bento-icon {
-    width: 46px; height: 46px;
-    border-radius: 12px;
-    background: rgba(123,45,45,.1);
-    display: grid;
-    place-items: center;
-    color: var(--brand, #7b2d2d);
-    flex-shrink: 0;
-  }
-  .bento-title {
-    font-size: clamp(20px, 2.4vw, 28px);
-    font-weight: 700;
-    letter-spacing: -.02em;
-    margin: 0;
-    line-height: 1.15;
-    font-family: ui-serif, Georgia, serif;
-    color: var(--ink, #141312);
-  }
-  .bento-list {
-    list-style: none;
-    padding: 0; margin: 0;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
-  .bento-list li {
-    font-size: 13.5px;
-    line-height: 1.55;
-    color: var(--muted, rgba(20,19,18,.66));
-    padding-left: 14px;
-    position: relative;
-  }
-  .bento-list li::before {
-    content: "–";
-    position: absolute;
-    left: 0;
-    color: var(--brand, #7b2d2d);
-    opacity: .5;
-  }
+  .bento-card { padding: 36px 32px; display: flex; flex-direction: column; gap: 14px; min-height: 280px; }
+  .bento-num { font-size: 11px; font-weight: 700; letter-spacing: .16em; color: var(--brand, #7b2d2d); opacity: .5; }
+  .bento-icon { width: 46px; height: 46px; border-radius: 12px; background: rgba(123,45,45,.1); display: grid; place-items: center; color: var(--brand, #7b2d2d); flex-shrink: 0; }
+  .bento-title { font-size: clamp(20px, 2.4vw, 28px); font-weight: 700; letter-spacing: -.02em; margin: 0; line-height: 1.15; font-family: ui-serif, Georgia, serif; color: var(--ink, #141312); }
+  .bento-list { list-style: none; padding: 0; margin: 0; flex: 1; display: flex; flex-direction: column; gap: 7px; }
+  .bento-list li { font-size: 13.5px; line-height: 1.55; color: var(--muted, rgba(20,19,18,.66)); padding-left: 14px; position: relative; }
+  .bento-list li::before { content: "–"; position: absolute; left: 0; color: var(--brand, #7b2d2d); opacity: .5; }
 
-  /* ── How it works ───────────────────────────────────────────── */
-  .how-section {
-    padding: 72px 0 80px;
-    border-top: 1px solid rgba(30,24,22,.1);
-  }
-  .how-section .ascii-diagram { margin: 24px 0; }
-  .how-desc {
-    font-size: 15px;
-    line-height: 1.72;
-    color: var(--muted, rgba(20,19,18,.6));
-    max-width: 560px;
-    margin: 0;
-  }
-
-  /* ── Drop guide ─────────────────────────────────────────────── */
-  .drop-guide {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 80px;
-    position: relative;
-    margin: 4px 0;
-  }
-  .drop-guide__line {
-    width: 1px;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(123,45,45,0) 0%, rgba(123,45,45,.3) 40%, rgba(123,45,45,.3) 60%, rgba(123,45,45,0) 100%);
-  }
-  .drop-guide__ball {
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    background: var(--brand, #7b2d2d);
-    box-shadow: 0 0 14px rgba(123,45,45,.55), 0 0 4px rgba(123,45,45,.8);
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: ballDrop 2.2s cubic-bezier(.3, 0, .7, 1) infinite;
-  }
-  @keyframes ballDrop {
-    0%   { top: 0;              opacity: 0; transform: translateX(-50%) scale(.5); }
-    12%  {                      opacity: 1; transform: translateX(-50%) scale(1); }
-    88%  {                      opacity: .7; transform: translateX(-50%) scale(.85); }
-    100% { top: calc(100% - 9px); opacity: 0; transform: translateX(-50%) scale(.3); }
-  }
-
-  /* ── Wave guide ─────────────────────────────────────────────── */
+  /* ─── Wave guide ────────────────────────────────────────────── */
   .wave-guide { padding: 16px 0; overflow: hidden; }
   .wave-svg { width: 100%; height: 70px; display: block; }
 
-  /* ── Case studies ───────────────────────────────────────────── */
+  /* ─── Case studies ──────────────────────────────────────────── */
   .cases-section { padding: 80px 0; }
-  .cases-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 48px;
-  }
-  .case-card { padding: 32px 28px; display: flex; flex-direction: column; gap: 10px; }
-  .case-label {
-    font-size: 10px;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: var(--brand, #7b2d2d);
-    font-weight: 600;
-  }
-  .case-name {
-    font-size: clamp(28px, 3.5vw, 40px);
-    font-weight: 700;
-    margin: 0;
-    letter-spacing: -.025em;
-    font-family: ui-serif, Georgia, serif;
-    line-height: 1.05;
-    color: var(--ink, #141312);
-  }
-  .case-summary {
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--ink, #141312);
-    font-weight: 500;
-    margin: 0;
-  }
-  .case-detail {
-    font-size: 13px;
-    line-height: 1.65;
-    color: var(--muted, rgba(20,19,18,.6));
-    margin: 0;
-    flex: 1;
+  .cases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+  .case-card { padding: 28px 24px; display: flex; flex-direction: column; gap: 10px; }
+  .case-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--brand, #7b2d2d); font-weight: 600; }
+  .case-name { font-size: clamp(28px, 3.5vw, 40px); font-weight: 700; margin: 0; letter-spacing: -.025em; font-family: ui-serif, Georgia, serif; line-height: 1.05; color: var(--ink, #141312); }
+  .case-summary { font-size: 14px; line-height: 1.6; color: var(--ink, #141312); font-weight: 500; margin: 0; }
+  .case-detail { font-size: 13px; line-height: 1.65; color: var(--muted, rgba(20,19,18,.6)); margin: 0; flex: 1; }
+
+  /* ─── Drop guide ────────────────────────────────────────────── */
+  .drop-guide { display: flex; flex-direction: column; align-items: center; height: 80px; position: relative; margin: 4px 0; }
+  .drop-guide__line { width: 1px; height: 100%; background: linear-gradient(to bottom, rgba(123,45,45,0) 0%, rgba(123,45,45,.3) 40%, rgba(123,45,45,.3) 60%, rgba(123,45,45,0) 100%); }
+  .drop-guide__ball { width: 9px; height: 9px; border-radius: 50%; background: var(--brand, #7b2d2d); box-shadow: 0 0 14px rgba(123,45,45,.55); position: absolute; left: 50%; transform: translateX(-50%); animation: ballDrop 2.2s cubic-bezier(.3,0,.7,1) infinite; }
+  @keyframes ballDrop {
+    0%   { top: 0; opacity: 0; transform: translateX(-50%) scale(.5); }
+    12%  { opacity: 1; transform: translateX(-50%) scale(1); }
+    88%  { opacity: .7; transform: translateX(-50%) scale(.85); }
+    100% { top: calc(100% - 9px); opacity: 0; transform: translateX(-50%) scale(.3); }
   }
 
-  /* ── Final CTA ──────────────────────────────────────────────── */
-  .final-cta {
-    border-top: 1px solid rgba(30,24,22,.1);
-    padding: 96px 0 60px;
-  }
+  /* ─── Final CTA ─────────────────────────────────────────────── */
+  .final-cta { border-top: 1px solid rgba(30,24,22,.1); padding: 96px 0 60px; }
   .cta-inner { text-align: center; }
-  .cta-big {
-    font-size: clamp(44px, 7vw, 88px);
-    font-weight: 700;
-    letter-spacing: -.04em;
-    line-height: 1.0;
-    margin: 10px 0 20px;
-    font-family: ui-serif, Georgia, serif;
-    color: var(--ink, #141312);
-  }
-  .cta-sub {
-    font-size: 16px;
-    color: var(--muted, rgba(20,19,18,.6));
-    margin: 0 0 40px;
-  }
-  .cta-actions {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
+  .cta-big { font-size: clamp(44px, 7vw, 88px); font-weight: 700; letter-spacing: -.04em; line-height: 1.0; margin: 10px 0 20px; font-family: ui-serif, Georgia, serif; color: var(--ink, #141312); }
+  .cta-sub { font-size: 16px; color: var(--muted, rgba(20,19,18,.6)); margin: 0 0 40px; }
+  .cta-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
-  /* ── Responsive ─────────────────────────────────────────────── */
+  /* ─── Responsive ────────────────────────────────────────────── */
+  @media (max-width: 860px) {
+    .reader-scene-inner { grid-template-columns: 1fr; gap: 28px; }
+    .reader-scene { display: none; }
+    .fisher-scene { display: none; }
+  }
   @media (max-width: 720px) {
     .cases-grid { grid-template-columns: 1fr; }
     .hero { min-height: auto; padding: 80px 0 60px; }
@@ -714,6 +688,5 @@ const marqueeItems = [
   @media (max-width: 480px) {
     .hero-ctas { gap: 8px; }
     .pill { padding: 11px 20px; }
-    .how-section .ascii-diagram { font-size: 9px; padding: 18px 12px; }
   }
 </style>
