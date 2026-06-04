@@ -79,7 +79,19 @@ const marqueeItems = [
       </div>
     </div>
 
-    <!-- ── ASCII Fisher (hero corner) ── -->
+    <!-- ── Mobile hero character (fishing scene) ── -->
+    <div class="mobile-hero-char" aria-hidden="true" id="mobile-fisher">
+      <pre class="char-pre mobile-fisher-pre">
+<span class="mobile-fisher-body"><span class="c-hi">  ( ◕‿◕ )</span></span>
+<span class="mobile-fisher-body"><span class="c-muted">   /│╲ <span class="c-dim">·</span></span></span>
+<span class="mobile-fisher-body"><span class="c-muted">  ╱ │ ╲<span class="c-dim">│</span></span></span>
+<span class="c-muted">    └┘  <span class="c-dim">│</span></span>
+<span class="mobile-water"><span class="c-brand">≈≈≈≈≈≈≈≈≈≈≈≈</span></span>
+<span class="mobile-fish"><span class="c-hi">   »=(°ᴥ°)=»</span></span></pre>
+      <p class="mobile-char-label">tap me</p>
+    </div>
+
+    <!-- ── ASCII Fisher (hero corner, desktop only) ── -->
     <div class="char-scene fisher-scene" aria-hidden="true">
       <pre class="char-pre fisher-pre">
 <span class="c-dim">         ·</span>
@@ -100,6 +112,61 @@ const marqueeItems = [
       {[...marqueeItems, ...marqueeItems].map((item) => (
         <span class="marquee-item">{item}</span>
       ))}
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════ MOBILE CHARACTER PARADE ════════ -->
+  <div class="char-parade" aria-hidden="true">
+    <div class="parade-track">
+
+      <div class="parade-card">
+        <pre class="char-pre parade-char">
+<span class="c-hi"> ╭────╮</span>
+<span class="c-hi"> │◕‿◕│</span>
+<span class="c-hi"> ╰────╯</span>
+<span class="c-muted">  /│\  <span class="c-dim">·</span></span>
+<span class="c-muted"> / │ \ <span class="c-dim">│</span></span>
+<span class="parade-water"><span class="c-brand"> ≈≈≈≈≈≈│≈≈</span></span>
+<span class="parade-fish"><span class="c-hi">   »=(ᴥ)=»</span></span></pre>
+        <span class="parade-label">Fishing for leads</span>
+      </div>
+
+      <div class="parade-card">
+        <pre class="char-pre parade-char">
+<span class="c-hi"> ╭────╮</span>
+<span class="parade-read-head"><span class="c-hi"> │ˆ ˆ│</span></span>
+<span class="parade-read-head"><span class="c-hi"> ╰────╯</span></span>
+<span class="c-muted">  /│╲  ╔══════╗</span>
+<span class="c-muted"> ╱ │ ╲ ║<span class="c-hi">DIGEST</span>║</span>
+<span class="c-muted">       ║▮▮▮▮▮▮║</span>
+<span class="parade-page"><span class="c-muted">       ╚══════╝</span></span></pre>
+        <span class="parade-label">Reading the strategy</span>
+      </div>
+
+      <div class="parade-card">
+        <pre class="char-pre parade-char">
+<span class="c-hi"> ╔═════╗</span>
+<span class="parade-robot"><span class="c-hi"> ║ ◉ ◉║</span></span>
+<span class="parade-robot"><span class="c-hi"> ║  ▪  ║</span></span>
+<span class="c-hi"> ╚═════╝</span>
+<span class="c-muted">   ┃┃</span>
+<span class="c-muted">  ┌┴┴┐</span>
+<span class="c-muted">  └──┘</span></pre>
+        <span class="parade-label">AI working 24/7</span>
+      </div>
+
+      <div class="parade-card">
+        <pre class="char-pre parade-char">
+<span class="parade-wave-head"><span class="c-hi"> ╭────╮</span></span>
+<span class="parade-wave-head"><span class="c-hi"> │◕‿◕│</span></span>
+<span class="parade-wave-head"><span class="c-hi"> ╰────╯</span></span>
+<span class="c-muted"><span class="parade-larm">╲</span>/│\<span class="parade-rarm">/</span></span>
+<span class="c-muted"> ╱ │ ╲</span>
+<span class="c-muted">  / \</span>
+<span class="c-muted">  </span></pre>
+        <span class="parade-label">Your VA, waving hello</span>
+      </div>
+
     </div>
   </div>
 
@@ -316,6 +383,7 @@ const marqueeItems = [
   document.addEventListener("DOMContentLoaded", () => {
     initTypewriter();
     initParallaxOrbs();
+    initMobileFisher();
   });
 
   function initTypewriter() {
@@ -337,6 +405,30 @@ const marqueeItems = [
       }
     }
     tick();
+  }
+
+  function initMobileFisher() {
+    const fisher = document.getElementById("mobile-fisher");
+    if (!fisher) return;
+    const fish = fisher.querySelector<HTMLElement>(".mobile-fish");
+    const body = fisher.querySelectorAll<HTMLElement>(".mobile-fisher-body");
+    let tapping = false;
+    fisher.addEventListener("click", () => {
+      if (tapping) return;
+      tapping = true;
+      // Fish jumps
+      if (fish) { fish.style.animation = "none"; void fish.offsetWidth; fish.style.animation = "mobileFishJump .6s ease-out forwards"; }
+      // Body bounces
+      body.forEach(el => { el.style.animation = "none"; void el.offsetWidth; el.style.animation = "mobileBounce .5s cubic-bezier(.36,.07,.19,.97) forwards"; });
+      const label = fisher.querySelector<HTMLElement>(".mobile-char-label");
+      if (label) label.textContent = "✓ nice catch!";
+      setTimeout(() => {
+        tapping = false;
+        if (fish) fish.style.animation = "";
+        body.forEach(el => el.style.animation = "");
+        if (label) label.textContent = "tap me";
+      }, 2200);
+    });
   }
 
   function initParallaxOrbs() {
@@ -673,11 +765,105 @@ const marqueeItems = [
   .cta-sub { font-size: 16px; color: var(--muted, rgba(20,19,18,.6)); margin: 0 0 40px; }
   .cta-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
+  /* ─── Mobile hero character ─────────────────────────────────── */
+  .mobile-hero-char {
+    display: none;
+    text-align: center;
+    margin-top: 40px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-fisher-pre { font-size: 16px; display: inline-block; text-align: left; }
+  .mobile-fisher-body { display: block; }
+  .mobile-water { display: block; animation: waterDrift 2s linear infinite; color: var(--brand, #7b2d2d); opacity: .45; }
+  .mobile-fish  { display: block; animation: fishJump 5s ease-in-out infinite; animation-delay: 1.8s; }
+  .c-brand      { color: var(--brand, #7b2d2d); }
+  .mobile-char-label {
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted, rgba(20,19,18,.4));
+    margin: 8px 0 0;
+    font-weight: 600;
+    transition: color 300ms ease;
+  }
+
+  @keyframes mobileFishJump {
+    0%   { transform: translateY(0) scaleX(1); }
+    30%  { transform: translateY(-24px) scaleX(-1); }
+    60%  { transform: translateY(-12px) scaleX(-1); }
+    100% { transform: translateY(0) scaleX(1); }
+  }
+  @keyframes mobileBounce {
+    0%,100% { transform: translateY(0); }
+    20%     { transform: translateY(-10px); }
+    40%     { transform: translateY(-4px); }
+    60%     { transform: translateY(-7px); }
+    80%     { transform: translateY(-2px); }
+  }
+
+  /* ─── Character parade (mobile only) ───────────────────────── */
+  .char-parade {
+    display: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 28px 0 20px;
+    border-top: 1px solid rgba(30,24,22,.1);
+    border-bottom: 1px solid rgba(30,24,22,.1);
+  }
+  .char-parade::-webkit-scrollbar { display: none; }
+  .parade-track {
+    display: flex;
+    gap: 0;
+    width: max-content;
+    padding: 0 20px;
+  }
+  .parade-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 24px;
+    border-right: 1px solid rgba(30,24,22,.08);
+    flex-shrink: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 200ms ease;
+    border-radius: 16px;
+  }
+  .parade-card:last-child { border-right: none; }
+  .parade-card:active { background: rgba(123,45,45,.05); }
+  .parade-char { font-size: 13px; display: inline-block; text-align: left; }
+  .parade-label {
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--muted, rgba(20,19,18,.45));
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .parade-water { display: block; animation: waterDrift 2s linear infinite; }
+  .parade-fish  { display: block; animation: fishJump 5s ease-in-out infinite; animation-delay: 2s; }
+  .parade-read-head { display: block; animation: readerNod 4s ease-in-out infinite; }
+  .parade-page  { display: block; animation: paperRustle 3s ease-in-out infinite; }
+  .parade-robot { display: block; animation: robotBlink 3s step-end infinite; }
+  .parade-wave-head { display: block; animation: waverBob 2.6s ease-in-out infinite; }
+  .parade-larm  { display: inline; animation: waveLeft 1.2s ease-in-out infinite; }
+  .parade-rarm  { display: inline; animation: waveRight 1.2s ease-in-out infinite; animation-delay: .6s; }
+
   /* ─── Responsive ────────────────────────────────────────────── */
   @media (max-width: 860px) {
     .reader-scene-inner { grid-template-columns: 1fr; gap: 28px; }
     .reader-scene { display: none; }
     .fisher-scene { display: none; }
+    .mobile-hero-char { display: block; }
+    .char-parade { display: block; }
+    /* Bigger case study chars on mobile */
+    .char-mini { font-size: 14px; }
+    .case-char { margin-bottom: 8px; }
   }
   @media (max-width: 720px) {
     .cases-grid { grid-template-columns: 1fr; }
@@ -688,5 +874,6 @@ const marqueeItems = [
   @media (max-width: 480px) {
     .hero-ctas { gap: 8px; }
     .pill { padding: 11px 20px; }
+    .mobile-fisher-pre { font-size: 14px; }
   }
 </style>
