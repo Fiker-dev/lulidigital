@@ -57,6 +57,7 @@ const regionalFallbackKeywords = {
 
 const serviceSignals = [
   "ai",
+  "digital",
   "automation",
   "assistant",
   "virtual assistant",
@@ -145,6 +146,10 @@ const relevanceScore = (keyword) => {
   const normalized = keyword.toLowerCase();
 
   return serviceSignals.reduce((score, signal) => {
+    if (signal === "ai") {
+      return /\bai\b/i.test(keyword) ? score + 1 : score;
+    }
+
     return normalized.includes(signal) ? score + 1 : score;
   }, 0);
 };
@@ -175,15 +180,9 @@ const chooseKeyword = (trends, now = new Date(), geo = "ZA") => {
     };
   }
 
-    return {
-      keyword: fallbackForToday(now, geo),
-      source: trends.length > 0 ? "LuliDigital fallback rotation after Google Trends scan" : "LuliDigital fallback rotation",
-    trend: trends[0]
-      ? {
-          keyword: trends[0].keyword,
-          traffic: trends[0].traffic,
-        }
-      : undefined,
+  return {
+    keyword: fallbackForToday(now, geo),
+    source: trends.length > 0 ? "LuliDigital fallback rotation after Google Trends scan" : "LuliDigital fallback rotation",
   };
 };
 
@@ -221,6 +220,18 @@ export const getDailySeoRecommendation = async ({ forceRefresh = false, geo, mar
     if (cachedRecommendation && cachedRecommendation.expiresAt > Date.now()) {
       return cachedRecommendation.value;
     }
+  }
+
+  if (selectedGeo === "AFRICA") {
+    const keyword = fallbackForToday(new Date(), selectedGeo);
+    const recommendation = buildRecommendation(keyword, "LuliDigital Africa keyword rotation", selectedGeo);
+
+    cachedRecommendations.set(cacheKey, {
+      expiresAt: Date.now() + CACHE_TTL,
+      value: recommendation,
+    });
+
+    return recommendation;
   }
 
   try {

@@ -28,49 +28,41 @@ const serviceSchema = {
   serviceSchema={serviceSchema}
 >
 
-  <!-- ══════════════════════════ PAGE SIGNATURE CHARACTER ════════ -->
+  <!-- ══════════════════════ OBJECT ASCII — NO BOTS ══════════════ -->
   <div class="page-sig" aria-hidden="true" data-reveal="fade">
     <div class="sig-chars">
 
-      <!-- Thinking robot -->
+      <!-- CPU chip — no person -->
       <div class="sig-char">
         <pre class="sig-pre">
-<span class="sh">  ┌─────────┐</span>
-<span class="ai-ant sh">  │ ◉  ◉  │</span>
-<span class="sh">  │   ▲   │</span>
-<span class="sh">  └────┬────┘</span>
-<span class="sm">    ┌──┴──┐</span>
-<span class="sm">    │ CPU │</span>
-<span class="ai-think sm">    │▓▓▓▓▓│</span>
-<span class="sm">    └──┬──┘</span>
-<span class="sm">    /     \</span></pre>
-        <span class="sig-label">always processing</span>
+<span class="sh">  ┌──────────┐</span>
+<span class="ai-chip sh">  │ ◈  ◈  ◈ │</span>
+<span class="sm">  │ ─  ─  ─ │</span>
+<span class="ai-chip sh">  │ ◈  ◈  ◈ │</span>
+<span class="sh">  └──────────┘</span></pre>
+        <span class="sig-label">processing</span>
       </div>
 
-      <!-- Human + AI chat -->
+      <!-- Binary data stream -->
       <div class="sig-char">
         <pre class="sig-pre">
-<span class="sh">╭──╮       ╔═════╗</span>
-<span class="ai-talk sh">│◕‿│  ───▶  ║ <span class="sm">AI</span>  ║</span>
-<span class="sh">╰──╯       ╚══╤══╝</span>
-<span class="sm">/│\           │</span>
-<span class="sm">/ \       ╔══╧══╗</span>
-<span class="ai-reply sm">          ║ ✓✓✓ ║</span>
-<span class="sm">          ╚═════╝</span></pre>
-        <span class="sig-label">instant answers</span>
+<span class="ai-bin1 sh">01101001</span>
+<span class="ai-bin2 sm">10010110</span>
+<span class="ai-bin1 sh">01001010</span>
+<span class="ai-bin2 sm">11010010</span>
+<span class="ai-bin1 sh">00110101</span></pre>
+        <span class="sig-label">data streams</span>
       </div>
 
-      <!-- Neural nodes -->
+      <!-- Neural network nodes — no people -->
       <div class="sig-char">
         <pre class="sig-pre">
 <span class="sh">  ◉ ─── ◉</span>
 <span class="ai-pulse sm"> ╱ ╲   ╱ ╲</span>
 <span class="sh">◉   ◉─◉   ◉</span>
 <span class="ai-pulse sm"> ╲ ╱   ╲ ╱</span>
-<span class="sh">  ◉ ─── ◉</span>
-<span class="sm">  │       │</span>
-<span class="sh">  ◎ ─── ◎</span></pre>
-        <span class="sig-label">neural networks</span>
+<span class="sh">  ◉ ─── ◉</span></pre>
+        <span class="sig-label">neural network</span>
       </div>
 
     </div>
@@ -81,7 +73,7 @@ const serviceSchema = {
   <section class="ai-hero" aria-label="AI services">
     <div class="hero-orb orb-a" aria-hidden="true"></div>
     <span class="eyebrow" data-blur-in>AI Desk</span>
-    <h1 class="ai-title" data-word-reveal>
+    <h1 class="ai-title" data-word-reveal data-bee-stop>
       AI automation that ships in weeks, not months.
     </h1>
     <p class="ai-sub" data-blur-in data-blur-delay="200">
@@ -363,18 +355,16 @@ const serviceSchema = {
   .sig-label { font-family: var(--font-body, "DM Sans", sans-serif); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted, rgba(20,19,18,.4)); font-weight: 600; }
   .sig-tagline { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); font-size: clamp(14px, 2vw, 18px); font-style: italic; color: var(--muted, rgba(20,19,18,.5)); margin: 0; }
 
-  /* AI character animations */
-  .ai-ant   { display: block; animation: aiAntenna 1.8s ease-in-out infinite; }
-  .ai-think { display: block; animation: aiThink 1.2s step-end infinite; }
-  .ai-talk  { display: block; animation: aiTalk 2.4s ease-in-out infinite; }
-  .ai-reply { display: block; animation: aiReply 2.4s ease-in-out infinite; animation-delay: 1s; }
+  /* AI object animations */
+  .ai-chip  { display: block; animation: aiChip  1.4s step-end infinite; }
+  .ai-bin1  { display: block; animation: aiBin1  0.9s step-end infinite; }
+  .ai-bin2  { display: block; animation: aiBin2  0.9s step-end infinite; animation-delay: .45s; }
   .ai-pulse { display: block; animation: aiPulse 1.6s ease-in-out infinite; }
 
-  @keyframes aiAntenna { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
-  @keyframes aiThink   { 0%,40%,100%{opacity:1} 50%,90%{opacity:.3} }
-  @keyframes aiTalk    { 0%,100%{transform:translateX(0)} 40%{transform:translateX(4px)} }
-  @keyframes aiReply   { 0%,100%{opacity:0;transform:translateY(4px)} 20%,80%{opacity:1;transform:translateY(0)} }
-  @keyframes aiPulse   { 0%,100%{opacity:.3} 50%{opacity:1} }
+  @keyframes aiChip  { 0%,60%,100%{opacity:1} 65%,95%{opacity:.2} }
+  @keyframes aiBin1  { 0%,100%{opacity:1}  50%{opacity:.3} }
+  @keyframes aiBin2  { 0%,100%{opacity:.3} 50%{opacity:1} }
+  @keyframes aiPulse { 0%,100%{opacity:.3} 50%{opacity:1} }
 
   /* ── Responsive ─────────────────────────────────────────────── */
   @media (max-width: 600px) {

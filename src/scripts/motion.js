@@ -69,6 +69,27 @@ export function initMotion() {
     io.observe(el);
   });
 
+  // ── 3b. Float cards after reveal ─────────────────────────────
+  const floatCards = document.querySelectorAll(".glow-card[data-reveal]");
+  if (floatCards.length) {
+    const fio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const el = e.target;
+          el.classList.add("is-in");
+          setTimeout(() => el.classList.add("card-float-active"), 700);
+          fio.unobserve(el);
+        });
+      },
+      { threshold: 0.12 }
+    );
+    floatCards.forEach((el) => {
+      if (reduced) { el.classList.add("is-in", "card-float-active"); }
+      else fio.observe(el);
+    });
+  }
+
   // ── 4. Stagger children [data-stagger] ───────────────────────
   document.querySelectorAll("[data-stagger]").forEach((parent) => {
     const gap = parseInt(parent.dataset.staggerGap ?? "80", 10);

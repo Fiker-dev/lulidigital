@@ -8,51 +8,42 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   active="contact"
 >
 
-  <!-- ══════════════════════════ PAGE SIGNATURE CHARACTER ════════ -->
+  <!-- ══════════════════════ OBJECT ASCII — NO BOTS ══════════════ -->
   <div class="page-sig" aria-hidden="true" data-reveal="fade">
     <div class="sig-chars">
 
-      <!-- Greeter at door -->
+      <!-- Envelope — no person -->
       <div class="sig-char">
         <pre class="sig-pre">
-<span class="sh">         ┌──┐</span>
-<span class="sh">      ╔══╡  ╞══╗</span>
-<span class="sh">      ║  └──┘  ║</span>
-<span class="sm">      ║  <span class="con-head">╭──╮</span>  ║</span>
-<span class="con-head sm">      ║  │◕‿│  ║</span>
-<span class="sm">      ║  ╰──╯  ║</span>
-<span class="con-wave sm">    <span class="sh">╲</span> ║  /│╲  ║ <span class="sh">╱</span></span>
-<span class="sm">      ║ ╱ │ ╲ ║</span>
-<span class="sm">      ╚═══════╝</span></pre>
-        <span class="sig-label">open door</span>
+<span class="sh">╔═════════════════╗</span>
+<span class="con-env sh">║╲               ╱║</span>
+<span class="sh">║ ╲_____________╱ ║</span>
+<span class="sh">║                 ║</span>
+<span class="sh">╚═════════════════╝</span></pre>
+        <span class="sig-label">send a note</span>
       </div>
 
-      <!-- Phone / message -->
+      <!-- Speech bubble — no person -->
       <div class="sig-char">
         <pre class="sig-pre">
-<span class="sm">  ╭─────────────╮</span>
-<span class="sm">  │ <span class="sh">hello there!</span> │</span>
-<span class="sm">  ╰──────┬──────╯</span>
-<span class="sm">         │</span>
-<span class="sh">  ╭────╮</span>
-<span class="con-head sh">  │◕‿◕ │</span>
-<span class="sh">  ╰────╯</span>
-<span class="sm">   /│╲</span>
-<span class="sm">  ╱ │ ╲</span></pre>
+<span class="sh">╭─────────────────╮</span>
+<span class="con-msg sh">│  hello there!   │</span>
+<span class="sh">│  We're ready.   │</span>
+<span class="sh">╰───┬─────────────╯</span>
+<span class="con-dot sm">    ·</span>
+<span class="con-dot sm">      ·</span></pre>
         <span class="sig-label">we're listening</span>
       </div>
 
-      <!-- Coffee + notepad -->
+      <!-- Coffee + notepad — no person -->
       <div class="sig-char">
         <pre class="sig-pre">
-<span class="sh">  ╭────╮</span>
-<span class="con-head sh">  │ ◠‿◠│</span>
-<span class="sh">  ╰────╯</span>
-<span class="sm">   /│╲  ╔═══╗</span>
-<span class="sm">  ╱ │ ╲ ║ ✎ ║</span>
-<span class="con-write sm">       ║~~~║</span>
-<span class="sm">       ╚═══╝</span>
-<span class="con-cup sm">    ☕</span></pre>
+<span class="sh">  ╔═════╗</span>
+<span class="sm">  ║  ✎  ║</span>
+<span class="con-write sh">  ║~~~~~║</span>
+<span class="sh">  ║~~~~~║</span>
+<span class="sh">  ╚═════╝</span>
+<span class="con-cup sh">   ☕</span></pre>
         <span class="sig-label">let's talk</span>
       </div>
 
@@ -63,7 +54,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <section class="contact-wrap">
     <header class="contact-head">
       <div class="kicker">Contact Desk</div>
-      <h1 class="headline">Reach the desk.</h1>
+      <h1 class="headline" data-bee-stop>Reach the desk.</h1>
       <p class="subhead">
         For campaigns, systems, or something you're building — send a note or message the desk.
       </p>
@@ -116,16 +107,18 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     .sig-label { font-family: var(--font-body, "DM Sans", sans-serif); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted, rgba(20,19,18,.4)); font-weight: 600; }
     .sig-tagline { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); font-size: clamp(14px, 2vw, 18px); font-style: italic; color: var(--muted, rgba(20,19,18,.5)); margin: 0; }
 
-    /* Contact character animations */
-    .con-head  { display: block; animation: conBob 3s ease-in-out infinite; }
-    .con-wave  { display: block; animation: conWave 1.4s ease-in-out infinite; }
-    .con-write { display: block; animation: conWrite 2s step-end infinite; }
-    .con-cup   { display: block; animation: conCup 4s ease-in-out infinite; }
+    /* Contact object animations */
+    .con-env   { display: block; animation: conEnv   2.4s ease-in-out infinite; }
+    .con-msg   { display: block; animation: conMsg   3s   ease-in-out infinite; }
+    .con-dot   { display: block; animation: conDot   1.6s ease-in-out infinite; }
+    .con-write { display: block; animation: conWrite 2s   step-end   infinite; }
+    .con-cup   { display: block; animation: conCup   4s   ease-in-out infinite; }
 
-    @keyframes conBob   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
-    @keyframes conWave  { 0%,100%{transform:rotate(0)} 30%{transform:rotate(-12deg)} 60%{transform:rotate(8deg)} }
-    @keyframes conWrite { 0%,60%,100%{opacity:1} 65%{opacity:.3} }
-    @keyframes conCup   { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+    @keyframes conEnv   { 0%,100%{opacity:1}  50%{opacity:.5} }
+    @keyframes conMsg   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+    @keyframes conDot   { 0%,100%{opacity:0}  50%{opacity:1} }
+    @keyframes conWrite { 0%,60%,100%{opacity:1} 65%{opacity:.2} }
+    @keyframes conCup   { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
 
     /* ── Contact layout ────────────────────────────────────────── */
     .contact-wrap {

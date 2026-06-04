@@ -30,50 +30,42 @@ const serviceSchema = {
   serviceSchema={serviceSchema}
 >
 
-  <!-- ══════════════════════════ PAGE SIGNATURE CHARACTER ════════ -->
+  <!-- ══════════════════════ OBJECT ASCII — NO BOTS ══════════════ -->
   <div class="page-sig" aria-hidden="true" data-reveal="fade">
     <div class="sig-chars">
 
-      <!-- Megaphone person -->
+      <!-- Megaphone object -->
       <div class="sig-char">
         <pre class="sig-pre">
-<span class="sh">  ╭────╮</span>
-<span class="sig-head sh">  │◕ ◕ │</span>
-<span class="sh">  ╰──┬─╯</span>
-<span class="sm">  ╱ │╲  ╔══╗</span>
-<span class="sig-arm sm"> ╱  │ ╲╔╝▶▶║</span>
-<span class="sm">╱   │  ╚╗  ║</span>
-<span class="sm">    │   ╚══╝</span>
-<span class="sm">   ╱ ╲</span></pre>
+<span class="mkt-horn sh">    ╔══╗</span>
+<span class="mkt-horn sh">    ║▶▶╠════════</span>
+<span class="sh">    ╚══╝</span>
+<span class="sm">   ────────</span>
+<span class="mkt-wave sm">  ∿ ∿ ∿ ∿ ∿</span></pre>
         <span class="sig-label">broadcasting</span>
       </div>
 
-      <!-- Billboard painter -->
+      <!-- Rising chart -->
       <div class="sig-char">
         <pre class="sig-pre">
-<span class="sh">     ╭───╮</span>
-<span class="sig-head sh">     │ ◠‿◠│</span>
-<span class="sh">     ╰───╯</span>
-<span class="sm">  ╱╲ /│╲</span>
-<span class="sig-brush sm"> ╱  ╲  │  ╲</span>
-<span class="sm">   ┌────────────┐</span>
-<span class="sig-board sm">   │  <span class="sh">YOUR BRAND</span> │</span>
-<span class="sig-board sm">   │   ∿∿∿∿∿∿   │</span>
-<span class="sm">   └────────────┘</span></pre>
-        <span class="sig-label">painting stories</span>
+<span class="sm">   │      <span class="sh">╱</span></span>
+<span class="sm">   │    <span class="sh">╱</span></span>
+<span class="mkt-chart sm">   │  <span class="sh">╱</span></span>
+<span class="sm">   │<span class="sh">╱</span></span>
+<span class="sm">   └──────</span></pre>
+        <span class="sig-label">growth</span>
       </div>
 
-      <!-- Camera person -->
+      <!-- Billboard sign -->
       <div class="sig-char">
         <pre class="sig-pre">
-<span class="sh">  ╭────╮</span>
-<span class="sig-head sh">  │◕‿◕ │</span>
-<span class="sh">  ╰────╯</span>
-<span class="sm">   /│╲  ╔══════╗</span>
-<span class="sig-cam sm">  ╱ │ ╲─║ ◎REC ║</span>
-<span class="sm">      ╲  ╚══════╝</span>
-<span class="sm">      ╱╲</span></pre>
-        <span class="sig-label">capturing moments</span>
+<span class="sh">┌──────────────┐</span>
+<span class="mkt-bill sh">│  YOUR BRAND  │</span>
+<span class="sh">│  ▮▮▮▮▮▮▮▮  │</span>
+<span class="sh">└──────┬───────┘</span>
+<span class="sm">       │</span>
+<span class="sm">       │</span></pre>
+        <span class="sig-label">billboard</span>
       </div>
 
     </div>
@@ -84,7 +76,7 @@ const serviceSchema = {
   <section class="mkt-hero" aria-label="Marketing services">
     <div class="hero-orb orb-a" aria-hidden="true"></div>
     <span class="eyebrow" data-blur-in>Marketing Desk</span>
-    <h1 class="mkt-title" data-word-reveal>
+    <h1 class="mkt-title" data-word-reveal data-bee-stop>
       Brand strategy, performance marketing &amp; paid media.
     </h1>
     <p class="mkt-sub" data-blur-in data-blur-delay="200">
@@ -395,18 +387,16 @@ const serviceSchema = {
     letter-spacing: .02em;
   }
 
-  /* Marketing character animations */
-  .sig-head  { display: block; animation: mktNod 3.5s ease-in-out infinite; }
-  .sig-arm   { display: block; animation: mktArm 1.4s ease-in-out infinite; transform-origin: top center; }
-  .sig-brush { display: block; animation: mktBrush 2s ease-in-out infinite; }
-  .sig-board { display: block; animation: mktBoard 4s ease-in-out infinite; }
-  .sig-cam   { display: block; animation: mktCam 2.8s ease-in-out infinite; }
+  /* Marketing object animations */
+  .mkt-horn  { display: block; animation: mktHorn  1.8s ease-in-out infinite; }
+  .mkt-wave  { display: block; animation: mktWave  2s   linear     infinite; }
+  .mkt-chart { display: block; animation: mktChart 3s   ease-in-out infinite; }
+  .mkt-bill  { display: block; animation: mktBill  4s   ease-in-out infinite; }
 
-  @keyframes mktNod   { 0%,100%{transform:rotate(0)} 40%{transform:rotate(4deg) translateY(-2px)} 70%{transform:rotate(-2deg)} }
-  @keyframes mktArm   { 0%,100%{transform:rotate(0) scaleX(1)} 50%{transform:rotate(-8deg) scaleX(1.05)} }
-  @keyframes mktBrush { 0%,100%{transform:translateX(0)} 50%{transform:translateX(6px)} }
-  @keyframes mktBoard { 0%,100%{opacity:1} 50%{opacity:.7} 60%{opacity:1} }
-  @keyframes mktCam   { 0%,100%{transform:translateX(0)} 30%{transform:translateX(-3px) rotate(-2deg)} 70%{transform:translateX(3px) rotate(2deg)} }
+  @keyframes mktHorn  { 0%,100%{transform:scaleX(1)}   50%{transform:scaleX(1.08)} }
+  @keyframes mktWave  { 0%{letter-spacing:.1em} 50%{letter-spacing:.3em} 100%{letter-spacing:.1em} }
+  @keyframes mktChart { 0%,100%{opacity:.4} 50%{opacity:1} }
+  @keyframes mktBill  { 0%,100%{opacity:1}  60%{opacity:.6} }
 
   /* Pills on this page */
   .pill {

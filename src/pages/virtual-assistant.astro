@@ -30,50 +30,43 @@ const serviceSchema = {
   serviceSchema={serviceSchema}
 >
 
-  <!-- ══════════════════════════ PAGE SIGNATURE CHARACTER ════════ -->
+  <!-- ══════════════════════ OBJECT ASCII — NO BOTS ══════════════ -->
   <div class="page-sig" aria-hidden="true" data-reveal="fade">
     <div class="sig-chars">
 
-      <!-- Inbox tamer -->
+      <!-- Inbox — no person -->
       <div class="sig-char">
         <pre class="sig-pre">
-<span class="sh">  ╭────╮</span>
-<span class="va-head sh">  │◕‿◕ │</span>
-<span class="sh">  ╰────╯</span>
-<span class="sm">   /│╲  ╔═══════╗</span>
-<span class="sm">  ╱ │ ╲ ║ INBOX ║</span>
-<span class="va-check sm">       ║ ✓ ✓ ✓ ║</span>
-<span class="sm">       ║ ✓ ✓   ║</span>
-<span class="sm">       ╚═══════╝</span></pre>
+<span class="sh">╔═══════════╗</span>
+<span class="va-inbox sh">║ ✓ INBOX 1 ║</span>
+<span class="sm">╠═══════════╣</span>
+<span class="va-inbox sh">║ ✓ INBOX 2 ║</span>
+<span class="sm">╠═══════════╣</span>
+<span class="va-inbox sh">║ ✓ INBOX 3 ║</span>
+<span class="sh">╚═══════════╝</span></pre>
         <span class="sig-label">inbox zero</span>
       </div>
 
-      <!-- Calendar keeper -->
+      <!-- Calendar — no person -->
       <div class="sig-char">
         <pre class="sig-pre">
-<span class="sh">  ╭────╮</span>
-<span class="va-head sh">  │ˆ ‿ˆ│</span>
-<span class="sh">  ╰────╯</span>
-<span class="sm">  ╱│╲  ┌───────┐</span>
-<span class="sm"> ╱ │ ╲ │Mo Tu W│</span>
-<span class="va-cal sm">       │<span class="sh">◈</span>  <span class="sh">◈</span>  <span class="sh">◈</span>│</span>
-<span class="sm">       │Th Fr Sa│</span>
-<span class="va-cal sm">       │<span class="sh">◈</span>  <span class="sh">◈</span>  · │</span>
-<span class="sm">       └───────┘</span></pre>
-        <span class="sig-label">calendar mastery</span>
+<span class="sh">┌───────────┐</span>
+<span class="sm">│ Mo Tu We  │</span>
+<span class="va-cal sh">│ <span class="sh">◈</span>  <span class="sh">◈</span>  <span class="sh">◈</span>  │</span>
+<span class="sm">│ Th Fr Sa  │</span>
+<span class="va-cal sh">│ <span class="sh">◈</span>  <span class="sh">◈</span>  ·  │</span>
+<span class="sh">└───────────┘</span></pre>
+        <span class="sig-label">calendar managed</span>
       </div>
 
-      <!-- Task runner -->
+      <!-- Checklist — no person -->
       <div class="sig-char">
         <pre class="sig-pre">
-<span class="sh">  ╭────╮</span>
-<span class="va-head sh">  │◉ ‿◉│</span>
-<span class="sh">  ╰────╯</span>
-<span class="sm">   /│╲</span>
-<span class="sm">  ╱ │ ╲  [<span class="sh">✓</span>] done</span>
-<span class="va-tasks sm">         [<span class="sh">✓</span>] done</span>
-<span class="va-tasks sm">         [<span class="sh">✓</span>] done</span>
-<span class="sm">         [ ] next</span></pre>
+<span class="va-task sh">[<span class="sh">✓</span>] Inbox done</span>
+<span class="va-task sh">[<span class="sh">✓</span>] Calendar ok</span>
+<span class="va-task sh">[<span class="sh">✓</span>] Report sent</span>
+<span class="sm">[ ] Next item</span>
+<span class="sm">[ ] And more…</span></pre>
         <span class="sig-label">nothing slips</span>
       </div>
 
@@ -85,7 +78,7 @@ const serviceSchema = {
   <section class="va-hero" aria-label="Virtual Assistant services">
     <div class="hero-orb orb-a" aria-hidden="true"></div>
     <span class="eyebrow" data-blur-in>Virtual Assistant Desk</span>
-    <h1 class="va-title" data-word-reveal>
+    <h1 class="va-title" data-word-reveal data-bee-stop>
       Executive support without the full-time overhead.
     </h1>
     <p class="va-sub" data-blur-in data-blur-delay="200">
@@ -333,16 +326,14 @@ Founder       Inbox · Calendar · Tasks     You focus on
   .sig-label { font-family: var(--font-body, "DM Sans", sans-serif); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted, rgba(20,19,18,.4)); font-weight: 600; }
   .sig-tagline { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); font-size: clamp(14px, 2vw, 18px); font-style: italic; color: var(--muted, rgba(20,19,18,.5)); margin: 0; }
 
-  /* VA character animations */
-  .va-head  { display: block; animation: vaNod 4s ease-in-out infinite; }
-  .va-check { display: block; animation: vaCheck 3s ease-in-out infinite; }
-  .va-cal   { display: block; animation: vaCal 2s step-end infinite; }
-  .va-tasks { display: block; animation: vaTasks 4s ease-in-out infinite; }
+  /* VA object animations */
+  .va-inbox { display: block; animation: vaInbox 2.4s ease-in-out infinite; }
+  .va-cal   { display: block; animation: vaCal   2s   step-end   infinite; }
+  .va-task  { display: block; animation: vaTask  3s   ease-in-out infinite; }
 
-  @keyframes vaNod   { 0%,100%{transform:rotate(0)} 30%{transform:rotate(3deg) translateY(-2px)} }
-  @keyframes vaCheck { 0%,100%{opacity:1} 50%{opacity:.5} 55%{opacity:1} }
-  @keyframes vaCal   { 0%,70%,100%{opacity:1} 75%{opacity:.4} }
-  @keyframes vaTasks { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
+  @keyframes vaInbox { 0%,100%{opacity:1}  50%{opacity:.5} }
+  @keyframes vaCal   { 0%,70%,100%{opacity:1} 75%{opacity:.3} }
+  @keyframes vaTask  { 0%,100%{transform:translateX(0)} 50%{transform:translateX(3px)} }
 
   /* ── Responsive ─────────────────────────────────────────────── */
   @media (max-width: 520px) {

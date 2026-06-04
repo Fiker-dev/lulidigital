@@ -181,6 +181,56 @@ const jsonLd = {
 
   <body>
     <div class="scroll-bar" aria-hidden="true"></div>
+
+    <!-- ══════════════════════════ FLYING BEE GUIDE ═══════════════ -->
+    <div id="bee-guide" aria-hidden="true">
+      <svg class="bee-svg" viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg">
+        <!-- Wings -->
+        <g class="bee-wings">
+          <ellipse cx="38" cy="18" rx="21" ry="12"
+            fill="rgba(210,235,255,0.65)" stroke="rgba(130,170,230,0.45)" stroke-width="0.8"/>
+          <ellipse cx="57" cy="19" rx="17" ry="10"
+            fill="rgba(210,235,255,0.55)" stroke="rgba(130,170,230,0.45)" stroke-width="0.8"/>
+        </g>
+        <!-- Body -->
+        <ellipse cx="42" cy="44" rx="23" ry="16" fill="#F5A41F"/>
+        <!-- Stripes -->
+        <rect x="23" y="31" width="10" height="26" rx="7" fill="rgba(20,10,0,0.72)"/>
+        <rect x="37" y="30" width="10" height="28" rx="7" fill="rgba(20,10,0,0.72)"/>
+        <rect x="51" y="32" width="8"  height="24" rx="6" fill="rgba(20,10,0,0.72)"/>
+        <!-- Body sheen -->
+        <ellipse cx="42" cy="44" rx="23" ry="16" fill="none" stroke="#E8991A" stroke-width="1.5" opacity="0.35"/>
+        <!-- Fuzzy edge -->
+        <ellipse cx="42" cy="44" rx="23" ry="16" fill="none" stroke="#FFC94A" stroke-width="3" opacity="0.12"/>
+        <!-- Head -->
+        <circle cx="68" cy="42" r="14" fill="#F5A41F"/>
+        <circle cx="68" cy="42" r="14" fill="none" stroke="#E8991A" stroke-width="1.2" opacity="0.35"/>
+        <!-- Eye -->
+        <circle cx="73" cy="37" r="5"   fill="#130C04"/>
+        <circle cx="74.5" cy="35.5" r="2" fill="white"/>
+        <!-- Smile -->
+        <path d="M63 47 Q68 52 74 47" stroke="#130C04" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <!-- Stinger -->
+        <ellipse cx="17" cy="46" rx="6" ry="3" fill="#CC8A10" transform="rotate(-10 17 46)"/>
+        <path d="M12 46 L5 49" stroke="#130C04" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Antennae -->
+        <path d="M66 29 Q63 17 60 9"  stroke="#130C04" stroke-width="2"   fill="none" stroke-linecap="round"/>
+        <circle cx="60" cy="8"  r="3.5" fill="#130C04"/>
+        <path d="M72 29 Q75 17 80 10" stroke="#130C04" stroke-width="2"   fill="none" stroke-linecap="round"/>
+        <circle cx="80" cy="9"  r="3.5" fill="#130C04"/>
+        <!-- Legs -->
+        <path d="M30 57 L24 64" stroke="#130C04" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M42 60 L40 68" stroke="#130C04" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M54 57 L59 63" stroke="#130C04" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <!-- Trail dots -->
+      <div class="bee-trail">
+        <span class="trail-dot t1"></span>
+        <span class="trail-dot t2"></span>
+        <span class="trail-dot t3"></span>
+      </div>
+    </div>
+
     <SiteHeader active={active} />
     <main class="page">
       <slot />
@@ -198,7 +248,71 @@ const jsonLd = {
     initInkHighlights();
     initMagnetic();
     initScrollProgress();
+    initBee();
   });
+
+  function initBee() {
+    const beeEl = document.getElementById("bee-guide");
+    if (!beeEl || window.innerWidth < 900) { if (beeEl) beeEl.style.display = "none"; return; }
+    const bee = beeEl as HTMLElement;
+
+    // Current smooth position (in viewport px, fixed coords)
+    let cx = window.innerWidth - 64;
+    let cy = 120;
+    // Target position
+    let tx = cx;
+    let ty = cy;
+
+    let isLanded  = false;
+    let landTimer = 0;
+    let lastTilt  = 0;
+    let rawScroll = 0;
+
+    window.addEventListener("scroll", () => { rawScroll = window.scrollY; }, { passive: true });
+
+    // When a section heading enters view, land the bee there
+    const stops = document.querySelectorAll<HTMLElement>("[data-bee-stop]");
+    if (stops.length) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const r = (e.target as HTMLElement).getBoundingClientRect();
+          // Land on right side, vertically near the heading
+          tx = window.innerWidth - 60;
+          ty = Math.max(80, Math.min(r.top + 24, window.innerHeight - 80));
+          isLanded = true;
+          bee.classList.add("is-landed");
+          clearTimeout(landTimer);
+          landTimer = window.setTimeout(() => {
+            isLanded = false;
+            bee.classList.remove("is-landed");
+          }, 2600); // stay landed 2.6 s then fly again
+        });
+      }, { threshold: 0.45 });
+      stops.forEach((s) => io.observe(s));
+    }
+
+    function tick(ms: number) {
+      if (!isLanded) {
+        // Flying: follow scroll + sine-wave oscillation
+        const docH = document.body.scrollHeight - window.innerHeight;
+        const pct  = docH > 0 ? Math.min(rawScroll / docH, 1) : 0;
+        ty = 100 + pct * (window.innerHeight * 0.68);
+        tx = window.innerWidth - 56 + Math.sin(ms * 0.00050) * (window.innerWidth * 0.07);
+      }
+
+      const ease = isLanded ? 0.07 : 0.04;
+      cx += (tx - cx) * ease;
+      cy += (ty - cy) * ease;
+
+      const tilt = isLanded ? 0 : (Math.cos(ms * 0.00050) > 0 ? 9 : -9);
+      lastTilt  += (tilt - lastTilt) * 0.09;
+
+      bee.style.transform = `translate(${cx}px, ${cy}px) rotate(${lastTilt}deg)`;
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
 
   function initMagnetic() {
     document.querySelectorAll<HTMLElement>(".magnetic").forEach((el) => {
@@ -244,4 +358,74 @@ const jsonLd = {
     z-index: 200;
     pointer-events: none;
   }
+
+  /* ── Flying Bee ─────────────────────────────────────────────── */
+  #bee-guide {
+    position: fixed;
+    left: 0; top: 0;           /* origin; JS uses translate() to position */
+    z-index: 90;
+    pointer-events: none;
+    will-change: transform;
+    filter: drop-shadow(0 3px 8px rgba(180,120,0,.22));
+    transition: filter 400ms ease;
+  }
+  #bee-guide.is-landed {
+    filter: drop-shadow(0 6px 16px rgba(180,120,0,.35));
+  }
+  .bee-svg {
+    width: 40px;               /* smaller */
+    height: auto;
+    display: block;
+  }
+  /* Wings flap fast while flying */
+  .bee-wings {
+    transform-origin: 48px 20px;
+    animation: wingFlap 0.15s ease-in-out infinite alternate;
+  }
+  /* Wings barely move when landed */
+  .is-landed .bee-wings {
+    animation: wingLanded 1.2s ease-in-out infinite alternate;
+  }
+  @keyframes wingFlap {
+    from { transform: scaleY(1) scaleX(1);   opacity: .9; }
+    to   { transform: scaleY(.25) scaleX(.9); opacity: .35; }
+  }
+  @keyframes wingLanded {
+    from { transform: scaleY(.85) scaleX(.95); opacity: .7; }
+    to   { transform: scaleY(.65) scaleX(.9);  opacity: .5; }
+  }
+  /* Landed: gentle body bob */
+  .is-landed .bee-svg {
+    animation: beeLanded 1.4s ease-in-out infinite;
+  }
+  @keyframes beeLanded {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-4px); }
+  }
+  /* Trail dots (only while flying) */
+  .bee-trail {
+    position: absolute;
+    top: 24px; left: -10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    pointer-events: none;
+  }
+  .is-landed .bee-trail { opacity: 0; }
+  .trail-dot {
+    display: block;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #F5A41F;
+    opacity: 0;
+    animation: trailFade 0.8s ease-out infinite;
+  }
+  .t1 { animation-delay: 0s;   width: 4px; height: 4px; }
+  .t2 { animation-delay: .16s; width: 3px; height: 3px; }
+  .t3 { animation-delay: .32s; width: 2px; height: 2px; }
+  @keyframes trailFade {
+    0%   { opacity: .6; transform: translateX(4px) translateY(0); }
+    100% { opacity: 0;  transform: translateX(12px) translateY(8px); }
+  }
+  @media (max-width: 899px) { #bee-guide { display: none; } }
 </style>
