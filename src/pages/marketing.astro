@@ -18,6 +18,8 @@ const serviceSchema = {
     "creative direction services",
     "growth marketing services",
     "digital marketing agency for founders",
+    "AI powered digital marketing",
+    "AI marketing automation",
   ],
   "description": "Digital marketing services for founders and growing brands: paid media management, brand strategy, SEO, content marketing, and performance campaigns across Meta, Google, and TikTok.",
 };
@@ -37,13 +39,13 @@ const mktMarquee = [
 >
 
   <!-- ═══════════════════════════════════════════════════════ HERO -->
-  <section class="mkt-hero" aria-label="Marketing services">
-    <div class="hero-orb orb-a" aria-hidden="true"></div>
+  <section class="mkt-hero" aria-label="Marketing services" data-bee-stop>
+    <div class="mkt-signal-field" aria-hidden="true"></div>
 
     <div class="mkt-hero-split">
       <div class="mkt-hero-text">
-        <span class="eyebrow" data-blur-in>Marketing Desk</span>
-        <h1 class="mkt-title" data-word-reveal data-bee-stop>
+        <span class="eyebrow mkt-eyebrow" data-blur-in>Campaign Studio</span>
+        <h1 class="mkt-title" data-word-reveal>
           Brand strategy, performance marketing &amp; paid media.
         </h1>
         <p class="mkt-sub" data-blur-in data-blur-delay="200">
@@ -58,6 +60,7 @@ const mktMarquee = [
 
       <!-- Animated growth chart character -->
       <div class="mkt-chart" aria-hidden="true">
+        <div class="mc-flight-line"></div>
         <div class="mc-header">
           <span class="mc-label">Campaign Performance</span>
           <span class="mc-live"><span class="mc-live-dot"></span>Live</span>
@@ -117,8 +120,25 @@ const mktMarquee = [
     </div>
   </div>
 
+  <section class="selling-point selling-point--marketing" aria-label="AI powered digital marketing selling point" data-reveal="up" data-bee-stop>
+    <span class="eyebrow">Why This Works</span>
+    <h2 class="selling-title">You get digital marketing powered by AI, guided by human strategy.</h2>
+    <p class="selling-copy">
+      Your campaigns should not guess. We use AI where it makes the work faster and sharper:
+      audience research, keyword direction, content angles, campaign reporting, and optimisation signals.
+      Then we bring the human judgment that keeps your brand clear, trustworthy, and worth choosing.
+    </p>
+    <p class="selling-copy selling-copy--direct">
+      Want to know how this would work for your business? Talk to the desk and we will walk you through it.
+    </p>
+    <div class="selling-links">
+      <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">WhatsApp the desk</a>
+      <a class="pill pill--outline magnetic" href="mailto:info@lulidigital.co.za">Email the desk</a>
+    </div>
+  </section>
+
   <!-- ════════════════════════════════════════ PROCESS TIMELINE -->
-  <section class="process-section" aria-label="Marketing process" data-reveal="up">
+  <section class="process-section" aria-label="Marketing process" data-reveal="up" data-bee-stop>
     <span class="eyebrow">The Process</span>
     <h2 class="section-title">Clean story. Clear offer. Measurable lift.</h2>
 
@@ -250,7 +270,7 @@ const mktMarquee = [
   </section>
 
   <!-- ════════════════════════════════════════ STRATEGY FLOW GRID -->
-  <section class="strategy-section" aria-label="Marketing strategy overview" data-reveal="up">
+  <section class="strategy-section" aria-label="Marketing strategy overview" data-reveal="up" data-bee-stop>
     <span class="eyebrow">The Full System</span>
     <h2 class="section-title">Every piece connected.</h2>
     <div class="strategy-flow" data-stagger data-stagger-gap="80">
@@ -324,7 +344,7 @@ const mktMarquee = [
   </div>
 
   <!-- ═══════════════════════════════════════════════════════ CTA -->
-  <section class="mkt-cta-section" aria-label="Get started with marketing" data-reveal="fade" data-bee-stop>
+  <section class="mkt-cta-section" aria-label="Get started with marketing" data-reveal="fade" data-bee-final>
     <h2 class="cta-title" data-blur-in>You built it. We broadcast it.</h2>
     <p class="cta-sub" data-blur-in data-blur-delay="150">Let us help you put it out there for the world to see.</p>
     <div data-stagger data-stagger-gap="80" class="cta-links">
@@ -341,13 +361,33 @@ const mktMarquee = [
   .mkt-hero {
     position: relative; overflow: hidden;
     padding: 88px 0 72px;
+    isolation: isolate;
+    background:
+      linear-gradient(135deg, rgba(123,45,45,.08), transparent 38%),
+      linear-gradient(180deg, rgba(255,255,255,.25), transparent 72%);
   }
-  .orb-a { width: 500px; height: 500px; top: -100px; right: -160px; }
+  .mkt-signal-field {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(90deg, rgba(123,45,45,.09) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(123,45,45,.07) 1px, transparent 1px),
+      radial-gradient(circle at 76% 24%, rgba(255,177,66,.22), transparent 28%);
+    background-size: 72px 72px, 72px 72px, 100% 100%;
+    mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+    animation: signalPan 18s linear infinite;
+  }
+  @keyframes signalPan {
+    to { background-position: 72px 0, 0 72px, 0 0; }
+  }
+  .mkt-eyebrow { color: #a35b20; }
 
   .mkt-hero-split {
     display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 48px;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+    gap: clamp(28px, 5vw, 48px);
     align-items: center;
   }
   .mkt-hero-text { text-align: left; }
@@ -380,13 +420,37 @@ const mktMarquee = [
 
   /* ── Chart Character ────────────────────────────────────────── */
   .mkt-chart {
+    position: relative;
     background: var(--paper-card, #f6f2ea);
     border: 1px solid rgba(30,24,22,.12);
-    border-radius: 20px; overflow: hidden;
-    box-shadow: 0 24px 64px rgba(0,0,0,.1), 0 2px 8px rgba(123,45,45,.08);
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 18px 36px rgba(61,37,20,.12), 0 2px 8px rgba(123,45,45,.08);
     animation: chartFloat 6s ease-in-out infinite;
     will-change: transform;
     padding: 20px;
+  }
+  .mkt-chart::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border-radius: 10px;
+    border: 1px dashed rgba(163,91,32,.18);
+    pointer-events: none;
+  }
+  .mc-flight-line {
+    position: absolute;
+    left: -18%;
+    right: -18%;
+    top: 64%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(245,164,31,.78), transparent);
+    transform: rotate(-18deg);
+    opacity: .9;
+    animation: lineSweep 3.8s ease-in-out infinite;
+  }
+  @keyframes lineSweep {
+    0%,100% { transform: translateX(-16%) rotate(-18deg); opacity: .15; }
+    48% { transform: translateX(16%) rotate(-18deg); opacity: .95; }
   }
   @keyframes chartFloat {
     0%,100% { transform: translateY(0) rotate(0deg); }
@@ -427,7 +491,7 @@ const mktMarquee = [
     --final-h: var(--bh, 60%);
   }
   @keyframes barRise { to { height: var(--final-h); } }
-  .mc-bar-wrap--accent .mc-bar { background: var(--brand); box-shadow: 0 -4px 16px rgba(123,45,45,.35); }
+  .mc-bar-wrap--accent .mc-bar { background: linear-gradient(180deg, #f5a41f, var(--brand)); box-shadow: 0 -4px 16px rgba(245,164,31,.3); }
   .mc-bar-label {
     font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
     color: var(--muted, rgba(20,19,18,.4)); font-weight: 600;
@@ -470,6 +534,14 @@ const mktMarquee = [
   /* ── Services ───────────────────────────────────────────────── */
   .mkt-services { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
   .svc-card { padding: 26px 24px; min-height: 220px; }
+  .mkt-services .svc-card {
+    background:
+      linear-gradient(160deg, rgba(255,255,255,.46), rgba(246,242,234,.78)),
+      var(--paper-card);
+  }
+  .mkt-services .svc-card:hover {
+    background: linear-gradient(160deg, #2a1410, #5f2a1f 62%, #8a421f);
+  }
   .svc-icon {
     width: 40px; height: 40px; border-radius: 10px; background: rgba(123,45,45,.1);
     display: grid; place-items: center; color: var(--brand); flex-shrink: 0;
@@ -511,8 +583,24 @@ const mktMarquee = [
     .mkt-chart { max-width: 380px; margin: 0 auto; }
   }
   @media (max-width: 680px) {
-    .mkt-hero { padding: 60px 0 52px; }
+    .mkt-hero { padding: 48px 0 42px; }
+    .mkt-title { font-size: clamp(32px, 11vw, 44px); }
+    .mkt-sub { font-size: 15px; line-height: 1.58; }
+    .mkt-ctas .pill { width: 100%; justify-content: center; }
+    .mkt-chart { padding: 16px; border-radius: 12px; animation-duration: 8s; }
+    .mc-bars { height: 86px; }
+    .marquee-item { padding: 0 16px; }
     .timeline { flex-direction: column; align-items: center; gap: 14px; }
     .timeline-connector { width: 1px; height: 24px; margin: 0; }
+    .timeline-step { width: 100%; min-width: 0; align-items: flex-start; text-align: left; flex-direction: row; }
+    .timeline-content { display: grid; gap: 2px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mkt-signal-field,
+    .mkt-chart,
+    .mc-flight-line,
+    .mc-bar,
+    .timeline-dot { animation: none !important; }
+    .mc-bar { height: var(--final-h); }
   }
 </style>

@@ -99,36 +99,39 @@ const marqueeItems2 = [
 
   <!-- ═════════════════════════════════════ STORY: THE PROBLEM -->
   <section class="story-problem" aria-label="The problem we solve">
-    <div class="problem-inner" data-reveal="up">
+    <div class="problem-inner honey-text-block" data-reveal="up" data-bee-stop>
       <span class="eyebrow">Sound familiar?</span>
       <div class="problem-grid">
-        <div class="problem-card glow-card" data-tilt="8" data-reveal="float-l" data-reveal-delay="0">
+        <div class="problem-card glow-card" data-motion-kind="rise" data-tilt="8" data-reveal="float-l" data-reveal-delay="0">
           <div class="tilt-layer">
             <div class="prob-stat" aria-hidden="true">
               <span class="prob-num">47</span>
               <span class="prob-unit">tasks<br/>this week</span>
             </div>
             <p class="problem-text">You're doing everything yourself.<br/>And it's costing you.</p>
+            <p class="card-typed" data-card-type="sorting tasks... finding the leak..."></p>
           </div>
         </div>
 
-        <div class="problem-card glow-card" data-tilt="8" data-reveal="drop" data-reveal-delay="120">
+        <div class="problem-card glow-card" data-motion-kind="pop" data-tilt="8" data-reveal="drop" data-reveal-delay="120">
           <div class="tilt-layer">
             <div class="prob-stat" aria-hidden="true">
               <span class="prob-num">0h</span>
               <span class="prob-unit">for actual<br/>strategy</span>
             </div>
             <p class="problem-text">Your calendar is full.<br/>None of it moves the needle.</p>
+            <p class="card-typed" data-card-type="protecting deep work..."></p>
           </div>
         </div>
 
-        <div class="problem-card glow-card" data-tilt="8" data-reveal="float-r" data-reveal-delay="240">
+        <div class="problem-card glow-card" data-motion-kind="steam" data-tilt="8" data-reveal="float-r" data-reveal-delay="240">
           <div class="tilt-layer">
             <div class="prob-stat" aria-hidden="true">
               <span class="prob-num">??</span>
               <span class="prob-unit">growth this<br/>quarter</span>
             </div>
             <p class="problem-text">Systems aren't in place.<br/>Growth is guesswork.</p>
+            <p class="card-typed" data-card-type="building the operating system..."></p>
           </div>
         </div>
       </div>
@@ -169,13 +172,14 @@ const marqueeItems2 = [
     </div>
 
     <div class="bento-grid">
-      <article class="glow-card bento-card" data-reveal="float-l" data-reveal-delay="0" data-tilt="9">
+      <article class="glow-card bento-card" data-motion-kind="float" data-reveal="float-l" data-reveal-delay="0" data-tilt="9">
         <div class="tilt-layer" style="display:flex;flex-direction:column;gap:14px;height:100%">
           <div class="bento-num" aria-hidden="true">01</div>
           <div class="bento-icon" aria-hidden="true">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
           </div>
           <h3 class="bento-title">Marketing</h3>
+          <p class="card-typed" data-card-type="AI finds the angle. Strategy makes it sell."></p>
           <ul class="bento-list">
             <li style="--li-i:0">Brand strategy &amp; positioning</li>
             <li style="--li-i:1">Paid media: Meta, Google, TikTok</li>
@@ -185,13 +189,14 @@ const marqueeItems2 = [
         </div>
       </article>
 
-      <article class="glow-card bento-card" data-reveal="drop" data-reveal-delay="130" data-tilt="9">
+      <article class="glow-card bento-card" data-motion-kind="pop" data-reveal="drop" data-reveal-delay="130" data-tilt="9">
         <div class="tilt-layer" style="display:flex;flex-direction:column;gap:14px;height:100%">
           <div class="bento-num" aria-hidden="true">02</div>
           <div class="bento-icon" aria-hidden="true">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><circle cx="12" cy="14" r="2"/></svg>
           </div>
           <h3 class="bento-title">AI Automation</h3>
+          <p class="card-typed" data-card-type="Your support layer keeps working after hours."></p>
           <ul class="bento-list">
             <li style="--li-i:0">Conversational AI assistants</li>
             <li style="--li-i:1">Workflow automation end-to-end</li>
@@ -201,13 +206,14 @@ const marqueeItems2 = [
         </div>
       </article>
 
-      <article class="glow-card bento-card" data-reveal="float-r" data-reveal-delay="260" data-tilt="9">
+      <article class="glow-card bento-card" data-motion-kind="rise" data-reveal="float-r" data-reveal-delay="260" data-tilt="9">
         <div class="tilt-layer" style="display:flex;flex-direction:column;gap:14px;height:100%">
           <div class="bento-num" aria-hidden="true">03</div>
           <div class="bento-icon" aria-hidden="true">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
           <h3 class="bento-title">Virtual Assistant</h3>
+          <p class="card-typed" data-card-type="Human care. AI backup. Cleaner weeks."></p>
           <ul class="bento-list">
             <li style="--li-i:0">Inbox &amp; calendar management</li>
             <li style="--li-i:1">Project coordination</li>
@@ -323,7 +329,7 @@ const marqueeItems2 = [
     </div>
 
     <div class="usecases-grid">
-      <article class="glow-card usecase-card" data-reveal="float-l" data-reveal-delay="0" data-tilt="7">
+      <article class="glow-card usecase-card" data-motion-kind="rise" data-reveal="float-l" data-reveal-delay="0" data-tilt="7">
         <div class="tilt-layer">
           <div class="uc-top">
             <div class="uc-desk-tag">Marketing Desk</div>
@@ -333,12 +339,13 @@ const marqueeItems2 = [
             </div>
           </div>
           <h3 class="uc-headline">Brand undefined → brand that compounds.</h3>
+          <p class="card-typed" data-card-type="positioning locked... campaign ready..."></p>
           <p class="uc-body">Positioning, creative direction, paid media, and SEO built as one system. You show up consistently everywhere it matters.</p>
           <a class="cta-link" href="/marketing">Marketing Desk <span class="arr">→</span></a>
         </div>
       </article>
 
-      <article class="glow-card usecase-card" data-reveal="pop" data-reveal-delay="160" data-tilt="7">
+      <article class="glow-card usecase-card" data-motion-kind="steam" data-reveal="pop" data-reveal-delay="160" data-tilt="7">
         <div class="tilt-layer">
           <div class="uc-top">
             <div class="uc-desk-tag">AI Desk</div>
@@ -348,12 +355,13 @@ const marqueeItems2 = [
             </div>
           </div>
           <h3 class="uc-headline">Repetitive work → automated, always on.</h3>
+          <p class="card-typed" data-card-type="AI agent awake... routing next task..."></p>
           <p class="uc-body">AI trained on your business handles tier-1 queries 24/7. Your team focuses only on work that actually moves things forward.</p>
           <a class="cta-link" href="/ai">AI Desk <span class="arr">→</span></a>
         </div>
       </article>
 
-      <article class="glow-card usecase-card" data-reveal="float-r" data-reveal-delay="320" data-tilt="7">
+      <article class="glow-card usecase-card" data-motion-kind="float" data-reveal="float-r" data-reveal-delay="320" data-tilt="7">
         <div class="tilt-layer">
           <div class="uc-top">
             <div class="uc-desk-tag">Virtual Assistant</div>
@@ -363,6 +371,7 @@ const marqueeItems2 = [
             </div>
           </div>
           <h3 class="uc-headline">Chaos controlled → operations that run.</h3>
+          <p class="card-typed" data-card-type="inbox clear... calendar protected..."></p>
           <p class="uc-body">Inbox managed. Calendar owned. Deliverables tracked. You lead from the front — everything behind the scenes, handled.</p>
           <a class="cta-link" href="/virtual-assistant">VA Desk <span class="arr">→</span></a>
         </div>
@@ -571,6 +580,53 @@ const marqueeItems2 = [
 
   /* ── Story: Problem Section ─────────────────────────────────── */
   .story-problem { padding: 80px 0 40px; }
+  .honey-text-block {
+    position: relative;
+    isolation: isolate;
+    padding: 20px 0 6px;
+  }
+  .honey-text-block::before {
+    content: "";
+    position: absolute;
+    left: -18px;
+    top: 42px;
+    width: min(380px, 82vw);
+    height: 18px;
+    border-radius: 999px 999px 18px 18px;
+    background:
+      linear-gradient(90deg, rgba(245,164,31,.05), rgba(245,164,31,.74), rgba(255,199,74,.24));
+    transform: rotate(-1.8deg) scaleX(.35);
+    transform-origin: left center;
+    animation: honeySpread 1.4s cubic-bezier(.2,.9,.2,1) .45s forwards;
+    z-index: -1;
+  }
+  .honey-text-block::after {
+    content: "";
+    position: absolute;
+    left: 76px;
+    top: 54px;
+    width: 130px;
+    height: 58px;
+    background:
+      radial-gradient(circle at 10% 0, #f5a41f 0 7px, transparent 8px),
+      radial-gradient(circle at 48% 0, rgba(245,164,31,.78) 0 5px, transparent 6px),
+      radial-gradient(circle at 82% 0, rgba(245,164,31,.62) 0 4px, transparent 5px),
+      linear-gradient(#f5a41f, #f5a41f) 10% 0 / 7px 34px no-repeat,
+      linear-gradient(rgba(245,164,31,.78), rgba(245,164,31,.78)) 48% 0 / 5px 48px no-repeat,
+      linear-gradient(rgba(245,164,31,.62), rgba(245,164,31,.62)) 82% 0 / 4px 25px no-repeat;
+    opacity: 0;
+    filter: drop-shadow(0 8px 12px rgba(245,164,31,.14));
+    animation: honeyDrip 1.2s ease .95s forwards;
+    z-index: -1;
+  }
+  @keyframes honeySpread {
+    0% { opacity: 0; transform: rotate(-1.8deg) scaleX(.18); }
+    100% { opacity: 1; transform: rotate(-1.8deg) scaleX(1); }
+  }
+  @keyframes honeyDrip {
+    0% { opacity: 0; transform: translateY(-8px) scaleY(.2); }
+    100% { opacity: .78; transform: translateY(0) scaleY(1); }
+  }
   .problem-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-top: 32px; }
   .problem-card { padding: 36px 28px; display: flex; flex-direction: column; gap: 20px; }
   .prob-stat { display: flex; align-items: baseline; gap: 12px; }

@@ -232,4 +232,59 @@ export function initMotion() {
       else fio.observe(el);
     });
   }
+
+  // ── 11. Dramatic card motion for hover and touch ─────────────
+  const storyCards = document.querySelectorAll(".glow-card");
+  if (storyCards.length) {
+    storyCards.forEach((card, i) => {
+      card.style.setProperty("--card-drift-delay", `${(i % 6) * -0.55}s`);
+      card.dataset.motionKind = card.dataset.motionKind || ["rise", "pop", "float", "steam"][i % 4];
+      card.addEventListener("pointerenter", () => card.classList.add("is-card-engaged"));
+      card.addEventListener("pointerleave", () => card.classList.remove("is-card-engaged"));
+      card.addEventListener("pointerdown", () => {
+        card.classList.add("is-card-engaged", "is-card-tapped");
+        window.setTimeout(() => card.classList.remove("is-card-tapped"), 520);
+      }, { passive: true });
+    });
+
+    if (!reduced) {
+      const cardIo = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            entry.target.classList.toggle("is-card-near", entry.isIntersecting);
+          });
+        },
+        { threshold: 0.45 }
+      );
+      storyCards.forEach((card) => cardIo.observe(card));
+    }
+  }
+
+  // ── 12. Typewriter snippets inside cards ─────────────────────
+  document.querySelectorAll("[data-card-type]").forEach((el) => {
+    const node = el;
+    const raw = (node.dataset.cardType || node.textContent || "").trim();
+    if (!raw) return;
+    node.textContent = reduced ? raw : "";
+    if (reduced) return;
+    let started = false;
+    const typeIo = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting || started) return;
+          started = true;
+          let i = 0;
+          const tick = () => {
+            node.textContent = raw.slice(0, i);
+            i += 1;
+            if (i <= raw.length) window.setTimeout(tick, 28);
+          };
+          window.setTimeout(tick, 180);
+          typeIo.unobserve(node);
+        });
+      },
+      { threshold: 0.62 }
+    );
+    typeIo.observe(node);
+  });
 }

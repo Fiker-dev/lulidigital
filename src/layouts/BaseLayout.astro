@@ -13,6 +13,7 @@ const {
   localBusinessSchema,
   organizationSchemaOverride,
   hreflangLinks = [],
+  showBee = true,
 } = Astro.props;
 
 const siteUrl = "https://lulidigital.com";
@@ -183,53 +184,55 @@ const jsonLd = {
     <div class="scroll-bar" aria-hidden="true"></div>
 
     <!-- ══════════════════════════ FLYING BEE GUIDE ═══════════════ -->
-    <div id="bee-guide" aria-hidden="true">
-      <svg class="bee-svg" viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg">
-        <!-- Wings -->
-        <g class="bee-wings">
-          <ellipse cx="38" cy="18" rx="21" ry="12"
-            fill="rgba(210,235,255,0.65)" stroke="rgba(130,170,230,0.45)" stroke-width="0.8"/>
-          <ellipse cx="57" cy="19" rx="17" ry="10"
-            fill="rgba(210,235,255,0.55)" stroke="rgba(130,170,230,0.45)" stroke-width="0.8"/>
-        </g>
-        <!-- Body -->
-        <ellipse cx="42" cy="44" rx="23" ry="16" fill="#F5A41F"/>
-        <!-- Stripes -->
-        <rect x="23" y="31" width="10" height="26" rx="7" fill="rgba(20,10,0,0.72)"/>
-        <rect x="37" y="30" width="10" height="28" rx="7" fill="rgba(20,10,0,0.72)"/>
-        <rect x="51" y="32" width="8"  height="24" rx="6" fill="rgba(20,10,0,0.72)"/>
-        <!-- Body sheen -->
-        <ellipse cx="42" cy="44" rx="23" ry="16" fill="none" stroke="#E8991A" stroke-width="1.5" opacity="0.35"/>
-        <!-- Fuzzy edge -->
-        <ellipse cx="42" cy="44" rx="23" ry="16" fill="none" stroke="#FFC94A" stroke-width="3" opacity="0.12"/>
-        <!-- Head -->
-        <circle cx="68" cy="42" r="14" fill="#F5A41F"/>
-        <circle cx="68" cy="42" r="14" fill="none" stroke="#E8991A" stroke-width="1.2" opacity="0.35"/>
-        <!-- Eye -->
-        <circle cx="73" cy="37" r="5"   fill="#130C04"/>
-        <circle cx="74.5" cy="35.5" r="2" fill="white"/>
-        <!-- Smile -->
-        <path d="M63 47 Q68 52 74 47" stroke="#130C04" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-        <!-- Stinger -->
-        <ellipse cx="17" cy="46" rx="6" ry="3" fill="#CC8A10" transform="rotate(-10 17 46)"/>
-        <path d="M12 46 L5 49" stroke="#130C04" stroke-width="2.5" stroke-linecap="round"/>
-        <!-- Antennae -->
-        <path d="M66 29 Q63 17 60 9"  stroke="#130C04" stroke-width="2"   fill="none" stroke-linecap="round"/>
-        <circle cx="60" cy="8"  r="3.5" fill="#130C04"/>
-        <path d="M72 29 Q75 17 80 10" stroke="#130C04" stroke-width="2"   fill="none" stroke-linecap="round"/>
-        <circle cx="80" cy="9"  r="3.5" fill="#130C04"/>
-        <!-- Legs -->
-        <path d="M30 57 L24 64" stroke="#130C04" stroke-width="1.8" stroke-linecap="round"/>
-        <path d="M42 60 L40 68" stroke="#130C04" stroke-width="1.8" stroke-linecap="round"/>
-        <path d="M54 57 L59 63" stroke="#130C04" stroke-width="1.8" stroke-linecap="round"/>
-      </svg>
-      <!-- Trail dots -->
-      <div class="bee-trail">
-        <span class="trail-dot t1"></span>
-        <span class="trail-dot t2"></span>
-        <span class="trail-dot t3"></span>
+    {showBee && (
+      <div id="bee-guide" aria-hidden="true">
+        <svg class="bee-svg" viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg">
+          <!-- Wings -->
+          <g class="bee-wings">
+            <ellipse cx="38" cy="18" rx="21" ry="12"
+              fill="rgba(210,235,255,0.65)" stroke="rgba(130,170,230,0.45)" stroke-width="0.8"/>
+            <ellipse cx="57" cy="19" rx="17" ry="10"
+              fill="rgba(210,235,255,0.55)" stroke="rgba(130,170,230,0.45)" stroke-width="0.8"/>
+          </g>
+          <!-- Body -->
+          <ellipse cx="42" cy="44" rx="23" ry="16" fill="#F5A41F"/>
+          <!-- Stripes -->
+          <rect x="23" y="31" width="10" height="26" rx="7" fill="rgba(20,10,0,0.72)"/>
+          <rect x="37" y="30" width="10" height="28" rx="7" fill="rgba(20,10,0,0.72)"/>
+          <rect x="51" y="32" width="8"  height="24" rx="6" fill="rgba(20,10,0,0.72)"/>
+          <!-- Body sheen -->
+          <ellipse cx="42" cy="44" rx="23" ry="16" fill="none" stroke="#E8991A" stroke-width="1.5" opacity="0.35"/>
+          <!-- Fuzzy edge -->
+          <ellipse cx="42" cy="44" rx="23" ry="16" fill="none" stroke="#FFC94A" stroke-width="3" opacity="0.12"/>
+          <!-- Head -->
+          <circle cx="68" cy="42" r="14" fill="#F5A41F"/>
+          <circle cx="68" cy="42" r="14" fill="none" stroke="#E8991A" stroke-width="1.2" opacity="0.35"/>
+          <!-- Eye -->
+          <circle cx="73" cy="37" r="5"   fill="#130C04"/>
+          <circle cx="74.5" cy="35.5" r="2" fill="white"/>
+          <!-- Smile -->
+          <path d="M63 47 Q68 52 74 47" stroke="#130C04" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <!-- Stinger -->
+          <ellipse cx="17" cy="46" rx="6" ry="3" fill="#CC8A10" transform="rotate(-10 17 46)"/>
+          <path d="M12 46 L5 49" stroke="#130C04" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Antennae -->
+          <path d="M66 29 Q63 17 60 9"  stroke="#130C04" stroke-width="2"   fill="none" stroke-linecap="round"/>
+          <circle cx="60" cy="8"  r="3.5" fill="#130C04"/>
+          <path d="M72 29 Q75 17 80 10" stroke="#130C04" stroke-width="2"   fill="none" stroke-linecap="round"/>
+          <circle cx="80" cy="9"  r="3.5" fill="#130C04"/>
+          <!-- Legs -->
+          <path d="M30 57 L24 64" stroke="#130C04" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M42 60 L40 68" stroke="#130C04" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M54 57 L59 63" stroke="#130C04" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <!-- Trail dots -->
+        <div class="bee-trail">
+          <span class="trail-dot t1"></span>
+          <span class="trail-dot t2"></span>
+          <span class="trail-dot t3"></span>
+        </div>
       </div>
-    </div>
+    )}
 
     <SiteHeader active={active} />
     <main class="page">
@@ -253,12 +256,14 @@ const jsonLd = {
 
   function initBee() {
     const beeEl = document.getElementById("bee-guide");
-    if (!beeEl || window.innerWidth < 900) { if (beeEl) beeEl.style.display = "none"; return; }
+    if (!beeEl) return;
     const bee = beeEl as HTMLElement;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isSmall = window.innerWidth < 700;
 
     // Current smooth position (in viewport px, fixed coords)
-    let cx = window.innerWidth - 64;
-    let cy = 120;
+    let cx = isSmall ? 18 : 48;
+    let cy = isSmall ? 92 : 120;
     // Target position
     let tx = cx;
     let ty = cy;
@@ -267,38 +272,74 @@ const jsonLd = {
     let landTimer = 0;
     let lastTilt  = 0;
     let rawScroll = 0;
+    let audioCtx: AudioContext | null = null;
+    let audioReady = false;
+    let lastBuzz = 0;
+
+    const unlockAudio = () => {
+      if (audioReady) return;
+      const AudioCtor = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioCtor) return;
+      audioCtx = new AudioCtor();
+      audioReady = true;
+      playBuzz(0.018, 0.08);
+    };
+
+    window.addEventListener("pointerdown", unlockAudio, { once: true, passive: true });
+
+    function playBuzz(volume = 0.026, duration = 0.14) {
+      if (!audioReady || !audioCtx || reduced) return;
+      const now = audioCtx.currentTime;
+      if (now - lastBuzz < 1.2) return;
+      lastBuzz = now;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(170, now);
+      osc.frequency.linearRampToValueAtTime(235, now + duration * 0.45);
+      osc.frequency.linearRampToValueAtTime(150, now + duration);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(volume, now + 0.018);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + duration + 0.02);
+    }
 
     window.addEventListener("scroll", () => { rawScroll = window.scrollY; }, { passive: true });
 
-    // When a section heading enters view, land the bee there
-    const stops = document.querySelectorAll<HTMLElement>("[data-bee-stop]");
+    const stops = document.querySelectorAll<HTMLElement>("[data-bee-stop], [data-bee-final]");
     if (stops.length) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
           if (!e.isIntersecting) return;
           const r = (e.target as HTMLElement).getBoundingClientRect();
-          // Land on right side, vertically near the heading
-          tx = window.innerWidth - 60;
-          ty = Math.max(80, Math.min(r.top + 24, window.innerHeight - 80));
+          const targetIsFinal = (e.target as HTMLElement).hasAttribute("data-bee-final");
+          const beeOffset = isSmall ? 34 : 48;
+          const leftLanding = r.left - beeOffset;
+          const centerLanding = r.left + Math.min(r.width * 0.42, 180);
+          tx = Math.max(8, Math.min(targetIsFinal ? centerLanding : leftLanding, window.innerWidth - (isSmall ? 42 : 58)));
+          ty = Math.max(isSmall ? 70 : 80, Math.min(r.top + Math.min(34, r.height * 0.28), window.innerHeight - (isSmall ? 74 : 84)));
           isLanded = true;
           bee.classList.add("is-landed");
+          playBuzz(targetIsFinal ? 0.035 : 0.024, targetIsFinal ? 0.18 : 0.12);
           clearTimeout(landTimer);
           landTimer = window.setTimeout(() => {
             isLanded = false;
             bee.classList.remove("is-landed");
-          }, 2600); // stay landed 2.6 s then fly again
+          }, targetIsFinal ? 3600 : 2200);
         });
-      }, { threshold: 0.45 });
+      }, { threshold: isSmall ? 0.32 : 0.45, rootMargin: "0px 0px -12% 0px" });
       stops.forEach((s) => io.observe(s));
     }
 
     function tick(ms: number) {
       if (!isLanded) {
-        // Flying: follow scroll + sine-wave oscillation
         const docH = document.body.scrollHeight - window.innerHeight;
         const pct  = docH > 0 ? Math.min(rawScroll / docH, 1) : 0;
-        ty = 100 + pct * (window.innerHeight * 0.68);
-        tx = window.innerWidth - 56 + Math.sin(ms * 0.00050) * (window.innerWidth * 0.07);
+        ty = (isSmall ? 82 : 100) + pct * (window.innerHeight * (isSmall ? 0.56 : 0.68));
+        tx = (isSmall ? 16 : 44) + Math.sin(ms * 0.00050) * (isSmall ? 12 : 28);
       }
 
       const ease = isLanded ? 0.07 : 0.04;
@@ -342,7 +383,8 @@ const jsonLd = {
 </script>
 
 <style>
-  :global(html) { scroll-padding-top: 70px; }
+  :global(html) { scroll-padding-top: 70px; overflow-x: clip; }
+  :global(body) { overflow-x: hidden; }
   .page {
     max-width: var(--max);
     margin: 0 auto;
@@ -427,5 +469,18 @@ const jsonLd = {
     0%   { opacity: .6; transform: translateX(4px) translateY(0); }
     100% { opacity: 0;  transform: translateX(12px) translateY(8px); }
   }
-  @media (max-width: 899px) { #bee-guide { display: none; } }
+  @media (max-width: 699px) {
+    #bee-guide { z-index: 75; }
+    .bee-svg { width: 32px; }
+    .bee-trail { top: 19px; left: -8px; gap: 4px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #bee-guide,
+    .bee-wings,
+    .is-landed .bee-svg,
+    .trail-dot {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
 </style>
