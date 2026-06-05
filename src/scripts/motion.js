@@ -69,27 +69,6 @@ export function initMotion() {
     io.observe(el);
   });
 
-  // ── 3b. Float cards after reveal ─────────────────────────────
-  const floatCards = document.querySelectorAll(".glow-card[data-reveal]");
-  if (floatCards.length) {
-    const fio = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          const el = e.target;
-          el.classList.add("is-in");
-          setTimeout(() => el.classList.add("card-float-active"), 700);
-          fio.unobserve(el);
-        });
-      },
-      { threshold: 0.12 }
-    );
-    floatCards.forEach((el) => {
-      if (reduced) { el.classList.add("is-in", "card-float-active"); }
-      else fio.observe(el);
-    });
-  }
-
   // ── 4. Stagger children [data-stagger] ───────────────────────
   document.querySelectorAll("[data-stagger]").forEach((parent) => {
     const gap = parseInt(parent.dataset.staggerGap ?? "80", 10);
@@ -170,5 +149,87 @@ export function initMotion() {
       header.classList.toggle("is-hidden", y > lastY && y > 160);
       lastY = y;
     }, { passive: true });
+  }
+
+  // ── 8. 3D Tilt Cards [data-tilt] ─────────────────────────────
+  if (!reduced && window.matchMedia("(hover: hover)").matches) {
+    document.querySelectorAll("[data-tilt]").forEach((card) => {
+      const strength = parseFloat(card.dataset.tilt || "10");
+      let rafId = 0;
+      let tx = 0, ty = 0, tz = 0;
+      let cx = 0, cy = 0;
+
+      card.addEventListener("mousemove", (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        tx = -y * strength;
+        ty =  x * strength;
+        tz = strength * 0.8;
+
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          cx += (tx - cx) * 0.18;
+          cy += (ty - cy) * 0.18;
+          card.style.transform = `perspective(800px) rotateX(${cx}deg) rotateY(${cy}deg) translateZ(${tz}px) scale(1.02)`;
+          card.style.transition = "none";
+        });
+      });
+
+      card.addEventListener("mouseleave", () => {
+        cancelAnimationFrame(rafId);
+        cx = 0; cy = 0;
+        card.style.transition = "transform 600ms cubic-bezier(.16,1,.3,1)";
+        card.style.transform = "perspective(800px) rotateX(0) rotateY(0) translateZ(0) scale(1)";
+      });
+    });
+  }
+
+  // ── 9. Floating text lines [data-text-float] ─────────────────
+  // Stagger-animates each line of text inside the element
+  document.querySelectorAll("[data-text-float]").forEach((el) => {
+    const direction = el.dataset.textFloat || "up";
+    const lines = el.querySelectorAll(".float-line");
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          lines.forEach((line, i) => {
+            setTimeout(() => line.classList.add("is-in"), i * 90);
+          });
+          io.unobserve(e.target);
+        });
+      },
+      { threshold: 0.2 }
+    );
+    if (reduced) {
+      lines.forEach((l) => l.classList.add("is-in"));
+    } else {
+      io.observe(el);
+    }
+  });
+
+  // ── 10. Card float after reveal ──────────────────────────────
+  const floatCards = document.querySelectorAll(".glow-card[data-reveal]");
+  if (floatCards.length) {
+    const fio = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const el = e.target;
+          const delay = parseInt(el.dataset.revealDelay ?? "0", 10);
+          setTimeout(() => {
+            el.classList.add("is-in");
+            setTimeout(() => el.classList.add("card-float-active"), 700);
+          }, delay);
+          fio.unobserve(el);
+        });
+      },
+      { threshold: 0.12 }
+    );
+    floatCards.forEach((el) => {
+      if (reduced) { el.classList.add("is-in", "card-float-active"); }
+      else fio.observe(el);
+    });
   }
 }

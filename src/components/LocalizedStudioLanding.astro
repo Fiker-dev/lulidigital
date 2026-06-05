@@ -3,6 +3,14 @@ const { market } = Astro.props;
 const isAmsterdam = market.variant === "amsterdam";
 const isMunich = market.variant === "munich";
 const isStockholm = market.variant === "stockholm";
+const marketLinks = [
+  { href: "/africa", label: "Africa", copy: "International and dollar-earning teams" },
+  { href: "/south-africa", label: "South Africa", copy: "Local founders and growing businesses" },
+  { href: "/amsterdam", label: "Amsterdam", copy: "Tech founders and scale-ups" },
+  { href: "/munich", label: "Munich", copy: "Enterprise and B2B teams" },
+  { href: "/stockholm", label: "Stockholm", copy: "Nordic startups and brands" },
+];
+const currentMarketPath = `/${market.variant}`;
 ---
 
 <section class:list={["local-landing", `local-landing--${market.variant}`]}>
@@ -152,6 +160,22 @@ const isStockholm = market.variant === "stockholm";
         <p>Inbox management, calendar control, project tracking, and structured execution for founders and team leads who need quiet, reliable follow-through.</p>
         <span class="service-link">Explore the desk →</span>
       </a>
+    </div>
+  </section>
+
+  <section class="market-links reveal-block" aria-label="Market landing pages">
+    <div class="section-head">
+      <p class="local-eyebrow">Markets</p>
+      <h2>Local pages for the markets we serve.</h2>
+    </div>
+
+    <div class="market-links__grid">
+      {marketLinks.map((item) => (
+        <a class:list={["market-link-card", item.href === currentMarketPath && "is-current"]} href={item.href}>
+          <span>{item.label}</span>
+          <p>{item.copy}</p>
+        </a>
+      ))}
     </div>
   </section>
 
@@ -611,6 +635,7 @@ const isStockholm = market.variant === "stockholm";
   }
 
   .local-section,
+  .market-links,
   .local-proof,
   .local-contact{
     padding: 86px 0;
@@ -719,10 +744,48 @@ const isStockholm = market.variant === "stockholm";
   }
 
   .capability-card p,
+  .market-link-card p,
   .proof-copy p,
   .local-contact p{
     color: var(--local-muted);
     line-height: 1.7;
+  }
+
+  .market-links__grid{
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .market-link-card{
+    min-height: 132px;
+    padding: 18px;
+    border: 1px solid var(--local-line);
+    color: var(--local-ink);
+    text-decoration: none;
+    background: rgba(255,255,255,.28);
+    transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+  }
+
+  .market-link-card:hover,
+  .market-link-card.is-current{
+    transform: translateY(-3px);
+    border-color: var(--local-accent);
+    background: rgba(255,255,255,.5);
+  }
+
+  .market-link-card span{
+    display: block;
+    margin-bottom: 12px;
+    color: var(--local-accent);
+    font-size: 12px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+
+  .market-link-card p{
+    margin: 0;
+    font-size: 14px;
   }
 
   .munich-timeline{
@@ -893,7 +956,8 @@ const isStockholm = market.variant === "stockholm";
     }
 
     .capability-grid,
-    .capability-grid--bento{
+    .capability-grid--bento,
+    .market-links__grid{
       grid-template-columns: 1fr 1fr;
     }
 
@@ -912,7 +976,8 @@ const isStockholm = market.variant === "stockholm";
     }
 
     .capability-grid,
-    .capability-grid--bento{
+    .capability-grid--bento,
+    .market-links__grid{
       grid-template-columns: 1fr;
     }
 

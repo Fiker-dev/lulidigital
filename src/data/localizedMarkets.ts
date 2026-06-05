@@ -1,6 +1,7 @@
 const siteUrl = "https://lulidigital.com";
 
 export const regionalAlternates = [
+  { hreflang: "x-default", href: `${siteUrl}/` },
   { hreflang: "en-001", href: `${siteUrl}/africa` },
   { hreflang: "en-za", href: `${siteUrl}/south-africa` },
   { hreflang: "en-nl", href: `${siteUrl}/amsterdam` },

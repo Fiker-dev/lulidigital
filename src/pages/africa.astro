@@ -7,13 +7,10 @@ import { getDailySeoRecommendation } from "../lib/seoAgent.js";
 const seoRecommendation = await getDailySeoRecommendation({ geo: "AFRICA", market: "africa" });
 const market = {
   ...markets.africa,
-  title: `${seoRecommendation.keyword} | Digital Marketing, AI Automation & Virtual Assistant Services for African Companies | LuliDigital`,
-  description: `LuliDigital helps African companies and international teams with ${seoRecommendation.keyword}, performance marketing, AI automation, SEO, and executive virtual assistant services.`,
   seoRecommendation,
   serviceSchema: {
     ...markets.africa.serviceSchema,
     serviceType: [seoRecommendation.keyword, ...markets.africa.serviceSchema.serviceType],
-    description: `Africa-focused digital studio offering ${seoRecommendation.keyword}, SEO, paid media, brand strategy, AI workflow automation, and executive virtual assistant services.`,
   },
 };
 ---

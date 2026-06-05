@@ -19,6 +19,12 @@ const serviceSchema = {
   ],
   "description": "LuliDigital builds AI automation systems for business: conversational AI assistants, AI workflow automation, and custom agent implementation. Practical AI integration for executives and growing teams — shipped in weeks.",
 };
+
+const aiMarquee = [
+  "24/7 Coverage", "Lead Qualified", "Workflow Automated", "Report Generated",
+  "Query Answered", "Agent Deployed", "Process Optimised", "Task Routed",
+  "Follow-up Sent", "Data Processed", "Knowledge Queried", "Always On",
+];
 ---
 
 <BaseLayout
@@ -28,80 +34,119 @@ const serviceSchema = {
   serviceSchema={serviceSchema}
 >
 
-  <!-- ══════════════════════ OBJECT ASCII — NO BOTS ══════════════ -->
-  <div class="page-sig" aria-hidden="true" data-reveal="fade">
-    <div class="sig-chars">
-
-      <!-- CPU chip — no person -->
-      <div class="sig-char">
-        <pre class="sig-pre">
-<span class="sh">  ┌──────────┐</span>
-<span class="ai-chip sh">  │ ◈  ◈  ◈ │</span>
-<span class="sm">  │ ─  ─  ─ │</span>
-<span class="ai-chip sh">  │ ◈  ◈  ◈ │</span>
-<span class="sh">  └──────────┘</span></pre>
-        <span class="sig-label">processing</span>
-      </div>
-
-      <!-- Binary data stream -->
-      <div class="sig-char">
-        <pre class="sig-pre">
-<span class="ai-bin1 sh">01101001</span>
-<span class="ai-bin2 sm">10010110</span>
-<span class="ai-bin1 sh">01001010</span>
-<span class="ai-bin2 sm">11010010</span>
-<span class="ai-bin1 sh">00110101</span></pre>
-        <span class="sig-label">data streams</span>
-      </div>
-
-      <!-- Neural network nodes — no people -->
-      <div class="sig-char">
-        <pre class="sig-pre">
-<span class="sh">  ◉ ─── ◉</span>
-<span class="ai-pulse sm"> ╱ ╲   ╱ ╲</span>
-<span class="sh">◉   ◉─◉   ◉</span>
-<span class="ai-pulse sm"> ╲ ╱   ╲ ╱</span>
-<span class="sh">  ◉ ─── ◉</span></pre>
-        <span class="sig-label">neural network</span>
-      </div>
-
-    </div>
-    <p class="sig-tagline">— <em>Practical AI. Ships in weeks, not quarters.</em> —</p>
-  </div>
-
   <!-- ═══════════════════════════════════════════════════════ HERO -->
   <section class="ai-hero" aria-label="AI services">
     <div class="hero-orb orb-a" aria-hidden="true"></div>
-    <span class="eyebrow" data-blur-in>AI Desk</span>
-    <h1 class="ai-title" data-word-reveal data-bee-stop>
-      AI automation that ships in weeks, not months.
-    </h1>
-    <p class="ai-sub" data-blur-in data-blur-delay="200">
-      Conversational AI assistants, workflow automation, and agent implementation —
-      practical, managed, and live without the enterprise overhead.
-    </p>
-    <div class="ai-hero-ctas" data-stagger data-stagger-gap="80">
-      <a class="cta-link" href="https://wa.me/27602551513">Talk to us <span class="arr">→</span></a>
-      <a class="cta-link" href="/marketing">Marketing Desk <span class="arr">→</span></a>
+
+    <div class="ai-hero-split">
+      <div class="ai-hero-text">
+        <span class="eyebrow" data-blur-in>AI Desk</span>
+        <h1 class="ai-title" data-word-reveal data-bee-stop>
+          AI automation that ships in weeks, not months.
+        </h1>
+        <p class="ai-sub" data-blur-in data-blur-delay="200">
+          Conversational AI assistants, workflow automation, and agent implementation —
+          practical, managed, and live without the enterprise overhead.
+        </p>
+        <div class="ai-hero-ctas" data-stagger data-stagger-gap="80">
+          <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">Talk to us →</a>
+          <a class="pill pill--outline magnetic" href="/marketing">Marketing Desk →</a>
+        </div>
+      </div>
+
+      <!-- Animated AI chat character -->
+      <div class="ai-chat" aria-hidden="true">
+        <div class="ac-header">
+          <div class="ac-avatar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><circle cx="12" cy="14" r="2"/></svg>
+          </div>
+          <div class="ac-header-info">
+            <span class="ac-name">LANA AI</span>
+            <span class="ac-online"><span class="ac-online-dot"></span>Always on</span>
+          </div>
+        </div>
+        <div class="ac-messages">
+          <div class="ac-msg ac-msg--in" style="--mi:0">
+            <p>How long does setup take?</p>
+          </div>
+          <div class="ac-msg ac-msg--out" style="--mi:1">
+            <p>Most systems are live in 2–6 weeks. We handle the full build.</p>
+          </div>
+          <div class="ac-msg ac-msg--in" style="--mi:2">
+            <p>What can it actually do?</p>
+          </div>
+          <div class="ac-msg ac-msg--out" style="--mi:3">
+            <p>Answer queries 24/7, qualify leads, route tasks, generate reports — trained on your business.</p>
+          </div>
+          <div class="ac-typing" style="--mi:4">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════ ASCII WORKFLOW DIAGRAM -->
+  <!-- ══════════════════════════════════════════════════ MARQUEE -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      {[...aiMarquee, ...aiMarquee].map((item) => (
+        <span class="marquee-item">{item}</span>
+      ))}
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════ HOW IT WORKS -->
   <section class="diagram-section" aria-label="How AI works for your business" data-reveal="up">
     <span class="eyebrow">How It Works</span>
     <h2 class="section-title">Your business. Smarter systems.</h2>
 
-    <pre class="ascii-diagram" role="img" aria-label="AI workflow: Your business inputs go into AI processing which outputs answers, actions and reports">
-  <span class="dim">YOUR BUSINESS</span>           <span class="dim">LANA AI</span>                 <span class="dim">OUTPUT</span>
-  ┌───────────┐       ┌────────────────┐       ┌──────────┐
-  │ <span class="hi">Question</span>  │ <span class="hi">────▶</span> │   <span class="hi">AI Process</span>   │ <span class="hi">────▶</span> │ <span class="hi">Answer</span>   │
-  │ <span class="hi">Task</span>      │       │   <span class="hi">+ Memory</span>    │       │ <span class="hi">Action</span>   │
-  │ <span class="hi">Data</span>      │       │   <span class="hi">+ Context</span>   │       │ <span class="hi">Report</span>   │
-  └───────────┘       └────────────────┘       └──────────┘</pre>
+    <div class="how-flow" data-reveal="fade" data-reveal-delay="280" aria-label="AI workflow diagram">
+      <div class="how-node">
+        <span class="how-node-num">Input</span>
+        <span class="how-node-title">Your Business</span>
+        <span class="how-node-sub">Questions · Tasks · Data</span>
+      </div>
+      <svg class="how-arrow" viewBox="0 0 48 24" aria-hidden="true" fill="none">
+        <path d="M4 12 L40 12" stroke="rgba(123,45,45,.4)" stroke-width="1.5"/>
+        <path d="M34 6 L44 12 L34 18" stroke="rgba(123,45,45,.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="how-node how-node--accent">
+        <span class="how-node-num">Process</span>
+        <span class="how-node-title">LANA AI</span>
+        <span class="how-node-sub">Memory · Context · Logic</span>
+      </div>
+      <svg class="how-arrow" viewBox="0 0 48 24" aria-hidden="true" fill="none">
+        <path d="M4 12 L40 12" stroke="rgba(123,45,45,.4)" stroke-width="1.5"/>
+        <path d="M34 6 L44 12 L34 18" stroke="rgba(123,45,45,.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="how-node">
+        <span class="how-node-num">Output</span>
+        <span class="how-node-title">Results</span>
+        <span class="how-node-sub">Answers · Actions · Reports</span>
+      </div>
+    </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════ AI LOOP SVG -->
-  <section class="loop-section" aria-label="The AI learning loop" data-reveal="up">
+  <!-- ═══════════════════════════════════════════ METRICS STRIP -->
+  <div class="metrics-strip" aria-label="AI impact" data-reveal="up">
+    <div class="metric-item">
+      <span class="metric-num ai-247">24<span class="metric-slash">/7</span></span>
+      <span class="metric-label">AI coverage</span>
+    </div>
+    <div class="metric-divider" aria-hidden="true"></div>
+    <div class="metric-item">
+      <span class="metric-num" data-count="80" data-count-suffix="%">0</span>
+      <span class="metric-label">queries automated</span>
+    </div>
+    <div class="metric-divider" aria-hidden="true"></div>
+    <div class="metric-item">
+      <span class="metric-num" data-count="14" data-count-suffix="d">0</span>
+      <span class="metric-label">avg deploy time</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ AI LOOP SVG -->
+  <section class="loop-section" aria-label="The AI learning loop" data-reveal="up" data-bee-stop>
     <span class="eyebrow">The AI Loop</span>
     <h2 class="section-title">Always learning. Always on.</h2>
 
@@ -112,8 +157,8 @@ const serviceSchema = {
             <path d="M0,0 L0,6 L8,3 z" fill="rgba(123,45,45,.55)"/>
           </marker>
         </defs>
-        <!-- Guide circle -->
-        <circle cx="200" cy="200" r="130" fill="none" stroke="rgba(123,45,45,.1)" stroke-width="1" stroke-dasharray="4 6"/>
+        <!-- Spinning guide circle -->
+        <circle cx="200" cy="200" r="130" fill="none" stroke="rgba(123,45,45,.1)" stroke-width="1" stroke-dasharray="4 6" class="loop-ring"/>
         <!-- Nodes -->
         <circle cx="200" cy="70"  r="44" fill="var(--paper-card,#f6f2ea)" stroke="rgba(123,45,45,.3)" stroke-width="1.5"/>
         <circle cx="330" cy="200" r="44" fill="rgba(123,45,45,.9)"        stroke="none"/>
@@ -138,34 +183,49 @@ const serviceSchema = {
     <span class="eyebrow">What We Build</span>
     <div class="bento-grid" data-stagger data-stagger-gap="80">
 
-      <article class="glow-card svc-card">
-        <h3 class="svc-title">Conversational AI assistant</h3>
-        <ul class="bento-list">
-          <li>Customer questions answered 24/7</li>
-          <li>Leads qualified, scored &amp; routed</li>
-          <li>Follow-ups triggered automatically</li>
-        </ul>
-        <p class="svc-footer">Always on. Always on-brand.</p>
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="float-l" data-reveal-delay="0">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:12px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3 class="svc-title">Conversational AI assistant</h3>
+          <ul class="bento-list">
+            <li style="--li-i:0">Customer questions answered 24/7</li>
+            <li style="--li-i:1">Leads qualified, scored &amp; routed</li>
+            <li style="--li-i:2">Follow-ups triggered automatically</li>
+          </ul>
+          <p class="svc-footer">Always on. Always on-brand.</p>
+        </div>
       </article>
 
-      <article class="glow-card svc-card">
-        <h3 class="svc-title">Internal AI agent</h3>
-        <ul class="bento-list">
-          <li>Contracts &amp; SOPs found in seconds</li>
-          <li>Staff questions answered automatically</li>
-          <li>Knowledge bases made queryable</li>
-        </ul>
-        <p class="svc-footer">Your team's second brain.</p>
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="drop" data-reveal-delay="130">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:12px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 12 7 7"/><path d="m17 2 5 5-5 5"/><path d="M22 7h-7"/></svg>
+          </div>
+          <h3 class="svc-title">Internal AI agent</h3>
+          <ul class="bento-list">
+            <li style="--li-i:0">Contracts &amp; SOPs found in seconds</li>
+            <li style="--li-i:1">Staff questions answered automatically</li>
+            <li style="--li-i:2">Knowledge bases made queryable</li>
+          </ul>
+          <p class="svc-footer">Your team's second brain.</p>
+        </div>
       </article>
 
-      <article class="glow-card svc-card bento-card--wide">
-        <h3 class="svc-title">AI workflow automation</h3>
-        <ul class="bento-list bento-list--cols">
-          <li>Repetitive tasks automated end-to-end</li>
-          <li>Reports generated &amp; distributed on schedule</li>
-          <li>Approvals, routing &amp; follow-ups handled without input</li>
-        </ul>
-        <p class="svc-footer">Less manual work. More capacity.</p>
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="float-r" data-reveal-delay="260">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:12px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </div>
+          <h3 class="svc-title">AI workflow automation</h3>
+          <ul class="bento-list">
+            <li style="--li-i:0">Repetitive tasks automated end-to-end</li>
+            <li style="--li-i:1">Reports generated on schedule</li>
+            <li style="--li-i:2">Approvals &amp; routing handled without input</li>
+          </ul>
+          <p class="svc-footer">Less manual work. More capacity.</p>
+        </div>
       </article>
 
     </div>
@@ -183,7 +243,7 @@ const serviceSchema = {
         { name: "AI integration services", desc: "Connecting AI systems to your existing tools — CRMs, inboxes, databases, and platforms." },
         { name: "Custom AI assistant development", desc: "Bespoke AI assistants built around your brand, knowledge base, and operational workflows." },
       ].map(({ name, desc }) => (
-        <article class="glow-card mini-card">
+        <article class="glow-card mini-card" data-tilt="6">
           <h4 class="mini-title">{name}</h4>
           <p class="mini-desc">{desc}</p>
         </article>
@@ -191,13 +251,59 @@ const serviceSchema = {
     </div>
   </section>
 
+  <!-- ══════════════════════════════ BOLD DARK STATEMENT -->
+  <section class="bold-statement" aria-label="AI promise">
+    <div class="bs-inner">
+      <p class="bs-line" data-reveal="up" data-reveal-delay="0">Stop doing what machines</p>
+      <p class="bs-line bs-accent" data-reveal="up" data-reveal-delay="140">can do better.</p>
+    </div>
+    <div class="bs-reel" aria-hidden="true">
+      <div class="bs-reel-track">
+        <span class="bsr-word">Automate</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Optimise</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Scale</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">24/7</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Deploy</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Automate</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Optimise</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Scale</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">24/7</span><span class="bsr-sep">—</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════ LIVE DESK FEED -->
+  <div class="desk-feed" aria-hidden="true">
+    <span class="df-badge"><span class="df-dot"></span>Live</span>
+    <div class="df-track-wrap">
+      <div class="df-track">
+        {[
+          "47 customer queries handled — zero human hours spent",
+          "Lead qualification workflow triggered — 12 leads scored",
+          "Automated report dispatched to 3 stakeholders",
+          "New knowledge base query answered in 0.4 seconds",
+          "Onboarding workflow completed — no manual steps required",
+          "AI agent deployed for e-commerce support team",
+          "47 customer queries handled — zero human hours spent",
+          "Lead qualification workflow triggered — 12 leads scored",
+          "Automated report dispatched to 3 stakeholders",
+        ].map((item) => (
+          <>
+            <span class="df-item">{item}</span>
+            <span class="df-sep" aria-hidden="true">·</span>
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════════════════════════ CTA -->
-  <section class="ai-cta" aria-label="Get started with AI" data-reveal="fade">
+  <section class="ai-cta" aria-label="Get started with AI" data-reveal="fade" data-bee-stop>
     <h2 class="cta-title" data-blur-in>Ready to automate?</h2>
     <p class="cta-sub">Most systems ship in 2–6 weeks.</p>
     <div data-stagger data-stagger-gap="80" class="cta-links">
-      <a class="cta-link" href="https://wa.me/27602551513">Talk to the desk <span class="arr">→</span></a>
-      <a class="cta-link" href="/virtual-assistant">Visit VA Desk <span class="arr">→</span></a>
+      <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">Talk to the desk →</a>
+      <a class="pill pill--outline magnetic" href="/virtual-assistant">Visit VA Desk →</a>
     </div>
   </section>
 
@@ -206,172 +312,161 @@ const serviceSchema = {
 
 <style>
   /* ── Hero ───────────────────────────────────────────────────── */
-  .ai-hero {
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    padding: 88px 0 80px;
-  }
+  .ai-hero { position: relative; overflow: hidden; padding: 88px 0 72px; }
   .orb-a { width: 500px; height: 500px; top: -80px; right: -160px; }
+
+  .ai-hero-split {
+    display: grid; grid-template-columns: 1fr 360px; gap: 48px; align-items: center;
+  }
+  .ai-hero-text { text-align: left; }
+
   .ai-title {
-    font-size: clamp(36px, 5.5vw, 72px);
-    font-weight: 700;
-    line-height: 1.04;
-    letter-spacing: -.035em;
-    margin: 14px 0 20px;
-    font-family: ui-serif, Georgia, serif;
-    color: var(--ink, #141312);
-    max-width: 780px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: clamp(32px, 4.5vw, 60px); font-weight: 700; line-height: 1.06;
+    letter-spacing: -.035em; margin: 14px 0 20px;
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    color: var(--ink, #141312); max-width: 560px;
   }
   .ai-sub {
-    font-size: clamp(15px, 1.8vw, 18px);
-    line-height: 1.65;
-    color: var(--muted, rgba(20,19,18,.66));
-    margin: 0 auto 32px;
-    max-width: 560px;
+    font-size: clamp(15px, 1.8vw, 17px); line-height: 1.65;
+    color: var(--muted, rgba(20,19,18,.66)); margin: 0 0 32px; max-width: 480px;
   }
-  .ai-hero-ctas { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
+  .ai-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
 
-  /* ── Diagram ────────────────────────────────────────────────── */
-  .diagram-section {
-    padding: 72px 0 80px;
-    border-top: 1px solid rgba(30,24,22,.1);
+  /* Pills */
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px;
+    border-radius: 999px; font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+    font-weight: 700; text-decoration: none; cursor: pointer; will-change: transform;
+    transition: box-shadow 250ms ease, background 200ms ease, color 200ms ease;
   }
-  .diagram-section .ascii-diagram { margin: 24px 0; }
+  .pill--filled { background: var(--brand); color: #f9f5ef; box-shadow: 0 8px 28px rgba(123,45,45,.35); }
+  .pill--filled:hover { box-shadow: 0 14px 36px rgba(123,45,45,.48); background: #6a2828; }
+  .pill--outline { border: 1.5px solid var(--brand); color: var(--brand); }
+  .pill--outline:hover { background: rgba(123,45,45,.07); }
 
-  /* ── AI Loop SVG ────────────────────────────────────────────── */
-  .loop-section {
-    padding: 72px 0 80px;
-    border-top: 1px solid rgba(30,24,22,.1);
+  /* ── Chat Character ─────────────────────────────────────────── */
+  .ai-chat {
+    background: var(--paper-card, #f6f2ea);
+    border: 1px solid rgba(30,24,22,.12); border-radius: 20px; overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,.1), 0 2px 8px rgba(123,45,45,.08);
+    animation: chatFloat 5.5s ease-in-out infinite;
+    will-change: transform;
   }
+  @keyframes chatFloat {
+    0%,100% { transform: translateY(0); }
+    45%     { transform: translateY(-12px) rotate(.2deg); }
+    75%     { transform: translateY(-5px) rotate(-.15deg); }
+  }
+  .ac-header {
+    display: flex; align-items: center; gap: 10px; padding: 14px 16px 12px;
+    border-bottom: 1px solid rgba(30,24,22,.08); background: rgba(123,45,45,.06);
+  }
+  .ac-avatar {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--brand);
+    display: grid; place-items: center; color: #f9f5ef; flex-shrink: 0;
+  }
+  .ac-name { display: block; font-size: 13px; font-weight: 700; color: var(--ink); font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
+  .ac-online { display: flex; align-items: center; gap: 5px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #22c55e; font-weight: 600; font-family: var(--font-body, "DM Sans", sans-serif); }
+  .ac-online-dot { width: 5px; height: 5px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px rgba(34,197,94,.8); animation: badgePulse 2s ease-in-out infinite; }
+
+  .ac-messages { padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .ac-msg {
+    max-width: 85%; padding: 9px 13px; border-radius: 14px; font-size: 13px; line-height: 1.5;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    opacity: 0; transform: translateY(8px);
+    animation: msgIn 350ms cubic-bezier(.34,1.4,.64,1) forwards;
+    animation-delay: calc(var(--mi, 0) * 1000ms + 800ms);
+  }
+  .ac-msg p { margin: 0; }
+  .ac-msg--in { background: rgba(30,24,22,.07); color: var(--ink); border-bottom-left-radius: 4px; align-self: flex-start; }
+  .ac-msg--out { background: var(--brand); color: rgba(249,245,239,.95); border-bottom-right-radius: 4px; align-self: flex-end; }
+  @keyframes msgIn { to { opacity: 1; transform: translateY(0); } }
+
+  .ac-typing {
+    display: flex; align-items: center; gap: 5px; padding: 10px 14px; border-radius: 14px;
+    background: rgba(30,24,22,.07); width: fit-content; border-bottom-left-radius: 4px;
+    opacity: 0; animation: msgIn 350ms cubic-bezier(.34,1.4,.64,1) forwards;
+    animation-delay: calc(var(--mi, 4) * 1000ms + 800ms);
+  }
+  .ac-typing span {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--muted); display: block;
+    animation: typingDot 1.2s ease-in-out infinite;
+  }
+  .ac-typing span:nth-child(2) { animation-delay: .2s; }
+  .ac-typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes typingDot { 0%,80%,100%{transform:translateY(0);opacity:.4} 40%{transform:translateY(-5px);opacity:1} }
+
+  /* ── Diagram / How ──────────────────────────────────────────── */
+  .diagram-section { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
+
+  /* ── AI metric 24/7 ─────────────────────────────────────────── */
+  .ai-247 { display: inline-flex; align-items: baseline; gap: 2px; }
+  .metric-slash { font-size: .5em; font-weight: 700; opacity: .7; }
+
+  /* ── Loop SVG ───────────────────────────────────────────────── */
+  .loop-section { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
   .loop-wrap { display: flex; justify-content: center; margin-top: 28px; }
-  .loop-svg {
-    width: 100%;
-    max-width: 340px;
-    height: auto;
-    display: block;
-  }
-  .loop-svg .node-label {
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 11px;
-    fill: rgba(20,19,18,.8);
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-  .loop-svg .node-label-inv {
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 11px;
-    fill: rgba(243,239,231,.92);
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
+  .loop-svg { width: 100%; max-width: 340px; height: auto; display: block; }
+  .loop-ring { animation: loopSpin 18s linear infinite; transform-origin: 200px 200px; }
+  @keyframes loopSpin { to { transform: rotate(360deg); } }
+  .loop-svg .node-label { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: rgba(20,19,18,.8); letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
+  .loop-svg .node-label-inv { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; fill: rgba(243,239,231,.92); letter-spacing: .08em; text-transform: uppercase; font-weight: 600; }
 
   /* ── Service cards ──────────────────────────────────────────── */
-  .services-section {
-    padding: 72px 0 80px;
-    border-top: 1px solid rgba(30,24,22,.1);
+  .services-section { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
+  .svc-card { padding: 28px 24px; min-height: 240px; }
+  .svc-icon {
+    width: 40px; height: 40px; border-radius: 10px; background: rgba(123,45,45,.1);
+    display: grid; place-items: center; color: var(--brand); flex-shrink: 0;
+    transition: background 350ms ease, color 300ms ease, transform 400ms cubic-bezier(.34,1.56,.64,1);
   }
-  .svc-card {
-    padding: 28px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+  .svc-card:hover .svc-icon { background: rgba(123,45,45,.35); color: #f9f5ef; transform: rotate(8deg) scale(1.12); }
   .svc-title {
-    font-size: clamp(18px, 2vw, 22px);
-    font-weight: 700;
-    margin: 0;
-    letter-spacing: -.015em;
-    font-family: ui-serif, Georgia, serif;
-    line-height: 1.2;
-    color: var(--ink, #141312);
+    font-size: clamp(17px, 2vw, 21px); font-weight: 700; margin: 0; letter-spacing: -.015em;
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    line-height: 1.2; color: var(--ink, #141312); transition: color 300ms ease;
   }
-  .svc-footer {
-    font-size: 12px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--brand, #7b2d2d);
-    font-weight: 600;
-    margin: 0;
-    margin-top: auto;
-  }
+  .svc-card:hover .svc-title { color: rgba(245,240,232,.95); }
+  .svc-footer { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--brand, #7b2d2d); font-weight: 600; margin: 0; margin-top: auto; font-family: var(--font-body, "DM Sans", sans-serif); transition: color 300ms ease; }
+  .svc-card:hover .svc-footer { color: rgba(245,240,232,.45); }
   .bento-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; flex: 1; }
-  .bento-list li { font-size: 13.5px; line-height: 1.55; color: var(--muted, rgba(20,19,18,.66)); padding-left: 14px; position: relative; }
-  .bento-list li::before { content: "–"; position: absolute; left: 0; color: var(--brand, #7b2d2d); opacity: .55; }
-  .bento-list--cols { columns: 2; gap: 16px; display: block; }
-  .bento-list--cols li { break-inside: avoid; }
+  .bento-list li {
+    font-size: 13.5px; line-height: 1.55; color: var(--muted, rgba(20,19,18,.66));
+    padding-left: 14px; position: relative; font-family: var(--font-body, "DM Sans", sans-serif);
+    transform: translateX(-8px);
+    transition: transform 420ms cubic-bezier(.16,1,.3,1), color 300ms ease;
+    transition-delay: calc(var(--li-i, 0) * 55ms + 60ms);
+  }
+  .bento-list li::before { content: "–"; position: absolute; left: 0; color: var(--brand, #7b2d2d); opacity: .55; transition: color 300ms ease; }
+  .svc-card:hover .bento-list li { transform: translateX(0); color: rgba(245,240,232,.7); }
+  .svc-card:hover .bento-list li::before { color: var(--brand); opacity: .7; }
 
   /* ── Full services ──────────────────────────────────────────── */
-  .full-services {
-    padding: 72px 0 80px;
-    border-top: 1px solid rgba(30,24,22,.1);
-  }
+  .full-services { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
   .mini-card { padding: 24px 22px; display: flex; flex-direction: column; gap: 10px; }
-  .mini-title {
-    font-size: 15px;
-    font-weight: 700;
-    margin: 0;
-    letter-spacing: -.01em;
-    color: var(--ink, #141312);
-  }
-  .mini-desc {
-    font-size: 13px;
-    line-height: 1.65;
-    color: var(--muted, rgba(20,19,18,.62));
-    margin: 0;
-  }
+  .mini-title { font-size: 15px; font-weight: 700; margin: 0; letter-spacing: -.01em; color: var(--ink, #141312); font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); transition: color 300ms ease; }
+  .mini-desc { font-size: 13px; line-height: 1.65; color: var(--muted, rgba(20,19,18,.62)); margin: 0; transition: color 300ms ease; }
+  .mini-card:hover .mini-title { color: rgba(245,240,232,.95); }
+  .mini-card:hover .mini-desc { color: rgba(245,240,232,.6); }
 
   /* ── CTA ────────────────────────────────────────────────────── */
-  .ai-cta {
-    text-align: center;
-    padding: 80px 0 40px;
-    border-top: 1px solid rgba(30,24,22,.1);
-  }
-  .cta-title {
-    font-size: clamp(28px, 4vw, 48px);
-    font-weight: 700;
-    letter-spacing: -.03em;
-    margin: 0 0 10px;
-    font-family: ui-serif, Georgia, serif;
-  }
-  .cta-sub { font-size: 15px; color: var(--muted, rgba(20,19,18,.62)); margin: 0 0 28px; }
-  .cta-links { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
-
-  /* ── Fonts ──────────────────────────────────────────────────── */
-  .ai-title, .svc-title, .cta-title, .section-title, .mini-title { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
-  .ai-sub, .svc-footer, .mini-desc, .cta-sub { font-family: var(--font-body, "DM Sans", sans-serif); }
-
-  /* ── Page signature (shared) ────────────────────────────────── */
-  .page-sig { padding: 48px 0 20px; text-align: center; }
-  .sig-chars { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 20px; }
-  .sig-char { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .sig-pre { font-family: var(--font-mono, "SF Mono", ui-monospace, monospace); font-size: 13px; line-height: 1.45; margin: 0; white-space: pre; background: none; border: none; padding: 0; text-align: left; }
-  .sh { color: var(--brand, #7b2d2d); }
-  .sm { color: rgba(20,19,18,.42); }
-  .sig-label { font-family: var(--font-body, "DM Sans", sans-serif); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted, rgba(20,19,18,.4)); font-weight: 600; }
-  .sig-tagline { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); font-size: clamp(14px, 2vw, 18px); font-style: italic; color: var(--muted, rgba(20,19,18,.5)); margin: 0; }
-
-  /* AI object animations */
-  .ai-chip  { display: block; animation: aiChip  1.4s step-end infinite; }
-  .ai-bin1  { display: block; animation: aiBin1  0.9s step-end infinite; }
-  .ai-bin2  { display: block; animation: aiBin2  0.9s step-end infinite; animation-delay: .45s; }
-  .ai-pulse { display: block; animation: aiPulse 1.6s ease-in-out infinite; }
-
-  @keyframes aiChip  { 0%,60%,100%{opacity:1} 65%,95%{opacity:.2} }
-  @keyframes aiBin1  { 0%,100%{opacity:1}  50%{opacity:.3} }
-  @keyframes aiBin2  { 0%,100%{opacity:.3} 50%{opacity:1} }
-  @keyframes aiPulse { 0%,100%{opacity:.3} 50%{opacity:1} }
+  .ai-cta { text-align: center; padding: 80px 0 40px; border-top: 1px solid rgba(30,24,22,.1); }
+  .cta-title { font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -.03em; margin: 0 0 10px; font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
+  .cta-sub { font-size: 15px; color: var(--muted, rgba(20,19,18,.62)); margin: 0 0 28px; font-family: var(--font-body, "DM Sans", sans-serif); }
+  .cta-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
   /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .ai-hero-split { grid-template-columns: 1fr; }
+    .ai-hero-text { text-align: center; }
+    .ai-title { max-width: 100%; margin-left: auto; margin-right: auto; }
+    .ai-sub { max-width: 100%; }
+    .ai-hero-ctas { justify-content: center; }
+    .ai-chat { max-width: 360px; margin: 0 auto; }
+  }
   @media (max-width: 600px) {
-    .ai-hero { padding: 60px 0 60px; }
-    .diagram-section .ascii-diagram { font-size: 9px; padding: 18px 14px; }
+    .ai-hero { padding: 60px 0 52px; }
     .bento-list--cols { columns: 1; }
-    .sig-chars { gap: 20px; }
-    .sig-pre { font-size: 11px; }
   }
 </style>

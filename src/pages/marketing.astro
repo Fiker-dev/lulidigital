@@ -21,6 +21,12 @@ const serviceSchema = {
   ],
   "description": "Digital marketing services for founders and growing brands: paid media management, brand strategy, SEO, content marketing, and performance campaigns across Meta, Google, and TikTok.",
 };
+
+const mktMarquee = [
+  "Meta Ads", "Google Campaigns", "TikTok Strategy", "Brand Positioning",
+  "Content Calendar", "Paid Media", "SEO", "Campaign Launch",
+  "Creative Direction", "Performance Marketing", "Brand Voice", "Audience Strategy",
+];
 ---
 
 <BaseLayout
@@ -30,64 +36,86 @@ const serviceSchema = {
   serviceSchema={serviceSchema}
 >
 
-  <!-- ══════════════════════ OBJECT ASCII — NO BOTS ══════════════ -->
-  <div class="page-sig" aria-hidden="true" data-reveal="fade">
-    <div class="sig-chars">
-
-      <!-- Megaphone object -->
-      <div class="sig-char">
-        <pre class="sig-pre">
-<span class="mkt-horn sh">    ╔══╗</span>
-<span class="mkt-horn sh">    ║▶▶╠════════</span>
-<span class="sh">    ╚══╝</span>
-<span class="sm">   ────────</span>
-<span class="mkt-wave sm">  ∿ ∿ ∿ ∿ ∿</span></pre>
-        <span class="sig-label">broadcasting</span>
-      </div>
-
-      <!-- Rising chart -->
-      <div class="sig-char">
-        <pre class="sig-pre">
-<span class="sm">   │      <span class="sh">╱</span></span>
-<span class="sm">   │    <span class="sh">╱</span></span>
-<span class="mkt-chart sm">   │  <span class="sh">╱</span></span>
-<span class="sm">   │<span class="sh">╱</span></span>
-<span class="sm">   └──────</span></pre>
-        <span class="sig-label">growth</span>
-      </div>
-
-      <!-- Billboard sign -->
-      <div class="sig-char">
-        <pre class="sig-pre">
-<span class="sh">┌──────────────┐</span>
-<span class="mkt-bill sh">│  YOUR BRAND  │</span>
-<span class="sh">│  ▮▮▮▮▮▮▮▮  │</span>
-<span class="sh">└──────┬───────┘</span>
-<span class="sm">       │</span>
-<span class="sm">       │</span></pre>
-        <span class="sig-label">billboard</span>
-      </div>
-
-    </div>
-    <p class="sig-tagline">— <em>You built it. We broadcast it.</em> —</p>
-  </div>
-
   <!-- ═══════════════════════════════════════════════════════ HERO -->
   <section class="mkt-hero" aria-label="Marketing services">
     <div class="hero-orb orb-a" aria-hidden="true"></div>
-    <span class="eyebrow" data-blur-in>Marketing Desk</span>
-    <h1 class="mkt-title" data-word-reveal data-bee-stop>
-      Brand strategy, performance marketing &amp; paid media.
-    </h1>
-    <p class="mkt-sub" data-blur-in data-blur-delay="200">
-      We build brand strategy, run performance campaigns across Meta, Google, and TikTok,
-      and create content systems that make your business get found, understood, and chosen.
-    </p>
-    <div class="mkt-ctas" data-stagger data-stagger-gap="80">
-      <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">Request a walkthrough</a>
-      <a class="pill pill--outline magnetic" href="/ai">Visit AI Desk</a>
+
+    <div class="mkt-hero-split">
+      <div class="mkt-hero-text">
+        <span class="eyebrow" data-blur-in>Marketing Desk</span>
+        <h1 class="mkt-title" data-word-reveal data-bee-stop>
+          Brand strategy, performance marketing &amp; paid media.
+        </h1>
+        <p class="mkt-sub" data-blur-in data-blur-delay="200">
+          We build brand strategy, run performance campaigns across Meta, Google, and TikTok,
+          and create content systems that make your business get found, understood, and chosen.
+        </p>
+        <div class="mkt-ctas" data-stagger data-stagger-gap="80">
+          <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">Request a walkthrough</a>
+          <a class="pill pill--outline magnetic" href="/ai">Visit AI Desk</a>
+        </div>
+      </div>
+
+      <!-- Animated growth chart character -->
+      <div class="mkt-chart" aria-hidden="true">
+        <div class="mc-header">
+          <span class="mc-label">Campaign Performance</span>
+          <span class="mc-live"><span class="mc-live-dot"></span>Live</span>
+        </div>
+        <div class="mc-bars">
+          <div class="mc-bar-wrap" style="--bh:38%;--bd:0ms">
+            <div class="mc-bar"></div>
+            <span class="mc-bar-label">Jan</span>
+          </div>
+          <div class="mc-bar-wrap" style="--bh:52%;--bd:80ms">
+            <div class="mc-bar"></div>
+            <span class="mc-bar-label">Feb</span>
+          </div>
+          <div class="mc-bar-wrap" style="--bh:44%;--bd:160ms">
+            <div class="mc-bar"></div>
+            <span class="mc-bar-label">Mar</span>
+          </div>
+          <div class="mc-bar-wrap" style="--bh:68%;--bd:240ms">
+            <div class="mc-bar"></div>
+            <span class="mc-bar-label">Apr</span>
+          </div>
+          <div class="mc-bar-wrap" style="--bh:75%;--bd:320ms">
+            <div class="mc-bar"></div>
+            <span class="mc-bar-label">May</span>
+          </div>
+          <div class="mc-bar-wrap mc-bar-wrap--accent" style="--bh:91%;--bd:400ms">
+            <div class="mc-bar"></div>
+            <span class="mc-bar-label">Now</span>
+          </div>
+        </div>
+        <div class="mc-stats">
+          <div class="mc-stat">
+            <span class="mc-stat-num">3×</span>
+            <span class="mc-stat-label">ROAS</span>
+          </div>
+          <div class="mc-stat-div"></div>
+          <div class="mc-stat">
+            <span class="mc-stat-num">↑40%</span>
+            <span class="mc-stat-label">organic</span>
+          </div>
+          <div class="mc-stat-div"></div>
+          <div class="mc-stat">
+            <span class="mc-stat-num">60d</span>
+            <span class="mc-stat-label">to launch</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
+
+  <!-- ══════════════════════════════════════════════════ MARQUEE -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      {[...mktMarquee, ...mktMarquee].map((item) => (
+        <span class="marquee-item">{item}</span>
+      ))}
+    </div>
+  </div>
 
   <!-- ════════════════════════════════════════ PROCESS TIMELINE -->
   <section class="process-section" aria-label="Marketing process" data-reveal="up">
@@ -135,71 +163,173 @@ const serviceSchema = {
     <p class="process-note">Best for: Launches, rebrands, and growth sprints — weekly reporting, monthly iteration.</p>
   </section>
 
+  <!-- ═══════════════════════════════════════════ METRICS STRIP -->
+  <div class="metrics-strip" aria-label="Marketing impact" data-reveal="up">
+    <div class="metric-item">
+      <span class="metric-num" data-count="3" data-count-suffix="×">0</span>
+      <span class="metric-label">average ROAS</span>
+    </div>
+    <div class="metric-divider" aria-hidden="true"></div>
+    <div class="metric-item">
+      <span class="metric-num" data-count="60" data-count-suffix="d">0</span>
+      <span class="metric-label">to brand launch</span>
+    </div>
+    <div class="metric-divider" aria-hidden="true"></div>
+    <div class="metric-item">
+      <span class="metric-num" data-count="40" data-count-suffix="%">0</span>
+      <span class="metric-label">avg organic growth</span>
+    </div>
+  </div>
+
   <!-- ══════════════════════════════════════════ SERVICE BENTO GRID -->
-  <section class="mkt-services" aria-label="Marketing services we offer" data-reveal="up">
+  <section class="mkt-services" aria-label="Marketing services we offer" data-reveal="up" data-bee-stop>
     <span class="eyebrow">What We Do</span>
     <div class="bento-grid" data-stagger data-stagger-gap="70">
 
-      <article class="glow-card svc-card">
-        <h3 class="svc-title">Brand Strategy &amp; Positioning</h3>
-        <p class="svc-desc">Messaging architecture, brand voice, competitive positioning, and visual identity systems built to win in your market.</p>
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="float-l" data-reveal-delay="0">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:10px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/></svg>
+          </div>
+          <h3 class="svc-title">Brand Strategy &amp; Positioning</h3>
+          <p class="svc-desc">Messaging architecture, brand voice, competitive positioning, and visual identity systems built to win in your market.</p>
+        </div>
       </article>
 
-      <article class="glow-card svc-card">
-        <h3 class="svc-title">Paid Media Management</h3>
-        <p class="svc-desc">Performance campaigns across Meta, Google, and TikTok — audience strategy, creative testing, budget management, and weekly reporting.</p>
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="drop" data-reveal-delay="80">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:10px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          </div>
+          <h3 class="svc-title">Paid Media Management</h3>
+          <p class="svc-desc">Performance campaigns across Meta, Google, and TikTok — audience strategy, creative testing, budget management, and weekly reporting.</p>
+        </div>
       </article>
 
-      <article class="glow-card svc-card">
-        <h3 class="svc-title">Content Marketing &amp; SEO</h3>
-        <p class="svc-desc">Content systems, editorial calendars, and SEO strategy that build organic visibility and keep your brand present at every stage.</p>
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="float-r" data-reveal-delay="160">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:10px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+          </div>
+          <h3 class="svc-title">Content Marketing &amp; SEO</h3>
+          <p class="svc-desc">Content systems, editorial calendars, and SEO strategy that build organic visibility and keep your brand present at every stage.</p>
+        </div>
       </article>
 
-      <article class="glow-card svc-card">
-        <h3 class="svc-title">Creative Direction</h3>
-        <p class="svc-desc">On-brand visual direction, campaign angles, shoot-day planning, and consistency audits so every asset earns its place.</p>
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="float-l" data-reveal-delay="80">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:10px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          </div>
+          <h3 class="svc-title">Creative Direction</h3>
+          <p class="svc-desc">On-brand visual direction, campaign angles, shoot-day planning, and consistency audits so every asset earns its place.</p>
+        </div>
       </article>
 
-      <article class="glow-card svc-card">
-        <h3 class="svc-title">Performance Optimisation</h3>
-        <p class="svc-desc">Conversion rate testing, landing page strategy, tracking setup, and monthly iteration cycles that compound results over time.</p>
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="pop" data-reveal-delay="160">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:10px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <h3 class="svc-title">Performance Optimisation</h3>
+          <p class="svc-desc">Conversion rate testing, landing page strategy, tracking setup, and monthly iteration cycles that compound results over time.</p>
+        </div>
       </article>
 
-      <article class="glow-card svc-card">
-        <h3 class="svc-title">Campaign Production</h3>
-        <p class="svc-desc">Full-funnel campaign builds — from positioning and hooks to creative assets, launch management, and post-campaign reporting.</p>
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="float-r" data-reveal-delay="240">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:10px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 19-9-9 19-2-8-8-2z"/></svg>
+          </div>
+          <h3 class="svc-title">Campaign Production</h3>
+          <p class="svc-desc">Full-funnel campaign builds — from positioning and hooks to creative assets, launch management, and post-campaign reporting.</p>
+        </div>
       </article>
 
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════ ASCII STRATEGY MAP -->
+  <!-- ════════════════════════════════════════ STRATEGY FLOW GRID -->
   <section class="strategy-section" aria-label="Marketing strategy overview" data-reveal="up">
     <span class="eyebrow">The Full System</span>
-    <pre class="ascii-diagram" role="img" aria-label="Marketing system: Brand strategy flows into Content which flows into Paid Media, all feeding into Reporting and Iteration">
-  <span class="hi">BRAND STRATEGY</span>
-  └── Positioning · Voice · Visual direction
-       │
-       ▼
-  <span class="hi">CONTENT SYSTEM</span>
-  └── Scripts · Hooks · Shoot planning · Posting rhythm
-       │
-       ▼
-  <span class="hi">PAID MEDIA</span>
-  └── Meta · Google · TikTok · Budget management
-       │
-       ▼
-  <span class="hi">REPORT &amp; ITERATE</span>
-  └── Weekly learnings · Monthly compounding · Growth</pre>
+    <h2 class="section-title">Every piece connected.</h2>
+    <div class="strategy-flow" data-stagger data-stagger-gap="80">
+      <div class="how-node">
+        <span class="how-node-num">01</span>
+        <span class="how-node-title">Brand Strategy</span>
+        <span class="how-node-sub">Positioning · Voice · Visual direction</span>
+      </div>
+      <div class="how-node">
+        <span class="how-node-num">02</span>
+        <span class="how-node-title">Content System</span>
+        <span class="how-node-sub">Scripts · Hooks · Shoot planning · Posting rhythm</span>
+      </div>
+      <div class="how-node how-node--accent">
+        <span class="how-node-num">03</span>
+        <span class="how-node-title">Paid Media</span>
+        <span class="how-node-sub">Meta · Google · TikTok · Budget management</span>
+      </div>
+      <div class="how-node">
+        <span class="how-node-num">04</span>
+        <span class="how-node-title">Report &amp; Iterate</span>
+        <span class="how-node-sub">Weekly learnings · Monthly compounding · Growth</span>
+      </div>
+    </div>
   </section>
 
+  <!-- ══════════════════════════════ BOLD DARK STATEMENT -->
+  <section class="bold-statement" aria-label="Marketing promise">
+    <div class="bs-inner">
+      <p class="bs-line" data-reveal="up" data-reveal-delay="0">Invisible brands go nowhere.</p>
+      <p class="bs-line bs-accent" data-reveal="up" data-reveal-delay="140">Let's fix that.</p>
+    </div>
+    <div class="bs-reel" aria-hidden="true">
+      <div class="bs-reel-track">
+        <span class="bsr-word">Meta</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Google</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">TikTok</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Brand</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Content</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">SEO</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Meta</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Google</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">TikTok</span><span class="bsr-sep">—</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════ LIVE DESK FEED -->
+  <div class="desk-feed" aria-hidden="true">
+    <span class="df-badge"><span class="df-dot"></span>Live</span>
+    <div class="df-track-wrap">
+      <div class="df-track">
+        {[
+          "TikTok campaign — 2.4M impressions this week",
+          "Meta ads CTR up 18% after creative refresh",
+          "Client brand launched in 60 days — sold out week one",
+          "Google campaign — ROAS 3.2× in month two",
+          "Content system live — posting 5× weekly with zero effort",
+          "SEO content compounding — 40% more organic leads",
+          "TikTok campaign — 2.4M impressions this week",
+          "Meta ads CTR up 18% after creative refresh",
+          "Client brand launched in 60 days — sold out week one",
+        ].map((item) => (
+          <>
+            <span class="df-item">{item}</span>
+            <span class="df-sep" aria-hidden="true">·</span>
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════════════════════════ CTA -->
-  <section class="mkt-cta-section" aria-label="Get started with marketing" data-reveal="fade">
+  <section class="mkt-cta-section" aria-label="Get started with marketing" data-reveal="fade" data-bee-stop>
     <h2 class="cta-title" data-blur-in>You built it. We broadcast it.</h2>
     <p class="cta-sub" data-blur-in data-blur-delay="150">Let us help you put it out there for the world to see.</p>
     <div data-stagger data-stagger-gap="80" class="cta-links">
-      <a class="cta-link" href="https://wa.me/27602551513">WhatsApp us <span class="arr">→</span></a>
-      <a class="cta-link" href="mailto:info@lulidigital.co.za">Email the desk <span class="arr">→</span></a>
+      <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">WhatsApp us →</a>
+      <a class="pill pill--outline magnetic" href="mailto:info@lulidigital.co.za">Email the desk →</a>
     </div>
   </section>
 
@@ -209,217 +339,180 @@ const serviceSchema = {
 <style>
   /* ── Hero ───────────────────────────────────────────────────── */
   .mkt-hero {
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    padding: 88px 0 80px;
+    position: relative; overflow: hidden;
+    padding: 88px 0 72px;
   }
   .orb-a { width: 500px; height: 500px; top: -100px; right: -160px; }
+
+  .mkt-hero-split {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 48px;
+    align-items: center;
+  }
+  .mkt-hero-text { text-align: left; }
+
   .mkt-title {
-    font-size: clamp(34px, 5vw, 66px);
-    font-weight: 700;
-    line-height: 1.04;
-    letter-spacing: -.035em;
-    margin: 14px auto 20px;
-    font-family: ui-serif, Georgia, serif;
-    color: var(--ink, #141312);
-    max-width: 800px;
+    font-size: clamp(32px, 4.5vw, 60px);
+    font-weight: 700; line-height: 1.06; letter-spacing: -.035em;
+    margin: 14px 0 20px;
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    color: var(--ink, #141312); max-width: 580px;
   }
   .mkt-sub {
-    font-size: clamp(15px, 1.8vw, 18px);
-    line-height: 1.65;
-    color: var(--muted, rgba(20,19,18,.66));
-    margin: 0 auto 32px;
-    max-width: 580px;
+    font-size: clamp(15px, 1.8vw, 17px); line-height: 1.65;
+    color: var(--muted, rgba(20,19,18,.66)); margin: 0 0 32px; max-width: 480px;
   }
-  .mkt-ctas { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
+  .mkt-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
 
-  /* ── Process Timeline ───────────────────────────────────────── */
-  .process-section {
-    padding: 72px 0 80px;
-    border-top: 1px solid rgba(30,24,22,.1);
-  }
-  .timeline {
-    display: flex;
-    align-items: flex-start;
-    margin: 36px 0 24px;
-    overflow-x: auto;
-  }
-  .timeline-step {
-    flex: 1;
-    min-width: 120px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 10px;
-    padding: 0 8px;
-  }
-  .timeline-dot {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    background: var(--brand, #7b2d2d);
-    flex-shrink: 0;
-  }
-  .timeline-connector {
-    width: 48px;
-    height: 1px;
-    background: var(--brand, #7b2d2d);
-    opacity: .28;
-    margin-top: 6px;
-    flex-shrink: 0;
-  }
-  .timeline-num {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .12em;
-    color: var(--brand, #7b2d2d);
-    margin: 0;
-  }
-  .timeline-name {
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: -.01em;
-    margin: 0;
-    color: var(--ink, #141312);
-    font-family: ui-serif, Georgia, serif;
-  }
-  .timeline-desc {
-    font-size: 12px;
-    color: var(--muted, rgba(20,19,18,.6));
-    line-height: 1.5;
-    margin: 0;
-  }
-  .process-note {
-    font-size: 13px;
-    color: var(--muted, rgba(20,19,18,.55));
-    margin: 0;
-  }
-
-  /* ── Services ───────────────────────────────────────────────── */
-  .mkt-services {
-    padding: 72px 0 80px;
-    border-top: 1px solid rgba(30,24,22,.1);
-  }
-  .svc-card { padding: 26px 24px; display: flex; flex-direction: column; gap: 10px; }
-  .svc-title {
-    font-size: clamp(16px, 1.8vw, 19px);
-    font-weight: 700;
-    margin: 0;
-    letter-spacing: -.015em;
-    font-family: ui-serif, Georgia, serif;
-    line-height: 1.2;
-    color: var(--ink, #141312);
-  }
-  .svc-desc {
-    font-size: 13px;
-    line-height: 1.65;
-    color: var(--muted, rgba(20,19,18,.62));
-    margin: 0;
-  }
-
-  /* ── ASCII Strategy Map ─────────────────────────────────────── */
-  .strategy-section {
-    padding: 72px 0 80px;
-    border-top: 1px solid rgba(30,24,22,.1);
-  }
-  .strategy-section .ascii-diagram { margin-top: 24px; }
-
-  /* ── CTA ────────────────────────────────────────────────────── */
-  .mkt-cta-section {
-    text-align: center;
-    padding: 80px 0 40px;
-    border-top: 1px solid rgba(30,24,22,.1);
-  }
-  .cta-title {
-    font-size: clamp(28px, 4vw, 48px);
-    font-weight: 700;
-    letter-spacing: -.03em;
-    margin: 0 0 10px;
-    font-family: ui-serif, Georgia, serif;
-  }
-  .cta-sub { font-size: 15px; color: var(--muted, rgba(20,19,18,.62)); margin: 0 0 28px; }
-  .cta-links { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
-
-  /* ── Fonts ──────────────────────────────────────────────────── */
-  .mkt-title, .svc-title, .cta-title, .section-title { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
-
-  /* ── Page signature ─────────────────────────────────────────── */
-  .page-sig {
-    padding: 48px 0 20px;
-    text-align: center;
-  }
-  .sig-chars {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-  .sig-char { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .sig-pre {
-    font-family: var(--font-mono, "SF Mono", ui-monospace, monospace);
-    font-size: 13px;
-    line-height: 1.45;
-    margin: 0;
-    white-space: pre;
-    background: none;
-    border: none;
-    padding: 0;
-    text-align: left;
-  }
-  .sh { color: var(--brand, #7b2d2d); }
-  .sm { color: rgba(20,19,18,.42); }
-  .sig-label {
-    font-family: var(--font-body, "DM Sans", sans-serif);
-    font-size: 10px;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--muted, rgba(20,19,18,.4));
-    font-weight: 600;
-  }
-  .sig-tagline {
-    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
-    font-size: clamp(14px, 2vw, 18px);
-    font-style: italic;
-    color: var(--muted, rgba(20,19,18,.5));
-    margin: 0;
-    letter-spacing: .02em;
-  }
-
-  /* Marketing object animations */
-  .mkt-horn  { display: block; animation: mktHorn  1.8s ease-in-out infinite; }
-  .mkt-wave  { display: block; animation: mktWave  2s   linear     infinite; }
-  .mkt-chart { display: block; animation: mktChart 3s   ease-in-out infinite; }
-  .mkt-bill  { display: block; animation: mktBill  4s   ease-in-out infinite; }
-
-  @keyframes mktHorn  { 0%,100%{transform:scaleX(1)}   50%{transform:scaleX(1.08)} }
-  @keyframes mktWave  { 0%{letter-spacing:.1em} 50%{letter-spacing:.3em} 100%{letter-spacing:.1em} }
-  @keyframes mktChart { 0%,100%{opacity:.4} 50%{opacity:1} }
-  @keyframes mktBill  { 0%,100%{opacity:1}  60%{opacity:.6} }
-
-  /* Pills on this page */
+  /* Pills */
   .pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 13px 26px; border-radius: 999px;
-    font-family: var(--font-body, "DM Sans", sans-serif);
-    font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700;
-    text-decoration: none; cursor: pointer; will-change: transform;
+    display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px;
+    border-radius: 999px; font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+    font-weight: 700; text-decoration: none; cursor: pointer; will-change: transform;
     transition: box-shadow 250ms ease, background 200ms ease, color 200ms ease;
   }
-  .pill--filled { background: var(--brand, #7b2d2d); color: #f9f5ef; box-shadow: 0 8px 28px rgba(123,45,45,.35); }
-  .pill--filled:hover { box-shadow: 0 14px 36px rgba(123,45,45,.45); background: #6a2828; }
-  .pill--outline { border: 1.5px solid var(--brand, #7b2d2d); color: var(--brand, #7b2d2d); }
-  .pill--outline:hover { background: rgba(123,45,45,.06); }
+  .pill--filled { background: var(--brand); color: #f9f5ef; box-shadow: 0 8px 28px rgba(123,45,45,.35); }
+  .pill--filled:hover { box-shadow: 0 14px 36px rgba(123,45,45,.48); background: #6a2828; }
+  .pill--outline { border: 1.5px solid var(--brand); color: var(--brand); }
+  .pill--outline:hover { background: rgba(123,45,45,.07); }
+
+  /* ── Chart Character ────────────────────────────────────────── */
+  .mkt-chart {
+    background: var(--paper-card, #f6f2ea);
+    border: 1px solid rgba(30,24,22,.12);
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,.1), 0 2px 8px rgba(123,45,45,.08);
+    animation: chartFloat 6s ease-in-out infinite;
+    will-change: transform;
+    padding: 20px;
+  }
+  @keyframes chartFloat {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    45%     { transform: translateY(-12px) rotate(.3deg); }
+    75%     { transform: translateY(-5px) rotate(-.2deg); }
+  }
+  .mc-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .mc-label {
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted, rgba(20,19,18,.55)); font-weight: 600;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+  .mc-live {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    color: #22c55e; font-weight: 700;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+  .mc-live-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: #22c55e;
+    box-shadow: 0 0 8px rgba(34,197,94,.7); animation: badgePulse 2s ease-in-out infinite;
+  }
+  .mc-bars {
+    display: flex; align-items: flex-end; gap: 8px; height: 100px; margin-bottom: 16px;
+  }
+  .mc-bar-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1;
+  }
+  .mc-bar {
+    width: 100%; border-radius: 4px 4px 0 0;
+    background: rgba(123,45,45,.25);
+    height: 0;
+    animation: barRise 700ms cubic-bezier(.34,1.4,.64,1) forwards;
+    animation-delay: calc(var(--bd, 0ms) + 600ms);
+    --final-h: var(--bh, 60%);
+  }
+  @keyframes barRise { to { height: var(--final-h); } }
+  .mc-bar-wrap--accent .mc-bar { background: var(--brand); box-shadow: 0 -4px 16px rgba(123,45,45,.35); }
+  .mc-bar-label {
+    font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted, rgba(20,19,18,.4)); font-weight: 600;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+  .mc-stats {
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(30,24,22,.07); padding-top: 12px;
+  }
+  .mc-stat { text-align: center; flex: 1; }
+  .mc-stat-num {
+    display: block; font-size: 16px; font-weight: 800; letter-spacing: -.03em;
+    color: var(--brand); font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+  }
+  .mc-stat-label {
+    display: block; font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted, rgba(20,19,18,.45)); font-weight: 600;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+  .mc-stat-div { width: 1px; height: 28px; background: rgba(30,24,22,.08); }
+
+  /* ── Process Timeline ───────────────────────────────────────── */
+  .process-section { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
+  .timeline { display: flex; align-items: flex-start; margin: 36px 0 24px; overflow-x: auto; }
+  .timeline-step { flex: 1; min-width: 120px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 0 8px; }
+  .timeline-dot {
+    width: 12px; height: 12px; border-radius: 50%; background: var(--brand, #7b2d2d); flex-shrink: 0;
+    animation: tdotPulse 2.4s ease-in-out infinite;
+  }
+  .timeline-step:nth-child(3) .timeline-dot { animation-delay: .6s; }
+  .timeline-step:nth-child(5) .timeline-dot { animation-delay: 1.2s; }
+  .timeline-step:nth-child(7) .timeline-dot { animation-delay: 1.8s; }
+  @keyframes tdotPulse { 0%,100%{box-shadow:0 0 0 0 rgba(123,45,45,0)} 50%{box-shadow:0 0 0 5px rgba(123,45,45,.15)} }
+  .timeline-connector { width: 48px; height: 1px; background: var(--brand, #7b2d2d); opacity: .28; margin-top: 6px; flex-shrink: 0; }
+  .timeline-num { font-size: 11px; font-weight: 700; letter-spacing: .12em; color: var(--brand, #7b2d2d); margin: 0; }
+  .timeline-name { font-size: 14px; font-weight: 700; letter-spacing: -.01em; margin: 0; color: var(--ink, #141312); font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
+  .timeline-desc { font-size: 12px; color: var(--muted, rgba(20,19,18,.6)); line-height: 1.5; margin: 0; }
+  .process-note { font-size: 13px; color: var(--muted, rgba(20,19,18,.55)); margin: 0; }
+
+  /* ── Services ───────────────────────────────────────────────── */
+  .mkt-services { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
+  .svc-card { padding: 26px 24px; min-height: 220px; }
+  .svc-icon {
+    width: 40px; height: 40px; border-radius: 10px; background: rgba(123,45,45,.1);
+    display: grid; place-items: center; color: var(--brand); flex-shrink: 0;
+    transition: background 350ms ease, color 300ms ease, transform 400ms cubic-bezier(.34,1.56,.64,1);
+  }
+  .svc-card:hover .svc-icon { background: rgba(123,45,45,.35); color: #f9f5ef; transform: rotate(8deg) scale(1.12); }
+  .svc-title {
+    font-size: clamp(16px, 1.8vw, 19px); font-weight: 700; margin: 0;
+    letter-spacing: -.015em;
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    line-height: 1.2; color: var(--ink, #141312);
+    transition: color 300ms ease;
+  }
+  .svc-card:hover .svc-title { color: rgba(245,240,232,.95); }
+  .svc-desc { font-size: 13px; line-height: 1.65; color: var(--muted, rgba(20,19,18,.62)); margin: 0; transition: color 300ms ease; flex: 1; }
+  .svc-card:hover .svc-desc { color: rgba(245,240,232,.65); }
+
+  /* ── Strategy Flow Grid ─────────────────────────────────────── */
+  .strategy-section { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
+  .strategy-flow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0 0; }
+  @media (max-width: 560px) { .strategy-flow { grid-template-columns: 1fr; } }
+
+  /* ── CTA ────────────────────────────────────────────────────── */
+  .mkt-cta-section { text-align: center; padding: 80px 0 40px; border-top: 1px solid rgba(30,24,22,.1); }
+  .cta-title {
+    font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -.03em; margin: 0 0 10px;
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+  }
+  .cta-sub { font-size: 15px; color: var(--muted, rgba(20,19,18,.62)); margin: 0 0 28px; font-family: var(--font-body, "DM Sans", sans-serif); }
+  .cta-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
   /* ── Responsive ─────────────────────────────────────────────── */
-  @media (max-width: 720px) {
-    .timeline { flex-direction: column; align-items: flex-start; }
-    .timeline-step { flex-direction: row; text-align: left; align-items: flex-start; gap: 12px; width: 100%; min-width: unset; }
-    .timeline-connector { width: 1px; height: 24px; margin: 0 6px 0 5px; }
-    .mkt-hero { padding: 60px 0 60px; }
-    .strategy-section .ascii-diagram { font-size: 10px; padding: 20px 16px; }
-    .sig-chars { gap: 20px; }
-    .sig-pre { font-size: 11px; }
+  @media (max-width: 900px) {
+    .mkt-hero-split { grid-template-columns: 1fr; }
+    .mkt-hero-text { text-align: center; }
+    .mkt-title { max-width: 100%; margin-left: auto; margin-right: auto; }
+    .mkt-sub { max-width: 100%; }
+    .mkt-ctas { justify-content: center; }
+    .mkt-chart { max-width: 380px; margin: 0 auto; }
+  }
+  @media (max-width: 680px) {
+    .mkt-hero { padding: 60px 0 52px; }
+    .timeline { flex-direction: column; align-items: center; gap: 14px; }
+    .timeline-connector { width: 1px; height: 24px; margin: 0; }
   }
 </style>

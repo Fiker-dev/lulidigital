@@ -21,6 +21,12 @@ const serviceSchema = {
   ],
   "description": "Executive virtual assistant services for founders, CEOs, and growing teams: remote admin support, inbox management, calendar control, project management, and operational follow-through — without the overhead of a full-time hire.",
 };
+
+const vaMarquee = [
+  "Inbox Zero", "Calendar Cleared", "Follow-ups Sent", "Reports Filed",
+  "Projects Tracked", "Meetings Scheduled", "Tasks Delegated", "Operations Handled",
+  "Brief Prepared", "Deadlines Hit", "Stakeholders Aligned", "No Detail Missed",
+];
 ---
 
 <BaseLayout
@@ -30,67 +36,73 @@ const serviceSchema = {
   serviceSchema={serviceSchema}
 >
 
-  <!-- ══════════════════════ OBJECT ASCII — NO BOTS ══════════════ -->
-  <div class="page-sig" aria-hidden="true" data-reveal="fade">
-    <div class="sig-chars">
-
-      <!-- Inbox — no person -->
-      <div class="sig-char">
-        <pre class="sig-pre">
-<span class="sh">╔═══════════╗</span>
-<span class="va-inbox sh">║ ✓ INBOX 1 ║</span>
-<span class="sm">╠═══════════╣</span>
-<span class="va-inbox sh">║ ✓ INBOX 2 ║</span>
-<span class="sm">╠═══════════╣</span>
-<span class="va-inbox sh">║ ✓ INBOX 3 ║</span>
-<span class="sh">╚═══════════╝</span></pre>
-        <span class="sig-label">inbox zero</span>
-      </div>
-
-      <!-- Calendar — no person -->
-      <div class="sig-char">
-        <pre class="sig-pre">
-<span class="sh">┌───────────┐</span>
-<span class="sm">│ Mo Tu We  │</span>
-<span class="va-cal sh">│ <span class="sh">◈</span>  <span class="sh">◈</span>  <span class="sh">◈</span>  │</span>
-<span class="sm">│ Th Fr Sa  │</span>
-<span class="va-cal sh">│ <span class="sh">◈</span>  <span class="sh">◈</span>  ·  │</span>
-<span class="sh">└───────────┘</span></pre>
-        <span class="sig-label">calendar managed</span>
-      </div>
-
-      <!-- Checklist — no person -->
-      <div class="sig-char">
-        <pre class="sig-pre">
-<span class="va-task sh">[<span class="sh">✓</span>] Inbox done</span>
-<span class="va-task sh">[<span class="sh">✓</span>] Calendar ok</span>
-<span class="va-task sh">[<span class="sh">✓</span>] Report sent</span>
-<span class="sm">[ ] Next item</span>
-<span class="sm">[ ] And more…</span></pre>
-        <span class="sig-label">nothing slips</span>
-      </div>
-
-    </div>
-    <p class="sig-tagline">— <em>If it takes your time, it can be delegated.</em> —</p>
-  </div>
-
   <!-- ═══════════════════════════════════════════════════════ HERO -->
   <section class="va-hero" aria-label="Virtual Assistant services">
     <div class="hero-orb orb-a" aria-hidden="true"></div>
-    <span class="eyebrow" data-blur-in>Virtual Assistant Desk</span>
-    <h1 class="va-title" data-word-reveal data-bee-stop>
-      Executive support without the full-time overhead.
-    </h1>
-    <p class="va-sub" data-blur-in data-blur-delay="200">
-      Dedicated remote support for founders and CEOs — inbox, calendar, operations, and projects handled so you can lead.
-    </p>
-    <div class="va-ctas" data-stagger data-stagger-gap="80">
-      <a class="cta-link" href="https://wa.me/27602551513">Hire your VA <span class="arr">→</span></a>
-      <a class="cta-link" href="/ai">AI Desk <span class="arr">→</span></a>
+
+    <div class="va-hero-split">
+      <div class="va-hero-text">
+        <span class="eyebrow" data-blur-in>Virtual Assistant Desk</span>
+        <h1 class="va-title" data-word-reveal data-bee-stop>
+          Executive support without the full-time overhead.
+        </h1>
+        <p class="va-sub" data-blur-in data-blur-delay="200">
+          Dedicated remote support for founders and CEOs — inbox, calendar, operations, and projects handled so you can lead.
+        </p>
+        <div class="va-ctas" data-stagger data-stagger-gap="80">
+          <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">Hire your VA →</a>
+          <a class="pill pill--outline magnetic" href="/ai">AI Desk →</a>
+        </div>
+      </div>
+
+      <!-- Animated task board character -->
+      <div class="va-board" aria-hidden="true">
+        <div class="vb-header">
+          <span class="vb-dot vb-dot--r"></span>
+          <span class="vb-dot vb-dot--y"></span>
+          <span class="vb-dot vb-dot--g"></span>
+          <span class="vb-title-bar">Today's Desk</span>
+        </div>
+        <div class="vb-tasks">
+          <div class="vb-task vb-task--done" style="--ti:0">
+            <span class="vb-check">✓</span>
+            <span>Inbox cleared — 47 emails</span>
+          </div>
+          <div class="vb-task vb-task--done" style="--ti:1">
+            <span class="vb-check">✓</span>
+            <span>3 exec calls scheduled</span>
+          </div>
+          <div class="vb-task vb-task--done" style="--ti:2">
+            <span class="vb-check">✓</span>
+            <span>Q3 brief sent to team</span>
+          </div>
+          <div class="vb-task vb-task--active" style="--ti:3">
+            <span class="vb-spinner"></span>
+            <span>Weekly report — in progress</span>
+          </div>
+          <div class="vb-task vb-task--pending" style="--ti:4">
+            <span class="vb-ring"></span>
+            <span>Review invoice batch</span>
+          </div>
+        </div>
+        <div class="vb-footer">
+          <span class="vb-status-dot"></span>
+          <span class="vb-status-text">VA active now</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════ DELEGATION SVG -->
+  <!-- ══════════════════════════════════════════════════ MARQUEE -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      {[...vaMarquee, ...vaMarquee].map((item) => (
+        <span class="marquee-item">{item}</span>
+      ))}
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════ DELEGATION SVG -->
   <section class="delegation-section" aria-label="How delegation works" data-reveal="up">
     <span class="eyebrow">How Delegation Works</span>
     <h2 class="section-title">If it takes your time, it can be delegated.</h2>
@@ -102,28 +114,21 @@ const serviceSchema = {
             <path d="M0,0 L0,6 L8,3 z" fill="rgba(123,45,45,.55)"/>
           </marker>
         </defs>
-        <!-- You -->
         <rect x="10" y="40" width="140" height="100" rx="16" fill="var(--paper-card,#f6f2ea)" stroke="rgba(123,45,45,.28)" stroke-width="1.5"/>
         <text x="80" y="72"  text-anchor="middle" class="del-big">You</text>
         <text x="80" y="92"  text-anchor="middle" class="del-small">Founder / CEO</text>
         <text x="80" y="110" text-anchor="middle" class="del-small">Decision maker</text>
-        <!-- Arrow 1 -->
         <path d="M154 90 L210 90" stroke="rgba(123,45,45,.45)" stroke-width="1.5" marker-end="url(#arr-del)"/>
-        <!-- VA -->
         <rect x="215" y="40" width="230" height="100" rx="16" fill="rgba(123,45,45,.88)" stroke="none"/>
         <text x="330" y="72"  text-anchor="middle" class="del-big-inv">Virtual Assistant</text>
         <text x="330" y="92"  text-anchor="middle" class="del-small-inv">Inbox · Calendar · Tasks</text>
         <text x="330" y="110" text-anchor="middle" class="del-small-inv">Projects · Follow-ups</text>
-        <!-- Arrow 2 -->
         <path d="M450 90 L506 90" stroke="rgba(123,45,45,.45)" stroke-width="1.5" marker-end="url(#arr-del)"/>
-        <!-- Done -->
         <rect x="511" y="40" width="140" height="100" rx="16" fill="var(--paper-card,#f6f2ea)" stroke="rgba(123,45,45,.28)" stroke-width="1.5"/>
         <text x="581" y="82"  text-anchor="middle" class="del-big">Done.</text>
         <text x="581" y="102" text-anchor="middle" class="del-small">You focus on what</text>
         <text x="581" y="118" text-anchor="middle" class="del-small">only you can do.</text>
       </svg>
-
-      <!-- ASCII fallback for very small screens -->
       <pre class="delegation-ascii ascii-diagram" aria-hidden="true">
 <span class="hi">You</span> ──────▶ <span class="hi">Virtual Assistant</span> ──────▶ <span class="hi">Done.</span>
 Founder       Inbox · Calendar · Tasks     You focus on
@@ -131,65 +136,150 @@ Founder       Inbox · Calendar · Tasks     You focus on
     </div>
   </section>
 
+  <!-- ═══════════════════════════════════════════ METRICS STRIP -->
+  <div class="metrics-strip" aria-label="VA impact" data-reveal="up">
+    <div class="metric-item">
+      <span class="metric-num" data-count="40" data-count-suffix="h+">0</span>
+      <span class="metric-label">freed per week</span>
+    </div>
+    <div class="metric-divider" aria-hidden="true"></div>
+    <div class="metric-item">
+      <span class="metric-num" data-count="200" data-count-suffix="+">0</span>
+      <span class="metric-label">tasks handled monthly</span>
+    </div>
+    <div class="metric-divider" aria-hidden="true"></div>
+    <div class="metric-item">
+      <span class="metric-num" data-count="3" data-count-suffix="×">0</span>
+      <span class="metric-label">more leadership time</span>
+    </div>
+  </div>
+
   <!-- ══════════════════════════════════════════ SERVICE BENTO GRID -->
-  <section class="va-services" aria-label="VA services" data-reveal="up">
+  <section class="va-services" aria-label="VA services" data-reveal="up" data-bee-stop>
     <span class="eyebrow">What We Handle</span>
     <div class="bento-grid" data-stagger data-stagger-gap="80">
 
-      <article class="glow-card svc-card">
-        <h3 class="svc-title">Admin &amp; Operations</h3>
-        <ul class="bento-list">
-          <li>Inbox managed &amp; organised</li>
-          <li>Calendar controlled &amp; optimised</li>
-          <li>Follow-ups sent on schedule</li>
-          <li>Reports prepared &amp; distributed</li>
-        </ul>
-        <p class="svc-footer">Quiet execution behind the scenes.</p>
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="float-l" data-reveal-delay="0">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:12px;height:100%">
+          <div class="svc-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </div>
+          <h3 class="svc-title">Admin &amp; Operations</h3>
+          <ul class="bento-list">
+            <li style="--li-i:0">Inbox managed &amp; organised</li>
+            <li style="--li-i:1">Calendar controlled &amp; optimised</li>
+            <li style="--li-i:2">Follow-ups sent on schedule</li>
+            <li style="--li-i:3">Reports prepared &amp; distributed</li>
+          </ul>
+          <p class="svc-footer">Quiet execution behind the scenes.</p>
+        </div>
       </article>
 
-      <article class="glow-card svc-card">
-        <h3 class="svc-title">Project Management</h3>
-        <ul class="bento-list">
-          <li>Timelines owned &amp; maintained</li>
-          <li>Milestones tracked and hit</li>
-          <li>Teams aligned without chasing</li>
-          <li>Deliverables managed end-to-end</li>
-        </ul>
-        <p class="svc-footer">Nothing slips. Nothing gets lost.</p>
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="drop" data-reveal-delay="100">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:12px;height:100%">
+          <div class="svc-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          </div>
+          <h3 class="svc-title">Project Management</h3>
+          <ul class="bento-list">
+            <li style="--li-i:0">Timelines owned &amp; maintained</li>
+            <li style="--li-i:1">Milestones tracked and hit</li>
+            <li style="--li-i:2">Teams aligned without chasing</li>
+            <li style="--li-i:3">Deliverables managed end-to-end</li>
+          </ul>
+          <p class="svc-footer">Nothing slips. Nothing gets lost.</p>
+        </div>
       </article>
 
-      <article class="glow-card svc-card">
-        <h3 class="svc-title">Marketing &amp; Content Support</h3>
-        <ul class="bento-list">
-          <li>Content created and scheduled</li>
-          <li>Campaigns structured and briefed</li>
-          <li>Social media managed</li>
-          <li>Brand message distributed</li>
-        </ul>
-        <p class="svc-footer">Your message out. Consistently.</p>
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="float-r" data-reveal-delay="200">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:12px;height:100%">
+          <div class="svc-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 19-9-9 19-2-8-8-2z"/></svg>
+          </div>
+          <h3 class="svc-title">Marketing &amp; Content Support</h3>
+          <ul class="bento-list">
+            <li style="--li-i:0">Content created and scheduled</li>
+            <li style="--li-i:1">Campaigns structured and briefed</li>
+            <li style="--li-i:2">Social media managed</li>
+            <li style="--li-i:3">Brand message distributed</li>
+          </ul>
+          <p class="svc-footer">Your message out. Consistently.</p>
+        </div>
       </article>
 
-      <article class="glow-card svc-card">
-        <h3 class="svc-title">AI &amp; Custom Tools</h3>
-        <ul class="bento-list">
-          <li>AI assistants built for your business</li>
-          <li>Workflows automated end-to-end</li>
-          <li>Tools tailored to your operations</li>
-          <li>Systems that grow with your team</li>
-        </ul>
-        <p class="svc-footer">Built to work with you.</p>
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="pop" data-reveal-delay="300">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:12px;height:100%">
+          <div class="svc-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><circle cx="12" cy="14" r="2"/></svg>
+          </div>
+          <h3 class="svc-title">AI &amp; Custom Tools</h3>
+          <ul class="bento-list">
+            <li style="--li-i:0">AI assistants built for your business</li>
+            <li style="--li-i:1">Workflows automated end-to-end</li>
+            <li style="--li-i:2">Tools tailored to your operations</li>
+            <li style="--li-i:3">Systems that grow with your team</li>
+          </ul>
+          <p class="svc-footer">Built to work with you.</p>
+        </div>
       </article>
 
     </div>
   </section>
 
+  <!-- ══════════════════════════════ BOLD DARK STATEMENT -->
+  <section class="bold-statement" aria-label="VA promise">
+    <div class="bs-inner">
+      <p class="bs-line" data-reveal="up" data-reveal-delay="0">Your time is finite.</p>
+      <p class="bs-line bs-accent" data-reveal="up" data-reveal-delay="140">Delegate everything else.</p>
+    </div>
+    <div class="bs-reel" aria-hidden="true">
+      <div class="bs-reel-track">
+        <span class="bsr-word">Inbox</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Calendar</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Projects</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Follow-ups</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Reports</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Operations</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Inbox</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Calendar</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Projects</span><span class="bsr-sep">—</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════ LIVE DESK FEED -->
+  <div class="desk-feed" aria-hidden="true">
+    <span class="df-badge"><span class="df-dot"></span>Live</span>
+    <div class="df-track-wrap">
+      <div class="df-track">
+        {[
+          "Inbox cleared — 47 emails handled this morning",
+          "3 executive calls blocked and confirmed",
+          "Weekly report prepared and sent to stakeholders",
+          "Project timeline updated — milestones on track",
+          "Follow-up sequence sent to 5 warm leads",
+          "Deep work calendar blocks set — zero conflicts",
+          "Invoice batch reviewed and filed",
+          "Inbox cleared — 47 emails handled this morning",
+          "3 executive calls blocked and confirmed",
+          "Weekly report prepared and sent to stakeholders",
+        ].map((item) => (
+          <>
+            <span class="df-item">{item}</span>
+            <span class="df-sep" aria-hidden="true">·</span>
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════════════════════════════════ CTA -->
-  <section class="va-cta-section" aria-label="Hire a virtual assistant" data-reveal="fade">
+  <section class="va-cta-section" aria-label="Hire a virtual assistant" data-reveal="fade" data-bee-stop>
     <h2 class="cta-title" data-blur-in>Hire your virtual assistant today.</h2>
     <p class="cta-sub" data-blur-in data-blur-delay="150">Side by side. So you don't carry it alone.</p>
     <div data-stagger data-stagger-gap="80" class="cta-links">
-      <a class="cta-link" href="https://wa.me/27602551513">WhatsApp us <span class="arr">→</span></a>
-      <a class="cta-link" href="mailto:info@lulidigital.co.za">Email the desk <span class="arr">→</span></a>
+      <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">WhatsApp us →</a>
+      <a class="pill pill--outline magnetic" href="mailto:info@lulidigital.co.za">Email the desk →</a>
     </div>
   </section>
 
@@ -201,149 +291,207 @@ Founder       Inbox · Calendar · Tasks     You focus on
   .va-hero {
     position: relative;
     overflow: hidden;
-    text-align: center;
-    padding: 88px 0 80px;
+    padding: 88px 0 72px;
   }
   .orb-a { width: 480px; height: 480px; top: -100px; left: -160px; }
+
+  .va-hero-split {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 48px;
+    align-items: center;
+  }
+  .va-hero-text { text-align: left; }
+
   .va-title {
-    font-size: clamp(36px, 5.5vw, 68px);
+    font-size: clamp(34px, 4.8vw, 62px);
     font-weight: 700;
-    line-height: 1.04;
+    line-height: 1.06;
     letter-spacing: -.035em;
-    margin: 14px auto 20px;
-    font-family: ui-serif, Georgia, serif;
+    margin: 14px 0 20px;
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
     color: var(--ink, #141312);
-    max-width: 780px;
+    max-width: 600px;
   }
   .va-sub {
-    font-size: clamp(15px, 1.8vw, 18px);
+    font-size: clamp(15px, 1.8vw, 17px);
     line-height: 1.65;
     color: var(--muted, rgba(20,19,18,.66));
-    margin: 0 auto 32px;
-    max-width: 520px;
+    margin: 0 0 32px;
+    max-width: 480px;
   }
-  .va-ctas { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
+  .va-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* Pills */
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 26px; border-radius: 999px;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+    font-weight: 700; text-decoration: none; cursor: pointer;
+    will-change: transform;
+    transition: box-shadow 250ms ease, background 200ms ease, color 200ms ease;
+  }
+  .pill--filled { background: var(--brand); color: #f9f5ef; box-shadow: 0 8px 28px rgba(123,45,45,.35); }
+  .pill--filled:hover { box-shadow: 0 14px 36px rgba(123,45,45,.48); background: #6a2828; }
+  .pill--outline { border: 1.5px solid var(--brand); color: var(--brand); }
+  .pill--outline:hover { background: rgba(123,45,45,.07); }
+
+  /* ── Task Board Character ───────────────────────────────────── */
+  .va-board {
+    background: var(--paper-card, #f6f2ea);
+    border: 1px solid rgba(30,24,22,.12);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,.1), 0 2px 8px rgba(123,45,45,.08);
+    animation: boardFloat 5s ease-in-out infinite;
+    will-change: transform;
+  }
+  @keyframes boardFloat {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    40%     { transform: translateY(-10px) rotate(-.4deg); }
+    70%     { transform: translateY(-5px) rotate(.2deg); }
+  }
+  .vb-header {
+    display: flex; align-items: center; gap: 7px;
+    padding: 14px 18px 10px;
+    border-bottom: 1px solid rgba(30,24,22,.08);
+    background: rgba(255,255,255,.5);
+  }
+  .vb-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .vb-dot--r { background: #ff5f57; }
+  .vb-dot--y { background: #febc2e; }
+  .vb-dot--g { background: #28c840; }
+  .vb-title-bar {
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted, rgba(20,19,18,.45)); font-weight: 600;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    margin-left: 6px;
+  }
+  .vb-tasks { padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; }
+  .vb-task {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; font-family: var(--font-body, "DM Sans", sans-serif);
+    padding: 9px 12px; border-radius: 10px;
+    opacity: 0;
+    transform: translateX(-10px);
+    animation: taskSlide 400ms cubic-bezier(.34,1.4,.64,1) forwards;
+    animation-delay: calc(var(--ti, 0) * 180ms + 400ms);
+  }
+  @keyframes taskSlide {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .vb-task--done {
+    background: rgba(40,200,64,.08);
+    color: rgba(20,19,18,.75);
+  }
+  .vb-task--active {
+    background: rgba(123,45,45,.08);
+    color: var(--ink, #141312);
+  }
+  .vb-task--pending {
+    background: rgba(30,24,22,.04);
+    color: var(--muted, rgba(20,19,18,.55));
+  }
+  .vb-check {
+    font-size: 11px; color: #28c840; font-weight: 700; flex-shrink: 0;
+  }
+  .vb-spinner {
+    width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+    border: 2px solid rgba(123,45,45,.2); border-top-color: var(--brand);
+    animation: spin 800ms linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .vb-ring {
+    width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+    border: 2px solid rgba(30,24,22,.18);
+  }
+  .vb-footer {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 18px 14px;
+    border-top: 1px solid rgba(30,24,22,.06);
+  }
+  .vb-status-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #28c840;
+    box-shadow: 0 0 8px rgba(40,200,64,.7); animation: badgePulse 2s ease-in-out infinite;
+  }
+  .vb-status-text {
+    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted, rgba(20,19,18,.5)); font-family: var(--font-body, "DM Sans", sans-serif);
+    font-weight: 600;
+  }
 
   /* ── Delegation ─────────────────────────────────────────────── */
-  .delegation-section {
-    padding: 72px 0 80px;
-    border-top: 1px solid rgba(30,24,22,.1);
-  }
+  .delegation-section { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
   .delegation-wrap { margin-top: 28px; }
-  .delegation-svg {
-    width: 100%;
-    max-width: 680px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-  }
-  .delegation-svg .del-big {
-    font-family: ui-serif, Georgia, serif;
-    font-size: 15px;
-    font-weight: 700;
-    fill: rgba(20,19,18,.9);
-  }
-  .delegation-svg .del-big-inv {
-    font-family: ui-serif, Georgia, serif;
-    font-size: 14px;
-    font-weight: 700;
-    fill: rgba(243,239,231,.95);
-  }
-  .delegation-svg .del-small {
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 10px;
-    fill: rgba(20,19,18,.5);
-    letter-spacing: .04em;
-  }
-  .delegation-svg .del-small-inv {
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 10px;
-    fill: rgba(243,239,231,.7);
-    letter-spacing: .04em;
-  }
+  .delegation-svg { width: 100%; max-width: 680px; height: auto; display: block; margin: 0 auto; }
+  .delegation-svg .del-big { font-family: ui-serif, Georgia, serif; font-size: 15px; font-weight: 700; fill: rgba(20,19,18,.9); }
+  .delegation-svg .del-big-inv { font-family: ui-serif, Georgia, serif; font-size: 14px; font-weight: 700; fill: rgba(243,239,231,.95); }
+  .delegation-svg .del-small { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: rgba(20,19,18,.5); letter-spacing: .04em; }
+  .delegation-svg .del-small-inv { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: rgba(243,239,231,.7); letter-spacing: .04em; }
   .delegation-ascii { display: none; }
 
   /* ── Services ───────────────────────────────────────────────── */
-  .va-services {
-    padding: 72px 0 80px;
-    border-top: 1px solid rgba(30,24,22,.1);
+  .va-services { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
+  .svc-card { padding: 28px 24px; min-height: 260px; }
+  .svc-icon {
+    width: 40px; height: 40px; border-radius: 10px; background: rgba(123,45,45,.1);
+    display: grid; place-items: center; color: var(--brand); flex-shrink: 0;
+    transition: background 350ms ease, color 300ms ease, transform 400ms cubic-bezier(.34,1.56,.64,1);
   }
-  .svc-card {
-    padding: 28px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+  .svc-card:hover .svc-icon { background: rgba(123,45,45,.35); color: #f9f5ef; transform: rotate(8deg) scale(1.12); }
   .svc-title {
-    font-size: clamp(17px, 2vw, 21px);
-    font-weight: 700;
-    margin: 0;
+    font-size: clamp(17px, 1.9vw, 21px); font-weight: 700; margin: 0;
     letter-spacing: -.015em;
-    font-family: ui-serif, Georgia, serif;
-    line-height: 1.2;
-    color: var(--ink, #141312);
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    line-height: 1.2; color: var(--ink, #141312);
+    transition: color 300ms ease;
   }
+  .svc-card:hover .svc-title { color: rgba(245,240,232,.95); }
   .bento-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; flex: 1; }
-  .bento-list li { font-size: 13.5px; line-height: 1.55; color: var(--muted, rgba(20,19,18,.66)); padding-left: 14px; position: relative; }
-  .bento-list li::before { content: "–"; position: absolute; left: 0; color: var(--brand, #7b2d2d); opacity: .55; }
-  .svc-footer {
-    font-size: 11px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--brand, #7b2d2d);
-    font-weight: 600;
-    margin: 0;
-    margin-top: auto;
+  .bento-list li {
+    font-size: 13.5px; line-height: 1.55; color: var(--muted, rgba(20,19,18,.66));
+    padding-left: 14px; position: relative;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    transform: translateX(-8px);
+    transition: transform 420ms cubic-bezier(.16,1,.3,1), color 300ms ease;
+    transition-delay: calc(var(--li-i, 0) * 55ms + 60ms);
   }
+  .bento-list li::before { content: "–"; position: absolute; left: 0; color: var(--brand, #7b2d2d); opacity: .55; transition: color 300ms ease; }
+  .svc-card:hover .bento-list li { transform: translateX(0); color: rgba(245,240,232,.7); }
+  .svc-card:hover .bento-list li::before { color: var(--brand); opacity: .7; }
+  .svc-footer {
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--brand, #7b2d2d); font-weight: 600; margin: 0; margin-top: auto;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    transition: color 300ms ease;
+  }
+  .svc-card:hover .svc-footer { color: rgba(245,240,232,.45); }
 
   /* ── CTA ────────────────────────────────────────────────────── */
-  .va-cta-section {
-    text-align: center;
-    padding: 80px 0 40px;
-    border-top: 1px solid rgba(30,24,22,.1);
-  }
+  .va-cta-section { text-align: center; padding: 80px 0 40px; border-top: 1px solid rgba(30,24,22,.1); }
   .cta-title {
-    font-size: clamp(28px, 4vw, 48px);
-    font-weight: 700;
-    letter-spacing: -.03em;
-    margin: 0 0 10px;
-    font-family: ui-serif, Georgia, serif;
+    font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -.03em; margin: 0 0 10px;
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
   }
-  .cta-sub { font-size: 15px; color: var(--muted, rgba(20,19,18,.62)); margin: 0 0 28px; }
-  .cta-links { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
-
-  /* ── Fonts ──────────────────────────────────────────────────── */
-  .va-title, .svc-title, .cta-title, .section-title { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
-  .va-sub, .svc-footer, .cta-sub { font-family: var(--font-body, "DM Sans", sans-serif); }
-
-  /* ── Page signature ─────────────────────────────────────────── */
-  .page-sig { padding: 48px 0 20px; text-align: center; }
-  .sig-chars { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 20px; }
-  .sig-char { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .sig-pre { font-family: var(--font-mono, "SF Mono", ui-monospace, monospace); font-size: 13px; line-height: 1.45; margin: 0; white-space: pre; background: none; border: none; padding: 0; text-align: left; }
-  .sh { color: var(--brand, #7b2d2d); }
-  .sm { color: rgba(20,19,18,.42); }
-  .sig-label { font-family: var(--font-body, "DM Sans", sans-serif); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted, rgba(20,19,18,.4)); font-weight: 600; }
-  .sig-tagline { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); font-size: clamp(14px, 2vw, 18px); font-style: italic; color: var(--muted, rgba(20,19,18,.5)); margin: 0; }
-
-  /* VA object animations */
-  .va-inbox { display: block; animation: vaInbox 2.4s ease-in-out infinite; }
-  .va-cal   { display: block; animation: vaCal   2s   step-end   infinite; }
-  .va-task  { display: block; animation: vaTask  3s   ease-in-out infinite; }
-
-  @keyframes vaInbox { 0%,100%{opacity:1}  50%{opacity:.5} }
-  @keyframes vaCal   { 0%,70%,100%{opacity:1} 75%{opacity:.3} }
-  @keyframes vaTask  { 0%,100%{transform:translateX(0)} 50%{transform:translateX(3px)} }
+  .cta-sub { font-size: 15px; color: var(--muted, rgba(20,19,18,.62)); margin: 0 0 28px; font-family: var(--font-body, "DM Sans", sans-serif); }
+  .cta-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
   /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .va-hero-split { grid-template-columns: 1fr; }
+    .va-hero-text { text-align: center; }
+    .va-title { max-width: 100%; margin-left: auto; margin-right: auto; }
+    .va-sub { max-width: 100%; }
+    .va-ctas { justify-content: center; }
+    .va-board { max-width: 420px; margin: 0 auto; }
+  }
   @media (max-width: 520px) {
     .delegation-svg { display: none; }
     .delegation-ascii { display: block; font-size: 10px; padding: 18px 14px; }
-    .va-hero { padding: 60px 0 60px; }
+    .va-hero { padding: 60px 0 52px; }
   }
   @media (max-width: 600px) {
     .bento-grid { grid-template-columns: 1fr; }
-    .sig-chars { gap: 20px; }
-    .sig-pre { font-size: 11px; }
   }
 </style>

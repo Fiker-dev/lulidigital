@@ -7,13 +7,10 @@ import { getDailySeoRecommendation } from "../lib/seoAgent.js";
 const seoRecommendation = await getDailySeoRecommendation({ geo: "SE", market: "stockholm" });
 const market = {
   ...markets.stockholm,
-  title: `${seoRecommendation.keyword} | Stockholm Digital Marketing, AI Automation & Virtual Assistant | LuliDigital`,
-  description: `LuliDigital helps Stockholm startups and Nordic brands with ${seoRecommendation.keyword}, performance marketing, AI automation, and virtual assistant services.`,
   seoRecommendation,
   serviceSchema: {
     ...markets.stockholm.serviceSchema,
     serviceType: [seoRecommendation.keyword, ...markets.stockholm.serviceSchema.serviceType],
-    description: `Stockholm digital marketing agency offering ${seoRecommendation.keyword}, performance marketing, brand strategy, AI workflow automation, and virtual assistant services.`,
   },
 };
 ---
