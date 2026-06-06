@@ -222,8 +222,9 @@ const nav = [
     padding-bottom: 12px;
   }
   .nav-mobile__cell {
+    position: relative;
     min-height: 116px;
-    padding: 20px 13px 18px;
+    padding: 22px 22px 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -232,12 +233,7 @@ const nav = [
     text-align: center;
     color: var(--ink, #141312);
     text-decoration: none;
-    background:
-      radial-gradient(circle at 36% 22%, rgba(255,255,255,.75), transparent 26%),
-      linear-gradient(150deg, rgba(255,210,97,.92), rgba(190,112,26,.22) 70%),
-      var(--paper-card, #f6f2ea);
-    border: 1px solid rgba(111, 67, 16, .2);
-    clip-path: polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0 50%);
+    background: transparent;
     filter: drop-shadow(0 10px 16px rgba(97, 55, 14, .12));
     transform: translateY(10px) scale(.94);
     opacity: 0;
@@ -247,6 +243,22 @@ const nav = [
       filter 240ms ease;
     transition-delay: calc(var(--cell-index) * 42ms);
     touch-action: manipulation;
+  }
+  .nav-mobile__cell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    clip-path: polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0 50%);
+    background:
+      radial-gradient(circle at 36% 22%, rgba(255,255,255,.75), transparent 26%),
+      linear-gradient(150deg, rgba(255,210,97,.92), rgba(190,112,26,.22) 70%),
+      var(--paper-card, #f6f2ea);
+    border: 1px solid rgba(111, 67, 16, .2);
+  }
+  .nav-mobile__cell > * {
+    position: relative;
+    z-index: 1;
   }
   details[open] .nav-mobile__cell {
     opacity: 1;
@@ -259,10 +271,12 @@ const nav = [
     filter: drop-shadow(0 5px 10px rgba(97, 55, 14, .14));
   }
   .nav-mobile__cell.is-active {
+    color: #fff8ec;
+  }
+  .nav-mobile__cell.is-active::before {
     background:
       radial-gradient(circle at 34% 20%, rgba(255,255,255,.8), transparent 25%),
       linear-gradient(145deg, rgba(123,45,45,.95), rgba(180,92,30,.78));
-    color: #fff8ec;
   }
   .cell-short {
     font-size: 11px;
@@ -313,7 +327,7 @@ const nav = [
 
   @media (max-width: 370px) {
     .nav-mobile__panel { left: 8px; right: 8px; padding: 15px 12px 14px; }
-    .nav-mobile__cell { min-height: 104px; padding-inline: 10px; }
+    .nav-mobile__cell { min-height: 104px; padding-inline: 18px; }
     .cell-label { font-size: 13px; }
     .cell-note { font-size: 9px; }
   }

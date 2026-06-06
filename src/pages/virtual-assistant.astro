@@ -138,10 +138,36 @@ const vaMarquee = [
       <div class="handoff-scene" aria-label="Bee moving between a human assistant and an AI assistant">
         <article class="handoff-cell handoff-cell--human">
           <div class="cartoon-assistant" aria-hidden="true">
-            <span class="assistant-hair"></span>
-            <span class="assistant-face"></span>
-            <span class="assistant-body"></span>
-            <span class="assistant-laptop"></span>
+            <svg class="assistant-anime" viewBox="0 0 180 180" role="img" aria-label="Anime style virtual assistant illustration">
+              <defs>
+                <linearGradient id="skinGlow" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#ffd4ad"/>
+                  <stop offset="1" stop-color="#f1a57b"/>
+                </linearGradient>
+                <linearGradient id="hairGlow" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#1f1207"/>
+                  <stop offset="1" stop-color="#5a3209"/>
+                </linearGradient>
+                <linearGradient id="jacketGlow" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#2b1a05"/>
+                  <stop offset="1" stop-color="#b66d00"/>
+                </linearGradient>
+              </defs>
+              <ellipse cx="90" cy="158" rx="58" ry="12" fill="rgba(107,59,0,.16)"/>
+              <path d="M45 82c0-35 18-62 48-62 31 0 49 25 49 62 0 20-7 41-16 52H61C52 123 45 102 45 82Z" fill="url(#hairGlow)"/>
+              <path d="M57 84c0-31 15-51 36-51 22 0 37 20 37 51 0 28-16 52-37 52S57 112 57 84Z" fill="url(#skinGlow)"/>
+              <path d="M57 78c8-2 21-9 31-23 12 14 26 20 42 22-3-27-17-44-38-44-20 0-34 17-35 45Z" fill="url(#hairGlow)"/>
+              <ellipse cx="78" cy="91" rx="8" ry="11" fill="#211300"/>
+              <ellipse cx="106" cy="91" rx="8" ry="11" fill="#211300"/>
+              <circle cx="81" cy="87" r="3" fill="#fff8df"/>
+              <circle cx="109" cy="87" r="3" fill="#fff8df"/>
+              <path d="M82 115c8 7 17 7 25 0" fill="none" stroke="#7a4300" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="64" cy="103" r="8" fill="rgba(245,164,31,.18)"/>
+              <circle cx="121" cy="103" r="8" fill="rgba(245,164,31,.18)"/>
+              <path d="M47 158c5-29 23-45 45-45s40 16 45 45H47Z" fill="url(#jacketGlow)"/>
+              <rect x="39" y="124" width="102" height="36" rx="9" fill="#fff8df" stroke="rgba(107,59,0,.24)" stroke-width="2"/>
+              <circle cx="90" cy="142" r="7" fill="#f5a41f"/>
+            </svg>
           </div>
           <span class="handoff-kicker">Human VA</span>
           <h3>Care, context, and follow-through.</h3>
@@ -150,11 +176,26 @@ const vaMarquee = [
 
         <div class="handoff-bridge" aria-hidden="true">
           <span class="bridge-line"></span>
-          <span class="bridge-bee">
-            <span class="bridge-bee__wing"></span>
-            <span class="bridge-bee__body"></span>
-            <span class="bridge-bee__head"></span>
-          </span>
+          <svg class="bridge-bee" viewBox="0 0 96 72" aria-hidden="true">
+            <g class="bridge-bee__wings">
+              <ellipse cx="38" cy="18" rx="21" ry="12" fill="rgba(210,235,255,.72)" stroke="rgba(130,170,230,.42)" stroke-width="1"/>
+              <ellipse cx="57" cy="19" rx="17" ry="10" fill="rgba(210,235,255,.58)" stroke="rgba(130,170,230,.42)" stroke-width="1"/>
+            </g>
+            <ellipse cx="42" cy="44" rx="23" ry="16" fill="#f5a41f"/>
+            <rect x="23" y="31" width="10" height="26" rx="7" fill="rgba(20,10,0,.74)"/>
+            <rect x="37" y="30" width="10" height="28" rx="7" fill="rgba(20,10,0,.74)"/>
+            <rect x="51" y="32" width="8" height="24" rx="6" fill="rgba(20,10,0,.74)"/>
+            <ellipse cx="42" cy="44" rx="23" ry="16" fill="none" stroke="#ffc94a" stroke-width="3" opacity=".18"/>
+            <circle cx="68" cy="42" r="14" fill="#f5a41f"/>
+            <circle cx="73" cy="37" r="5" fill="#130c04"/>
+            <circle cx="74.5" cy="35.5" r="2" fill="#fff8df"/>
+            <path d="M63 47 Q68 52 74 47" stroke="#130c04" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M12 46 L5 49" stroke="#130c04" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M66 29 Q63 17 60 9" stroke="#130c04" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <circle cx="60" cy="8" r="3.5" fill="#130c04"/>
+            <path d="M72 29 Q75 17 80 10" stroke="#130c04" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <circle cx="80" cy="9" r="3.5" fill="#130c04"/>
+          </svg>
           <span class="bridge-drip bridge-drip--one"></span>
           <span class="bridge-drip bridge-drip--two"></span>
         </div>
@@ -553,11 +594,8 @@ const vaMarquee = [
     position: relative;
     z-index: 2;
     min-height: 270px;
-    padding: 30px 24px;
-    clip-path: polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0 50%);
-    background:
-      radial-gradient(circle at 34% 18%, rgba(255,255,255,.76), transparent 27%),
-      linear-gradient(150deg, rgba(255,212,90,.95), rgba(245,164,31,.72) 64%, rgba(182,109,0,.32));
+    padding: 34px clamp(42px, 5vw, 74px);
+    background: transparent;
     color: #211300;
     filter: drop-shadow(0 18px 24px rgba(107,59,0,.14));
     display: flex;
@@ -565,6 +603,20 @@ const vaMarquee = [
     justify-content: center;
     gap: 9px;
     animation: handoffFloat 6.5s ease-in-out infinite;
+  }
+  .handoff-cell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    clip-path: polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0 50%);
+    background:
+      radial-gradient(circle at 34% 18%, rgba(255,255,255,.76), transparent 27%),
+      linear-gradient(150deg, rgba(255,212,90,.95), rgba(245,164,31,.72) 64%, rgba(182,109,0,.32));
+  }
+  .handoff-cell > * {
+    position: relative;
+    z-index: 1;
   }
   .handoff-cell--ai { animation-delay: -2.2s; }
   .handoff-kicker {
@@ -576,9 +628,10 @@ const vaMarquee = [
   }
   .handoff-cell h3 {
     margin: 0;
-    font-size: clamp(22px, 2.8vw, 32px);
-    line-height: 1.04;
-    letter-spacing: -.035em;
+    font-size: clamp(20px, 2.35vw, 28px);
+    line-height: 1.08;
+    letter-spacing: -.02em;
+    text-wrap: balance;
   }
   .handoff-cell p {
     margin: 0;
@@ -588,63 +641,14 @@ const vaMarquee = [
   }
   .cartoon-assistant {
     position: relative;
-    width: 108px;
-    height: 106px;
+    width: min(132px, 42%);
+    min-width: 104px;
     margin: 0 auto 4px;
   }
-  .assistant-hair,
-  .assistant-face,
-  .assistant-body,
-  .assistant-laptop {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .assistant-hair {
-    top: 3px;
-    width: 66px;
-    height: 62px;
-    border-radius: 42% 42% 48% 48%;
-    background: #3a2107;
-  }
-  .assistant-face {
-    top: 17px;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background:
-      radial-gradient(circle at 34% 42%, #211300 0 2px, transparent 2.4px),
-      radial-gradient(circle at 66% 42%, #211300 0 2px, transparent 2.4px),
-      radial-gradient(ellipse at 50% 66%, rgba(122,67,0,.42) 0 8px, transparent 8.5px),
-      #f4b98d;
-    box-shadow: inset 0 -5px 0 rgba(122,67,0,.08);
-  }
-  .assistant-body {
-    top: 66px;
-    width: 72px;
-    height: 36px;
-    border-radius: 22px 22px 8px 8px;
-    background: linear-gradient(160deg, #7a4300, #b66d00);
-  }
-  .assistant-laptop {
-    top: 77px;
-    width: 92px;
-    height: 28px;
-    border-radius: 7px;
-    background: #fff8df;
-    border: 1px solid rgba(107,59,0,.22);
-    box-shadow: 0 8px 16px rgba(107,59,0,.12);
-  }
-  .assistant-laptop::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 8px;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--honey);
-    transform: translateX(-50%);
+  .assistant-anime {
+    display: block;
+    width: 100%;
+    height: auto;
   }
   .handoff-bridge {
     position: relative;
@@ -668,59 +672,18 @@ const vaMarquee = [
     position: absolute;
     left: -8%;
     top: 50%;
-    width: 46px;
-    height: 34px;
+    width: 54px;
+    height: auto;
     filter: drop-shadow(0 8px 10px rgba(107,59,0,.18));
     animation: beeHandoff 4.6s cubic-bezier(.42,0,.2,1) infinite;
   }
-  .bridge-bee__wing,
-  .bridge-bee__body,
-  .bridge-bee__head {
-    position: absolute;
-    display: block;
-  }
-  .bridge-bee__wing {
-    left: 10px;
-    top: 0;
-    width: 22px;
-    height: 13px;
-    border-radius: 50%;
-    background: rgba(230,246,255,.72);
-    border: 1px solid rgba(130,170,230,.32);
-    transform-origin: bottom center;
+  .bridge-bee__wings {
+    transform-origin: 48px 20px;
     animation: miniWing 160ms ease-in-out infinite alternate;
   }
-  .bridge-bee__body {
-    left: 5px;
-    top: 11px;
-    width: 30px;
-    height: 19px;
-    border-radius: 999px;
-    background:
-      linear-gradient(90deg, transparent 0 25%, rgba(20,10,0,.72) 25% 36%, transparent 36% 52%, rgba(20,10,0,.72) 52% 63%, transparent 63% 78%, rgba(20,10,0,.72) 78% 87%, transparent 87%),
-      var(--honey);
-  }
-  .bridge-bee__head {
-    right: 2px;
-    top: 13px;
-    width: 17px;
-    height: 17px;
-    border-radius: 50%;
-    background: var(--honey);
-  }
-  .bridge-bee__head::before {
-    content: "";
-    position: absolute;
-    right: 4px;
-    top: 4px;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: #211300;
-  }
   @keyframes miniWing {
-    from { transform: rotate(-8deg) scaleY(1); opacity: .8; }
-    to { transform: rotate(8deg) scaleY(.38); opacity: .45; }
+    from { transform: scaleY(1); opacity: .86; }
+    to { transform: scaleY(.36); opacity: .45; }
   }
   .bridge-drip {
     position: absolute;
@@ -873,6 +836,9 @@ const vaMarquee = [
     }
     .handoff-cell {
       min-height: 240px;
+      padding-inline: clamp(46px, 13vw, 76px);
+    }
+    .handoff-cell::before {
       clip-path: polygon(16% 0, 84% 0, 100% 50%, 84% 100%, 16% 100%, 0 50%);
     }
     .handoff-bridge {
@@ -899,11 +865,12 @@ const vaMarquee = [
     .vb-header { padding: 12px 14px 9px; }
     .vb-tasks { padding: 12px; gap: 8px; }
     .vb-task { font-size: 12.5px; align-items: flex-start; }
-    .cartoon-assistant { transform: scale(.9); transform-origin: center bottom; }
+    .cartoon-assistant { width: 112px; min-width: 112px; }
     .handoff-cell {
-      padding: 28px 20px;
+      padding: 30px 42px;
       min-height: 224px;
     }
+    .handoff-cell h3 { font-size: 22px; }
     .handoff-proof span {
       min-height: auto;
     }
