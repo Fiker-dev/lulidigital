@@ -8,15 +8,15 @@ const starters = [
 
 <div class="lana-chat" data-lana-chat>
   <button class="lana-chat__toggle" type="button" data-lana-toggle aria-expanded="false" aria-controls="lana-panel">
-    <span class="lana-chat__badge">Lana</span>
-    <span class="lana-chat__label">Chat with the desk</span>
+    <span class="lana-chat__badge">AI</span>
+    <span class="lana-chat__label">AI Agent Assistant</span>
   </button>
 
   <section class="lana-chat__panel" id="lana-panel" hidden>
     <header class="lana-chat__header">
       <div>
         <p class="lana-chat__eyebrow">LuliDigital Assistant</p>
-        <h2>Lana</h2>
+        <h2>AI Agent Assistant</h2>
       </div>
       <button class="lana-chat__close" type="button" aria-label="Close chat" data-lana-close>×</button>
     </header>
@@ -25,7 +25,7 @@ const starters = [
 
     <div class="lana-chat__messages" data-lana-messages aria-live="polite">
       <article class="lana-chat__message lana-chat__message--assistant">
-        Hi, I&apos;m Lana. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.
+        Hi, I&apos;m the AI Agent Assistant. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.
       </article>
     </div>
 
@@ -36,13 +36,13 @@ const starters = [
     </div>
 
     <form class="lana-chat__composer" data-lana-form>
-      <label class="sr-only" for="lana-input">Ask Lana a question</label>
+      <label class="sr-only" for="lana-input">Ask the AI Agent Assistant a question</label>
       <textarea
         id="lana-input"
         name="message"
         rows="1"
         maxlength="800"
-        placeholder="Ask Lana something..."
+        placeholder="Ask the AI Agent Assistant..."
         data-lana-input
       ></textarea>
       <button type="submit" class="lana-chat__send" data-lana-send>Send</button>
@@ -85,7 +85,7 @@ const starters = [
       if (hour < 18) return "Good afternoon";
       return "Good evening";
     };
-    const initialGreeting = `${getTimeAwareGreeting()}, I’m Lana. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.`;
+    const initialGreeting = `${getTimeAwareGreeting()}, I’m the AI Agent Assistant. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.`;
     messagesEl.innerHTML = "";
     const initialMessage = document.createElement("article");
     initialMessage.className = "lana-chat__message lana-chat__message--assistant";
@@ -216,7 +216,9 @@ const starters = [
   .lana-chat__toggle{
     width: auto;
     border: 1px solid rgba(20, 19, 18, 0.15);
-    background: linear-gradient(180deg, rgba(250, 247, 240, 0.98), rgba(244, 239, 230, 0.98));
+    background:
+      radial-gradient(circle at 18% 20%, rgba(255, 212, 90, .42), transparent 32%),
+      linear-gradient(180deg, rgba(255, 250, 232, 0.98), rgba(255, 241, 194, 0.98));
     color: var(--ink);
     border-radius: 22px;
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
@@ -235,8 +237,8 @@ const starters = [
     min-width: 58px;
     height: 34px;
     border-radius: 999px;
-    background: rgba(107, 47, 58, 0.12);
-    color: var(--wine-strong);
+    background: rgba(245, 164, 31, 0.24);
+    color: var(--honey-dark);
     font-size: 12px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
@@ -254,7 +256,11 @@ const starters = [
     width: min(344px, calc(100vw - 24px));
     border-radius: 28px;
     border: 1px solid rgba(20, 19, 18, 0.14);
-    background: linear-gradient(180deg, rgba(249, 245, 238, 0.98), rgba(243, 238, 230, 0.98));
+    background:
+      linear-gradient(30deg, transparent 33%, rgba(182,109,0,.12) 34%, rgba(182,109,0,.12) 35%, transparent 36%),
+      linear-gradient(150deg, transparent 33%, rgba(182,109,0,.1) 34%, rgba(182,109,0,.1) 35%, transparent 36%),
+      linear-gradient(180deg, rgba(255, 250, 232, 0.98), rgba(255, 241, 194, 0.98));
+    background-size: 42px 72px, 42px 72px, auto;
     box-shadow: 0 22px 52px rgba(0, 0, 0, 0.16);
     overflow: hidden;
     backdrop-filter: blur(12px);
@@ -270,8 +276,9 @@ const starters = [
 
   .lana-chat__header h2{
     margin: 4px 0 0;
-    font-size: 32px;
-    line-height: 1;
+    font-size: clamp(23px, 7vw, 31px);
+    line-height: .98;
+    text-wrap: balance;
   }
 
   .lana-chat__eyebrow{
@@ -325,7 +332,7 @@ const starters = [
 
   .lana-chat__message--user{
     align-self: flex-end;
-    background: rgba(107, 47, 58, 0.12);
+    background: rgba(245, 164, 31, 0.2);
     color: rgba(20, 19, 18, 0.9);
   }
 
@@ -370,7 +377,7 @@ const starters = [
     border-radius: 16px;
     padding: 0 16px;
     min-height: 48px;
-    background: var(--wine-strong);
+    background: var(--honey-dark);
     color: white;
     font: inherit;
     font-weight: 600;

@@ -168,6 +168,14 @@
 .glow-card:hover {
   box-shadow: 0 24px 56px rgba(0,0,0,.14), 0 4px 16px rgba(123,45,45,.1);
 }
+.glow-card.is-honey-glazed::before { opacity: .88; }
+.glow-card.is-honey-glazed {
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255,255,255,.26), transparent 26%),
+    linear-gradient(145deg, rgba(255,212,90,.94), rgba(245,164,31,.78) 52%, rgba(122,67,0,.92));
+  color: #fff8df;
+  box-shadow: 0 30px 70px rgba(107,59,0,.22), 0 8px 26px rgba(245,164,31,.24);
+}
 .glow-card > * { position: relative; z-index: 1; }
 .honey-glaze {
   position: absolute;
@@ -213,6 +221,20 @@
 }
 .glow-card.is-honey-glazed {
   border-color: rgba(190,112,26,.36);
+}
+.glow-card.is-honey-glazed :is(h1,h2,h3,h4,p,li,span,a) {
+  color: inherit;
+}
+.glow-card.is-honey-glazed :is(.bento-kicker,.uc-desk-tag,.svc-footer,.mini-title,.prob-num,.cta-link,.card-typed) {
+  color: #2b1a05;
+}
+.glow-card.is-honey-glazed :is(.bento-icon,.svc-icon) {
+  background: rgba(43,26,5,.18);
+  color: #fff8df;
+  transform: rotate(6deg) scale(1.08);
+}
+.glow-card.is-honey-glazed :is(.bento-list li,.mini-desc,.svc-title,.svc-card p,.usecase-card p) {
+  color: rgba(43,26,5,.78);
 }
 .glow-card.is-card-near {
   animation: cardBreath 4.8s ease-in-out infinite;
@@ -452,18 +474,18 @@
   color: var(--brand, #7b2d2d);
 }
 .selling-point--ai {
-  background: linear-gradient(135deg, #0d1312, #162321);
+  background: linear-gradient(135deg, #2b1a05, #7a4300);
 }
-.selling-point--ai::before { border-color: rgba(98,255,209,.18); }
+.selling-point--ai::before { border-color: rgba(255,212,90,.24); }
 .selling-point--ai .eyebrow,
 .selling-point--ai .selling-copy--direct,
-.selling-point--ai .pill--outline { color: #62ffd1; }
-.selling-point--ai .selling-title { color: #dffdf4; }
-.selling-point--ai .selling-copy { color: rgba(223,253,244,.72); }
+.selling-point--ai .pill--outline { color: var(--honey-bright, #ffd45a); }
+.selling-point--ai .selling-title { color: #fff8df; }
+.selling-point--ai .selling-copy { color: rgba(255,248,223,.75); }
 .selling-point--ai .pill--filled {
-  background: #62ffd1;
-  color: #07100f;
-  box-shadow: 0 10px 26px rgba(98,255,209,.22);
+  background: var(--honey-bright, #ffd45a);
+  color: #211300;
+  box-shadow: 0 10px 26px rgba(245,164,31,.26);
 }
 .selling-point--va .selling-title { color: #172229; }
 .selling-point--va .pill--filled {

@@ -4,21 +4,24 @@
   --font-body:    "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono:    "SF Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
 
-  /* Old-money paper palette */
-  --paper: #f3efe7;         /* page background */
-  --paper-card: #f6f2ea;    /* cards/panels */
-  --paper-line: #efe7dc;    /* soft dividers */
+  /* Honey studio palette */
+  --paper: #fff7df;         /* page background */
+  --paper-card: #fff2c8;    /* cards/panels */
+  --paper-line: #ead79b;    /* soft dividers */
 
   /* Ink system */
   --ink: #141312;
   --muted: rgba(20, 19, 18, .66);
 
   /* Brand */
-  --brand: #7b2d2d;         /* consistent Luli maroon */
-  --wine: #6b2f3a;
-  --wine-muted: rgba(120, 64, 64, 0.78);
-  --wine-strong: #6a2e32; /* darker, deeper wine */
-  --wine-soft: rgba(107, 47, 58, 0.14);
+  --brand: #b66d00;         /* deep honey */
+  --honey: #f5a41f;
+  --honey-bright: #ffd45a;
+  --honey-dark: #6b3b00;
+  --wine: #9a5a00;
+  --wine-muted: rgba(129, 76, 0, 0.78);
+  --wine-strong: #7a4300;
+  --wine-soft: rgba(245, 164, 31, 0.22);
   --rule: rgba(20, 19, 18, .14);
   --paper-warm: rgba(255, 247, 237, 0.55);
   --border-ink-soft: rgba(30, 24, 22, 0.16);
@@ -38,6 +41,45 @@ html, body{
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body::before,
+body::after{
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+body::before{
+  z-index: 0;
+  opacity: .28;
+  background:
+    linear-gradient(30deg, transparent 34%, rgba(182,109,0,.26) 35%, rgba(182,109,0,.26) 36%, transparent 37%),
+    linear-gradient(150deg, transparent 34%, rgba(182,109,0,.22) 35%, rgba(182,109,0,.22) 36%, transparent 37%),
+    linear-gradient(90deg, transparent 48%, rgba(245,164,31,.15) 49%, rgba(245,164,31,.15) 51%, transparent 52%);
+  background-size: 54px 94px;
+  mask-image: linear-gradient(to bottom, black, rgba(0,0,0,.62) 48%, transparent 100%);
+}
+
+body::after{
+  z-index: 0;
+  opacity: .32;
+  background:
+    radial-gradient(ellipse at 14% 8%, rgba(255,212,90,.56), transparent 18%),
+    radial-gradient(ellipse at 84% 20%, rgba(245,164,31,.42), transparent 16%),
+    linear-gradient(180deg, rgba(255,196,44,.18), transparent 28%);
+  mask-image:
+    radial-gradient(18px 42px at 18% 10%, black 42%, transparent 46%),
+    radial-gradient(14px 34px at 22% 15%, black 42%, transparent 46%),
+    radial-gradient(16px 48px at 82% 21%, black 42%, transparent 46%),
+    radial-gradient(12px 30px at 87% 26%, black 42%, transparent 46%);
+  mask-composite: add;
+}
+
+body > *{
+  position: relative;
+  z-index: 1;
 }
 
 /* Global heading style — Fraunces display serif */
