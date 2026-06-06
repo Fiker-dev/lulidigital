@@ -247,16 +247,30 @@ const jsonLd = {
 </html>
 
 <script>
-  import { initMotion } from "../scripts/motion.js";
-  import { initInkHighlights } from "../scripts/inkHighlight.js";
+  const scheduleEnhancements = (callback: () => void) => {
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(callback, { timeout: 1200 });
+      return;
+    }
+    window.setTimeout(callback, 450);
+  };
 
   document.addEventListener("DOMContentLoaded", () => {
+    scheduleEnhancements(initEnhancements);
+  });
+
+  async function initEnhancements() {
+    const [{ initMotion }, { initInkHighlights }] = await Promise.all([
+      import("../scripts/motion.js"),
+      import("../scripts/inkHighlight.js"),
+    ]);
+
     initMotion();
     initInkHighlights();
     initMagnetic();
     initScrollProgress();
     initBee();
-  });
+  }
 
   function initBee() {
     const beeEl = document.getElementById("bee-guide");

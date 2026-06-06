@@ -52,140 +52,165 @@ const starters = [
 
 <script is:inline>
   (() => {
-    const root = document.querySelector("[data-lana-chat]");
-    if (!root) return;
+    let initialized = false;
 
-    const toggle = root.querySelector("[data-lana-toggle]");
-    const panel = root.querySelector("#lana-panel");
-    const closeButton = root.querySelector("[data-lana-close]");
-    const form = root.querySelector("[data-lana-form]");
-    const input = root.querySelector("[data-lana-input]");
-    const messagesEl = root.querySelector("[data-lana-messages]");
-    const sendButton = root.querySelector("[data-lana-send]");
-    const starters = Array.from(root.querySelectorAll("[data-lana-starter]"));
-    const localFallbackReply = (message) => {
-      const query = message.toLowerCase();
-      if (query.includes("contact") || query.includes("email") || query.includes("whatsapp") || query.includes("phone")) {
-        return "You can reach the desk on WhatsApp at +27 60 255 1513 or by email at info@lulidigital.co.za. WhatsApp is usually the fastest.";
-      }
-      if (query.includes("marketing") || query.includes("brand") || query.includes("ads")) {
-        return "The Marketing Desk helps with brand positioning, creative direction, and paid media. It is a good fit for launches, rebrands, and stronger visibility.";
-      }
-      if (query.includes("ai") || query.includes("chatbot") || query.includes("assistant") || query.includes("automation")) {
-        return "The AI Desk helps with chatbots, assistants, and practical workflows that answer questions and take repetitive work off your team.";
-      }
-      if (query.includes("virtual assistant") || query.includes("operations") || query.includes("admin") || query.includes("project")) {
-        return "The Virtual Assistant Desk supports operations, admin, follow-through, and project coordination so work moves more cleanly.";
-      }
-      return "LuliDigital helps with Marketing, AI systems, and Virtual Assistant support. If you want, ask about one area, or contact the desk on WhatsApp at +27 60 255 1513.";
-    };
-    const getTimeAwareGreeting = () => {
-      const hour = new Date().getHours();
-      if (hour < 12) return "Good morning";
-      if (hour < 18) return "Good afternoon";
-      return "Good evening";
-    };
-    const initialGreeting = `${getTimeAwareGreeting()}, I’m Lana. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.`;
-    messagesEl.innerHTML = "";
-    const initialMessage = document.createElement("article");
-    initialMessage.className = "lana-chat__message lana-chat__message--assistant";
-    initialMessage.textContent = initialGreeting;
-    messagesEl.appendChild(initialMessage);
-    const history = [
-      {
-        role: "assistant",
-        content: initialGreeting,
-      },
-    ];
+    const initLanaChat = () => {
+      if (initialized) return;
+      initialized = true;
 
-    const setOpen = (open) => {
-      panel.hidden = !open;
-      toggle.setAttribute("aria-expanded", String(open));
-      if (open) input.focus();
-    };
+      const root = document.querySelector("[data-lana-chat]");
+      if (!root) return;
 
-    const autoSize = () => {
-      input.style.height = "auto";
-      input.style.height = Math.min(input.scrollHeight, 140) + "px";
-    };
+      const toggle = root.querySelector("[data-lana-toggle]");
+      const panel = root.querySelector("#lana-panel");
+      const closeButton = root.querySelector("[data-lana-close]");
+      const form = root.querySelector("[data-lana-form]");
+      const input = root.querySelector("[data-lana-input]");
+      const messagesEl = root.querySelector("[data-lana-messages]");
+      const sendButton = root.querySelector("[data-lana-send]");
+      const starters = Array.from(root.querySelectorAll("[data-lana-starter]"));
 
-    const appendMessage = (role, content) => {
-      const item = document.createElement("article");
-      item.className = `lana-chat__message lana-chat__message--${role}`;
-      item.textContent = content;
-      messagesEl.appendChild(item);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-    };
+      const localFallbackReply = (message) => {
+        const query = message.toLowerCase();
+        if (query.includes("contact") || query.includes("email") || query.includes("whatsapp") || query.includes("phone")) {
+          return "You can reach the desk on WhatsApp at +27 60 255 1513 or by email at info@lulidigital.co.za. WhatsApp is usually the fastest.";
+        }
+        if (query.includes("marketing") || query.includes("brand") || query.includes("ads")) {
+          return "The Marketing Desk helps with brand positioning, creative direction, and paid media. It is a good fit for launches, rebrands, and stronger visibility.";
+        }
+        if (query.includes("ai") || query.includes("chatbot") || query.includes("assistant") || query.includes("automation")) {
+          return "The AI Desk helps with chatbots, assistants, and practical workflows that answer questions and take repetitive work off your team.";
+        }
+        if (query.includes("virtual assistant") || query.includes("operations") || query.includes("admin") || query.includes("project")) {
+          return "The Virtual Assistant Desk supports operations, admin, follow-through, and project coordination so work moves more cleanly.";
+        }
+        return "LuliDigital helps with Marketing, AI systems, and Virtual Assistant support. If you want, ask about one area, or contact the desk on WhatsApp at +27 60 255 1513.";
+      };
 
-    const setPending = (pending) => {
-      sendButton.disabled = pending;
-      sendButton.textContent = pending ? "Sending..." : "Send";
-      input.disabled = pending;
-      starters.forEach((starter) => {
-        starter.disabled = pending;
-      });
-    };
+      const getTimeAwareGreeting = () => {
+        const hour = new Date().getHours();
+        if (hour < 12) return "Good morning";
+        if (hour < 18) return "Good afternoon";
+        return "Good evening";
+      };
 
-    const sendMessage = async (text) => {
-      const message = text.trim();
-      if (!message) return;
+      const initialGreeting = `${getTimeAwareGreeting()}, I’m Lana. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.`;
+      messagesEl.innerHTML = "";
 
-      appendMessage("user", message);
-      history.push({ role: "user", content: message });
-      input.value = "";
-      autoSize();
-      setPending(true);
+      const initialMessage = document.createElement("article");
+      initialMessage.className = "lana-chat__message lana-chat__message--assistant";
+      initialMessage.textContent = initialGreeting;
+      messagesEl.appendChild(initialMessage);
 
-      try {
-        const response = await fetch("/api/lana", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({
-            messages: history.slice(-8),
-          }),
+      const history = [
+        {
+          role: "assistant",
+          content: initialGreeting,
+        },
+      ];
+
+      const setOpen = (open) => {
+        panel.hidden = !open;
+        toggle.setAttribute("aria-expanded", String(open));
+        if (open) input.focus();
+      };
+
+      const autoSize = () => {
+        input.style.height = "auto";
+        input.style.height = Math.min(input.scrollHeight, 140) + "px";
+      };
+
+      const appendMessage = (role, content) => {
+        const item = document.createElement("article");
+        item.className = `lana-chat__message lana-chat__message--${role}`;
+        item.textContent = content;
+        messagesEl.appendChild(item);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      };
+
+      const setPending = (pending) => {
+        sendButton.disabled = pending;
+        sendButton.textContent = pending ? "Sending..." : "Send";
+        input.disabled = pending;
+        starters.forEach((starter) => {
+          starter.disabled = pending;
         });
+      };
 
-        const data = await response.json();
-        const reply = response.ok && typeof data.reply === "string" && data.reply.trim()
-          ? data.reply.trim()
-          : localFallbackReply(message);
+      const sendMessage = async (text) => {
+        const message = text.trim();
+        if (!message) return;
 
-        appendMessage("assistant", reply);
-        history.push({ role: "assistant", content: reply });
-      } catch {
-        const fallback = localFallbackReply(message);
-        appendMessage("assistant", fallback);
-        history.push({ role: "assistant", content: fallback });
-      } finally {
-        setPending(false);
-      }
-    };
+        appendMessage("user", message);
+        history.push({ role: "user", content: message });
+        input.value = "";
+        autoSize();
+        setPending(true);
 
-    toggle.addEventListener("click", () => setOpen(panel.hidden));
-    closeButton.addEventListener("click", () => setOpen(false));
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      sendMessage(input.value);
-    });
+        try {
+          const response = await fetch("/api/lana", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify({
+              messages: history.slice(-8),
+            }),
+          });
 
-    input.addEventListener("input", autoSize);
-    input.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" && !event.shiftKey) {
+          const data = await response.json();
+          const reply = response.ok && typeof data.reply === "string" && data.reply.trim()
+            ? data.reply.trim()
+            : localFallbackReply(message);
+
+          appendMessage("assistant", reply);
+          history.push({ role: "assistant", content: reply });
+        } catch {
+          const fallback = localFallbackReply(message);
+          appendMessage("assistant", fallback);
+          history.push({ role: "assistant", content: fallback });
+        } finally {
+          setPending(false);
+        }
+      };
+
+      toggle.addEventListener("click", () => setOpen(panel.hidden));
+      closeButton.addEventListener("click", () => setOpen(false));
+      form.addEventListener("submit", (event) => {
         event.preventDefault();
         sendMessage(input.value);
-      }
-    });
-
-    starters.forEach((starter) => {
-      starter.addEventListener("click", () => {
-        setOpen(true);
-        sendMessage(starter.getAttribute("data-lana-starter") || "");
       });
-    });
 
-    autoSize();
+      input.addEventListener("input", autoSize);
+      input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+          event.preventDefault();
+          sendMessage(input.value);
+        }
+      });
+
+      starters.forEach((starter) => {
+        starter.addEventListener("click", () => {
+          setOpen(true);
+          sendMessage(starter.getAttribute("data-lana-starter") || "");
+        });
+      });
+
+      autoSize();
+    };
+
+    const earlyToggle = document.querySelector("[data-lana-toggle]");
+    earlyToggle?.addEventListener("pointerdown", initLanaChat, { once: true, passive: true });
+
+    const schedule = window.requestIdleCallback
+      ? (callback) => window.requestIdleCallback(callback, { timeout: 1800 })
+      : (callback) => window.setTimeout(callback, 900);
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => schedule(initLanaChat), { once: true });
+    } else {
+      schedule(initLanaChat);
+    }
   })();
 </script>
 

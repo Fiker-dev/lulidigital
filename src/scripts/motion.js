@@ -1,4 +1,9 @@
-import { animate } from "motion";
+let animatePromise;
+
+const loadAnimate = () => {
+  animatePromise ??= import("motion").then((mod) => mod.animate);
+  return animatePromise;
+};
 
 export function initMotion() {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -241,12 +246,13 @@ export function initMotion() {
     let lastGlazedCard = null;
     let lastGlazeAt = 0;
 
-    const glazeCard = (card, intensity = 1) => {
+    const glazeCard = async (card, intensity = 1) => {
       if (reduced || !card) return;
       const now = performance.now();
       if (card === lastGlazedCard && now - lastGlazeAt < 1300) return;
       lastGlazedCard = card;
       lastGlazeAt = now;
+      const animate = await loadAnimate();
 
       let glaze = card.querySelector(".honey-glaze");
       if (!glaze) {
