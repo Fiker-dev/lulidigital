@@ -121,37 +121,59 @@ const vaMarquee = [
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════ DELEGATION SVG -->
-  <section class="delegation-section" aria-label="How delegation works" data-reveal="up" data-bee-stop>
-    <span class="eyebrow">How Delegation Works</span>
-    <h2 class="section-title">If it takes your time, it can be delegated.</h2>
+  <!-- ════════════════════════ HUMAN + AI HONEYCOMB STORY -->
+  <section class="delegation-section" aria-label="How human and AI assistant support work together" data-reveal="up" data-bee-stop>
+    <div class="delegation-heading">
+      <div>
+        <span class="eyebrow">How Delegation Works</span>
+        <h2 class="section-title">Human care and AI speed, working from the same hive.</h2>
+      </div>
+      <p>
+        Your human assistant handles judgment, tone, relationships, and follow-through.
+        AI helps prepare, sort, remind, draft, and keep the next step ready after hours.
+      </p>
+    </div>
 
     <div class="delegation-wrap">
-      <svg class="delegation-svg" viewBox="0 0 660 180" aria-label="Delegation flow: You hand tasks to the Virtual Assistant who handles them, resulting in Done">
-        <defs>
-          <marker id="arr-del" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-            <path d="M0,0 L0,6 L8,3 z" fill="rgba(123,45,45,.55)"/>
-          </marker>
-        </defs>
-        <rect x="10" y="40" width="140" height="100" rx="16" fill="var(--paper-card,#f6f2ea)" stroke="rgba(123,45,45,.28)" stroke-width="1.5"/>
-        <text x="80" y="72"  text-anchor="middle" class="del-big">You</text>
-        <text x="80" y="92"  text-anchor="middle" class="del-small">Founder / CEO</text>
-        <text x="80" y="110" text-anchor="middle" class="del-small">Decision maker</text>
-        <path d="M154 90 L210 90" stroke="rgba(123,45,45,.45)" stroke-width="1.5" marker-end="url(#arr-del)"/>
-        <rect x="215" y="40" width="230" height="100" rx="16" fill="rgba(123,45,45,.88)" stroke="none"/>
-        <text x="330" y="72"  text-anchor="middle" class="del-big-inv">Virtual Assistant</text>
-        <text x="330" y="92"  text-anchor="middle" class="del-small-inv">Inbox · Calendar · Tasks</text>
-        <text x="330" y="110" text-anchor="middle" class="del-small-inv">Projects · Follow-ups</text>
-        <path d="M450 90 L506 90" stroke="rgba(123,45,45,.45)" stroke-width="1.5" marker-end="url(#arr-del)"/>
-        <rect x="511" y="40" width="140" height="100" rx="16" fill="var(--paper-card,#f6f2ea)" stroke="rgba(123,45,45,.28)" stroke-width="1.5"/>
-        <text x="581" y="82"  text-anchor="middle" class="del-big">Done.</text>
-        <text x="581" y="102" text-anchor="middle" class="del-small">You focus on what</text>
-        <text x="581" y="118" text-anchor="middle" class="del-small">only you can do.</text>
-      </svg>
-      <pre class="delegation-ascii ascii-diagram" aria-hidden="true">
-<span class="hi">You</span> ──────▶ <span class="hi">Virtual Assistant</span> ──────▶ <span class="hi">Done.</span>
-Founder       Inbox · Calendar · Tasks     You focus on
-/ CEO         Projects · Follow-ups        what matters.</pre>
+      <div class="handoff-scene" aria-label="Bee moving between a human assistant and an AI assistant">
+        <article class="handoff-cell handoff-cell--human">
+          <div class="cartoon-assistant" aria-hidden="true">
+            <span class="assistant-hair"></span>
+            <span class="assistant-face"></span>
+            <span class="assistant-body"></span>
+            <span class="assistant-laptop"></span>
+          </div>
+          <span class="handoff-kicker">Human VA</span>
+          <h3>Care, context, and follow-through.</h3>
+          <p>Inbox, calendar, client tone, priorities, judgement calls, and the details that need a person.</p>
+        </article>
+
+        <div class="handoff-bridge" aria-hidden="true">
+          <span class="bridge-line"></span>
+          <span class="bridge-bee">
+            <span class="bridge-bee__wing"></span>
+            <span class="bridge-bee__body"></span>
+            <span class="bridge-bee__head"></span>
+          </span>
+          <span class="bridge-drip bridge-drip--one"></span>
+          <span class="bridge-drip bridge-drip--two"></span>
+        </div>
+
+        <article class="handoff-cell handoff-cell--ai">
+          <div class="ai-comb" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <span class="handoff-kicker">AI Support</span>
+          <h3>Always ready with the next step.</h3>
+          <p>Drafts, reminders, routing, summaries, task prep, and overnight support for repetitive work.</p>
+        </article>
+      </div>
+
+      <div class="handoff-proof" aria-label="Human and AI support split">
+        <span><strong>Human handles:</strong> trust, nuance, relationships.</span>
+        <span><strong>AI handles:</strong> speed, memory, repeatable steps.</span>
+        <span><strong>You get:</strong> cleaner days and fewer loose ends.</span>
+      </div>
     </div>
   </section>
 
@@ -308,16 +330,17 @@ Founder       Inbox · Calendar · Tasks     You focus on
 <style>
   /* ── Hero ───────────────────────────────────────────────────── */
   .va-hero {
-    --va-blue: #284c63;
-    --va-blue-soft: rgba(40,76,99,.12);
-    --va-paper: #f8f6f0;
+    --va-blue: var(--honey-dark, #6b3b00);
+    --va-blue-soft: rgba(245,164,31,.18);
+    --va-paper: #fff4c9;
     position: relative;
     overflow: hidden;
     padding: 88px 0 72px;
     isolation: isolate;
     background:
-      linear-gradient(115deg, rgba(40,76,99,.12), transparent 42%),
-      linear-gradient(180deg, rgba(255,255,255,.34), transparent 76%);
+      radial-gradient(circle at 76% 18%, rgba(255,212,90,.28), transparent 30%),
+      linear-gradient(115deg, rgba(245,164,31,.2), transparent 42%),
+      linear-gradient(180deg, rgba(255,248,223,.62), transparent 76%);
   }
   .va-desk-field {
     position: absolute;
@@ -325,9 +348,9 @@ Founder       Inbox · Calendar · Tasks     You focus on
     z-index: -1;
     pointer-events: none;
     background:
-      linear-gradient(90deg, rgba(40,76,99,.08) 1px, transparent 1px) 0 0 / 64px 64px,
-      linear-gradient(0deg, rgba(40,76,99,.06) 1px, transparent 1px) 0 0 / 64px 64px,
-      radial-gradient(circle at 18% 24%, rgba(40,76,99,.18), transparent 28%);
+      linear-gradient(30deg, transparent 34%, rgba(182,109,0,.18) 35%, rgba(182,109,0,.18) 36%, transparent 37%) 0 0 / 54px 94px,
+      linear-gradient(150deg, transparent 34%, rgba(182,109,0,.13) 35%, rgba(182,109,0,.13) 36%, transparent 37%) 0 0 / 54px 94px,
+      radial-gradient(circle at 18% 24%, rgba(245,164,31,.24), transparent 28%);
     mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
   }
   .va-desk-field::after {
@@ -337,7 +360,7 @@ Founder       Inbox · Calendar · Tasks     You focus on
     right: 8%;
     bottom: 14%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(40,76,99,.32), transparent);
+    background: linear-gradient(90deg, transparent, rgba(245,164,31,.72), transparent);
     animation: deskSweep 4.8s ease-in-out infinite;
   }
   @keyframes deskSweep {
@@ -361,7 +384,7 @@ Founder       Inbox · Calendar · Tasks     You focus on
     letter-spacing: -.035em;
     margin: 14px 0 20px;
     font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
-    color: #172229;
+    color: #211300;
     max-width: 600px;
   }
   .va-sub {
@@ -385,21 +408,21 @@ Founder       Inbox · Calendar · Tasks     You focus on
   }
   .pill--filled { background: var(--brand); color: #f9f5ef; box-shadow: 0 8px 28px rgba(123,45,45,.35); }
   .pill--filled:hover { box-shadow: 0 14px 36px rgba(123,45,45,.48); background: #6a2828; }
-  .va-hero .pill--filled { background: var(--va-blue); box-shadow: 0 8px 24px rgba(40,76,99,.26); }
-  .va-hero .pill--filled:hover { background: #1f3d50; box-shadow: 0 14px 32px rgba(40,76,99,.34); }
+  .va-hero .pill--filled { background: var(--brand); box-shadow: 0 8px 24px rgba(245,164,31,.3); }
+  .va-hero .pill--filled:hover { background: var(--honey-dark); box-shadow: 0 14px 32px rgba(245,164,31,.42); }
   .pill--outline { border: 1.5px solid var(--brand); color: var(--brand); }
   .va-hero .pill--outline { border-color: var(--va-blue); color: var(--va-blue); }
   .pill--outline:hover { background: rgba(123,45,45,.07); }
-  .va-hero .pill--outline:hover { background: rgba(40,76,99,.08); }
+  .va-hero .pill--outline:hover { background: rgba(245,164,31,.12); }
 
   /* ── Task Board Character ───────────────────────────────────── */
   .va-board {
     position: relative;
     background: var(--va-paper);
-    border: 1px solid rgba(40,76,99,.16);
+    border: 1px solid rgba(182,109,0,.18);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 18px 38px rgba(23,34,41,.12), 0 1px 0 rgba(255,255,255,.7) inset;
+    box-shadow: 0 18px 38px rgba(107,59,0,.13), 0 1px 0 rgba(255,255,255,.7) inset;
     animation: boardFloat 5s ease-in-out infinite;
     will-change: transform;
   }
@@ -407,7 +430,7 @@ Founder       Inbox · Calendar · Tasks     You focus on
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(40,76,99,.06), transparent);
+    background: linear-gradient(90deg, transparent, rgba(245,164,31,.14), transparent);
     transform: translateX(-100%);
     animation: taskReview 5.5s ease-in-out infinite;
     pointer-events: none;
@@ -424,8 +447,8 @@ Founder       Inbox · Calendar · Tasks     You focus on
   .vb-header {
     display: flex; align-items: center; gap: 7px;
     padding: 14px 18px 10px;
-    border-bottom: 1px solid rgba(30,24,22,.08);
-    background: rgba(40,76,99,.06);
+    border-bottom: 1px solid rgba(107,59,0,.1);
+    background: rgba(245,164,31,.12);
   }
   .vb-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .vb-dot--r { background: #ff5f57; }
@@ -433,7 +456,7 @@ Founder       Inbox · Calendar · Tasks     You focus on
   .vb-dot--g { background: #28c840; }
   .vb-title-bar {
     font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
-    color: rgba(23,34,41,.52); font-weight: 700;
+    color: rgba(70,40,0,.62); font-weight: 700;
     font-family: var(--font-body, "DM Sans", sans-serif);
     margin-left: 6px;
   }
@@ -455,8 +478,8 @@ Founder       Inbox · Calendar · Tasks     You focus on
     color: rgba(20,19,18,.75);
   }
   .vb-task--active {
-    background: rgba(40,76,99,.1);
-    color: #172229;
+    background: rgba(245,164,31,.16);
+    color: #211300;
   }
   .vb-task--pending {
     background: rgba(30,24,22,.04);
@@ -467,7 +490,7 @@ Founder       Inbox · Calendar · Tasks     You focus on
   }
   .vb-spinner {
     width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
-    border: 2px solid rgba(40,76,99,.2); border-top-color: var(--va-blue);
+    border: 2px solid rgba(107,59,0,.18); border-top-color: var(--brand);
     animation: spin 800ms linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -486,45 +509,313 @@ Founder       Inbox · Calendar · Tasks     You focus on
   }
   .vb-status-text {
     font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-    color: rgba(23,34,41,.52); font-family: var(--font-body, "DM Sans", sans-serif);
+    color: rgba(70,40,0,.62); font-family: var(--font-body, "DM Sans", sans-serif);
     font-weight: 600;
   }
 
   /* ── Delegation ─────────────────────────────────────────────── */
   .delegation-section { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
-  .delegation-wrap { margin-top: 28px; }
+  .delegation-heading {
+    display: grid;
+    grid-template-columns: minmax(0, .95fr) minmax(260px, .55fr);
+    gap: clamp(20px, 4vw, 52px);
+    align-items: end;
+    margin-bottom: 28px;
+  }
+  .delegation-heading p {
+    margin: 0;
+    max-width: 46ch;
+    color: rgba(33,19,0,.68);
+    font-size: 15px;
+    line-height: 1.65;
+  }
   .delegation-wrap {
     border-radius: 12px;
-    padding: 24px;
-    background: linear-gradient(135deg, rgba(40,76,99,.08), rgba(255,255,255,.24));
-    border: 1px solid rgba(40,76,99,.12);
+    padding: clamp(18px, 4vw, 36px);
+    background:
+      radial-gradient(circle at 50% 24%, rgba(255,212,90,.38), transparent 26%),
+      linear-gradient(30deg, transparent 34%, rgba(182,109,0,.14) 35%, rgba(182,109,0,.14) 36%, transparent 37%),
+      linear-gradient(150deg, transparent 34%, rgba(182,109,0,.1) 35%, rgba(182,109,0,.1) 36%, transparent 37%),
+      linear-gradient(135deg, rgba(255,247,223,.9), rgba(255,235,166,.48));
+    background-size: auto, 54px 94px, 54px 94px, auto;
+    border: 1px solid rgba(182,109,0,.18);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 24px 60px rgba(107,59,0,.08);
   }
-  .delegation-svg { width: 100%; max-width: 680px; height: auto; display: block; margin: 0 auto; }
-  .delegation-svg .del-big { font-family: ui-serif, Georgia, serif; font-size: 15px; font-weight: 700; fill: rgba(20,19,18,.9); }
-  .delegation-svg .del-big-inv { font-family: ui-serif, Georgia, serif; font-size: 14px; font-weight: 700; fill: rgba(243,239,231,.95); }
-  .delegation-svg .del-small { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: rgba(20,19,18,.5); letter-spacing: .04em; }
-  .delegation-svg .del-small-inv { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 10px; fill: rgba(243,239,231,.7); letter-spacing: .04em; }
-  .delegation-ascii { display: none; }
+  .handoff-scene {
+    position: relative;
+    min-height: 330px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(120px, .5fr) minmax(0, 1fr);
+    gap: clamp(10px, 3vw, 28px);
+    align-items: center;
+  }
+  .handoff-cell {
+    position: relative;
+    z-index: 2;
+    min-height: 270px;
+    padding: 30px 24px;
+    clip-path: polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0 50%);
+    background:
+      radial-gradient(circle at 34% 18%, rgba(255,255,255,.76), transparent 27%),
+      linear-gradient(150deg, rgba(255,212,90,.95), rgba(245,164,31,.72) 64%, rgba(182,109,0,.32));
+    color: #211300;
+    filter: drop-shadow(0 18px 24px rgba(107,59,0,.14));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 9px;
+    animation: handoffFloat 6.5s ease-in-out infinite;
+  }
+  .handoff-cell--ai { animation-delay: -2.2s; }
+  .handoff-kicker {
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: rgba(70,40,0,.68);
+  }
+  .handoff-cell h3 {
+    margin: 0;
+    font-size: clamp(22px, 2.8vw, 32px);
+    line-height: 1.04;
+    letter-spacing: -.035em;
+  }
+  .handoff-cell p {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.46;
+    color: rgba(33,19,0,.76);
+  }
+  .cartoon-assistant {
+    position: relative;
+    width: 108px;
+    height: 106px;
+    margin: 0 auto 4px;
+  }
+  .assistant-hair,
+  .assistant-face,
+  .assistant-body,
+  .assistant-laptop {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .assistant-hair {
+    top: 3px;
+    width: 66px;
+    height: 62px;
+    border-radius: 42% 42% 48% 48%;
+    background: #3a2107;
+  }
+  .assistant-face {
+    top: 17px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 34% 42%, #211300 0 2px, transparent 2.4px),
+      radial-gradient(circle at 66% 42%, #211300 0 2px, transparent 2.4px),
+      radial-gradient(ellipse at 50% 66%, rgba(122,67,0,.42) 0 8px, transparent 8.5px),
+      #f4b98d;
+    box-shadow: inset 0 -5px 0 rgba(122,67,0,.08);
+  }
+  .assistant-body {
+    top: 66px;
+    width: 72px;
+    height: 36px;
+    border-radius: 22px 22px 8px 8px;
+    background: linear-gradient(160deg, #7a4300, #b66d00);
+  }
+  .assistant-laptop {
+    top: 77px;
+    width: 92px;
+    height: 28px;
+    border-radius: 7px;
+    background: #fff8df;
+    border: 1px solid rgba(107,59,0,.22);
+    box-shadow: 0 8px 16px rgba(107,59,0,.12);
+  }
+  .assistant-laptop::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--honey);
+    transform: translateX(-50%);
+  }
+  .handoff-bridge {
+    position: relative;
+    z-index: 3;
+    min-height: 150px;
+    display: grid;
+    place-items: center;
+  }
+  .bridge-line {
+    position: absolute;
+    left: -16%;
+    right: -16%;
+    top: 50%;
+    height: 7px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(245,164,31,.1), rgba(245,164,31,.88), rgba(255,212,90,.94), rgba(245,164,31,.14));
+    transform: translateY(-50%);
+    animation: honeyBridgePulse 3.8s ease-in-out infinite;
+  }
+  .bridge-bee {
+    position: absolute;
+    left: -8%;
+    top: 50%;
+    width: 46px;
+    height: 34px;
+    filter: drop-shadow(0 8px 10px rgba(107,59,0,.18));
+    animation: beeHandoff 4.6s cubic-bezier(.42,0,.2,1) infinite;
+  }
+  .bridge-bee__wing,
+  .bridge-bee__body,
+  .bridge-bee__head {
+    position: absolute;
+    display: block;
+  }
+  .bridge-bee__wing {
+    left: 10px;
+    top: 0;
+    width: 22px;
+    height: 13px;
+    border-radius: 50%;
+    background: rgba(230,246,255,.72);
+    border: 1px solid rgba(130,170,230,.32);
+    transform-origin: bottom center;
+    animation: miniWing 160ms ease-in-out infinite alternate;
+  }
+  .bridge-bee__body {
+    left: 5px;
+    top: 11px;
+    width: 30px;
+    height: 19px;
+    border-radius: 999px;
+    background:
+      linear-gradient(90deg, transparent 0 25%, rgba(20,10,0,.72) 25% 36%, transparent 36% 52%, rgba(20,10,0,.72) 52% 63%, transparent 63% 78%, rgba(20,10,0,.72) 78% 87%, transparent 87%),
+      var(--honey);
+  }
+  .bridge-bee__head {
+    right: 2px;
+    top: 13px;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: var(--honey);
+  }
+  .bridge-bee__head::before {
+    content: "";
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #211300;
+  }
+  @keyframes miniWing {
+    from { transform: rotate(-8deg) scaleY(1); opacity: .8; }
+    to { transform: rotate(8deg) scaleY(.38); opacity: .45; }
+  }
+  .bridge-drip {
+    position: absolute;
+    width: 10px;
+    height: 34px;
+    border-radius: 999px;
+    background: rgba(245,164,31,.52);
+    top: 55%;
+    animation: bridgeDrip 3.6s ease-in-out infinite;
+  }
+  .bridge-drip--one { left: 28%; animation-delay: .4s; }
+  .bridge-drip--two { right: 22%; height: 26px; animation-delay: 1.2s; }
+  .ai-comb {
+    width: 116px;
+    height: 104px;
+    margin: 0 auto 6px;
+    display: grid;
+    grid-template-columns: repeat(3, 38px);
+    grid-auto-rows: 34px;
+    justify-content: center;
+    align-content: center;
+  }
+  .ai-comb span {
+    width: 40px;
+    height: 36px;
+    clip-path: polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0 50%);
+    background: linear-gradient(145deg, #2b1a05, #7a4300);
+    box-shadow: inset 0 0 0 2px rgba(255,212,90,.3);
+  }
+  .ai-comb span:nth-child(2),
+  .ai-comb span:nth-child(4) { transform: translateY(18px); }
+  .handoff-proof {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .handoff-proof span {
+    min-height: 76px;
+    padding: 16px;
+    border-radius: 12px;
+    background: rgba(255,248,223,.64);
+    border: 1px solid rgba(182,109,0,.14);
+    color: rgba(33,19,0,.76);
+    font-size: 13px;
+    line-height: 1.42;
+  }
+  .handoff-proof strong {
+    color: var(--honey-dark);
+  }
+  @keyframes handoffFloat {
+    0%,100% { transform: translateY(0); }
+    48% { transform: translateY(-9px); }
+  }
+  @keyframes honeyBridgePulse {
+    0%,100% { opacity: .32; transform: translateY(-50%) scaleX(.62); }
+    50% { opacity: .95; transform: translateY(-50%) scaleX(1); }
+  }
+  @keyframes beeHandoff {
+    0% { transform: translate(-10px, -50%) rotate(-5deg); }
+    45% { transform: translate(86px, -84%) rotate(8deg); }
+    100% { transform: translate(184px, -50%) rotate(-3deg); }
+  }
+  @keyframes bridgeDrip {
+    0%,100% { opacity: 0; transform: translateY(-8px) scaleY(.7); }
+    45% { opacity: .8; transform: translateY(8px) scaleY(1); }
+  }
 
   /* ── Services ───────────────────────────────────────────────── */
   .va-services { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
   .svc-card { padding: 28px 24px; min-height: 260px; }
   .va-services .svc-card {
     border-radius: 12px;
-    border-color: rgba(40,76,99,.16);
+    border-color: rgba(182,109,0,.18);
     background:
-      linear-gradient(180deg, rgba(255,255,255,.54), rgba(248,246,240,.84)),
+      linear-gradient(180deg, rgba(255,248,223,.72), rgba(255,244,201,.86)),
       var(--paper-card);
   }
   .va-services .svc-card:hover {
-    background: linear-gradient(160deg, #16262f, #284c63 68%, #376a7f);
+    background: linear-gradient(160deg, #2b1a05, #7a4300 68%, #b66d00);
+  }
+  .va-services .svc-card.is-honey-glazed {
+    background:
+      radial-gradient(circle at 28% 18%, rgba(255,255,255,.26), transparent 26%),
+      linear-gradient(145deg, rgba(255,212,90,.96), rgba(245,164,31,.82) 52%, rgba(122,67,0,.92));
+    border-color: rgba(255,212,90,.58);
+    color: #2b1a05;
   }
   .svc-icon {
     width: 40px; height: 40px; border-radius: 9px; background: var(--va-blue-soft);
     display: grid; place-items: center; color: var(--va-blue); flex-shrink: 0;
     transition: background 350ms ease, color 300ms ease, transform 400ms cubic-bezier(.34,1.56,.64,1);
   }
-  .svc-card:hover .svc-icon { background: rgba(40,76,99,.22); color: #f9f5ef; transform: rotate(-4deg) scale(1.08); }
+  .svc-card:hover .svc-icon { background: rgba(43,26,5,.22); color: #fff8df; transform: rotate(-4deg) scale(1.08); }
+  .svc-card.is-honey-glazed .svc-icon { background: rgba(43,26,5,.18); color: #fff8df; transform: rotate(-4deg) scale(1.08); }
   .svc-title {
     font-size: clamp(17px, 1.9vw, 21px); font-weight: 700; margin: 0;
     letter-spacing: -.015em;
@@ -533,6 +824,7 @@ Founder       Inbox · Calendar · Tasks     You focus on
     transition: color 300ms ease;
   }
   .svc-card:hover .svc-title { color: rgba(245,240,232,.95); }
+  .svc-card.is-honey-glazed .svc-title { color: #2b1a05; }
   .bento-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; flex: 1; }
   .bento-list li {
     font-size: 13.5px; line-height: 1.55; color: var(--muted, rgba(20,19,18,.66));
@@ -545,6 +837,8 @@ Founder       Inbox · Calendar · Tasks     You focus on
   .bento-list li::before { content: "–"; position: absolute; left: 0; color: var(--va-blue); opacity: .65; transition: color 300ms ease; }
   .svc-card:hover .bento-list li { transform: translateX(0); color: rgba(245,240,232,.7); }
   .svc-card:hover .bento-list li::before { color: rgba(245,240,232,.8); opacity: .9; }
+  .svc-card.is-honey-glazed .bento-list li { transform: translateX(0); color: rgba(43,26,5,.76); }
+  .svc-card.is-honey-glazed .bento-list li::before { color: #2b1a05; opacity: .75; }
   .svc-footer {
     font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
     color: var(--va-blue); font-weight: 700; margin: 0; margin-top: auto;
@@ -552,6 +846,7 @@ Founder       Inbox · Calendar · Tasks     You focus on
     transition: color 300ms ease;
   }
   .svc-card:hover .svc-footer { color: rgba(245,240,232,.45); }
+  .svc-card.is-honey-glazed .svc-footer { color: #4b2a00; }
 
   /* ── CTA ────────────────────────────────────────────────────── */
   .va-cta-section { text-align: center; padding: 80px 0 40px; border-top: 1px solid rgba(30,24,22,.1); }
@@ -570,10 +865,31 @@ Founder       Inbox · Calendar · Tasks     You focus on
     .va-sub { max-width: 100%; }
     .va-ctas { justify-content: center; }
     .va-board { max-width: 420px; margin: 0 auto; }
+    .delegation-heading { grid-template-columns: 1fr; align-items: start; }
+    .handoff-scene {
+      min-height: auto;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .handoff-cell {
+      min-height: 240px;
+      clip-path: polygon(16% 0, 84% 0, 100% 50%, 84% 100%, 16% 100%, 0 50%);
+    }
+    .handoff-bridge {
+      min-height: 86px;
+    }
+    .bridge-line {
+      left: 12%;
+      right: 12%;
+    }
+    .bridge-bee {
+      animation-name: beeHandoffMobile;
+    }
+    .handoff-proof {
+      grid-template-columns: 1fr;
+    }
   }
   @media (max-width: 520px) {
-    .delegation-svg { display: none; }
-    .delegation-ascii { display: block; font-size: 10px; padding: 18px 14px; }
     .delegation-wrap { padding: 14px; }
     .va-hero { padding: 48px 0 42px; }
     .va-title { font-size: clamp(32px, 11vw, 44px); }
@@ -583,6 +899,14 @@ Founder       Inbox · Calendar · Tasks     You focus on
     .vb-header { padding: 12px 14px 9px; }
     .vb-tasks { padding: 12px; gap: 8px; }
     .vb-task { font-size: 12.5px; align-items: flex-start; }
+    .cartoon-assistant { transform: scale(.9); transform-origin: center bottom; }
+    .handoff-cell {
+      padding: 28px 20px;
+      min-height: 224px;
+    }
+    .handoff-proof span {
+      min-height: auto;
+    }
   }
   @media (max-width: 600px) {
     .bento-grid { grid-template-columns: 1fr; }
@@ -593,7 +917,16 @@ Founder       Inbox · Calendar · Tasks     You focus on
     .va-board::before,
     .vb-task,
     .vb-spinner,
-    .vb-status-dot { animation: none !important; }
+    .vb-status-dot,
+    .handoff-cell,
+    .bridge-line,
+    .bridge-bee,
+    .bridge-drip { animation: none !important; }
     .vb-task { opacity: 1; transform: none; }
+  }
+  @keyframes beeHandoffMobile {
+    0% { transform: translate(20px, -50%) rotate(-5deg); }
+    50% { transform: translate(128px, -84%) rotate(8deg); }
+    100% { transform: translate(240px, -50%) rotate(-3deg); }
   }
 </style>
