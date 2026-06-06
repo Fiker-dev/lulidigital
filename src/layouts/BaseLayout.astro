@@ -12,6 +12,8 @@ const {
   serviceSchema,
   localBusinessSchema,
   organizationSchemaOverride,
+  extraSchemas = [],
+  ogType = "website",
   hreflangLinks = [],
   showBee = true,
 } = Astro.props;
@@ -52,6 +54,7 @@ const organizationSchema = {
   "@id": `${siteUrl}/#organization`,
   "name": "LuliDigital",
   "url": siteUrl,
+  "logo": `${siteUrl}/favicon.png`,
   "description": "Digital operations studio providing executive virtual assistant support, digital marketing, paid media, SEO, and AI automation services for founders, CEOs, and growing businesses.",
   "email": "info@lulidigital.co.za",
   "telephone": "+27602551513",
@@ -148,6 +151,7 @@ const jsonLd = {
       "mainEntityOfPage": { "@id": `${canonicalUrl}#webpage` },
       ...serviceSchema,
     } : null,
+    ...extraSchemas,
   ].filter(Boolean),
 };
 ---
@@ -172,7 +176,7 @@ const jsonLd = {
     <meta property="og:site_name" content="LuliDigital" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />

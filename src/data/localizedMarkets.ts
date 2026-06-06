@@ -16,7 +16,7 @@ export const localizedOrganizationSchema = {
   "@type": "Organization",
   "name": "LuliDigital",
   "url": siteUrl,
-  "logo": `${siteUrl}/logo.png`,
+  "logo": `${siteUrl}/favicon.png`,
   "description": "LuliDigital is an international digital studio offering performance marketing, AI workflow automation, conversational AI assistants, and executive virtual assistant services for founders and businesses across Europe and beyond.",
   "address": {
     "@type": "PostalAddress",

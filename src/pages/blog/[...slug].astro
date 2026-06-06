@@ -1,16 +1,37 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
-const { slug } = Astro.params;
+export const prerender = true;
 
-const post = await getEntry("blog", slug as string);
+export async function getStaticPaths() {
+  const posts = (await getCollection("blog"))
+    .filter((post) => !post.data.draft)
+    .filter((post) => post.data.pubDate.valueOf() <= Date.now());
 
-if (!post || post.data.draft || post.data.pubDate.valueOf() > Date.now()) {
-  return Astro.redirect("/blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
 }
 
+const { post } = Astro.props;
+
 const { Content } = await post.render();
+const siteUrl = "https://lulidigital.com";
+const canonicalPath = `/blog/${post.slug}`;
+const canonicalUrl = `${siteUrl}${canonicalPath}`;
+const articleSchema = {
+  "@type": "BlogPosting",
+  "@id": `${canonicalUrl}#article`,
+  "headline": post.data.title,
+  "description": post.data.description,
+  "datePublished": post.data.pubDate.toISOString(),
+  "dateModified": post.data.pubDate.toISOString(),
+  "author": { "@id": `${siteUrl}/#organization` },
+  "publisher": { "@id": `${siteUrl}/#organization` },
+  "mainEntityOfPage": { "@id": `${canonicalUrl}#webpage` },
+};
 
 function formatDate(date: Date) {
   return date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
@@ -21,6 +42,9 @@ function formatDate(date: Date) {
   title={`${post.data.title} | LuliDigital`}
   description={post.data.description}
   active="blog"
+  canonicalPath={canonicalPath}
+  extraSchemas={[articleSchema]}
+  ogType="article"
 >
   <main class="post-page">
     <nav class="post-back">
