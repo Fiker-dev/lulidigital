@@ -2,10 +2,10 @@
 const { active = "" } = Astro.props;
 
 const nav = [
-  { href: "/marketing",         label: "Marketing",         short: "Market", key: "marketing",         note: "Campaigns, SEO, content" },
-  { href: "/ai",                label: "AI",                short: "AI",     key: "ai",                note: "Automation and agents" },
-  { href: "/virtual-assistant", label: "Virtual Assistant", short: "VA",     key: "virtual-assistant", note: "Human paired with AI" },
-  { href: "/blog",              label: "Blog",              short: "Blog",   key: "blog",              note: "Fresh thinking" },
+  { href: "/marketing",         label: "Marketing Desk",    key: "marketing",         note: "SEO, ads, content" },
+  { href: "/ai",                label: "AI Desk",           key: "ai",                note: "Automation and agents" },
+  { href: "/virtual-assistant", label: "Virtual Assistant", key: "virtual-assistant", note: "Human and AI support" },
+  { href: "/blog",              label: "Blog",              key: "blog",              note: "Insights and updates" },
 ];
 ---
 
@@ -33,14 +33,13 @@ const nav = [
       </summary>
       <div class="nav-mobile__panel">
         <div class="nav-mobile__comb" aria-label="Service menu">
-        {nav.map(({ href, label, short, key, note }, index) => (
+        {nav.map(({ href, label, key, note }, index) => (
           <a
             class={`nav-mobile__cell${active === key ? " is-active" : ""}`}
             style={`--cell-index:${index}`}
             href={href}
             aria-label={label}
           >
-            <span class="cell-short">{short}</span>
             <span class="cell-label">{label}</span>
             <span class="cell-note">{note}</span>
           </a>
@@ -278,17 +277,10 @@ const nav = [
       radial-gradient(circle at 34% 20%, rgba(255,255,255,.8), transparent 25%),
       linear-gradient(145deg, rgba(123,45,45,.95), rgba(180,92,30,.78));
   }
-  .cell-short {
-    font-size: 11px;
-    line-height: 1;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    font-weight: 800;
-  }
   .cell-label {
-    max-width: 10ch;
-    font-size: 15px;
-    line-height: 1.04;
+    max-width: 12ch;
+    font-size: 17px;
+    line-height: 1.06;
     font-weight: 800;
   }
   .cell-note {
@@ -328,7 +320,7 @@ const nav = [
   @media (max-width: 370px) {
     .nav-mobile__panel { left: 8px; right: 8px; padding: 15px 12px 14px; }
     .nav-mobile__cell { min-height: 104px; padding-inline: 18px; }
-    .cell-label { font-size: 13px; }
+    .cell-label { font-size: 15px; }
     .cell-note { font-size: 9px; }
   }
 
