@@ -1,3 +1,5 @@
+import { animate } from "motion";
+
 export function initMotion() {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -236,16 +238,85 @@ export function initMotion() {
   // ── 11. Dramatic card motion for hover and touch ─────────────
   const storyCards = document.querySelectorAll(".glow-card");
   if (storyCards.length) {
+    let lastGlazedCard = null;
+    let lastGlazeAt = 0;
+
+    const glazeCard = (card, intensity = 1) => {
+      if (reduced || !card) return;
+      const now = performance.now();
+      if (card === lastGlazedCard && now - lastGlazeAt < 1300) return;
+      lastGlazedCard = card;
+      lastGlazeAt = now;
+
+      let glaze = card.querySelector(".honey-glaze");
+      if (!glaze) {
+        glaze = document.createElement("span");
+        glaze.className = "honey-glaze";
+        glaze.setAttribute("aria-hidden", "true");
+        card.appendChild(glaze);
+      }
+
+      card.classList.add("is-honey-glazed");
+      animate(glaze, {
+        opacity: [0, 0.95 * intensity, 0.62 * intensity, 0],
+        x: ["-42%", "8%", "68%", "128%"],
+        scaleX: [0.72, 1, 1.08, 0.86],
+      }, {
+        duration: 1.18,
+        ease: [0.16, 1, 0.3, 1],
+      });
+      animate(card, {
+        filter: [
+          "drop-shadow(0 0 0 rgba(245,164,31,0))",
+          `drop-shadow(0 18px 28px rgba(245,164,31,${0.16 * intensity}))`,
+          "drop-shadow(0 0 0 rgba(245,164,31,0))",
+        ],
+      }, {
+        duration: 1.18,
+        ease: "easeOut",
+      });
+      window.setTimeout(() => card.classList.remove("is-honey-glazed"), 1350);
+    };
+
     storyCards.forEach((card, i) => {
       card.style.setProperty("--card-drift-delay", `${(i % 6) * -0.55}s`);
       card.dataset.motionKind = card.dataset.motionKind || ["rise", "pop", "float", "steam"][i % 4];
-      card.addEventListener("pointerenter", () => card.classList.add("is-card-engaged"));
+      card.addEventListener("pointerenter", () => {
+        card.classList.add("is-card-engaged");
+        glazeCard(card, 0.74);
+      });
       card.addEventListener("pointerleave", () => card.classList.remove("is-card-engaged"));
       card.addEventListener("pointerdown", () => {
         card.classList.add("is-card-engaged", "is-card-tapped");
+        glazeCard(card, 1);
         window.setTimeout(() => card.classList.remove("is-card-tapped"), 520);
       }, { passive: true });
     });
+
+    window.addEventListener("luli:bee-pass", (event) => {
+      if (reduced) return;
+      const detail = event.detail || {};
+      const x = detail.x;
+      const y = detail.y;
+      if (typeof x !== "number" || typeof y !== "number") return;
+
+      let closest = null;
+      let closestDistance = Infinity;
+      storyCards.forEach((card) => {
+        const r = card.getBoundingClientRect();
+        const withinY = y >= r.top - 56 && y <= r.bottom + 56;
+        const withinX = x >= r.left - 72 && x <= r.right + 72;
+        if (!withinX || !withinY) return;
+        const dx = x - (r.left + r.width / 2);
+        const dy = y - (r.top + r.height / 2);
+        const distance = Math.hypot(dx, dy);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closest = card;
+        }
+      });
+      if (closest) glazeCard(closest, detail.landed ? 1 : 0.82);
+    }, { passive: true });
 
     if (!reduced) {
       const cardIo = new IntersectionObserver(

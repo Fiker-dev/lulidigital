@@ -2,10 +2,10 @@
 const { active = "" } = Astro.props;
 
 const nav = [
-  { href: "/marketing",         label: "Marketing",         key: "marketing" },
-  { href: "/ai",                label: "AI",                key: "ai" },
-  { href: "/virtual-assistant", label: "Virtual Assistant", key: "virtual-assistant" },
-  { href: "/blog",              label: "Blog",              key: "blog" },
+  { href: "/marketing",         label: "Marketing",         short: "Market", key: "marketing",         note: "Campaigns, SEO, content" },
+  { href: "/ai",                label: "AI",                short: "AI",     key: "ai",                note: "Automation and agents" },
+  { href: "/virtual-assistant", label: "Virtual Assistant", short: "VA",     key: "virtual-assistant", note: "Human paired with AI" },
+  { href: "/blog",              label: "Blog",              short: "Blog",   key: "blog",              note: "Fresh thinking" },
 ];
 ---
 
@@ -32,10 +32,24 @@ const nav = [
         </span>
       </summary>
       <div class="nav-mobile__panel">
-        {nav.map(({ href, label }) => (
-          <a class="nav-mobile__link" href={href}>{label}</a>
+        <div class="nav-mobile__comb" aria-label="Service menu">
+        {nav.map(({ href, label, short, key, note }, index) => (
+          <a
+            class={`nav-mobile__cell${active === key ? " is-active" : ""}`}
+            style={`--cell-index:${index}`}
+            href={href}
+            aria-label={label}
+          >
+            <span class="cell-short">{short}</span>
+            <span class="cell-label">{label}</span>
+            <span class="cell-note">{note}</span>
+          </a>
         ))}
-        <a class="nav-mobile__cta" href="/contact">Get Started →</a>
+        </div>
+        <a class="nav-mobile__cta" href="/contact">
+          <span>Talk to the desk</span>
+          <span aria-hidden="true">→</span>
+        </a>
       </div>
     </details>
   </div>
@@ -51,6 +65,9 @@ const nav = [
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid transparent;
     padding: 18px 20px;
+  }
+  .mast:has(.nav-mobile[open]) {
+    transform: translateY(0) !important;
   }
 
   .header-inner {
@@ -130,7 +147,19 @@ const nav = [
   }
 
   .nav-mobile { display: none; }
-  .nav-burger { list-style: none; cursor: pointer; padding: 4px; background: none; border: none; }
+  .nav-burger {
+    list-style: none;
+    cursor: pointer;
+    padding: 9px;
+    background: rgba(255,255,255,.34);
+    border: 1px solid rgba(30, 24, 22, .1);
+    border-radius: 999px;
+    min-width: 44px;
+    min-height: 44px;
+    display: grid;
+    place-items: center;
+    touch-action: manipulation;
+  }
   .nav-burger::-webkit-details-marker { display: none; }
   .burger-icon { display: flex; flex-direction: column; gap: 5px; width: 22px; }
   .burger-icon span {
@@ -144,39 +173,156 @@ const nav = [
   details[open] .burger-icon span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
 
   .nav-mobile__panel {
+    position: fixed;
+    top: calc(68px + env(safe-area-inset-top, 0px));
+    left: 12px;
+    right: 12px;
+    max-width: 420px;
+    margin: 0 auto;
+    background:
+      radial-gradient(circle at 18% 14%, rgba(245,164,31,.18), transparent 34%),
+      linear-gradient(145deg, rgba(255,252,244,.98), rgba(243,239,231,.96));
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(30, 24, 22, .13);
+    border-radius: 26px;
+    box-shadow: 0 22px 70px rgba(32, 20, 8, .18), inset 0 1px 0 rgba(255,255,255,.72);
+    padding: 18px 16px 16px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px) scale(.97);
+    transition:
+      opacity 260ms ease,
+      transform 360ms cubic-bezier(.16,1,.3,1);
+  }
+  details[open] .nav-mobile__panel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+  .nav-mobile__panel::before {
+    content: "";
     position: absolute;
-    top: 100%;
-    left: 0; right: 0;
-    background: rgba(243, 239, 231, .97);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(30, 24, 22, .12);
-    padding: 16px 20px 24px;
+    inset: 10px;
+    border-radius: 20px;
+    pointer-events: none;
+    opacity: .28;
+    background:
+      linear-gradient(30deg, transparent 32%, rgba(123,45,45,.16) 33%, rgba(123,45,45,.16) 34%, transparent 35%),
+      linear-gradient(150deg, transparent 32%, rgba(123,45,45,.12) 33%, rgba(123,45,45,.12) 34%, transparent 35%);
+    background-size: 34px 58px;
+    mask-image: linear-gradient(to bottom, black, transparent 92%);
+  }
+  .nav-mobile__comb {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 8px;
+    padding-bottom: 12px;
+  }
+  .nav-mobile__cell {
+    min-height: 116px;
+    padding: 20px 13px 18px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-  }
-  .nav-mobile__link {
-    font-size: 14px;
-    font-weight: 600;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
     color: var(--ink, #141312);
     text-decoration: none;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(30, 24, 22, .08);
-    transition: color 160ms ease;
+    background:
+      radial-gradient(circle at 36% 22%, rgba(255,255,255,.75), transparent 26%),
+      linear-gradient(150deg, rgba(255,210,97,.92), rgba(190,112,26,.22) 70%),
+      var(--paper-card, #f6f2ea);
+    border: 1px solid rgba(111, 67, 16, .2);
+    clip-path: polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0 50%);
+    filter: drop-shadow(0 10px 16px rgba(97, 55, 14, .12));
+    transform: translateY(10px) scale(.94);
+    opacity: 0;
+    transition:
+      opacity 420ms ease,
+      transform 520ms cubic-bezier(.16,1,.3,1),
+      filter 240ms ease;
+    transition-delay: calc(var(--cell-index) * 42ms);
+    touch-action: manipulation;
   }
-  .nav-mobile__link:hover { color: var(--brand, #7b2d2d); }
+  details[open] .nav-mobile__cell {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .nav-mobile__cell:nth-child(even) { transform: translateY(24px) scale(.94); }
+  details[open] .nav-mobile__cell:nth-child(even) { transform: translateY(14px) scale(1); }
+  .nav-mobile__cell:active {
+    transform: translateY(12px) scale(.97);
+    filter: drop-shadow(0 5px 10px rgba(97, 55, 14, .14));
+  }
+  .nav-mobile__cell.is-active {
+    background:
+      radial-gradient(circle at 34% 20%, rgba(255,255,255,.8), transparent 25%),
+      linear-gradient(145deg, rgba(123,45,45,.95), rgba(180,92,30,.78));
+    color: #fff8ec;
+  }
+  .cell-short {
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+  .cell-label {
+    max-width: 10ch;
+    font-size: 15px;
+    line-height: 1.04;
+    font-weight: 800;
+  }
+  .cell-note {
+    max-width: 15ch;
+    font-size: 10px;
+    line-height: 1.2;
+    color: rgba(20,19,18,.58);
+  }
+  .is-active .cell-note { color: rgba(255,248,236,.74); }
   .nav-mobile__cta {
-    margin-top: 12px;
+    position: relative;
+    z-index: 1;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
     font-size: 12px;
     font-weight: 700;
     letter-spacing: .14em;
     text-transform: uppercase;
-    color: var(--brand, #7b2d2d);
+    color: #fff8ec;
+    background: var(--brand, #7b2d2d);
+    border-radius: 999px;
+    box-shadow: 0 14px 28px rgba(123,45,45,.22);
+    padding: 0 18px;
     text-decoration: none;
   }
 
   @media (max-width: 680px) {
+    .mast { padding: 12px 20px; }
     .nav, .header-cta { display: none; }
     .nav-mobile { display: block; margin-left: auto; position: relative; }
+  }
+
+  @media (max-width: 370px) {
+    .nav-mobile__panel { left: 8px; right: 8px; padding: 15px 12px 14px; }
+    .nav-mobile__cell { min-height: 104px; padding-inline: 10px; }
+    .cell-label { font-size: 13px; }
+    .cell-note { font-size: 9px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-mobile__panel,
+    .nav-mobile__cell,
+    .burger-icon span {
+      transition: none !important;
+    }
   }
 </style>

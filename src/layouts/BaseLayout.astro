@@ -275,6 +275,7 @@ const jsonLd = {
     let audioCtx: AudioContext | null = null;
     let audioReady = false;
     let lastBuzz = 0;
+    let lastPassSignal = 0;
 
     const unlockAudio = () => {
       if (audioReady) return;
@@ -350,6 +351,16 @@ const jsonLd = {
       lastTilt  += (tilt - lastTilt) * 0.09;
 
       bee.style.transform = `translate(${cx}px, ${cy}px) rotate(${lastTilt}deg)`;
+      if (!reduced && ms - lastPassSignal > 520) {
+        lastPassSignal = ms;
+        window.dispatchEvent(new CustomEvent("luli:bee-pass", {
+          detail: {
+            x: cx + (isSmall ? 18 : 24),
+            y: cy + (isSmall ? 17 : 21),
+            landed: isLanded,
+          },
+        }));
+      }
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
