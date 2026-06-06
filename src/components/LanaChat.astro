@@ -8,15 +8,15 @@ const starters = [
 
 <div class="lana-chat" data-lana-chat>
   <button class="lana-chat__toggle" type="button" data-lana-toggle aria-expanded="false" aria-controls="lana-panel">
-    <span class="lana-chat__badge">AI</span>
-    <span class="lana-chat__label">AI Agent Assistant</span>
+    <span class="lana-chat__badge">Lana</span>
+    <span class="lana-chat__label">Chat with the desk</span>
   </button>
 
   <section class="lana-chat__panel" id="lana-panel" hidden>
     <header class="lana-chat__header">
       <div>
         <p class="lana-chat__eyebrow">LuliDigital Assistant</p>
-        <h2>AI Agent Assistant</h2>
+        <h2>Lana</h2>
       </div>
       <button class="lana-chat__close" type="button" aria-label="Close chat" data-lana-close>×</button>
     </header>
@@ -25,7 +25,7 @@ const starters = [
 
     <div class="lana-chat__messages" data-lana-messages aria-live="polite">
       <article class="lana-chat__message lana-chat__message--assistant">
-        Hi, I&apos;m the AI Agent Assistant. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.
+        Hi, I&apos;m Lana. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.
       </article>
     </div>
 
@@ -36,13 +36,13 @@ const starters = [
     </div>
 
     <form class="lana-chat__composer" data-lana-form>
-      <label class="sr-only" for="lana-input">Ask the AI Agent Assistant a question</label>
+      <label class="sr-only" for="lana-input">Ask Lana a question</label>
       <textarea
         id="lana-input"
         name="message"
         rows="1"
         maxlength="800"
-        placeholder="Ask the AI Agent Assistant..."
+        placeholder="Ask Lana something..."
         data-lana-input
       ></textarea>
       <button type="submit" class="lana-chat__send" data-lana-send>Send</button>
@@ -85,7 +85,7 @@ const starters = [
       if (hour < 18) return "Good afternoon";
       return "Good evening";
     };
-    const initialGreeting = `${getTimeAwareGreeting()}, I’m the AI Agent Assistant. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.`;
+    const initialGreeting = `${getTimeAwareGreeting()}, I’m Lana. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.`;
     messagesEl.innerHTML = "";
     const initialMessage = document.createElement("article");
     initialMessage.className = "lana-chat__message lana-chat__message--assistant";
