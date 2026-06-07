@@ -3,6 +3,7 @@ import "../styles/theme.css";
 import "../styles/motion.css";
 import SiteHeader from "../components/SiteHeader.astro";
 import LanaChat from "../components/LanaChat.astro";
+import ProfileLinks from "../components/ProfileLinks.astro";
 
 const {
   title = "LuliDigital",
@@ -59,6 +60,10 @@ const organizationSchema = {
   "description": "Digital operations studio providing executive virtual assistant support, digital marketing, paid media, SEO, and AI automation services for founders, CEOs, and growing businesses.",
   "email": "info@lulidigital.co.za",
   "telephone": "+27602551513",
+  "sameAs": [
+    "https://clutch.co/profile/lulidigital",
+    "https://www.sortlist.com/agency/lulidigital",
+  ],
   "areaServed": [
     { "@type": "Country", "name": "United Kingdom" },
     { "@type": "Country", "name": "Canada" },
@@ -256,6 +261,7 @@ const jsonLd = {
     <main class="page">
       <slot />
     </main>
+    <ProfileLinks />
     <LanaChat />
   </body>
 </html>
