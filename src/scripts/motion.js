@@ -245,43 +245,34 @@ export function initMotion() {
   if (storyCards.length) {
     let lastGlazedCard = null;
     let lastGlazeAt = 0;
+    const glazeTimers = new WeakMap();
 
-    const glazeCard = async (card, intensity = 1) => {
+    const glazeCard = (card, hold = false) => {
       if (reduced || !card) return;
       const now = performance.now();
-      if (card === lastGlazedCard && now - lastGlazeAt < 1300) return;
+      if (card === lastGlazedCard && now - lastGlazeAt < 450) return;
       lastGlazedCard = card;
       lastGlazeAt = now;
-      const animate = await loadAnimate();
 
-      let glaze = card.querySelector(".honey-glaze");
-      if (!glaze) {
-        glaze = document.createElement("span");
-        glaze.className = "honey-glaze";
-        glaze.setAttribute("aria-hidden", "true");
-        card.appendChild(glaze);
-      }
+      const existingTimer = glazeTimers.get(card);
+      if (existingTimer) window.clearTimeout(existingTimer);
 
       card.classList.add("is-honey-glazed");
-      animate(glaze, {
-        opacity: [0, 0.95 * intensity, 0.62 * intensity, 0],
-        x: ["-42%", "8%", "68%", "128%"],
-        scaleX: [0.72, 1, 1.08, 0.86],
-      }, {
-        duration: 1.18,
-        ease: [0.16, 1, 0.3, 1],
-      });
-      animate(card, {
-        filter: [
-          "drop-shadow(0 0 0 rgba(245,164,31,0))",
-          `drop-shadow(0 18px 28px rgba(245,164,31,${0.16 * intensity}))`,
-          "drop-shadow(0 0 0 rgba(245,164,31,0))",
-        ],
-      }, {
-        duration: 1.18,
-        ease: "easeOut",
-      });
-      window.setTimeout(() => card.classList.remove("is-honey-glazed"), 1350);
+
+      if (!hold) {
+        const timer = window.setTimeout(() => {
+          card.classList.remove("is-honey-glazed");
+          glazeTimers.delete(card);
+        }, 1050);
+        glazeTimers.set(card, timer);
+      }
+    };
+
+    const clearGlaze = (card) => {
+      const existingTimer = glazeTimers.get(card);
+      if (existingTimer) window.clearTimeout(existingTimer);
+      glazeTimers.delete(card);
+      card.classList.remove("is-honey-glazed");
     };
 
     storyCards.forEach((card, i) => {
@@ -289,14 +280,19 @@ export function initMotion() {
       card.dataset.motionKind = card.dataset.motionKind || ["rise", "pop", "float", "steam"][i % 4];
       card.addEventListener("pointerenter", () => {
         card.classList.add("is-card-engaged");
-        glazeCard(card, 0.74);
+        glazeCard(card, true);
       });
-      card.addEventListener("pointerleave", () => card.classList.remove("is-card-engaged"));
+      card.addEventListener("pointerleave", () => {
+        card.classList.remove("is-card-engaged");
+        clearGlaze(card);
+      });
       card.addEventListener("pointerdown", () => {
         card.classList.add("is-card-engaged", "is-card-tapped");
-        glazeCard(card, 1);
+        glazeCard(card, true);
         window.setTimeout(() => card.classList.remove("is-card-tapped"), 520);
       }, { passive: true });
+      card.addEventListener("pointerup", () => clearGlaze(card), { passive: true });
+      card.addEventListener("pointercancel", () => clearGlaze(card), { passive: true });
     });
 
     window.addEventListener("luli:bee-pass", (event) => {
@@ -321,7 +317,7 @@ export function initMotion() {
           closest = card;
         }
       });
-      if (closest) glazeCard(closest, detail.landed ? 1 : 0.82);
+      if (closest) glazeCard(closest, false);
     }, { passive: true });
 
     if (!reduced) {
