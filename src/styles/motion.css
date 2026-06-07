@@ -691,6 +691,11 @@
   color: var(--brand); line-height: 1; display: block;
   font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
 }
+.metric-word {
+  font-size: clamp(30px, 3.8vw, 48px);
+  letter-spacing: 0;
+  line-height: 1.05;
+}
 .metric-label {
   font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
   color: var(--muted); font-weight: 500; display: block; margin-top: 8px;
