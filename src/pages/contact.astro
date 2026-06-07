@@ -32,12 +32,16 @@ export const prerender = true;
     </div>
 
     <div class="coffee-scene" aria-hidden="true">
+      <span class="window-light"></span>
+      <span class="honey-jar"></span>
       <div class="steam steam--one"></div>
       <div class="steam steam--two"></div>
       <div class="steam steam--three"></div>
       <div class="honey-spoon">
         <span class="spoon-bowl"></span>
         <span class="spoon-stick"></span>
+        <span class="honey-thread honey-thread--one"></span>
+        <span class="honey-thread honey-thread--two"></span>
         <span class="honey-drop honey-drop--one"></span>
         <span class="honey-drop honey-drop--two"></span>
       </div>
@@ -51,6 +55,7 @@ export const prerender = true;
         <div class="cup-handle"></div>
       </div>
       <div class="saucer"></div>
+      <span class="surface-shadow"></span>
       <div class="table-note">tell us what you are building</div>
     </div>
   </section>
@@ -185,22 +190,25 @@ export const prerender = true;
       min-height: 430px;
       border-radius: 32px;
       overflow: hidden;
-      border: 1px solid rgba(196, 119, 0, .18);
+      border: 1px solid rgba(166, 91, 0, .20);
       background:
-        radial-gradient(circle at 22% 18%, rgba(255, 255, 255, .86) 0 8%, transparent 23%),
-        radial-gradient(circle at 76% 72%, rgba(255, 197, 63, .24), transparent 34%),
-        linear-gradient(145deg, rgba(255, 244, 205, .92), rgba(255, 255, 255, .58) 54%, rgba(248, 196, 85, .28));
-      box-shadow: 0 26px 70px rgba(74, 38, 0, .14), inset 0 1px 0 rgba(255, 255, 255, .74);
+        radial-gradient(circle at 20% 18%, rgba(255, 255, 255, .94) 0 9%, transparent 27%),
+        radial-gradient(circle at 76% 68%, rgba(255, 190, 57, .28), transparent 36%),
+        linear-gradient(145deg, rgba(255, 247, 218, .94), rgba(255, 255, 255, .62) 45%, rgba(244, 177, 50, .30));
+      box-shadow:
+        0 32px 80px rgba(74, 38, 0, .17),
+        inset 0 1px 0 rgba(255, 255, 255, .82),
+        inset 0 -40px 90px rgba(173, 91, 0, .10);
       isolation: isolate;
     }
     .coffee-scene::before {
       content: "";
       position: absolute;
       inset: 0;
-      opacity: .36;
+      opacity: .24;
       background-image:
-        linear-gradient(30deg, rgba(196, 119, 0, .16) 12%, transparent 12.5%, transparent 87%, rgba(196, 119, 0, .16) 87.5%, rgba(196, 119, 0, .16)),
-        linear-gradient(150deg, rgba(196, 119, 0, .16) 12%, transparent 12.5%, transparent 87%, rgba(196, 119, 0, .16) 87.5%, rgba(196, 119, 0, .16));
+        linear-gradient(30deg, rgba(196, 119, 0, .14) 12%, transparent 12.5%, transparent 87%, rgba(196, 119, 0, .14) 87.5%, rgba(196, 119, 0, .14)),
+        linear-gradient(150deg, rgba(196, 119, 0, .14) 12%, transparent 12.5%, transparent 87%, rgba(196, 119, 0, .14) 87.5%, rgba(196, 119, 0, .14));
       background-size: 82px 48px;
       z-index: -1;
     }
@@ -215,24 +223,68 @@ export const prerender = true;
       background: rgba(73, 35, 0, .10);
       filter: blur(12px);
     }
+    .window-light {
+      position: absolute;
+      inset: -18% auto auto -12%;
+      width: 58%;
+      height: 58%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, .9), rgba(255, 255, 255, 0) 66%);
+      filter: blur(10px);
+      opacity: .82;
+      z-index: 1;
+    }
+    .honey-jar {
+      position: absolute;
+      right: 8%;
+      bottom: 82px;
+      width: 78px;
+      height: 92px;
+      border-radius: 22px 22px 18px 18px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.34), transparent 32%),
+        linear-gradient(180deg, rgba(255, 214, 86, .50), rgba(169, 86, 0, .56));
+      border: 1px solid rgba(126, 63, 0, .12);
+      box-shadow: inset 10px 0 18px rgba(255,255,255,.20), 0 18px 40px rgba(92, 43, 0, .12);
+      opacity: .42;
+      transform: rotate(3deg);
+      z-index: 1;
+    }
+    .honey-jar::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: -13px;
+      height: 18px;
+      border-radius: 8px 8px 4px 4px;
+      background: linear-gradient(180deg, #f4d58a, #ad6500);
+      box-shadow: inset 0 3px 5px rgba(255,255,255,.36);
+    }
     .cup {
       position: absolute;
       left: 50%;
-      bottom: 92px;
-      width: min(56%, 300px);
-      aspect-ratio: 1.18;
+      bottom: 82px;
+      width: min(62%, 330px);
+      aspect-ratio: 1.12;
       transform: translateX(-50%);
+      z-index: 4;
     }
     .cup-body {
       position: absolute;
-      left: 8%;
-      right: 8%;
+      left: 7%;
+      right: 7%;
       bottom: 0;
-      height: 72%;
-      border-radius: 0 0 42% 42%;
-      background: linear-gradient(140deg, #fff9e9, #f2c26b 52%, #b86d00);
+      height: 70%;
+      border-radius: 8% 8% 44% 44%;
+      background:
+        radial-gradient(circle at 28% 22%, rgba(255,255,255,.88), transparent 17%),
+        linear-gradient(105deg, #fff3cf 0%, #f4c164 28%, #d88914 59%, #a95700 100%);
       border: 1px solid rgba(94, 47, 0, .16);
-      box-shadow: inset 16px 6px 28px rgba(255, 255, 255, .5), inset -18px -18px 28px rgba(132, 67, 0, .18);
+      box-shadow:
+        inset 20px 5px 30px rgba(255, 255, 255, .52),
+        inset -30px -20px 34px rgba(94, 43, 0, .20),
+        0 22px 42px rgba(94, 43, 0, .16);
     }
     .cup-lip {
       position: absolute;
@@ -241,39 +293,63 @@ export const prerender = true;
       top: 16%;
       height: 29%;
       border-radius: 50%;
-      background: linear-gradient(180deg, #fff9ed, #f0d49b);
+      background:
+        radial-gradient(ellipse at 45% 32%, rgba(255,255,255,.92), rgba(255,255,255,.28) 39%, transparent 40%),
+        linear-gradient(180deg, #fffaf0, #e7c17c 72%, #ae6508);
       border: 1px solid rgba(94, 47, 0, .18);
-      box-shadow: inset 0 8px 18px rgba(255, 255, 255, .7);
+      box-shadow:
+        inset 0 8px 18px rgba(255, 255, 255, .72),
+        0 7px 18px rgba(85, 35, 0, .10);
       z-index: 2;
+    }
+    .cup-lip::after {
+      content: "";
+      position: absolute;
+      left: 13%;
+      right: 13%;
+      top: 28%;
+      height: 46%;
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse at 33% 30%, rgba(212, 137, 32, .62), transparent 27%),
+        radial-gradient(ellipse at 68% 45%, rgba(56, 18, 2, .96), rgba(79, 31, 3, .98) 45%, rgba(32, 9, 0, 1));
+      box-shadow:
+        inset 0 9px 20px rgba(255, 174, 49, .34),
+        inset 0 -8px 16px rgba(0, 0, 0, .28);
     }
     .coffee {
       position: absolute;
-      left: 8%;
-      right: 8%;
-      top: 22%;
-      height: 18%;
+      left: 15%;
+      right: 15%;
+      top: 24%;
+      height: 14%;
       border-radius: 50%;
-      background: radial-gradient(circle at 34% 36%, #c98216, #5b2607 64%, #351204);
+      background:
+        radial-gradient(ellipse at 32% 31%, rgba(231, 154, 43, .78), transparent 24%),
+        radial-gradient(ellipse at 66% 42%, #5b2002, #240800 74%);
+      box-shadow: inset 0 9px 18px rgba(255, 187, 61, .20);
       z-index: 3;
+      animation: coffeeBreath 5.8s ease-in-out infinite;
     }
     .cup-handle {
       position: absolute;
-      right: -15%;
+      right: -13%;
       top: 35%;
       width: 34%;
       height: 34%;
-      border: 18px solid rgba(190, 112, 0, .72);
+      border: 18px solid rgba(183, 104, 0, .76);
       border-left: 0;
       border-radius: 0 999px 999px 0;
+      box-shadow: inset -7px -5px 13px rgba(91, 41, 0, .16);
     }
     .cup-glow {
       position: absolute;
-      inset: 14% auto auto 16%;
-      width: 34%;
-      height: 24%;
+      inset: 13% auto auto 14%;
+      width: 38%;
+      height: 26%;
       border-radius: 50%;
-      background: rgba(255, 255, 255, .42);
-      filter: blur(8px);
+      background: rgba(255, 255, 255, .54);
+      filter: blur(9px);
     }
     .cup-line {
       position: absolute;
@@ -287,76 +363,125 @@ export const prerender = true;
     .saucer {
       position: absolute;
       left: 50%;
-      bottom: 72px;
-      width: min(70%, 380px);
-      height: 48px;
+      bottom: 60px;
+      width: min(76%, 410px);
+      height: 58px;
       transform: translateX(-50%);
       border-radius: 50%;
-      background: linear-gradient(180deg, rgba(255, 250, 232, .92), rgba(218, 157, 38, .32));
+      background:
+        radial-gradient(ellipse at 48% 38%, rgba(255,255,255,.78), transparent 37%),
+        linear-gradient(180deg, rgba(255, 250, 232, .95), rgba(211, 139, 18, .28));
       border: 1px solid rgba(94, 47, 0, .12);
-      box-shadow: 0 18px 34px rgba(85, 44, 0, .13);
+      box-shadow: 0 20px 38px rgba(85, 44, 0, .14);
+      z-index: 2;
     }
     .honey-spoon {
       position: absolute;
-      left: 18%;
-      top: 23%;
-      width: 64%;
-      height: 74px;
-      transform: rotate(-8deg);
+      left: 15%;
+      top: 24%;
+      width: 72%;
+      height: 100px;
+      transform: rotate(-9deg);
+      transform-origin: 42% 50%;
+      animation: spoonFloat 6.8s ease-in-out infinite;
+      z-index: 6;
     }
     .spoon-stick {
       position: absolute;
-      left: 16%;
-      right: 2%;
-      top: 31px;
-      height: 9px;
+      left: 17%;
+      right: 1%;
+      top: 40px;
+      height: 10px;
       border-radius: 999px;
-      background: linear-gradient(90deg, #f7d484, #a45a00);
-      box-shadow: 0 9px 20px rgba(166, 91, 0, .18);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.44), rgba(255,255,255,0) 42%),
+        linear-gradient(90deg, #ffe09a 0%, #d08a1f 38%, #8f4300 100%);
+      box-shadow: 0 10px 22px rgba(91, 41, 0, .20);
     }
     .spoon-bowl {
       position: absolute;
       left: 0;
-      top: 16px;
-      width: 72px;
-      height: 38px;
+      top: 22px;
+      width: 86px;
+      height: 48px;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fff0b2, #c57700 72%);
-      box-shadow: inset 0 4px 14px rgba(255, 255, 255, .52);
+      background:
+        radial-gradient(circle at 35% 27%, rgba(255, 255, 255, .92), transparent 20%),
+        radial-gradient(circle at 66% 63%, #9e4b00, #4c1d00 78%),
+        linear-gradient(135deg, #ffd66c, #ad5c00);
+      box-shadow:
+        inset 9px 8px 16px rgba(255, 255, 255, .44),
+        inset -11px -9px 18px rgba(69, 24, 0, .30),
+        0 15px 25px rgba(87, 38, 0, .18);
+    }
+    .honey-thread {
+      position: absolute;
+      top: 58px;
+      width: 5px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255, 227, 126, .95), rgba(190, 103, 0, .80));
+      box-shadow: 0 0 12px rgba(255, 197, 63, .42);
+      transform-origin: top center;
+    }
+    .honey-thread--one {
+      left: 21%;
+      height: 104px;
+      animation: honeyStretch 4.8s ease-in-out infinite;
+    }
+    .honey-thread--two {
+      left: 48%;
+      height: 74px;
+      opacity: .72;
+      animation: honeyStretch 5.4s ease-in-out infinite .55s;
     }
     .honey-drop {
       position: absolute;
-      width: 13px;
+      width: 15px;
       border-radius: 999px;
-      background: linear-gradient(180deg, #ffd86b, #c87600);
+      background:
+        radial-gradient(circle at 35% 20%, rgba(255,255,255,.68), transparent 24%),
+        linear-gradient(180deg, #ffe06d, #c87600);
       box-shadow: 0 8px 20px rgba(196, 119, 0, .22);
     }
     .honey-drop--one {
-      left: 22%;
-      top: 42px;
-      height: 54px;
-      animation: honeyHang 3.6s ease-in-out infinite;
+      left: 19.6%;
+      top: 150px;
+      height: 26px;
+      animation: honeyDrop 4.8s ease-in-out infinite;
     }
     .honey-drop--two {
-      left: 56%;
-      top: 39px;
-      height: 34px;
-      opacity: .66;
-      animation: honeyHang 4.2s ease-in-out infinite .4s;
+      left: 46.7%;
+      top: 121px;
+      height: 20px;
+      opacity: .70;
+      animation: honeyDrop 5.4s ease-in-out infinite .55s;
     }
     .steam {
       position: absolute;
-      bottom: 282px;
-      width: 42px;
-      height: 96px;
+      bottom: 292px;
+      width: 52px;
+      height: 120px;
       border-radius: 999px;
-      border-left: 3px solid rgba(120, 64, 0, .19);
-      filter: blur(.2px);
-      animation: steamRise 4s ease-in-out infinite;
+      border-left: 4px solid rgba(120, 64, 0, .11);
+      border-top: 2px solid rgba(255, 255, 255, .22);
+      filter: blur(.7px);
+      animation: steamRise 5.2s ease-in-out infinite;
+      z-index: 5;
     }
-    .steam--one { left: 42%; }
-    .steam--two { left: 50%; animation-delay: .6s; transform: scale(.9); }
-    .steam--three { left: 57%; animation-delay: 1.1s; transform: scale(.78); }
+    .steam--one { left: 39%; }
+    .steam--two { left: 49%; animation-delay: .8s; transform: scale(.92); }
+    .steam--three { left: 58%; animation-delay: 1.4s; transform: scale(.78); }
+    .surface-shadow {
+      position: absolute;
+      left: 22%;
+      right: 16%;
+      bottom: 58px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(65, 28, 0, .13);
+      filter: blur(16px);
+      z-index: 1;
+    }
     .table-note {
       position: absolute;
       left: 26px;
@@ -370,12 +495,25 @@ export const prerender = true;
       color: rgba(89, 45, 0, .46);
     }
     @keyframes steamRise {
-      0%, 100% { opacity: .28; transform: translateY(8px) scale(.9); }
-      50% { opacity: .66; transform: translateY(-10px) scale(1); }
+      0% { opacity: 0; transform: translateY(20px) scale(.82); }
+      28% { opacity: .62; }
+      100% { opacity: 0; transform: translateY(-34px) scale(1.12); }
     }
-    @keyframes honeyHang {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(9px); }
+    @keyframes honeyStretch {
+      0%, 100% { transform: scaleY(.82); opacity: .58; }
+      48% { transform: scaleY(1.08); opacity: .96; }
+    }
+    @keyframes honeyDrop {
+      0%, 100% { transform: translateY(-3px) scale(.9); opacity: .58; }
+      48% { transform: translateY(9px) scale(1.05); opacity: .95; }
+    }
+    @keyframes spoonFloat {
+      0%, 100% { transform: rotate(-9deg) translateY(0); }
+      50% { transform: rotate(-7.5deg) translateY(5px); }
+    }
+    @keyframes coffeeBreath {
+      0%, 100% { transform: scaleX(1); filter: brightness(1); }
+      50% { transform: scaleX(1.025); filter: brightness(1.08); }
     }
 
     .contact-wrap {
@@ -488,10 +626,17 @@ export const prerender = true;
         min-height: 330px;
         border-radius: 26px;
       }
-      .cup { width: min(62%, 260px); bottom: 74px; }
-      .saucer { bottom: 58px; }
-      .steam { bottom: 232px; }
-      .honey-spoon { top: 19%; }
+      .cup { width: min(62%, 260px); bottom: 68px; }
+      .saucer { bottom: 50px; }
+      .surface-shadow { bottom: 49px; }
+      .steam { bottom: 225px; }
+      .honey-spoon { top: 18%; }
+      .honey-jar {
+        right: 7%;
+        bottom: 64px;
+        width: 62px;
+        height: 76px;
+      }
     }
 
     @media (max-width: 560px) {
@@ -512,17 +657,41 @@ export const prerender = true;
         min-height: 54px;
       }
       .coffee-scene {
-        min-height: 292px;
+        min-height: 304px;
         border-radius: 22px;
       }
       .honey-spoon {
-        left: 10%;
-        width: 80%;
+        left: 8%;
+        top: 16%;
+        width: 84%;
       }
-      .cup { width: min(70%, 230px); }
+      .cup {
+        width: min(72%, 230px);
+        bottom: 62px;
+      }
       .cup-handle {
         right: -12%;
         border-width: 14px;
+      }
+      .spoon-bowl {
+        width: 74px;
+        height: 42px;
+      }
+      .honey-thread--one { height: 82px; }
+      .honey-thread--two { height: 58px; }
+      .honey-drop--one { top: 128px; }
+      .honey-drop--two { top: 106px; }
+      .steam {
+        bottom: 204px;
+        height: 94px;
+      }
+      .saucer { bottom: 46px; }
+      .surface-shadow { bottom: 45px; }
+      .honey-jar {
+        right: 5%;
+        bottom: 58px;
+        width: 52px;
+        height: 64px;
       }
       .contact-wrap { padding: 12px 16px 60px; }
       .value { font-size: 17px; }
