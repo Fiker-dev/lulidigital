@@ -5,63 +5,57 @@ export const prerender = true;
 ---
 
 <BaseLayout
-  title="Contact LuliDigital | Virtual Assistant, Marketing & AI Services"
-  description="Contact LuliDigital for executive virtual assistant support, digital marketing, SEO, paid media, brand strategy, and AI automation services."
+  title="Contact LuliDigital | Virtual Assistant Desk, Marketing & AI Services"
+  description="Contact LuliDigital for Virtual Assistant Desk support, digital marketing, SEO, paid media, brand strategy, and AI automation services."
   active="contact"
 >
-
-  <!-- ══════════════════════ OBJECT ASCII — NO BOTS ══════════════ -->
-  <div class="page-sig" aria-hidden="true" data-reveal="fade">
-    <div class="sig-chars">
-
-      <!-- Envelope — no person -->
-      <div class="sig-char">
-        <pre class="sig-pre">
-<span class="sh">╔═════════════════╗</span>
-<span class="con-env sh">║╲               ╱║</span>
-<span class="sh">║ ╲_____________╱ ║</span>
-<span class="sh">║                 ║</span>
-<span class="sh">╚═════════════════╝</span></pre>
-        <span class="sig-label">send a note</span>
-      </div>
-
-      <!-- Speech bubble — no person -->
-      <div class="sig-char">
-        <pre class="sig-pre">
-<span class="sh">╭─────────────────╮</span>
-<span class="con-msg sh">│  hello there!   │</span>
-<span class="sh">│  We're ready.   │</span>
-<span class="sh">╰───┬─────────────╯</span>
-<span class="con-dot sm">    ·</span>
-<span class="con-dot sm">      ·</span></pre>
-        <span class="sig-label">we're listening</span>
-      </div>
-
-      <!-- Coffee + notepad — no person -->
-      <div class="sig-char">
-        <pre class="sig-pre">
-<span class="sh">  ╔═════╗</span>
-<span class="sm">  ║  ✎  ║</span>
-<span class="con-write sh">  ║~~~~~║</span>
-<span class="sh">  ║~~~~~║</span>
-<span class="sh">  ╚═════╝</span>
-<span class="con-cup sh">   ☕</span></pre>
-        <span class="sig-label">let's talk</span>
-      </div>
-
-    </div>
-    <p class="sig-tagline">— <em>Fastest reply: WhatsApp. We actually pick up.</em> —</p>
-  </div>
-
-  <section class="contact-wrap">
-    <header class="contact-head">
-      <div class="kicker">Contact Desk</div>
-      <h1 class="headline" data-bee-stop>Reach the desk.</h1>
+  <section class="contact-invite" aria-labelledby="contact-title">
+    <div class="invite-copy">
+      <p class="invite-pill">Coffee with honey?</p>
+      <header class="contact-head">
+        <div class="kicker">You are invited</div>
+        <h1 id="contact-title" class="headline" data-bee-stop>Come sit with the desk.</h1>
+      </header>
       <p class="subhead">
-        For campaigns, systems, or something you're building — send a note or message the desk.
+        Bring the campaign, system, inbox, launch, or rough idea. We will bring a warm cup,
+        a clear head, and a practical next step.
       </p>
-    </header>
+      <div class="invite-actions" aria-label="Contact options">
+        <a class="invite-btn invite-btn--primary" href="https://wa.me/27602551513" target="_blank" rel="noreferrer">
+          WhatsApp the desk
+        </a>
+        <a class="invite-btn invite-btn--ghost" href="mailto:info@lulidigital.co.za">
+          Email the desk
+        </a>
+      </div>
+      <p class="human-note">Fastest reply: WhatsApp. Real person on the other side.</p>
+    </div>
 
+    <div class="coffee-scene" aria-hidden="true">
+      <div class="steam steam--one"></div>
+      <div class="steam steam--two"></div>
+      <div class="steam steam--three"></div>
+      <div class="honey-spoon">
+        <span class="spoon-bowl"></span>
+        <span class="spoon-stick"></span>
+        <span class="honey-drop honey-drop--one"></span>
+        <span class="honey-drop honey-drop--two"></span>
+      </div>
+      <div class="cup">
+        <div class="coffee"></div>
+        <div class="cup-lip"></div>
+        <div class="cup-body">
+          <span class="cup-glow"></span>
+          <span class="cup-line"></span>
+        </div>
+        <div class="cup-handle"></div>
+      </div>
+      <div class="saucer"></div>
+      <div class="table-note">tell us what you are building</div>
+    </div>
+  </section>
+
+  <section class="contact-wrap" aria-label="Contact details">
     <div class="contact-card">
       <a class="contact-row" href="mailto:info@lulidigital.co.za">
         <span class="glyph" aria-hidden="true">
@@ -71,7 +65,7 @@ export const prerender = true;
           </svg>
         </span>
         <span class="contact-text">
-          <span class="label">Editorial Mail</span>
+          <span class="label">Email the desk</span>
           <span class="value">info@lulidigital.co.za</span>
         </span>
       </a>
@@ -85,86 +79,326 @@ export const prerender = true;
           </svg>
         </span>
         <span class="contact-text">
-          <span class="label">WhatsApp Desk</span>
+          <span class="label">WhatsApp the desk</span>
           <span class="value">+27 60 255 1513</span>
         </span>
       </a>
     </div>
 
-    <p class="fineprint">Fastest reply: WhatsApp.</p>
+    <p class="fineprint">Human reply. Clear next step. No ticket maze.</p>
   </section>
 
   <style>
-    /* ── Fonts ────────────────────────────────────────────────── */
     .headline { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
-    .subhead, .label, .value, .fineprint, .kicker { font-family: var(--font-body, "DM Sans", sans-serif); }
-
-    /* ── Page signature ────────────────────────────────────────── */
-    .page-sig { padding: 48px 0 20px; text-align: center; }
-    .sig-chars { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 20px; }
-    .sig-char { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-    .sig-pre { font-family: var(--font-mono, "SF Mono", ui-monospace, monospace); font-size: 13px; line-height: 1.45; margin: 0; white-space: pre; background: none; border: none; padding: 0; text-align: left; }
-    .sh { color: var(--brand, #7b2d2d); }
-    .sm { color: rgba(20,19,18,.42); }
-    .sig-label { font-family: var(--font-body, "DM Sans", sans-serif); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted, rgba(20,19,18,.4)); font-weight: 600; }
-    .sig-tagline { font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); font-size: clamp(14px, 2vw, 18px); font-style: italic; color: var(--muted, rgba(20,19,18,.5)); margin: 0; }
-
-    /* Contact object animations */
-    .con-env   { display: block; animation: conEnv   2.4s ease-in-out infinite; }
-    .con-msg   { display: block; animation: conMsg   3s   ease-in-out infinite; }
-    .con-dot   { display: block; animation: conDot   1.6s ease-in-out infinite; }
-    .con-write { display: block; animation: conWrite 2s   step-end   infinite; }
-    .con-cup   { display: block; animation: conCup   4s   ease-in-out infinite; }
-
-    @keyframes conEnv   { 0%,100%{opacity:1}  50%{opacity:.5} }
-    @keyframes conMsg   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-3px)} }
-    @keyframes conDot   { 0%,100%{opacity:0}  50%{opacity:1} }
-    @keyframes conWrite { 0%,60%,100%{opacity:1} 65%{opacity:.2} }
-    @keyframes conCup   { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
-
-    /* ── Contact layout ────────────────────────────────────────── */
-    .contact-wrap {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 40px 24px 80px;
-      color: rgba(20,20,20,.92);
+    .subhead, .label, .value, .fineprint, .kicker, .invite-pill, .invite-btn, .human-note, .table-note {
+      font-family: var(--font-body, "DM Sans", sans-serif);
     }
-    .contact-head { text-align: center; margin-bottom: 28px; }
+
+    .contact-invite {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: clamp(52px, 7vw, 92px) 24px clamp(26px, 4vw, 48px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
+      gap: clamp(32px, 6vw, 76px);
+      align-items: center;
+      color: rgba(20, 20, 20, .92);
+    }
+    .invite-copy { max-width: 620px; }
+    .invite-pill {
+      width: fit-content;
+      margin: 0 0 22px;
+      padding: 9px 15px;
+      border-radius: 999px;
+      border: 1px solid rgba(196, 119, 0, .28);
+      background: linear-gradient(135deg, rgba(255, 236, 173, .82), rgba(255, 255, 255, .54));
+      box-shadow: 0 14px 28px rgba(196, 119, 0, .10);
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: #8f5200;
+    }
+    .contact-head { margin-bottom: 16px; }
     .kicker {
       letter-spacing: .22em;
       font-size: 11px;
       text-transform: uppercase;
-      color: var(--muted, rgba(20,19,18,.5));
+      color: #9d6a16;
       margin-bottom: 14px;
-      font-weight: 600;
+      font-weight: 800;
     }
     .headline {
-      font-size: clamp(44px, 5vw, 80px);
-      line-height: .96;
-      margin: 0 0 10px;
-      font-weight: 700;
-      letter-spacing: -.04em;
+      font-size: clamp(48px, 7vw, 104px);
+      line-height: .92;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 0;
+      max-width: 680px;
     }
     .subhead {
-      margin: 0 auto;
-      max-width: 520px;
-      font-size: 16px;
-      line-height: 1.65;
-      color: rgba(20,20,20,.65);
+      margin: 0;
+      max-width: 560px;
+      font-size: clamp(17px, 1.5vw, 21px);
+      line-height: 1.6;
+      color: rgba(20, 20, 20, .68);
+    }
+    .invite-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .invite-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 24px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 900;
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .invite-btn:hover { transform: translateY(-2px); }
+    .invite-btn--primary {
+      color: #fff;
+      background: linear-gradient(135deg, #c87600, #8c340f);
+      box-shadow: 0 18px 36px rgba(196, 119, 0, .24);
+    }
+    .invite-btn--ghost {
+      color: #8f5200;
+      border: 1px solid rgba(196, 119, 0, .55);
+      background: rgba(255, 255, 255, .5);
+    }
+    .human-note {
+      margin: 18px 0 0;
+      font-size: 13px;
+      color: rgba(20, 20, 20, .54);
     }
 
+    .coffee-scene {
+      position: relative;
+      min-height: 430px;
+      border-radius: 32px;
+      overflow: hidden;
+      border: 1px solid rgba(196, 119, 0, .18);
+      background:
+        radial-gradient(circle at 22% 18%, rgba(255, 255, 255, .86) 0 8%, transparent 23%),
+        radial-gradient(circle at 76% 72%, rgba(255, 197, 63, .24), transparent 34%),
+        linear-gradient(145deg, rgba(255, 244, 205, .92), rgba(255, 255, 255, .58) 54%, rgba(248, 196, 85, .28));
+      box-shadow: 0 26px 70px rgba(74, 38, 0, .14), inset 0 1px 0 rgba(255, 255, 255, .74);
+      isolation: isolate;
+    }
+    .coffee-scene::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .36;
+      background-image:
+        linear-gradient(30deg, rgba(196, 119, 0, .16) 12%, transparent 12.5%, transparent 87%, rgba(196, 119, 0, .16) 87.5%, rgba(196, 119, 0, .16)),
+        linear-gradient(150deg, rgba(196, 119, 0, .16) 12%, transparent 12.5%, transparent 87%, rgba(196, 119, 0, .16) 87.5%, rgba(196, 119, 0, .16));
+      background-size: 82px 48px;
+      z-index: -1;
+    }
+    .coffee-scene::after {
+      content: "";
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      bottom: 82px;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(73, 35, 0, .10);
+      filter: blur(12px);
+    }
+    .cup {
+      position: absolute;
+      left: 50%;
+      bottom: 92px;
+      width: min(56%, 300px);
+      aspect-ratio: 1.18;
+      transform: translateX(-50%);
+    }
+    .cup-body {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      bottom: 0;
+      height: 72%;
+      border-radius: 0 0 42% 42%;
+      background: linear-gradient(140deg, #fff9e9, #f2c26b 52%, #b86d00);
+      border: 1px solid rgba(94, 47, 0, .16);
+      box-shadow: inset 16px 6px 28px rgba(255, 255, 255, .5), inset -18px -18px 28px rgba(132, 67, 0, .18);
+    }
+    .cup-lip {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 16%;
+      height: 29%;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #fff9ed, #f0d49b);
+      border: 1px solid rgba(94, 47, 0, .18);
+      box-shadow: inset 0 8px 18px rgba(255, 255, 255, .7);
+      z-index: 2;
+    }
+    .coffee {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: 22%;
+      height: 18%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 34% 36%, #c98216, #5b2607 64%, #351204);
+      z-index: 3;
+    }
+    .cup-handle {
+      position: absolute;
+      right: -15%;
+      top: 35%;
+      width: 34%;
+      height: 34%;
+      border: 18px solid rgba(190, 112, 0, .72);
+      border-left: 0;
+      border-radius: 0 999px 999px 0;
+    }
+    .cup-glow {
+      position: absolute;
+      inset: 14% auto auto 16%;
+      width: 34%;
+      height: 24%;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .42);
+      filter: blur(8px);
+    }
+    .cup-line {
+      position: absolute;
+      left: 21%;
+      right: 21%;
+      bottom: 26%;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(112, 54, 0, .18);
+    }
+    .saucer {
+      position: absolute;
+      left: 50%;
+      bottom: 72px;
+      width: min(70%, 380px);
+      height: 48px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: linear-gradient(180deg, rgba(255, 250, 232, .92), rgba(218, 157, 38, .32));
+      border: 1px solid rgba(94, 47, 0, .12);
+      box-shadow: 0 18px 34px rgba(85, 44, 0, .13);
+    }
+    .honey-spoon {
+      position: absolute;
+      left: 18%;
+      top: 23%;
+      width: 64%;
+      height: 74px;
+      transform: rotate(-8deg);
+    }
+    .spoon-stick {
+      position: absolute;
+      left: 16%;
+      right: 2%;
+      top: 31px;
+      height: 9px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f7d484, #a45a00);
+      box-shadow: 0 9px 20px rgba(166, 91, 0, .18);
+    }
+    .spoon-bowl {
+      position: absolute;
+      left: 0;
+      top: 16px;
+      width: 72px;
+      height: 38px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #fff0b2, #c57700 72%);
+      box-shadow: inset 0 4px 14px rgba(255, 255, 255, .52);
+    }
+    .honey-drop {
+      position: absolute;
+      width: 13px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ffd86b, #c87600);
+      box-shadow: 0 8px 20px rgba(196, 119, 0, .22);
+    }
+    .honey-drop--one {
+      left: 22%;
+      top: 42px;
+      height: 54px;
+      animation: honeyHang 3.6s ease-in-out infinite;
+    }
+    .honey-drop--two {
+      left: 56%;
+      top: 39px;
+      height: 34px;
+      opacity: .66;
+      animation: honeyHang 4.2s ease-in-out infinite .4s;
+    }
+    .steam {
+      position: absolute;
+      bottom: 282px;
+      width: 42px;
+      height: 96px;
+      border-radius: 999px;
+      border-left: 3px solid rgba(120, 64, 0, .19);
+      filter: blur(.2px);
+      animation: steamRise 4s ease-in-out infinite;
+    }
+    .steam--one { left: 42%; }
+    .steam--two { left: 50%; animation-delay: .6s; transform: scale(.9); }
+    .steam--three { left: 57%; animation-delay: 1.1s; transform: scale(.78); }
+    .table-note {
+      position: absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 24px;
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: rgba(89, 45, 0, .46);
+    }
+    @keyframes steamRise {
+      0%, 100% { opacity: .28; transform: translateY(8px) scale(.9); }
+      50% { opacity: .66; transform: translateY(-10px) scale(1); }
+    }
+    @keyframes honeyHang {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(9px); }
+    }
+
+    .contact-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 10px 24px 80px;
+      color: rgba(20, 20, 20, .92);
+    }
     .contact-card {
-      margin: 34px auto 0;
+      margin: 0 auto;
       max-width: 720px;
-      background: rgba(255,255,255,.62);
-      border: 1px solid rgba(30,30,30,.14);
+      background: rgba(255, 255, 255, .62);
+      border: 1px solid rgba(30, 30, 30, .14);
       border-radius: 20px;
-      box-shadow: 0 18px 40px rgba(20,20,20,.08), inset 0 1px 0 rgba(255,255,255,.65);
+      box-shadow: 0 18px 40px rgba(20, 20, 20, .08), inset 0 1px 0 rgba(255, 255, 255, .65);
       backdrop-filter: blur(8px);
       padding: 6px;
     }
-    .contact-card a, .contact-card a:visited { color: inherit !important; text-decoration: none !important; }
-
+    .contact-card a,
+    .contact-card a:visited {
+      color: inherit !important;
+      text-decoration: none !important;
+    }
     .contact-row {
       display: flex;
       align-items: center;
@@ -174,29 +408,133 @@ export const prerender = true;
       transition: transform .15s ease, background .15s ease;
       position: relative;
     }
-    .contact-row:hover { background: rgba(255,255,255,.55); transform: translateY(-2px); }
-    .contact-row::after { content: "→"; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: rgba(20,20,20,.45); font-size: 18px; }
-
+    .contact-row:hover { background: rgba(255, 255, 255, .55); transform: translateY(-2px); }
+    .contact-row::after {
+      content: "->";
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(20, 20, 20, .45);
+      font-size: 18px;
+    }
     .glyph {
-      width: 48px; height: 48px;
-      display: grid; place-items: center;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
       border-radius: 14px;
-      background: rgba(245,241,232,.9);
-      border: 1px solid rgba(30,30,30,.10);
+      background: rgba(245, 241, 232, .9);
+      border: 1px solid rgba(30, 30, 30, .10);
       color: var(--brand, #7b2d2d);
       flex-shrink: 0;
     }
-    .contact-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; padding-right: 28px; }
-    .label { font-size: 11px; letter-spacing: .18em; color: rgba(20,20,20,.5); text-transform: uppercase; font-weight: 600; }
-    .value { font-size: 20px; line-height: 1.2; font-weight: 600; color: rgba(20,20,20,.9); word-break: break-word; }
-    .divider { height: 1px; margin: 0 20px; background: rgba(20,20,20,.08); }
-    .fineprint { text-align: center; margin: 14px 0 0; font-size: 11px; letter-spacing: .14em; color: rgba(20,20,20,.45); text-transform: uppercase; }
+    .contact-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+      padding-right: 34px;
+    }
+    .label {
+      font-size: 11px;
+      letter-spacing: .18em;
+      color: rgba(20, 20, 20, .5);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .value {
+      font-size: 20px;
+      line-height: 1.2;
+      font-weight: 600;
+      color: rgba(20, 20, 20, .9);
+      word-break: break-word;
+    }
+    .divider { height: 1px; margin: 0 20px; background: rgba(20, 20, 20, .08); }
+    .fineprint {
+      text-align: center;
+      margin: 14px 0 0;
+      font-size: 11px;
+      letter-spacing: .14em;
+      color: rgba(20, 20, 20, .45);
+      text-transform: uppercase;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .steam,
+      .honey-drop,
+      .invite-btn,
+      .contact-row {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .contact-invite {
+        grid-template-columns: 1fr;
+        padding-top: 34px;
+        text-align: center;
+      }
+      .invite-copy { max-width: none; }
+      .invite-pill,
+      .invite-actions {
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+      }
+      .subhead { margin-left: auto; margin-right: auto; }
+      .coffee-scene {
+        min-height: 330px;
+        border-radius: 26px;
+      }
+      .cup { width: min(62%, 260px); bottom: 74px; }
+      .saucer { bottom: 58px; }
+      .steam { bottom: 232px; }
+      .honey-spoon { top: 19%; }
+    }
 
     @media (max-width: 560px) {
-      .contact-wrap { padding: 24px 16px 60px; }
+      .contact-invite {
+        padding: 28px 16px 22px;
+        gap: 24px;
+      }
+      .headline { font-size: clamp(42px, 13vw, 60px); }
+      .subhead { font-size: 16px; }
+      .invite-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+        gap: 10px;
+      }
+      .invite-btn {
+        width: 100%;
+        min-height: 54px;
+      }
+      .coffee-scene {
+        min-height: 292px;
+        border-radius: 22px;
+      }
+      .honey-spoon {
+        left: 10%;
+        width: 80%;
+      }
+      .cup { width: min(70%, 230px); }
+      .cup-handle {
+        right: -12%;
+        border-width: 14px;
+      }
+      .contact-wrap { padding: 12px 16px 60px; }
       .value { font-size: 17px; }
-      .sig-chars { gap: 20px; }
-      .sig-pre { font-size: 11px; }
+      .contact-row {
+        padding: 18px 14px;
+        gap: 12px;
+      }
+      .contact-row::after { right: 14px; }
+      .glyph {
+        width: 44px;
+        height: 44px;
+      }
     }
   </style>
 </BaseLayout>
