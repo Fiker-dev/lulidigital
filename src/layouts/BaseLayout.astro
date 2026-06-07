@@ -347,12 +347,12 @@ const jsonLd = {
       if (!AudioCtor) return;
       audioCtx = new AudioCtor();
       audioReady = true;
-      playBuzz(0.018, 0.08);
+      playBuzz(0.03, 0.11);
     };
 
     window.addEventListener("pointerdown", unlockAudio, { once: true, passive: true });
 
-    function playBuzz(volume = 0.026, duration = 0.14) {
+    function playBuzz(volume = 0.045, duration = 0.18) {
       if (!audioReady || !audioCtx || reduced) return;
       const now = audioCtx.currentTime;
       if (now - lastBuzz < 1.2) return;
@@ -388,7 +388,7 @@ const jsonLd = {
           ty = Math.max(isSmall ? 70 : 80, Math.min(r.top + Math.min(34, r.height * 0.28), window.innerHeight - (isSmall ? 74 : 84)));
           isLanded = true;
           bee.classList.add("is-landed");
-          playBuzz(targetIsFinal ? 0.035 : 0.024, targetIsFinal ? 0.18 : 0.12);
+          playBuzz(targetIsFinal ? 0.06 : 0.042, targetIsFinal ? 0.24 : 0.18);
           clearTimeout(landTimer);
           landTimer = window.setTimeout(() => {
             isLanded = false;
