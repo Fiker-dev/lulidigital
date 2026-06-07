@@ -7,17 +7,27 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 
 const topicsPath = join(__dirname, "blog-topics.json");
+const memoryPath = join(__dirname, "lana-memory.json");
 const topicsData = JSON.parse(readFileSync(topicsPath, "utf8"));
+const memory = existsSync(memoryPath) ? JSON.parse(readFileSync(memoryPath, "utf8")) : { pending_post: null, pending_drafts: [] };
+const queued = memory.pending_post;
 
 const index = topicsData.published_count % topicsData.topics.length;
-const customTitle = process.env.BLOG_TOPIC?.trim();
-const customKeyword = process.env.BLOG_KEYWORD?.trim();
-const customCategory = process.env.BLOG_CATEGORY?.trim();
-const customPainPoint = process.env.BLOG_PAIN_POINT?.trim();
-const customAngle = process.env.BLOG_ANGLE?.trim();
-const customToneNotes = process.env.BLOG_TONE_NOTES?.trim();
-const useSeoAgent = process.env.BLOG_USE_SEO_AGENT === "true";
-const isDraft = process.env.BLOG_DRAFT === "true";
+// Memory queue takes highest priority — overrides SEO agent and env vars
+const customTitle = queued?.topic || process.env.BLOG_TOPIC?.trim();
+const customKeyword = queued?.keyword || process.env.BLOG_KEYWORD?.trim();
+const customCategory = queued?.category || process.env.BLOG_CATEGORY?.trim();
+const customPainPoint = queued?.pain_point || process.env.BLOG_PAIN_POINT?.trim();
+const customAngle = queued?.angle || process.env.BLOG_ANGLE?.trim();
+const customToneNotes = queued?.tone_notes || process.env.BLOG_TONE_NOTES?.trim();
+const customCta = queued?.cta_text || null;
+const customCtaLink = queued?.cta_link || null;
+const useSeoAgent = !queued && process.env.BLOG_USE_SEO_AGENT === "true";
+const isDraft = queued?.draft ?? process.env.BLOG_DRAFT === "true";
+
+if (queued) {
+  console.log(`Using queued instructions from LANa memory: "${queued.topic || "(SEO auto)"}"`);
+}
 const seoRecommendation = !customTitle && useSeoAgent ? await getBestRegionalSeoRecommendation({ forceRefresh: true }) : null;
 const localTargets = {
   AFRICA: { label: "Africa Growth Desk", path: "/africa" },
@@ -88,6 +98,7 @@ ${seoAgentTopic?.localTarget ? `Local landing page to link naturally in the arti
 ${customPainPoint ? `Reader pain point to address: ${customPainPoint}` : ""}
 ${customAngle ? `Specific angle to use: ${customAngle}` : ""}
 ${customToneNotes ? `Tone notes from the editor: ${customToneNotes}` : ""}
+${customCta ? `End-of-article CTA text: "${customCta}"${customCtaLink ? ` — link it to ${customCtaLink}` : ""}` : ""}
 
 The article should give genuinely useful, actionable advice. It should feel like pain relief for a founder who is tired of vague advice and wants the next practical move. Structure it with a strong opening paragraph, 4-6 H2 sections, and a closing section. Include a relevant internal link to the LuliDigital service page at the end (use markdown link format to either /ai, /marketing, or /virtual-assistant depending on the topic). If a local landing page is provided, include exactly one natural internal link to that local page as well.`;
 
@@ -153,6 +164,19 @@ writeFileSync("/tmp/post_local_target.txt", seoAgentTopic?.localTarget?.path ?? 
 if (!isCustomTopic) {
   topicsData.published_count += 1;
   writeFileSync(topicsPath, JSON.stringify(topicsData, null, 2));
+}
+
+// Clear the queued instructions now that they have been used.
+// Track the new draft slug so LANa knows what to show/delete.
+if (queued || existsSync(memoryPath)) {
+  const updatedMemory = {
+    pending_post: null,
+    pending_drafts: isDraft
+      ? [...(memory.pending_drafts || []), post.slug]
+      : (memory.pending_drafts || []),
+  };
+  writeFileSync(memoryPath, JSON.stringify(updatedMemory, null, 2));
+  if (queued) console.log("Queued instructions consumed and cleared from memory.");
 }
 
 console.log("Done.");

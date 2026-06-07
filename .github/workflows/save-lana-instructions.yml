@@ -1,0 +1,120 @@
+name: Save LANa Instructions
+
+# LANa calls this via GitHub API to queue instructions for the next scheduled post.
+# Trigger: POST /repos/{owner}/{repo}/actions/workflows/save-lana-instructions.yml/dispatches
+# with inputs below. The queued data is written to scripts/lana-memory.json and committed.
+# generate-post.mjs reads this file first on the next scheduled run.
+
+on:
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'Blog topic / title idea'
+        required: false
+        type: string
+      keyword:
+        description: 'Primary SEO keyword'
+        required: false
+        type: string
+      category:
+        description: 'Category (AI Automation, Digital Marketing, Virtual Assistant, Lead Generation…)'
+        required: false
+        type: string
+      pain_point:
+        description: 'Reader pain point to address'
+        required: false
+        type: string
+      angle:
+        description: 'Angle or story direction (e.g. problem-solution, case study, how-to)'
+        required: false
+        type: string
+      tone_notes:
+        description: 'Tone notes (e.g. funny, relatable, practical, pain relief)'
+        required: false
+        type: string
+      cta_text:
+        description: 'End-of-article CTA text'
+        required: false
+        type: string
+      cta_link:
+        description: 'Internal link for the CTA (/ai, /marketing, /virtual-assistant, /landing-pages)'
+        required: false
+        type: string
+      draft:
+        description: 'Generate as draft instead of publishing immediately'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+jobs:
+  save-instructions:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Write instructions to memory file
+        run: |
+          node - <<'EOF'
+          import { readFileSync, writeFileSync, existsSync } from "fs";
+          const path = "scripts/lana-memory.json";
+          const existing = existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : { pending_post: null, pending_drafts: [] };
+          const pending = {
+            topic:      "${{ github.event.inputs.topic }}".trim() || null,
+            keyword:    "${{ github.event.inputs.keyword }}".trim() || null,
+            category:   "${{ github.event.inputs.category }}".trim() || null,
+            pain_point: "${{ github.event.inputs.pain_point }}".trim() || null,
+            angle:      "${{ github.event.inputs.angle }}".trim() || null,
+            tone_notes: "${{ github.event.inputs.tone_notes }}".trim() || null,
+            cta_text:   "${{ github.event.inputs.cta_text }}".trim() || null,
+            cta_link:   "${{ github.event.inputs.cta_link }}".trim() || null,
+            draft:      "${{ github.event.inputs.draft }}" === "true",
+            queued_at:  new Date().toISOString(),
+          };
+          Object.keys(pending).forEach(k => { if (pending[k] === null || pending[k] === "") delete pending[k]; });
+          writeFileSync(path, JSON.stringify({ ...existing, pending_post: pending }, null, 2));
+          console.log("Saved:", JSON.stringify(pending, null, 2));
+          EOF
+        shell: node {0}
+
+      - name: Commit and push memory file
+        run: |
+          git config user.name "LuliDigital Bot"
+          git config user.email "bot@lulidigital.com"
+          git add scripts/lana-memory.json
+          git diff --staged --quiet && echo "Nothing changed" && exit 0
+          git commit -m "lana: queue next post instructions"
+          git push
+
+      - name: Confirm via Telegram
+        run: |
+          TOPIC="${{ github.event.inputs.topic }}"
+          ANGLE="${{ github.event.inputs.angle }}"
+          DRAFT="${{ github.event.inputs.draft }}"
+          if [ -z "$TOPIC" ]; then TOPIC="(SEO auto-select)"; fi
+          if [ "$DRAFT" = "true" ]; then
+            STATUS="as a draft"
+          else
+            STATUS="and publish immediately"
+          fi
+          MESSAGE=$(cat <<EOF
+Got it. Queued for the next scheduled post.
+
+Topic: ${TOPIC}
+Angle: ${ANGLE:-not specified}
+Will generate: ${STATUS}
+
+I'll run this on the next scheduled post (Mon, Wed, or Fri at 8am UTC). You can override it anytime by sending new instructions.
+EOF
+          )
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            --data-urlencode "text=${MESSAGE}"

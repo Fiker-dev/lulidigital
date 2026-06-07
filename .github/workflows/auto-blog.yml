@@ -83,7 +83,7 @@ jobs:
         run: |
           git config user.name "LuliDigital Bot"
           git config user.email "bot@lulidigital.com"
-          git add src/content/blog/ scripts/blog-topics.json
+          git add src/content/blog/ scripts/blog-topics.json scripts/lana-memory.json
           git diff --staged --quiet && echo "No changes" && exit 0
           git commit -m "Auto: publish $(cat /tmp/post_title.txt)"
           git push
@@ -110,15 +110,15 @@ jobs:
           CATEGORY=$(cat /tmp/post_category.txt)
           URL="https://lulidigital.com/blog/${SLUG}"
           MESSAGE=$(cat <<EOF
-          New post live on LuliDigital
+New post live on LuliDigital
 
-          ${CATEGORY}
-          ${TITLE}
+${CATEGORY}
+${TITLE}
 
-          ${URL}
+${URL}
 
-          Not happy with it? Reply "take down ${SLUG}" and I'll remove it.
-          EOF
+Not happy with it? Reply "take down ${SLUG}" and I'll remove it.
+EOF
           )
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
@@ -131,20 +131,27 @@ jobs:
           SLUG=$(cat /tmp/post_slug.txt)
           CATEGORY=$(cat /tmp/post_category.txt)
           DESCRIPTION=$(cat /tmp/post_description.txt)
+          PREVIEW_URL="https://github.com/${{ github.repository }}/blob/main/src/content/blog/${SLUG}.md"
           MESSAGE=$(cat <<EOF
-          Draft ready for review
+Draft ready for your review
 
-          ${CATEGORY}
-          ${TITLE}
+${CATEGORY}
+${TITLE}
 
-          ${DESCRIPTION}
+${DESCRIPTION}
 
-          Approve now:
-          /publish ${SLUG}
+Read the full draft:
+${PREVIEW_URL}
 
-          Schedule:
-          /schedule ${SLUG} YYYY-MM-DD
-          EOF
+To publish now, reply:
+/publish ${SLUG}
+
+To schedule for a date, reply:
+/schedule ${SLUG} YYYY-MM-DD
+
+To delete it, reply:
+/delete-draft ${SLUG}
+EOF
           )
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \

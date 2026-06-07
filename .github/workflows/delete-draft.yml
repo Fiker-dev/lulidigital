@@ -1,0 +1,73 @@
+name: Delete Draft Post
+
+# Permanently removes a draft from the repo. LANa triggers this when you say
+# "delete the draft" or "/delete-draft {slug}" in Telegram.
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'Draft blog slug to delete'
+        required: true
+        type: string
+
+jobs:
+  delete-draft:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Delete draft file
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          FILE="src/content/blog/${SLUG}.md"
+          if [ ! -f "$FILE" ]; then
+            echo "File not found: $FILE"
+            curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+              --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+              --data-urlencode "text=Could not find a draft with slug: ${SLUG}. Check the slug and try again."
+            exit 0
+          fi
+          rm "$FILE"
+          echo "Deleted $FILE"
+
+      - name: Remove slug from memory pending_drafts
+        run: |
+          node - <<'EOF'
+          import { readFileSync, writeFileSync, existsSync } from "fs";
+          const path = "scripts/lana-memory.json";
+          if (!existsSync(path)) process.exit(0);
+          const memory = JSON.parse(readFileSync(path, "utf8"));
+          const slug = "${{ github.event.inputs.slug }}";
+          memory.pending_drafts = (memory.pending_drafts || []).filter(s => s !== slug);
+          writeFileSync(path, JSON.stringify(memory, null, 2));
+          EOF
+        shell: node {0}
+
+      - name: Commit and push
+        run: |
+          git config user.name "LuliDigital Bot"
+          git config user.email "bot@lulidigital.com"
+          git add src/content/blog/ scripts/lana-memory.json
+          git diff --staged --quiet && echo "No changes" && exit 0
+          git commit -m "Delete draft blog post ${{ github.event.inputs.slug }}"
+          git push
+
+      - name: Send Telegram confirmation
+        run: |
+          SLUG="${{ github.event.inputs.slug }}"
+          MESSAGE=$(cat <<EOF
+Draft deleted: ${SLUG}
+
+It's gone from the repo. Want me to write a new one? Just tell me the topic.
+EOF
+          )
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            --data-urlencode "text=${MESSAGE}"
