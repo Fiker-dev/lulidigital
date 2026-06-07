@@ -475,7 +475,7 @@ h1 .kw::after, h2 .kw::after, h3 .kw::after {
   .page{ padding: 18px 16px 60px; }
 }
 
-/* Jando exhibit card: creased paper prop */
+/* Case study card: creased paper prop */
 .content main.page .exhibit-card,
 .content main.page .missing-card{
   position: relative;

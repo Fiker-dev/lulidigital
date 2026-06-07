@@ -4,7 +4,7 @@ import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
 
 export const prerender = false;
 
-const seoTarget = getWeeklyPageSeoTarget("/marketing");
+const seoTarget = getWeeklyPageSeoTarget("/marketing-desk");
 
 Astro.response.headers.set("Cache-Control", "s-maxage=604800, stale-while-revalidate=86400");
 
@@ -62,7 +62,7 @@ const mktMarquee = [
         </p>
         <div class="mkt-ctas" data-stagger data-stagger-gap="80">
           <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">Request a walkthrough</a>
-          <a class="pill pill--outline magnetic" href="/ai">Visit AI Desk</a>
+          <a class="pill pill--outline magnetic" href="/ai-desk">Visit AI Desk</a>
         </div>
       </div>
 

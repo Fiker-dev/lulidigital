@@ -17,15 +17,25 @@ export const localizedOrganizationSchema = {
   "name": "LuliDigital",
   "url": siteUrl,
   "logo": `${siteUrl}/favicon.png`,
-  "description": "LuliDigital is an international digital studio offering performance marketing, AI workflow automation, conversational AI assistants, and executive virtual assistant services for founders and businesses across Europe and beyond.",
+  "description": "LuliDigital provides premium digital marketing, AI-driven business automation solutions, and specialized executive virtual assistant services for founders and modern brands across South Africa, Africa, Europe, the United Kingdom, and the United States.",
+  "email": "info@lulidigital.co.za",
+  "telephone": sharedTelephone,
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Johannesburg",
     "addressCountry": "ZA",
   },
+  "sameAs": [
+    "https://www.linkedin.com/company/lulidigital",
+    "https://clutch.co/profile/lulidigital",
+    "https://www.sortlist.com/agency/lulidigital",
+  ],
   "areaServed": [
-    { "@type": "Country", "name": "South Africa" },
-    { "@type": "Place", "name": "Africa" },
+    { "@type": "AdministrativeArea", "name": "South Africa" },
+    { "@type": "AdministrativeArea", "name": "United States" },
+    { "@type": "AdministrativeArea", "name": "United Kingdom" },
+    { "@type": "AdministrativeArea", "name": "Europe" },
+    { "@type": "AdministrativeArea", "name": "Africa" },
     { "@type": "Country", "name": "Nigeria" },
     { "@type": "Country", "name": "Kenya" },
     { "@type": "Country", "name": "Ghana" },
@@ -39,19 +49,13 @@ export const localizedOrganizationSchema = {
   ],
   "knowsAbout": [
     "Digital Marketing",
-    "Performance Marketing",
-    "Brand Strategy",
-    "Paid Media Management",
-    "SEO Services",
-    "Content Marketing",
-    "AI Workflow Automation",
-    "Conversational AI Assistants",
-    "AI Agent Implementation",
-    "Business Process Automation",
+    "AI Automation and Business Workflow Systems",
     "Executive Virtual Assistant Services",
-    "Remote Executive Assistant",
-    "Inbox and Calendar Management",
-    "Project Management",
+    "Brand Strategy",
+    "Paid Media Execution",
+    "Performance Marketing",
+    "SEO Services",
+    "Conversational AI Assistants",
   ],
 };
 
@@ -88,11 +92,13 @@ export const markets = {
       ],
       description:
         "Digital marketing, SEO, AI automation, paid media, brand strategy, and executive virtual assistant services for African companies, international teams, and dollar-earning service businesses.",
-      areaServed: { "@type": "Place", name: "Africa" },
+      areaServed: [
+        { "@type": "AdministrativeArea", name: "Africa" },
+      ],
     },
     localBusinessSchema: {
       name: "LuliDigital Africa",
-      logo: `${siteUrl}/favicon.svg`,
+      logo: `${siteUrl}/favicon.png`,
       telephone: sharedTelephone,
       openingHours,
       address: {
@@ -168,11 +174,13 @@ export const markets = {
       ],
       description:
         "South Africa digital marketing agency offering performance marketing, SEO, paid media, brand strategy, AI workflow automation, conversational AI assistants, and executive virtual assistant services.",
-      areaServed: { "@type": "Country", name: "South Africa" },
+      areaServed: [
+        { "@type": "AdministrativeArea", name: "South Africa" },
+      ],
     },
     localBusinessSchema: {
       name: "LuliDigital South Africa",
-      logo: `${siteUrl}/favicon.svg`,
+      logo: `${siteUrl}/favicon.png`,
       telephone: sharedTelephone,
       openingHours,
       address: {
@@ -249,11 +257,15 @@ export const markets = {
       ],
       description:
         "Amsterdam digital marketing agency offering performance marketing, paid media, brand strategy, AI workflow automation, conversational AI assistants, and executive virtual assistant services for tech founders and enterprise teams.",
-      areaServed: { "@type": "City", name: "Amsterdam" },
+      areaServed: [
+        { "@type": "City", name: "Amsterdam" },
+        { "@type": "Country", name: "Netherlands" },
+        { "@type": "AdministrativeArea", name: "Europe" },
+      ],
     },
     localBusinessSchema: {
       name: "LuliDigital Amsterdam",
-      logo: `${siteUrl}/favicon.svg`,
+      logo: `${siteUrl}/favicon.png`,
       telephone: sharedTelephone,
       openingHours,
       address: {
@@ -331,11 +343,15 @@ export const markets = {
       ],
       description:
         "Munich digital marketing agency offering corporate performance marketing, enterprise AI workflow automation, and executive virtual assistant services for B2B enterprises and German tech companies.",
-      areaServed: { "@type": "City", name: "Munich" },
+      areaServed: [
+        { "@type": "City", name: "Munich" },
+        { "@type": "Country", name: "Germany" },
+        { "@type": "AdministrativeArea", name: "Europe" },
+      ],
     },
     localBusinessSchema: {
       name: "LuliDigital Munich",
-      logo: `${siteUrl}/favicon.svg`,
+      logo: `${siteUrl}/favicon.png`,
       telephone: sharedTelephone,
       openingHours,
       address: {
@@ -413,11 +429,15 @@ export const markets = {
       ],
       description:
         "Stockholm digital marketing agency for startups and Nordic brands: performance marketing, brand strategy, AI workflow automation, conversational AI assistants, and virtual assistant services.",
-      areaServed: { "@type": "City", name: "Stockholm" },
+      areaServed: [
+        { "@type": "City", name: "Stockholm" },
+        { "@type": "Country", name: "Sweden" },
+        { "@type": "AdministrativeArea", name: "Europe" },
+      ],
     },
     localBusinessSchema: {
       name: "LuliDigital Stockholm",
-      logo: `${siteUrl}/favicon.svg`,
+      logo: `${siteUrl}/favicon.png`,
       telephone: sharedTelephone,
       openingHours,
       address: {

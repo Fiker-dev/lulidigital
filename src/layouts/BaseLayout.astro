@@ -3,7 +3,7 @@ import "../styles/theme.css";
 import "../styles/motion.css";
 import SiteHeader from "../components/SiteHeader.astro";
 import LanaChat from "../components/LanaChat.astro";
-import ProfileLinks from "../components/ProfileLinks.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 
 const {
   title = "LuliDigital",
@@ -52,16 +52,28 @@ const breadcrumbSchema = breadcrumbSegments.length > 0 ? {
 } : null;
 
 const organizationSchema = {
-  "@type": "ProfessionalService",
+  "@type": ["LocalBusiness", "ProfessionalService"],
   "@id": `${siteUrl}/#organization`,
   "name": "LuliDigital",
-  "image": `${siteUrl}/logo.png`,
+  "image": `${siteUrl}/favicon.png`,
   "url": siteUrl,
   "logo": `${siteUrl}/favicon.png`,
-  "description": "LuliDigital is a premium digital strategy, AI integration, and operational assistance studio built like an agile newsroom and run like a performance lab.",
+  "description": "LuliDigital is an AI Automation, Digital Strategy, and Virtual Assistant Studio built like an agile newsroom and run like a performance lab from Johannesburg, South Africa.",
   "email": "info@lulidigital.co.za",
   "telephone": "+27602551513",
+  "priceRange": "$$",
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "sales and client support",
+      "telephone": "+27602551513",
+      "email": "info@lulidigital.co.za",
+      "areaServed": ["ZA", "GB", "NL", "DE", "SE", "US"],
+      "availableLanguage": ["English"],
+    },
+  ],
   "sameAs": [
+    "https://www.linkedin.com/company/lulidigital",
     "https://clutch.co/profile/lulidigital",
     "https://www.sortlist.com/agency/lulidigital",
   ],
@@ -69,6 +81,11 @@ const organizationSchema = {
     { "@type": "Country", "name": "South Africa" },
     { "@type": "Country", "name": "United Kingdom" },
     { "@type": "Country", "name": "United States" },
+    { "@type": "Country", "name": "Netherlands" },
+    { "@type": "Country", "name": "Germany" },
+    { "@type": "Country", "name": "Sweden" },
+    { "@type": "Place", "name": "Europe" },
+    { "@type": "Place", "name": "Africa" },
   ],
   "knowsAbout": [
     "executive virtual assistant services",
@@ -79,6 +96,8 @@ const organizationSchema = {
     "paid media",
     "SEO services",
     "brand strategy",
+    "Newsroom and Lab",
+    "AI search visibility",
   ],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -124,6 +143,14 @@ const websiteSchema = {
   "url": siteUrl,
   "name": "LuliDigital",
   "publisher": { "@id": `${siteUrl}/#organization` },
+  "hasPart": [
+    {
+      "@type": "WebPage",
+      "name": "Newsroom and Lab",
+      "url": `${siteUrl}/blog`,
+      "description": "LuliDigital's research-led newsroom and lab for digital strategy, AI automation, SEO, and executive operations insights.",
+    },
+  ],
 };
 
 const webpageSchema = {
@@ -260,7 +287,7 @@ const jsonLd = {
     <main class="page">
       <slot />
     </main>
-    <ProfileLinks />
+    <SiteFooter />
     <LanaChat />
   </body>
 </html>

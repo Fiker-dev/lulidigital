@@ -72,7 +72,7 @@ const pageKeywordTargets = {
       "brand strategy services",
     ],
   },
-  "/marketing": {
+  "/marketing-desk": {
     page: "Marketing",
     primary: [
       "digital marketing services",
@@ -87,7 +87,7 @@ const pageKeywordTargets = {
       "content marketing services",
     ],
   },
-  "/ai": {
+  "/ai-desk": {
     page: "AI Automation",
     primary: [
       "AI automation services",
@@ -102,7 +102,7 @@ const pageKeywordTargets = {
       "AI automation for business",
     ],
   },
-  "/virtual-assistant": {
+  "/va-desk": {
     page: "Virtual Assistant",
     primary: [
       "executive virtual assistant services",

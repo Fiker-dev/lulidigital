@@ -69,4 +69,4 @@ Choosing the right digital marketing agency in Johannesburg means finding partne
 
 The best partnerships result in marketing systems that make your entire business more predictable, more scalable, and more valuable. Your Mondays become planning sessions instead of crisis management meetings. Your growth becomes sustainable instead of sporadic.
 
-At LuliDigital, we specialize in [performance marketing](/marketing) that integrates seamlessly with your business operations. We build systems that scale with your growth and create predictable pathways to sustainable success.
+At LuliDigital, we specialize in [performance marketing](/marketing-desk) that integrates seamlessly with your business operations. We build systems that scale with your growth and create predictable pathways to sustainable success.

@@ -98,4 +98,4 @@ Recognize good work publicly when appropriate. Virtual assistants often feel iso
 
 Hiring the right virtual assistant transforms how you spend your time and grows your business capacity. The key lies in thorough preparation, careful selection, and ongoing investment in the relationship. Take time upfront to define needs clearly, implement proper systems, and provide structured onboarding. The result is a valuable team member who handles routine tasks professionally while you focus on strategic priorities.
 
-If you need a virtual assistant who comes with established processes and dedicated account management, [LuliDigital's executive virtual assistant service](/virtual-assistant) provides experienced professionals who integrate seamlessly with your existing operations.
+If you need a virtual assistant who comes with established processes and dedicated account management, [LuliDigital's executive virtual assistant service](/va-desk) provides experienced professionals who integrate seamlessly with your existing operations.

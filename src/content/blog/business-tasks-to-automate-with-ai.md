@@ -92,6 +92,6 @@ The biggest mistake founders make with AI automation is trying to automate every
 
 Usually that's one of the five above.
 
-If you're not sure which one to start with, [the AI Desk at LuliDigital](/ai) works through exactly this — scoping which processes have the highest return, building the right system, and managing the implementation so your team doesn't have to.
+If you're not sure which one to start with, [the AI Desk at LuliDigital](/ai-desk) works through exactly this — scoping which processes have the highest return, building the right system, and managing the implementation so your team doesn't have to.
 
 [Start with a brief →](/amsterdam)
