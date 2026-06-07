@@ -1,5 +1,6 @@
 const ONE_DAY = 1000 * 60 * 60 * 24;
 const CACHE_TTL = 1000 * 60 * 60 * 6;
+const SITE_URL = "https://lulidigital.com";
 
 const cachedRecommendations = new Map();
 
@@ -280,6 +281,104 @@ const normalizePath = (path = "/") => {
   return cleanPath === "/" ? "/" : cleanPath.replace(/\/+$/, "");
 };
 
+const isoDate = (date) => date.toISOString().slice(0, 10);
+
+const dateDaysAgo = (days) => {
+  const date = new Date();
+  date.setUTCDate(date.getUTCDate() - days);
+  return date;
+};
+
+const urlToPath = (url) => {
+  try {
+    return normalizePath(new URL(url).pathname);
+  } catch {
+    return normalizePath(url);
+  }
+};
+
+const isBrandedQuery = (query) => /\b(luli|lulidigital|luli digital)\b/i.test(query);
+
+const getGoogleAccessToken = async ({ refreshToken }) => {
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
+  if (!clientId || !clientSecret || !refreshToken) {
+    throw new Error("Missing Google OAuth credentials");
+  }
+
+  const response = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      refresh_token: refreshToken,
+      grant_type: "refresh_token",
+    }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error_description || data.error || `Google OAuth token request failed with ${response.status}`);
+  }
+
+  return data.access_token;
+};
+
+const searchConsoleProperty = () =>
+  process.env.GOOGLE_SEARCH_CONSOLE_PROPERTY || process.env.GSC_PROPERTY || process.env.SEARCH_CONSOLE_PROPERTY;
+
+const searchConsoleRefreshToken = () =>
+  process.env.GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN || process.env.GSC_REFRESH_TOKEN;
+
+const querySearchConsole = async ({ dimensions = ["page", "query"], days = 28, rowLimit = 2500 } = {}) => {
+  const property = searchConsoleProperty();
+  const refreshToken = searchConsoleRefreshToken();
+
+  if (!property || !refreshToken) {
+    return {
+      configured: false,
+      rows: [],
+      property,
+      source: "Search Console not configured",
+    };
+  }
+
+  const accessToken = await getGoogleAccessToken({ refreshToken });
+  const endpoint = `https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(property)}/searchAnalytics/query`;
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      startDate: isoDate(dateDaysAgo(days + 3)),
+      endDate: isoDate(dateDaysAgo(3)),
+      dimensions,
+      rowLimit,
+      startRow: 0,
+    }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error?.message || `Search Console query failed with ${response.status}`);
+  }
+
+  return {
+    configured: true,
+    rows: data.rows ?? [],
+    property,
+    source: "Google Search Console",
+  };
+};
+
 const chooseKeyword = (trends, now = new Date(), geo = "ZA") => {
   const rankedTrends = trends
     .map((trend) => ({
@@ -354,6 +453,138 @@ export const getWeeklyPageSeoTarget = (path = "/", date = new Date()) => {
 
 export const getWeeklyPageSeoPlan = (date = new Date()) =>
   Object.keys(pageKeywordTargets).map((path) => getWeeklyPageSeoTarget(path, date));
+
+const buildSearchConsoleOpportunityMap = (rows = []) => {
+  const opportunities = new Map();
+
+  rows.forEach((row) => {
+    const [pageUrl, query] = row.keys ?? [];
+    const normalizedQuery = String(query ?? "").trim();
+    const path = urlToPath(String(pageUrl ?? SITE_URL));
+
+    if (!pageKeywordTargets[path] || !normalizedQuery || isBrandedQuery(normalizedQuery)) {
+      return;
+    }
+
+    const impressions = row.impressions ?? 0;
+    const clicks = row.clicks ?? 0;
+    const ctr = row.ctr ?? 0;
+    const position = row.position ?? 100;
+    const relevance = relevanceScore(normalizedQuery);
+
+    if (impressions < 3 || relevance === 0) {
+      return;
+    }
+
+    const opportunityScore =
+      impressions * Math.max(1, 24 - Math.min(position, 24)) * (1 - Math.min(ctr, 0.9)) * (relevance + 1);
+
+    const candidate = {
+      query: normalizedQuery,
+      clicks,
+      impressions,
+      ctr,
+      position,
+      relevance,
+      opportunityScore,
+    };
+
+    const pageOpportunities = opportunities.get(path) ?? [];
+    pageOpportunities.push(candidate);
+    opportunities.set(path, pageOpportunities);
+  });
+
+  return opportunities;
+};
+
+const mergeSearchConsoleTargets = (fallbackPlan, rows = [], source = "Google Search Console") => {
+  const opportunities = buildSearchConsoleOpportunityMap(rows);
+
+  return fallbackPlan.map((target) => {
+    const pageOpportunities = (opportunities.get(target.path) ?? [])
+      .sort((a, b) => b.opportunityScore - a.opportunityScore)
+      .slice(0, 5);
+
+    if (pageOpportunities.length === 0) {
+      return target;
+    }
+
+    const primaryKeyword = pageOpportunities[0].query;
+    const secondaryKeywords = [
+      ...pageOpportunities.slice(1).map((opportunity) => opportunity.query),
+      ...target.secondaryKeywords,
+    ]
+      .filter((keyword, index, list) => list.indexOf(keyword) === index)
+      .slice(0, 4);
+
+    return {
+      ...target,
+      primaryKeyword,
+      secondaryKeywords,
+      keywords: [primaryKeyword, ...secondaryKeywords],
+      source,
+      searchConsole: {
+        property: searchConsoleProperty(),
+        topOpportunities: pageOpportunities,
+      },
+    };
+  });
+};
+
+export const getSearchConsolePerformance = async ({ days = 28 } = {}) => {
+  const result = await querySearchConsole({ days });
+
+  return {
+    ...result,
+    rows: result.rows.map((row) => {
+      const [page, query] = row.keys ?? [];
+
+      return {
+        page,
+        path: urlToPath(page ?? SITE_URL),
+        query,
+        clicks: row.clicks ?? 0,
+        impressions: row.impressions ?? 0,
+        ctr: row.ctr ?? 0,
+        position: row.position ?? 0,
+      };
+    }),
+  };
+};
+
+export const getSearchConsolePageSeoPlan = async ({ date = new Date(), days = 28 } = {}) => {
+  const fallbackPlan = getWeeklyPageSeoPlan(date);
+
+  try {
+    const performance = await querySearchConsole({ days });
+
+    if (!performance.configured) {
+      return {
+        source: performance.source,
+        configured: false,
+        property: performance.property,
+        plan: fallbackPlan,
+      };
+    }
+
+    return {
+      source: performance.source,
+      configured: true,
+      property: performance.property,
+      plan: mergeSearchConsoleTargets(fallbackPlan, performance.rows, performance.source),
+    };
+  } catch (error) {
+    console.error("Search Console SEO plan failed:", error);
+
+    return {
+      source: "LuliDigital weekly page keyword rotation",
+      configured: Boolean(searchConsoleProperty() && searchConsoleRefreshToken()),
+      property: searchConsoleProperty(),
+      error: error.message,
+      plan: fallbackPlan,
+    };
+  }
+};
 
 export const getDailySeoRecommendation = async ({ forceRefresh = false, geo, market } = {}) => {
   const selectedGeo = geo || process.env.SEO_AGENT_GEO || "ZA";

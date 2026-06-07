@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { getBestRegionalSeoRecommendation, getDailySeoRecommendation, getWeeklyPageSeoPlan } from "../../../lib/seoAgent.js";
+import { getBestRegionalSeoRecommendation, getDailySeoRecommendation, getSearchConsolePageSeoPlan } from "../../../lib/seoAgent.js";
 
 export const prerender = false;
 
@@ -22,8 +22,8 @@ export const GET: APIRoute = async ({ request }) => {
     });
   }
 
-  const [weeklyPagePlan, regionalRecommendations, blogRecommendation] = await Promise.all([
-    Promise.resolve(getWeeklyPageSeoPlan()),
+  const [weeklySeo, regionalRecommendations, blogRecommendation] = await Promise.all([
+    getSearchConsolePageSeoPlan(),
     Promise.all(
       regionalMarkets.map(({ geo, market }) => getDailySeoRecommendation({ forceRefresh: true, geo, market })),
     ),
@@ -33,7 +33,11 @@ export const GET: APIRoute = async ({ request }) => {
   return new Response(JSON.stringify({
     ok: true,
     cadence: "weekly",
-    weeklyPagePlan,
+    weeklySource: weeklySeo.source,
+    searchConsoleConfigured: weeklySeo.configured,
+    searchConsoleProperty: weeklySeo.property,
+    searchConsoleError: weeklySeo.error,
+    weeklyPagePlan: weeklySeo.plan,
     regionalRecommendations,
     blogRecommendation,
   }), {

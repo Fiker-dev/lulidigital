@@ -19,7 +19,7 @@ The site uses a small SEO agent in two cadences:
 - Weekly page optimization: every Monday morning, the site refreshes the page-level keyword plan for the home, service, Africa, South Africa, Amsterdam, Munich, and Stockholm landing pages.
 - Monthly technical audit: run a manual page-speed, indexing, schema, sitemap, and Search Console review.
 
-Actual ranking keywords require Google Search Console or a keyword data provider. Until that is connected, weekly page optimization uses curated service keyword sets plus regional Google Trends signals where available.
+Actual ranking keywords come from Google Search Console when `GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN` and `GOOGLE_SEARCH_CONSOLE_PROPERTY` are configured. Until those are connected, weekly page optimization uses curated service keyword sets plus regional Google Trends signals where available.
 
 Files:
 
@@ -35,6 +35,10 @@ Environment variables:
 
 - `CRON_SECRET`: protects the cron route. Vercel Cron should call the route with `Authorization: Bearer <CRON_SECRET>`.
 - `SEO_AGENT_GEO`: optional Google Trends country code. Defaults to `ZA`.
+- `GOOGLE_CLIENT_ID`: Google OAuth client ID used to refresh Search Console access.
+- `GOOGLE_CLIENT_SECRET`: Google OAuth client secret used to refresh Search Console access.
+- `GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN`: refresh token generated with `https://www.googleapis.com/auth/webmasters.readonly`.
+- `GOOGLE_SEARCH_CONSOLE_PROPERTY`: Search Console property URL, for example `https://lulidigital.com/` or `sc-domain:lulidigital.com`.
 - `BLOG_USE_SEO_AGENT`: optional. Set to `true` in the auto-blog workflow to generate the next blog from the researched daily keyword.
 - `BLOG_SEO_AGENT_GEOS`: optional comma-separated list for blog keyword research. Defaults to `AFRICA,NL,DE,SE,ZA`.
 
