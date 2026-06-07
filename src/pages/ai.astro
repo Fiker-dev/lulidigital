@@ -1,7 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
 
-export const prerender = true;
+export const prerender = false;
+
+const seoTarget = getWeeklyPageSeoTarget("/ai");
+
+Astro.response.headers.set("Cache-Control", "s-maxage=604800, stale-while-revalidate=86400");
 
 const serviceSchema = {
   "name": "AI Automation, Conversational AI & Agent Implementation Services",
@@ -33,6 +38,7 @@ const aiMarquee = [
   title="AI Automation Services, Conversational AI & Agent Implementation | LuliDigital"
   description="LuliDigital builds AI automation systems for business: conversational AI assistants, AI workflow automation, and AI agent implementation. Practical AI integration for executives and growing teams — shipped in weeks."
   active="ai"
+  seoTarget={seoTarget}
   serviceSchema={serviceSchema}
 >
 

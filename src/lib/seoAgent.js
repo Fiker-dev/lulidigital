@@ -55,6 +55,119 @@ const regionalFallbackKeywords = {
   ],
 };
 
+const pageKeywordTargets = {
+  "/": {
+    page: "Home",
+    primary: [
+      "digital marketing and AI automation services",
+      "digital operations studio",
+      "marketing AI automation virtual assistant services",
+      "business automation and marketing support",
+    ],
+    secondary: [
+      "performance marketing",
+      "executive virtual assistant services",
+      "AI workflow automation",
+      "brand strategy services",
+    ],
+  },
+  "/marketing": {
+    page: "Marketing",
+    primary: [
+      "digital marketing services",
+      "performance marketing agency",
+      "AI powered digital marketing",
+      "SEO and paid media services",
+    ],
+    secondary: [
+      "brand strategy services",
+      "Google ads management",
+      "Meta ads management",
+      "content marketing services",
+    ],
+  },
+  "/ai": {
+    page: "AI Automation",
+    primary: [
+      "AI automation services",
+      "AI workflow automation",
+      "AI agent implementation",
+      "business process automation",
+    ],
+    secondary: [
+      "conversational AI assistant",
+      "custom AI chatbot development",
+      "AI integration services",
+      "AI automation for business",
+    ],
+  },
+  "/virtual-assistant": {
+    page: "Virtual Assistant",
+    primary: [
+      "executive virtual assistant services",
+      "remote executive assistant",
+      "virtual assistant for founders",
+      "AI executive assistant support",
+    ],
+    secondary: [
+      "inbox management services",
+      "calendar management services",
+      "remote admin support",
+      "operations support services",
+    ],
+  },
+  "/africa": {
+    page: "Africa",
+    primary: regionalFallbackKeywords.AFRICA,
+    secondary: [
+      "international companies in Africa",
+      "dollar earning African businesses",
+      "African startups digital marketing",
+      "AI automation for African businesses",
+    ],
+  },
+  "/south-africa": {
+    page: "South Africa",
+    primary: regionalFallbackKeywords.ZA,
+    secondary: [
+      "digital marketing agency Johannesburg",
+      "SEO services South Africa",
+      "AI workflow automation South Africa",
+      "virtual assistant services South Africa",
+    ],
+  },
+  "/amsterdam": {
+    page: "Amsterdam",
+    primary: regionalFallbackKeywords.NL,
+    secondary: [
+      "Amsterdam performance marketing",
+      "AI automation for Amsterdam startups",
+      "English digital marketing agency Amsterdam",
+      "virtual assistant services Amsterdam",
+    ],
+  },
+  "/munich": {
+    page: "Munich",
+    primary: regionalFallbackKeywords.DE,
+    secondary: [
+      "Munich performance marketing",
+      "enterprise AI automation Germany",
+      "English digital marketing agency Munich",
+      "B2B marketing Munich",
+    ],
+  },
+  "/stockholm": {
+    page: "Stockholm",
+    primary: regionalFallbackKeywords.SE,
+    secondary: [
+      "Stockholm performance marketing",
+      "AI automation for Nordic startups",
+      "English digital marketing agency Stockholm",
+      "virtual assistant services Stockholm",
+    ],
+  },
+};
+
 const serviceSignals = [
   "ai",
   "digital",
@@ -160,6 +273,13 @@ const fallbackForToday = (date = new Date(), geo = "ZA") => {
   return keywords[dayIndex % keywords.length];
 };
 
+const weekIndexFor = (date = new Date()) => Math.floor(date.getTime() / (ONE_DAY * 7));
+
+const normalizePath = (path = "/") => {
+  const cleanPath = path.split("?")[0].split("#")[0] || "/";
+  return cleanPath === "/" ? "/" : cleanPath.replace(/\/+$/, "");
+};
+
 const chooseKeyword = (trends, now = new Date(), geo = "ZA") => {
   const rankedTrends = trends
     .map((trend) => ({
@@ -209,6 +329,31 @@ export const inferSeoCategory = (keyword) => {
 
   return "AI Automation";
 };
+
+export const getWeeklyPageSeoTarget = (path = "/", date = new Date()) => {
+  const normalizedPath = normalizePath(path);
+  const config = pageKeywordTargets[normalizedPath] ?? pageKeywordTargets["/"];
+  const weekIndex = weekIndexFor(date);
+  const primaryKeyword = config.primary[weekIndex % config.primary.length];
+  const secondaryKeywords = config.secondary
+    .slice(weekIndex % config.secondary.length)
+    .concat(config.secondary.slice(0, weekIndex % config.secondary.length))
+    .slice(0, 4);
+
+  return {
+    path: normalizedPath,
+    page: config.page,
+    primaryKeyword,
+    secondaryKeywords,
+    keywords: [primaryKeyword, ...secondaryKeywords],
+    source: "LuliDigital weekly page keyword rotation",
+    week: weekIndex,
+    updatedAt: date.toISOString(),
+  };
+};
+
+export const getWeeklyPageSeoPlan = (date = new Date()) =>
+  Object.keys(pageKeywordTargets).map((path) => getWeeklyPageSeoTarget(path, date));
 
 export const getDailySeoRecommendation = async ({ forceRefresh = false, geo, market } = {}) => {
   const selectedGeo = geo || process.env.SEO_AGENT_GEO || "ZA";

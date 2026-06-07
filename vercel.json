@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/seo-agent",
       "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/cron/weekly-seo",
+      "schedule": "15 4 * * 1"
     }
   ],
   "redirects": [

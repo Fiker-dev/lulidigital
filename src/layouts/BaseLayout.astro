@@ -13,6 +13,7 @@ const {
   localBusinessSchema,
   organizationSchemaOverride,
   extraSchemas = [],
+  seoTarget,
   ogType = "website",
   hreflangLinks = [],
   showBee = true,
@@ -129,6 +130,16 @@ const webpageSchema = {
   "description": description,
   "isPartOf": { "@id": `${siteUrl}/#website` },
   "about": { "@id": `${siteUrl}/#organization` },
+  ...(seoTarget ? {
+    "keywords": seoTarget.keywords,
+    "about": [
+      { "@id": `${siteUrl}/#organization` },
+      ...seoTarget.keywords.map((keyword) => ({
+        "@type": "Thing",
+        "name": keyword,
+      })),
+    ],
+  } : {}),
 };
 
 const jsonLd = {
@@ -161,6 +172,9 @@ const jsonLd = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {seoTarget?.keywords?.length > 0 && (
+      <meta name="keywords" content={seoTarget.keywords.join(", ")} />
+    )}
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href={canonicalUrl} />
     {hreflangLinks.map((link) => (

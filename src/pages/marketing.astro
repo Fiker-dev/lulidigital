@@ -1,7 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
 
-export const prerender = true;
+export const prerender = false;
+
+const seoTarget = getWeeklyPageSeoTarget("/marketing");
+
+Astro.response.headers.set("Cache-Control", "s-maxage=604800, stale-while-revalidate=86400");
 
 const serviceSchema = {
   "name": "Digital Marketing, Performance Marketing & Brand Strategy Services",
@@ -37,6 +42,7 @@ const mktMarquee = [
   title="Digital Marketing Services, Performance Marketing & Brand Strategy | LuliDigital"
   description="Digital marketing services for founders and growing brands: paid media management, brand strategy, SEO, content marketing, and performance campaigns across Meta, Google, and TikTok."
   active="marketing"
+  seoTarget={seoTarget}
   serviceSchema={serviceSchema}
 >
 

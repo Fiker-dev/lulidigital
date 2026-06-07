@@ -1,0 +1,46 @@
+import type { APIRoute } from "astro";
+import { getBestRegionalSeoRecommendation, getDailySeoRecommendation, getWeeklyPageSeoPlan } from "../../../lib/seoAgent.js";
+
+export const prerender = false;
+
+const regionalMarkets = [
+  { geo: "AFRICA", market: "africa" },
+  { geo: "ZA", market: "south-africa" },
+  { geo: "NL", market: "amsterdam" },
+  { geo: "DE", market: "munich" },
+  { geo: "SE", market: "stockholm" },
+];
+
+export const GET: APIRoute = async ({ request }) => {
+  const cronSecret = process.env.CRON_SECRET;
+  const authHeader = request.headers.get("authorization");
+
+  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  const [weeklyPagePlan, regionalRecommendations, blogRecommendation] = await Promise.all([
+    Promise.resolve(getWeeklyPageSeoPlan()),
+    Promise.all(
+      regionalMarkets.map(({ geo, market }) => getDailySeoRecommendation({ forceRefresh: true, geo, market })),
+    ),
+    getBestRegionalSeoRecommendation({ forceRefresh: false }),
+  ]);
+
+  return new Response(JSON.stringify({
+    ok: true,
+    cadence: "weekly",
+    weeklyPagePlan,
+    regionalRecommendations,
+    blogRecommendation,
+  }), {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store",
+    },
+  });
+};

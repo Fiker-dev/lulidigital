@@ -1,7 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
 
-export const prerender = true;
+export const prerender = false;
+
+const seoTarget = getWeeklyPageSeoTarget("/virtual-assistant");
+
+Astro.response.headers.set("Cache-Control", "s-maxage=604800, stale-while-revalidate=86400");
 
 const serviceSchema = {
   "name": "Executive Virtual Assistant & Remote Operations Support Services",
@@ -37,6 +42,7 @@ const vaMarquee = [
   title="Executive Virtual Assistant Services for Founders & CEOs | LuliDigital"
   description="Executive virtual assistant services for founders, CEOs, and growing teams: remote admin support, inbox management, calendar control, project management, and operational follow-through without a full-time hire."
   active="virtual-assistant"
+  seoTarget={seoTarget}
   serviceSchema={serviceSchema}
 >
 

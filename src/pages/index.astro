@@ -1,7 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
 
-export const prerender = true;
+export const prerender = false;
+
+const seoTarget = getWeeklyPageSeoTarget("/");
+
+Astro.response.headers.set("Cache-Control", "s-maxage=604800, stale-while-revalidate=86400");
 
 const serviceSchema = {
   "name": "Digital Marketing, AI Automation & Executive Virtual Assistant Services",
@@ -33,6 +38,7 @@ const marqueeItems2 = [
 <BaseLayout
   title="LuliDigital | Performance Marketing, AI Automation & Executive Virtual Assistant"
   description="LuliDigital helps founders and executives with performance marketing, brand strategy, AI workflow automation, conversational AI assistants, and remote executive virtual assistant services."
+  seoTarget={seoTarget}
   serviceSchema={serviceSchema}
 >
 

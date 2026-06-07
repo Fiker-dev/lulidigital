@@ -2,9 +2,13 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import LocalizedStudioLanding from "../components/LocalizedStudioLanding.astro";
 import { localizedOrganizationSchema, markets, regionalAlternates } from "../data/localizedMarkets";
-import { getDailySeoRecommendation } from "../lib/seoAgent.js";
+import { getDailySeoRecommendation, getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
 
 const seoRecommendation = await getDailySeoRecommendation({ geo: "ZA", market: "south-africa" });
+const seoTarget = getWeeklyPageSeoTarget("/south-africa");
+
+Astro.response.headers.set("Cache-Control", "s-maxage=21600, stale-while-revalidate=86400");
+
 const market = {
   ...markets.southAfrica,
   seoRecommendation,
@@ -23,6 +27,7 @@ const market = {
   localBusinessSchema={market.localBusinessSchema}
   organizationSchemaOverride={localizedOrganizationSchema}
   hreflangLinks={regionalAlternates}
+  seoTarget={seoTarget}
 >
   <LocalizedStudioLanding market={market} />
 </BaseLayout>
