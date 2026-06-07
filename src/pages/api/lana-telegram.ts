@@ -153,7 +153,11 @@ export const POST: APIRoute = async ({ request }) => {
   const webhookSecret = getEnv("TELEGRAM_WEBHOOK_SECRET");
   const headerSecret = request.headers.get("X-Telegram-Bot-Api-Secret-Token");
 
-  if (webhookSecret && headerSecret !== webhookSecret) {
+  if (!webhookSecret) {
+    return new Response("Webhook secret is not configured", { status: 500 });
+  }
+
+  if (headerSecret !== webhookSecret) {
     return new Response("Unauthorized", { status: 401 });
   }
 

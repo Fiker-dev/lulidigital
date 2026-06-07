@@ -8,12 +8,6 @@ const links = [
   { href: "/blog", label: "Newsroom and Lab" },
   { href: "/contact", label: "Contact" },
 ];
-
-const authorityLinks = [
-  { href: "https://www.linkedin.com/company/lulidigital", label: "LinkedIn" },
-  { href: "https://clutch.co/profile/lulidigital", label: "Clutch" },
-  { href: "https://www.sortlist.com/agency/lulidigital", label: "Sortlist" },
-];
 ---
 
 <footer class="site-footer" aria-label="LuliDigital footer">
@@ -23,7 +17,7 @@ const authorityLinks = [
         <span>Luli</span>Digital
       </a>
       <p>
-        AI Automation, Digital Strategy, and Virtual Assistant Studio based in Johannesburg,
+        AI Automation, Digital Strategy, and Virtual Assistant Desk services based in Johannesburg,
         serving South Africa, Africa, Europe, and international teams.
       </p>
     </section>
@@ -44,15 +38,6 @@ const authorityLinks = [
         <a href="mailto:info@lulidigital.co.za">info@lulidigital.co.za</a>
         <span>Johannesburg, South Africa</span>
       </address>
-    </section>
-
-    <section class="site-footer__group" aria-label="Authority profiles">
-      <h2>Profiles</h2>
-      <nav class="site-footer__links" aria-label="Business network profiles">
-        {authorityLinks.map((link) => (
-          <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
-        ))}
-      </nav>
     </section>
   </div>
 
@@ -77,7 +62,7 @@ const authorityLinks = [
     max-width: var(--max, 1120px);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(240px, 1.4fr) repeat(3, minmax(150px, .7fr));
+    grid-template-columns: minmax(240px, 1.4fr) repeat(2, minmax(170px, .7fr));
     gap: clamp(24px, 4vw, 54px);
   }
 

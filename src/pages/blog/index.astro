@@ -10,6 +10,8 @@ const posts = (await getCollection("blog"))
 function formatDate(date: Date) {
   return date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 }
+
+const postSlug = (post: { id: string }) => post.id.replace(/\.md$/, "");
 ---
 
 <BaseLayout
@@ -34,14 +36,14 @@ function formatDate(date: Date) {
             {post.data.readingTime && <span class="post-time">{post.data.readingTime}</span>}
           </div>
           <h2 class="post-title">
-            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+            <a href={`/blog/${postSlug(post)}`}>{post.data.title}</a>
           </h2>
           <p class="post-excerpt">{post.data.description}</p>
           <div class="post-footer">
             <time class="post-date" datetime={post.data.pubDate.toISOString()}>
               {formatDate(post.data.pubDate)}
             </time>
-            <a class="post-link" href={`/blog/${post.slug}`}>Read →</a>
+            <a class="post-link" href={`/blog/${postSlug(post)}`}>Read →</a>
           </div>
         </article>
       ))}

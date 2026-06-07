@@ -10,12 +10,15 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
-    "@astrojs/vercel": "^8.1.0",
+    "@astrojs/vercel": "^10.0.8",
     "@tailwindcss/vite": "^4.1.18",
-    "astro": "^5.17.1",
+    "astro": "^6.4.4",
     "motion": "^12.40.0",
     "resend": "^6.12.4",
     "tailwindcss": "^4.1.18"
+  },
+  "overrides": {
+    "path-to-regexp": "^6.3.0"
   },
   "devDependencies": {
     "sharp": "^0.34.5"

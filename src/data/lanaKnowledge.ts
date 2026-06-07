@@ -10,7 +10,7 @@ const chunks: LanaKnowledgeChunk[] = [
     id: "about",
     title: "About LuliDigital",
     text:
-      "LuliDigital works like an editorial floor. The studio clarifies the story, pressure tests it in market, and builds systems teams can trust when decisions need to move fast. The business covers Marketing, AI, and Virtual Assistant support. The tone is human, calm, clear, practical, and supportive.",
+      "LuliDigital works like an editorial floor. The studio clarifies the story, pressure tests it in market, and builds systems teams can trust when decisions need to move fast. The business covers Marketing, AI, and Virtual Assistant Desk support. The tone is human, calm, clear, practical, and supportive.",
     keywords: ["about", "company", "brand", "studio", "lulidigital", "services"],
   },
   {
@@ -100,8 +100,8 @@ export function getFallbackReply(query: string) {
   }
 
   if (hasAnyTerm(query, ["what do you do", "services", "help with", "what does lulidigital"])) {
-    return "LuliDigital works across Marketing, AI, and Virtual Assistant support. The focus is clear positioning, practical systems, and follow-through that helps work move cleanly.";
+    return "LuliDigital works across Marketing, AI, and Virtual Assistant Desk support. The focus is clear positioning, practical systems, and follow-through that helps work move cleanly.";
   }
 
-  return "LuliDigital helps with Marketing, AI systems, and Virtual Assistant support. If you want, ask about a specific area, or contact the desk on WhatsApp at +27 60 255 1513.";
+  return "LuliDigital helps with Marketing, AI systems, and Virtual Assistant Desk support. If you want, ask about a specific area, or contact the desk on WhatsApp at +27 60 255 1513.";
 }

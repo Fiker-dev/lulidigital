@@ -208,7 +208,7 @@ export const markets = {
         copy: "Clear messaging, polished pages, and conversion-focused assets that help local and international customers trust the business faster.",
       },
       {
-        label: "Virtual Assistant",
+        label: "Virtual Assistant Desk",
         title: "Executive virtual assistant services",
         copy: "Inbox, calendar, follow-ups, project coordination, and admin support for founders who need operational follow-through.",
       },
@@ -294,7 +294,7 @@ export const markets = {
         copy: "High-end visual systems, brand positioning, conversion pages, and campaign interfaces built for international trust.",
       },
       {
-        label: "Virtual Assistant",
+        label: "Virtual Assistant Desk",
         title: "Executive virtual assistant services",
         copy: "Inbox management, calendar control, project coordination, and operational follow-through for Amsterdam founders and team leads.",
       },
@@ -466,7 +466,7 @@ export const markets = {
         copy: "Sharp brand systems, minimal interfaces, and cinematic campaign assets built to the Nordic standard — fast, premium, production-grade.",
       },
       {
-        label: "Virtual Assistant",
+        label: "Virtual Assistant Desk",
         title: "Executive virtual assistant services",
         copy: "Remote executive support for Stockholm founders — inbox, calendar, project management, and operations so you stay focused on building.",
       },

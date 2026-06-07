@@ -13,6 +13,20 @@ type ContactBody = {
   message: string;
 };
 
+const escapeHtml = (value: string) =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+
+const normalizeField = (value: unknown, maxLength: number) =>
+  typeof value === "string" ? value.trim().slice(0, maxLength) : "";
+
+const isValidEmail = (value: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= 254;
+
 export const POST: APIRoute = async ({ request }) => {
   const resendKey = import.meta.env.RESEND_API_KEY ?? process.env.RESEND_API_KEY;
   if (!resendKey) {
@@ -32,9 +46,15 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const { name, email, company, looking_for, timeline, preferred_channel, message } = body;
+  const name = normalizeField(body.name, 120);
+  const email = normalizeField(body.email, 254).toLowerCase();
+  const company = normalizeField(body.company, 140);
+  const lookingFor = normalizeField(body.looking_for, 160);
+  const timeline = normalizeField(body.timeline, 80);
+  const preferredChannel = normalizeField(body.preferred_channel, 80);
+  const message = normalizeField(body.message, 2000);
 
-  if (!name || !email || !looking_for || !timeline || !message) {
+  if (!name || !email || !lookingFor || !timeline || !message || !isValidEmail(email)) {
     return new Response(JSON.stringify({ error: "Missing required fields." }), {
       status: 400,
       headers: { "Content-Type": "application/json" },
@@ -42,6 +62,15 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const resend = new Resend(resendKey);
+  const safe = {
+    name: escapeHtml(name),
+    email: escapeHtml(email),
+    company: escapeHtml(company),
+    lookingFor: escapeHtml(lookingFor),
+    timeline: escapeHtml(timeline),
+    preferredChannel: escapeHtml(preferredChannel || "Email reply"),
+    message: escapeHtml(message),
+  };
 
   const row = (label: string, value: string) =>
     `<tr>
@@ -70,10 +99,10 @@ export const POST: APIRoute = async ({ request }) => {
         <tr>
           <td>
             <p style="margin:0 0 14px;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(245,241,232,.45)">New Brief</p>
-            <h1 style="margin:0;color:#fff;font-size:26px;font-weight:700;line-height:1.15;letter-spacing:-.02em">${name}${company ? `<span style="color:rgba(255,255,255,.4)"> · </span>${company}` : ""}</h1>
+            <h1 style="margin:0;color:#fff;font-size:26px;font-weight:700;line-height:1.15;letter-spacing:-.02em">${safe.name}${safe.company ? `<span style="color:rgba(255,255,255,.4)"> · </span>${safe.company}` : ""}</h1>
           </td>
           <td style="text-align:right;vertical-align:top;padding-top:4px">
-            <span style="display:inline-block;background:rgba(245,241,232,.1);border:1px solid rgba(245,241,232,.18);border-radius:100px;padding:5px 14px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,241,232,.6)">${timeline}</span>
+            <span style="display:inline-block;background:rgba(245,241,232,.1);border:1px solid rgba(245,241,232,.18);border-radius:100px;padding:5px 14px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,241,232,.6)">${safe.timeline}</span>
           </td>
         </tr>
       </table>
@@ -82,21 +111,21 @@ export const POST: APIRoute = async ({ request }) => {
     <!-- Brief data -->
     <div style="padding:28px 36px 0">
       <table style="width:100%;border-collapse:collapse">
-        ${row("Service", looking_for)}
-          ${row("Contact via", preferred_channel || "Email reply")}
-        ${row("Reply to", `<a href="mailto:${email}" style="color:#141414;text-decoration:underline">${email}</a>`)}
+        ${row("Service", safe.lookingFor)}
+          ${row("Contact via", safe.preferredChannel)}
+        ${row("Reply to", `<a href="mailto:${safe.email}" style="color:#141414;text-decoration:underline">${safe.email}</a>`)}
       </table>
     </div>
 
     <!-- Campaign priority -->
     <div style="margin:24px 36px;padding:20px 24px;background:#faf8f4;border-radius:10px;border:1px solid #ede8de">
       <p style="margin:0 0 10px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#aaa">Campaign Priority</p>
-      <p style="margin:0;font-size:15px;color:#141414;line-height:1.7;white-space:pre-wrap">${message}</p>
+      <p style="margin:0;font-size:15px;color:#141414;line-height:1.7;white-space:pre-wrap">${safe.message}</p>
     </div>
 
     <!-- Reply CTA -->
     <div style="padding:0 36px 32px">
-      <a href="mailto:${email}?subject=Re: Your LuliDigital Brief" style="display:inline-block;background:#141414;color:#fff;text-decoration:none;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:13px 26px;border-radius:8px;font-weight:600">Reply to ${name} →</a>
+      <a href="mailto:${safe.email}?subject=Re: Your LuliDigital Brief" style="display:inline-block;background:#141414;color:#fff;text-decoration:none;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:13px 26px;border-radius:8px;font-weight:600">Reply to ${safe.name} →</a>
     </div>
 
     <!-- Footer -->
@@ -137,18 +166,18 @@ export const POST: APIRoute = async ({ request }) => {
       <table style="width:100%;border-collapse:collapse">
         <tr>
           <td style="padding:4px 20px 4px 0;font-size:12px;color:#aaa;width:90px">Service</td>
-          <td style="padding:4px 0;font-size:13px;color:#141414;font-weight:500">${looking_for}</td>
+          <td style="padding:4px 0;font-size:13px;color:#141414;font-weight:500">${safe.lookingFor}</td>
         </tr>
         <tr>
           <td style="padding:4px 20px 4px 0;font-size:12px;color:#aaa">Timeline</td>
-          <td style="padding:4px 0;font-size:13px;color:#141414;font-weight:500">${timeline}</td>
+          <td style="padding:4px 0;font-size:13px;color:#141414;font-weight:500">${safe.timeline}</td>
         </tr>
       </table>
     </div>
 
     <!-- Body -->
     <div style="padding:36px 36px 28px">
-      <p style="margin:0 0 20px;font-size:16px;color:#141414;line-height:1.7">Hi ${name},</p>
+      <p style="margin:0 0 20px;font-size:16px;color:#141414;line-height:1.7">Hi ${safe.name},</p>
       <p style="margin:0 0 20px;font-size:15px;color:#555;line-height:1.8">Your brief is with the desk. We review every brief personally and come back with a focused response — no generic decks, no wasted calls.</p>
       <p style="margin:0;font-size:15px;color:#555;line-height:1.8">We'll be in touch shortly.</p>
     </div>
@@ -185,7 +214,7 @@ export const POST: APIRoute = async ({ request }) => {
       from: "LuliDigital Desk <desk@notify.lulidigital.com>",
       to: "info@lulidigital.co.za",
       replyTo: email,
-      subject: `New brief: ${looking_for} — ${name}${company ? ` · ${company}` : ""}`,
+      subject: `New brief: ${lookingFor} - ${name}${company ? ` - ${company}` : ""}`,
       html: internalHtml,
     }),
     resend.emails.send({

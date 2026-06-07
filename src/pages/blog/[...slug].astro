@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 
 export const prerender = true;
 
@@ -10,16 +10,16 @@ export async function getStaticPaths() {
     .filter((post) => post.data.pubDate.valueOf() <= Date.now());
 
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id.replace(/\.md$/, "") },
     props: { post },
   }));
 }
 
 const { post } = Astro.props;
 
-const { Content } = await post.render();
+const { Content } = await render(post);
 const siteUrl = "https://lulidigital.com";
-const canonicalPath = `/blog/${post.slug}`;
+const canonicalPath = `/blog/${post.id.replace(/\.md$/, "")}`;
 const canonicalUrl = `${siteUrl}${canonicalPath}`;
 const articleSchema = {
   "@type": "BlogPosting",
