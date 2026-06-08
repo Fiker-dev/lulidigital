@@ -23,10 +23,16 @@ export const GET: APIRoute = async ({ request }) => {
 
   const markets = await Promise.all([
     getDailySeoRecommendation({ forceRefresh: true, geo: "AFRICA", market: "africa" }),
-    getDailySeoRecommendation({ forceRefresh: true, geo: "ZA", market: "south-africa" }),
     getDailySeoRecommendation({ forceRefresh: true, geo: "NL", market: "amsterdam" }),
     getDailySeoRecommendation({ forceRefresh: true, geo: "DE", market: "munich" }),
     getDailySeoRecommendation({ forceRefresh: true, geo: "SE", market: "stockholm" }),
+    getDailySeoRecommendation({ forceRefresh: true, geo: "US", market: "united-states" }),
+    getDailySeoRecommendation({ forceRefresh: true, geo: "GB", market: "united-kingdom" }),
+    getDailySeoRecommendation({ forceRefresh: true, geo: "DK", market: "denmark" }),
+    getDailySeoRecommendation({ forceRefresh: true, geo: "CH", market: "switzerland" }),
+    getDailySeoRecommendation({ forceRefresh: true, geo: "IE", market: "ireland" }),
+    getDailySeoRecommendation({ forceRefresh: true, geo: "BE", market: "belgium" }),
+    getDailySeoRecommendation({ forceRefresh: true, geo: "NO", market: "norway" }),
   ]);
   const blogRecommendation = await getBestRegionalSeoRecommendation({ forceRefresh: false });
 

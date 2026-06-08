@@ -5,10 +5,16 @@ export const prerender = false;
 
 const regionalMarkets = [
   { geo: "AFRICA", market: "africa" },
-  { geo: "ZA", market: "south-africa" },
   { geo: "NL", market: "amsterdam" },
   { geo: "DE", market: "munich" },
   { geo: "SE", market: "stockholm" },
+  { geo: "US", market: "united-states" },
+  { geo: "GB", market: "united-kingdom" },
+  { geo: "DK", market: "denmark" },
+  { geo: "CH", market: "switzerland" },
+  { geo: "IE", market: "ireland" },
+  { geo: "BE", market: "belgium" },
+  { geo: "NO", market: "norway" },
 ];
 
 export const GET: APIRoute = async ({ request }) => {

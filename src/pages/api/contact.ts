@@ -199,7 +199,7 @@ export const POST: APIRoute = async ({ request }) => {
       <table style="width:100%;border-collapse:collapse">
         <tr>
           <td style="font-size:11px;color:#c0bbb2;letter-spacing:.06em">lulidigital.com</td>
-          <td style="text-align:right"><a href="mailto:info@lulidigital.co.za" style="font-size:11px;color:#c0bbb2;letter-spacing:.06em;text-decoration:none">info@lulidigital.co.za</a></td>
+          <td style="text-align:right"><a href="mailto:info@lulidigital.com" style="font-size:11px;color:#c0bbb2;letter-spacing:.06em;text-decoration:none">info@lulidigital.com</a></td>
         </tr>
       </table>
     </div>
@@ -212,7 +212,7 @@ export const POST: APIRoute = async ({ request }) => {
   const [internalResult, clientResult] = await Promise.all([
     resend.emails.send({
       from: "LuliDigital Desk <desk@notify.lulidigital.com>",
-      to: "info@lulidigital.co.za",
+      to: "info@lulidigital.com",
       replyTo: email,
       subject: `New brief: ${lookingFor} - ${name}${company ? ` - ${company}` : ""}`,
       html: internalHtml,

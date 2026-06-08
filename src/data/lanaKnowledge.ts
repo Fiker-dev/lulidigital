@@ -38,8 +38,8 @@ const chunks: LanaKnowledgeChunk[] = [
     id: "contact",
     title: "Contact Details",
     text:
-      "People can contact LuliDigital by email at info@lulidigital.co.za or by WhatsApp at +27 60 255 1513. The fastest reply is usually WhatsApp. The contact page invites people to reach out for campaigns, systems, or something they are building.",
-    keywords: ["contact", "email", "whatsapp", "phone", "reach out", "book", "call", "message", "info@lulidigital.co.za", "+27 60 255 1513"],
+      "People can contact LuliDigital by email at info@lulidigital.com or by WhatsApp at +27 60 255 1513. The fastest reply is usually WhatsApp. The contact page invites people to reach out for campaigns, systems, or something they are building.",
+    keywords: ["contact", "email", "whatsapp", "phone", "reach out", "book", "call", "message", "info@lulidigital.com", "+27 60 255 1513"],
   },
   {
     id: "fit",
@@ -84,7 +84,7 @@ export function getKnowledgeContext(query: string, limit = 4) {
 
 export function getFallbackReply(query: string) {
   if (hasAnyTerm(query, ["contact", "email", "whatsapp", "phone", "call", "reach"])) {
-    return "You can reach LuliDigital on WhatsApp at +27 60 255 1513 or by email at info@lulidigital.co.za. WhatsApp is usually the fastest way to get a reply.";
+    return "You can reach LuliDigital on WhatsApp at +27 60 255 1513 or by email at info@lulidigital.com. WhatsApp is usually the fastest way to get a reply.";
   }
 
   if (hasAnyTerm(query, ["marketing", "brand", "ads", "visibility", "rebrand", "launch"])) {

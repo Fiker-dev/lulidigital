@@ -3,10 +3,16 @@ const siteUrl = "https://lulidigital.com";
 export const regionalAlternates = [
   { hreflang: "x-default", href: `${siteUrl}/` },
   { hreflang: "en-001", href: `${siteUrl}/africa` },
-  { hreflang: "en-za", href: `${siteUrl}/south-africa` },
   { hreflang: "en-nl", href: `${siteUrl}/amsterdam` },
   { hreflang: "en-de", href: `${siteUrl}/munich` },
   { hreflang: "en-se", href: `${siteUrl}/stockholm` },
+  { hreflang: "en-us", href: `${siteUrl}/united-states` },
+  { hreflang: "en-gb", href: `${siteUrl}/united-kingdom` },
+  { hreflang: "en-dk", href: `${siteUrl}/denmark` },
+  { hreflang: "en-ch", href: `${siteUrl}/switzerland` },
+  { hreflang: "en-ie", href: `${siteUrl}/ireland` },
+  { hreflang: "en-be", href: `${siteUrl}/belgium` },
+  { hreflang: "en-no", href: `${siteUrl}/norway` },
 ];
 
 const sharedTelephone = "+27602551513";
@@ -17,8 +23,8 @@ export const localizedOrganizationSchema = {
   "name": "LuliDigital",
   "url": siteUrl,
   "logo": `${siteUrl}/favicon.png`,
-  "description": "LuliDigital provides premium digital marketing, AI-driven business automation solutions, and specialized executive virtual assistant services for founders and modern brands across South Africa, Africa, Europe, the United Kingdom, and the United States.",
-  "email": "info@lulidigital.co.za",
+  "description": "LuliDigital provides premium digital marketing, AI-driven business automation solutions, and specialized executive virtual assistant services for founders and modern brands across the United States, United Kingdom, Europe, and Africa.",
+  "email": "info@lulidigital.com",
   "telephone": sharedTelephone,
   "address": {
     "@type": "PostalAddress",
@@ -141,88 +147,6 @@ export const markets = {
     ],
     formTitle: "Start your Africa growth project",
     formCopy: "Send the market, service, or operations bottleneck. We will map the most direct route to a cleaner international-facing system.",
-  },
-  southAfrica: {
-    city: "South Africa",
-    variant: "south-africa",
-    title: "South Africa Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
-    description:
-      "LuliDigital helps South African founders and growing teams with digital marketing, AI automation, SEO, paid media, and executive virtual assistant services.",
-    h1: "South Africa digital marketing agency. AI automation. Virtual assistant services.",
-    h2: "For South African founders, service businesses, startups, and growing teams.",
-    eyebrow: "South Africa Digital Marketing Agency",
-    positioning:
-      "A Johannesburg-led digital studio helping South African businesses get found, look credible, and run cleaner systems across marketing, AI automation, and executive operations.",
-    intro:
-      "LuliDigital helps South African founders and growing teams with paid media, SEO, brand strategy, AI workflow automation, conversational AI assistants, and executive virtual assistant services from one focused desk.",
-    primaryCta: "Start a South Africa Project",
-    secondaryCta: "View All Services",
-    serviceSchema: {
-      name: "South Africa Digital Marketing Agency — AI Automation & Virtual Assistant Services",
-      serviceType: [
-        "digital marketing agency South Africa",
-        "digital marketing agency Johannesburg",
-        "performance marketing South Africa",
-        "paid media management South Africa",
-        "brand strategy South Africa",
-        "SEO services South Africa",
-        "AI automation South Africa",
-        "AI workflow automation South Africa",
-        "conversational AI assistant South Africa",
-        "virtual assistant services South Africa",
-        "remote executive assistant South Africa",
-      ],
-      description:
-        "South Africa digital marketing agency offering performance marketing, SEO, paid media, brand strategy, AI workflow automation, conversational AI assistants, and executive virtual assistant services.",
-      areaServed: [
-        { "@type": "AdministrativeArea", name: "South Africa" },
-      ],
-    },
-    localBusinessSchema: {
-      name: "LuliDigital South Africa",
-      logo: `${siteUrl}/favicon.png`,
-      telephone: sharedTelephone,
-      openingHours,
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Johannesburg",
-        addressCountry: "ZA",
-      },
-      description:
-        "South Africa digital marketing agency for founders and growing teams: performance marketing, SEO, AI automation, and executive virtual assistant services.",
-    },
-    capabilities: [
-      {
-        label: "Marketing",
-        title: "Digital marketing that makes the business searchable",
-        copy: "SEO, paid media, campaign planning, and brand positioning built for South African businesses that need visibility without wasting spend.",
-      },
-      {
-        label: "AI Automation",
-        title: "AI systems for lean teams",
-        copy: "AI assistants, workflow automation, and internal tools that answer questions, route work, and reduce repetitive admin.",
-      },
-      {
-        label: "Brand & Web",
-        title: "Credible brand and landing page systems",
-        copy: "Clear messaging, polished pages, and conversion-focused assets that help local and international customers trust the business faster.",
-      },
-      {
-        label: "Virtual Assistant Desk",
-        title: "Executive virtual assistant services",
-        copy: "Inbox, calendar, follow-ups, project coordination, and admin support for founders who need operational follow-through.",
-      },
-    ],
-    proofTitle: "Built in South Africa, ready for global work",
-    proofCopy:
-      "South African businesses often need to compete locally and internationally at the same time. We build the marketing, automation, and operations layer that helps the business look serious, respond faster, and keep work moving without adding more chaos.",
-    reviews: [
-      "They helped us make the business look as sharp online as the work we do in real life.",
-      "The AI and admin systems gave our team breathing room without hiring another full-time person.",
-      "Clear strategy, cleaner execution, and no vague marketing theatre.",
-    ],
-    formTitle: "Start your South Africa project",
-    formCopy: "Send the service, market, or operations bottleneck. We will map the next practical move.",
   },
   amsterdam: {
     city: "Amsterdam",
@@ -481,5 +405,576 @@ export const markets = {
     ],
     formTitle: "Start your Stockholm project",
     formCopy: "Send your brand, campaign, or AI challenge. We will respond with a focused recommendation.",
+  },
+  unitedStates: {
+    city: "United States",
+    variant: "united-states",
+    title: "US Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    description:
+      "LuliDigital serves US founders and remote-first teams with digital marketing, AI automation, SEO, paid media, and executive virtual assistant services.",
+    h1: "US digital marketing agency. AI automation. Virtual assistant services.",
+    h2: "For US founders, SaaS teams, and remote-first businesses.",
+    eyebrow: "United States Digital Studio",
+    positioning:
+      "A remote-first international studio serving US founders and growth teams with performance marketing, AI workflow automation, and executive virtual assistant services — built for the speed and standards of the US market.",
+    intro:
+      "LuliDigital helps US-based founders, SaaS businesses, and remote-first teams with paid media, SEO, brand strategy, AI workflow automation, conversational AI assistants, and executive virtual assistant services from one focused desk.",
+    primaryCta: "Start a US Project",
+    secondaryCta: "View All Services",
+    serviceSchema: {
+      name: "US Digital Marketing Agency — AI Automation & Virtual Assistant Services",
+      serviceType: [
+        "digital marketing agency United States",
+        "performance marketing USA",
+        "paid media management USA",
+        "brand strategy USA",
+        "SEO services United States",
+        "AI automation USA",
+        "AI workflow automation USA",
+        "conversational AI assistant USA",
+        "virtual assistant services USA",
+        "remote executive assistant USA",
+      ],
+      description:
+        "US digital marketing agency offering performance marketing, paid media, brand strategy, AI workflow automation, and executive virtual assistant services for founders and remote-first teams.",
+      areaServed: [
+        { "@type": "AdministrativeArea", name: "United States" },
+      ],
+    },
+    localBusinessSchema: {
+      name: "LuliDigital United States",
+      logo: `${siteUrl}/favicon.png`,
+      telephone: sharedTelephone,
+      openingHours,
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "US",
+      },
+      description:
+        "US digital marketing agency for founders and remote-first teams: performance marketing, AI automation, and executive virtual assistant services.",
+    },
+    capabilities: [
+      {
+        label: "Paid Media",
+        title: "Performance marketing built for US growth",
+        copy: "Meta, Google, and LinkedIn campaigns with audience strategy, creative variants, and automated reporting loops built for the US buyer cycle.",
+      },
+      {
+        label: "AI Automation",
+        title: "AI workflow automation for lean teams",
+        copy: "Custom AI assistants, automated lead routing, and workflow systems that remove repetitive work and keep operations moving across time zones.",
+      },
+      {
+        label: "Brand & SEO",
+        title: "Brand strategy and search visibility",
+        copy: "Positioning, landing pages, and SEO infrastructure built to rank in competitive US markets and convert high-intent traffic into pipeline.",
+      },
+      {
+        label: "Virtual Assistant Desk",
+        title: "Executive virtual assistant services",
+        copy: "Inbox, calendar, project coordination, and follow-through for US founders who need reliable remote operational support.",
+      },
+    ],
+    proofTitle: "Remote-first, US-standard execution",
+    proofCopy:
+      "US founders operate in one of the most competitive digital markets in the world. We build the paid media engine, automation layer, and operational support that helps remote-first teams move at the speed the US market demands without the overhead of a full in-house team.",
+    reviews: [
+      "They matched the pace and expectations of our US growth team immediately.",
+      "The SEO and paid media work drove pipeline we could actually track and close.",
+      "Remote executive support that finally felt as reliable as having someone in the office.",
+    ],
+    formTitle: "Start your US project",
+    formCopy: "Send the market, campaign target, or operations bottleneck. We will map the fastest route to a cleaner system.",
+  },
+  unitedKingdom: {
+    city: "United Kingdom",
+    variant: "united-kingdom",
+    title: "UK Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    description:
+      "LuliDigital serves UK founders and scale-ups with digital marketing, AI automation, SEO, paid media, and executive virtual assistant services.",
+    h1: "UK digital marketing agency. AI automation. Virtual assistant services.",
+    h2: "For UK founders, agencies, and scale-ups.",
+    eyebrow: "United Kingdom Digital Studio",
+    positioning:
+      "An international studio serving UK founders, agencies, and scale-ups with performance marketing, AI workflow automation, and executive virtual assistant services — delivered in English, built to global standard.",
+    intro:
+      "LuliDigital helps UK-based founders, marketing teams, and scale-ups with paid media, SEO, brand strategy, AI workflow automation, and executive virtual assistant services from one focused desk.",
+    primaryCta: "Start a UK Project",
+    secondaryCta: "View All Services",
+    serviceSchema: {
+      name: "UK Digital Marketing Agency — AI Automation & Virtual Assistant Services",
+      serviceType: [
+        "digital marketing agency UK",
+        "performance marketing UK",
+        "paid media management UK",
+        "brand strategy UK",
+        "SEO services United Kingdom",
+        "AI automation UK",
+        "AI workflow automation UK",
+        "conversational AI assistant UK",
+        "virtual assistant services UK",
+        "remote executive assistant UK",
+      ],
+      description:
+        "UK digital marketing agency offering performance marketing, paid media, brand strategy, AI workflow automation, and executive virtual assistant services for founders and scale-ups.",
+      areaServed: [
+        { "@type": "AdministrativeArea", name: "United Kingdom" },
+      ],
+    },
+    localBusinessSchema: {
+      name: "LuliDigital United Kingdom",
+      logo: `${siteUrl}/favicon.png`,
+      telephone: sharedTelephone,
+      openingHours,
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "GB",
+      },
+      description:
+        "UK digital marketing agency for founders and scale-ups: performance marketing, AI automation, and executive virtual assistant services.",
+    },
+    capabilities: [
+      {
+        label: "Paid Media",
+        title: "Performance marketing for UK scale-ups",
+        copy: "Meta, Google, and LinkedIn campaigns with creative strategy, audience targeting, and reporting built for UK buyer expectations and market cycles.",
+      },
+      {
+        label: "AI Automation",
+        title: "AI workflow automation",
+        copy: "Custom AI assistants, automated operations, and agent systems that handle customer queries, route leads, and free your team from repetitive work.",
+      },
+      {
+        label: "Brand & SEO",
+        title: "Brand strategy and search performance",
+        copy: "Clear positioning, high-converting landing pages, and SEO infrastructure built to compete in UK search markets.",
+      },
+      {
+        label: "Virtual Assistant Desk",
+        title: "Executive virtual assistant services",
+        copy: "Inbox, calendar, project coordination, and operational follow-through for UK founders who need reliable, quiet administrative support.",
+      },
+    ],
+    proofTitle: "Built for the pace of UK agency and founder markets",
+    proofCopy:
+      "UK teams face competitive digital markets and increasingly sophisticated buyers. We build the marketing infrastructure, automation layer, and executive support that lets UK founders and scale-ups compete without building a large in-house team.",
+    reviews: [
+      "They understood the UK market and moved at agency pace without agency friction.",
+      "The automation setup genuinely changed how our small team handles inbound.",
+      "Executive support that was reliable from day one, no onboarding lag.",
+    ],
+    formTitle: "Start your UK project",
+    formCopy: "Send your campaign priority, AI bottleneck, or operations challenge. We will map a direct route.",
+  },
+  denmark: {
+    city: "Denmark",
+    variant: "denmark",
+    title: "Denmark Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    description:
+      "LuliDigital serves Danish tech founders and Nordic businesses with digital marketing, AI automation, SEO, and executive virtual assistant services.",
+    h1: "Denmark digital marketing agency. AI automation. Virtual assistant services.",
+    h2: "For Danish tech founders, scale-ups, and Nordic businesses.",
+    eyebrow: "Denmark Digital Studio",
+    positioning:
+      "An international studio serving Danish founders and Nordic companies with performance marketing, AI workflow automation, and executive virtual assistant services — English-first, globally executed.",
+    intro:
+      "LuliDigital helps Danish tech companies, startups, and Nordic founders with paid media, SEO, brand strategy, AI workflow automation, and executive virtual assistant services from one focused desk.",
+    primaryCta: "Start a Denmark Project",
+    secondaryCta: "View All Services",
+    serviceSchema: {
+      name: "Denmark Digital Marketing Agency — AI Automation & Virtual Assistant Services",
+      serviceType: [
+        "digital marketing agency Denmark",
+        "performance marketing Denmark",
+        "paid media management Denmark",
+        "brand strategy Denmark",
+        "SEO services Denmark",
+        "AI automation Denmark",
+        "AI workflow automation Denmark",
+        "virtual assistant services Denmark",
+        "remote executive assistant Denmark",
+        "digital marketing agency Copenhagen",
+      ],
+      description:
+        "Denmark digital marketing agency offering performance marketing, paid media, brand strategy, AI workflow automation, and executive virtual assistant services for Danish tech founders and Nordic businesses.",
+      areaServed: [
+        { "@type": "Country", name: "Denmark" },
+        { "@type": "AdministrativeArea", name: "Europe" },
+      ],
+    },
+    localBusinessSchema: {
+      name: "LuliDigital Denmark",
+      logo: `${siteUrl}/favicon.png`,
+      telephone: sharedTelephone,
+      openingHours,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Copenhagen",
+        addressCountry: "DK",
+      },
+      description:
+        "Denmark digital marketing agency for tech founders and Nordic businesses: performance marketing, AI automation, and executive virtual assistant services.",
+    },
+    capabilities: [
+      {
+        label: "Paid Media",
+        title: "Performance marketing for Danish growth teams",
+        copy: "Paid media campaigns across Meta, Google, and LinkedIn with creative strategy and reporting built for the Nordic buyer standard.",
+      },
+      {
+        label: "AI Automation",
+        title: "AI automation for Danish teams",
+        copy: "Custom AI assistants, workflow automation, and agent systems that answer queries, route leads, and reduce manual work across the business.",
+      },
+      {
+        label: "Brand & SEO",
+        title: "Brand strategy and search visibility",
+        copy: "Clean positioning, high-converting landing pages, and SEO infrastructure built for Danish and Nordic search markets.",
+      },
+      {
+        label: "Virtual Assistant Desk",
+        title: "Executive virtual assistant services",
+        copy: "Inbox, calendar, coordination, and admin support for Danish founders who need reliable remote execution.",
+      },
+    ],
+    proofTitle: "The Nordic standard — at global execution speed",
+    proofCopy:
+      "Danish companies compete internationally by default. We build the marketing systems, automation layer, and executive support infrastructure that lets Danish founders run at the speed of their product without building a large internal operations team.",
+    reviews: [
+      "They matched the Nordic design and execution standard from the first deliverable.",
+      "Clean, fast, and no agency theatre. That is exactly what we needed.",
+      "The automation layer gave our team space to focus on product without losing operational control.",
+    ],
+    formTitle: "Start your Denmark project",
+    formCopy: "Send the campaign target, AI challenge, or operations bottleneck. We will map a direct, practical route.",
+  },
+  switzerland: {
+    city: "Switzerland",
+    variant: "switzerland",
+    title: "Switzerland Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    description:
+      "LuliDigital serves Swiss enterprises and precision businesses with digital marketing, AI automation, SEO, and executive virtual assistant services.",
+    h1: "Switzerland digital marketing agency. AI automation. Virtual assistant services.",
+    h2: "For Swiss enterprises, precision businesses, and international teams.",
+    eyebrow: "Switzerland Digital Studio",
+    positioning:
+      "A premium international studio serving Swiss enterprises and precision businesses with performance marketing, AI workflow automation, and executive virtual assistant services — built to European standard, delivered in English.",
+    intro:
+      "LuliDigital helps Swiss enterprises, financial services teams, and international businesses with paid media, SEO, brand strategy, AI workflow automation, and executive virtual assistant services from one focused desk.",
+    primaryCta: "Start a Switzerland Project",
+    secondaryCta: "View All Services",
+    serviceSchema: {
+      name: "Switzerland Digital Marketing Agency — AI Automation & Virtual Assistant Services",
+      serviceType: [
+        "digital marketing agency Switzerland",
+        "performance marketing Switzerland",
+        "enterprise digital marketing Switzerland",
+        "brand strategy Switzerland",
+        "SEO services Switzerland",
+        "AI automation Switzerland",
+        "AI workflow automation Switzerland",
+        "virtual assistant Switzerland",
+        "executive virtual assistant Switzerland",
+        "remote executive assistant Switzerland",
+        "digital marketing agency Zurich",
+      ],
+      description:
+        "Switzerland digital marketing agency offering performance marketing, enterprise brand strategy, AI workflow automation, and executive virtual assistant services for Swiss enterprises and international businesses.",
+      areaServed: [
+        { "@type": "Country", name: "Switzerland" },
+        { "@type": "AdministrativeArea", name: "Europe" },
+      ],
+    },
+    localBusinessSchema: {
+      name: "LuliDigital Switzerland",
+      logo: `${siteUrl}/favicon.png`,
+      telephone: sharedTelephone,
+      openingHours,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Zurich",
+        addressCountry: "CH",
+      },
+      description:
+        "Switzerland digital marketing agency for enterprises and international businesses: performance marketing, AI automation, and executive virtual assistant services.",
+    },
+    capabilities: [
+      {
+        label: "Paid Media",
+        title: "Performance marketing for Swiss enterprises",
+        copy: "Paid media campaigns with enterprise-grade audience logic, brand compliance controls, and optimization systems built for Swiss market precision.",
+      },
+      {
+        label: "AI Automation",
+        title: "AI automation for Swiss teams",
+        copy: "AI workflow automation, conversational assistants, and agent systems that handle internal queries, route client requests, and reduce operational friction.",
+      },
+      {
+        label: "Brand & SEO",
+        title: "Premium brand strategy and SEO",
+        copy: "Clean positioning, high-trust landing pages, and multilingual-ready SEO infrastructure built for Swiss and European search markets.",
+      },
+      {
+        label: "Virtual Assistant Desk",
+        title: "Executive virtual assistant services",
+        copy: "Inbox, calendar, project coordination, and executive operations support for Swiss leadership teams and international founders.",
+      },
+    ],
+    proofTitle: "European precision. Global execution.",
+    proofCopy:
+      "Swiss enterprises operate to a high standard of quality, trust, and detail. We build the marketing infrastructure, automation layer, and executive support that matches that standard — without the overhead of a large internal team.",
+    reviews: [
+      "Precision, reliability, and no noise. Exactly what a Swiss business expects from a partner.",
+      "The automation systems were built with the kind of accuracy our internal teams demanded.",
+      "They understood our international market requirements and delivered without compromise.",
+    ],
+    formTitle: "Start your Switzerland project",
+    formCopy: "Send the market priority, AI challenge, or operations need. We will respond with a focused, practical plan.",
+  },
+  ireland: {
+    city: "Ireland",
+    variant: "ireland",
+    title: "Ireland Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    description:
+      "LuliDigital serves Irish tech founders and EU-operating teams with digital marketing, AI automation, SEO, and executive virtual assistant services.",
+    h1: "Ireland digital marketing agency. AI automation. Virtual assistant services.",
+    h2: "For Irish tech founders, scale-ups, and EU-operating teams.",
+    eyebrow: "Ireland Digital Studio",
+    positioning:
+      "An international studio serving Irish tech companies and EU-operating teams with performance marketing, AI workflow automation, and executive virtual assistant services — English-first, globally executed.",
+    intro:
+      "LuliDigital helps Irish founders, tech companies, and EU-facing businesses with paid media, SEO, brand strategy, AI workflow automation, and executive virtual assistant services from one focused desk.",
+    primaryCta: "Start an Ireland Project",
+    secondaryCta: "View All Services",
+    serviceSchema: {
+      name: "Ireland Digital Marketing Agency — AI Automation & Virtual Assistant Services",
+      serviceType: [
+        "digital marketing agency Ireland",
+        "performance marketing Ireland",
+        "paid media management Ireland",
+        "brand strategy Ireland",
+        "SEO services Ireland",
+        "AI automation Ireland",
+        "AI workflow automation Ireland",
+        "virtual assistant services Ireland",
+        "remote executive assistant Ireland",
+        "digital marketing agency Dublin",
+      ],
+      description:
+        "Ireland digital marketing agency offering performance marketing, paid media, brand strategy, AI workflow automation, and executive virtual assistant services for Irish tech founders and EU-operating teams.",
+      areaServed: [
+        { "@type": "Country", name: "Ireland" },
+        { "@type": "AdministrativeArea", name: "Europe" },
+      ],
+    },
+    localBusinessSchema: {
+      name: "LuliDigital Ireland",
+      logo: `${siteUrl}/favicon.png`,
+      telephone: sharedTelephone,
+      openingHours,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Dublin",
+        addressCountry: "IE",
+      },
+      description:
+        "Ireland digital marketing agency for tech founders and EU-operating teams: performance marketing, AI automation, and executive virtual assistant services.",
+    },
+    capabilities: [
+      {
+        label: "Paid Media",
+        title: "Performance marketing for Irish tech",
+        copy: "Meta, Google, and LinkedIn campaigns with audience strategy and creative systems built for the Irish and wider EU tech market.",
+      },
+      {
+        label: "AI Automation",
+        title: "AI automation for EU-facing teams",
+        copy: "Custom AI assistants, workflow automation, and agent systems that handle inbound, route leads, and streamline operations for EU-facing businesses.",
+      },
+      {
+        label: "Brand & SEO",
+        title: "Brand strategy and search visibility",
+        copy: "Clear positioning, high-converting pages, and SEO infrastructure built to compete in Irish and EU search markets.",
+      },
+      {
+        label: "Virtual Assistant Desk",
+        title: "Executive virtual assistant services",
+        copy: "Inbox, calendar, coordination, and admin support for Irish founders who need reliable remote execution.",
+      },
+    ],
+    proofTitle: "Built for the pace of Ireland's tech ecosystem",
+    proofCopy:
+      "Ireland's tech scene operates at global speed, with EU market obligations and an English-first commercial culture. We build the marketing, automation, and operations infrastructure that helps Irish founders and teams move fast without losing control.",
+    reviews: [
+      "They understood the EU market requirements and delivered without friction.",
+      "Fast, precise, and genuinely useful AI automation. No bloat.",
+      "Executive support that matched the pace of our startup without slowing us down.",
+    ],
+    formTitle: "Start your Ireland project",
+    formCopy: "Send the campaign target, AI challenge, or operations bottleneck. We will map the most direct route.",
+  },
+  belgium: {
+    city: "Belgium",
+    variant: "belgium",
+    title: "Belgium Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    description:
+      "LuliDigital serves Belgian businesses and EU-operating teams with digital marketing, AI automation, SEO, and executive virtual assistant services.",
+    h1: "Belgium digital marketing agency. AI automation. Virtual assistant services.",
+    h2: "For Belgian businesses, EU agencies, and international teams.",
+    eyebrow: "Belgium Digital Studio",
+    positioning:
+      "An international studio serving Belgian businesses and EU-operating teams with performance marketing, AI workflow automation, and executive virtual assistant services — English-first, built to European standard.",
+    intro:
+      "LuliDigital helps Belgian companies, EU-facing startups, and international teams with paid media, SEO, brand strategy, AI workflow automation, and executive virtual assistant services from one focused desk.",
+    primaryCta: "Start a Belgium Project",
+    secondaryCta: "View All Services",
+    serviceSchema: {
+      name: "Belgium Digital Marketing Agency — AI Automation & Virtual Assistant Services",
+      serviceType: [
+        "digital marketing agency Belgium",
+        "performance marketing Belgium",
+        "paid media management Belgium",
+        "brand strategy Belgium",
+        "SEO services Belgium",
+        "AI automation Belgium",
+        "AI workflow automation Belgium",
+        "virtual assistant services Belgium",
+        "remote executive assistant Belgium",
+        "digital marketing agency Brussels",
+      ],
+      description:
+        "Belgium digital marketing agency offering performance marketing, paid media, brand strategy, AI workflow automation, and executive virtual assistant services for Belgian businesses and EU-operating teams.",
+      areaServed: [
+        { "@type": "Country", name: "Belgium" },
+        { "@type": "AdministrativeArea", name: "Europe" },
+      ],
+    },
+    localBusinessSchema: {
+      name: "LuliDigital Belgium",
+      logo: `${siteUrl}/favicon.png`,
+      telephone: sharedTelephone,
+      openingHours,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Brussels",
+        addressCountry: "BE",
+      },
+      description:
+        "Belgium digital marketing agency for businesses and EU-operating teams: performance marketing, AI automation, and executive virtual assistant services.",
+    },
+    capabilities: [
+      {
+        label: "Paid Media",
+        title: "Performance marketing for Belgian businesses",
+        copy: "Paid media campaigns across Meta, Google, and LinkedIn with audience strategy and creative systems built for Belgian and EU market standards.",
+      },
+      {
+        label: "AI Automation",
+        title: "AI automation for EU-facing teams",
+        copy: "Custom AI assistants, automated workflows, and agent systems that handle customer queries, route leads, and reduce operational overhead.",
+      },
+      {
+        label: "Brand & SEO",
+        title: "Brand strategy and multilingual SEO",
+        copy: "Clear positioning, high-converting landing pages, and SEO infrastructure built for Belgian and EU search markets.",
+      },
+      {
+        label: "Virtual Assistant Desk",
+        title: "Executive virtual assistant services",
+        copy: "Inbox, calendar, project coordination, and operational support for Belgian founders and international teams who need reliable remote execution.",
+      },
+    ],
+    proofTitle: "EU-standard execution for Belgian businesses",
+    proofCopy:
+      "Belgian businesses operate at the centre of the EU market, with complex buyer expectations and multilingual commercial requirements. We build the marketing, automation, and operational infrastructure that helps Belgian companies compete without building a large internal team.",
+    reviews: [
+      "They understood the complexity of EU market positioning and delivered cleanly.",
+      "The automation setup was precise and integrated without disrupting our existing workflow.",
+      "Reliable, fast executive support that matched our team's pace from day one.",
+    ],
+    formTitle: "Start your Belgium project",
+    formCopy: "Send the market priority, AI challenge, or operations bottleneck. We will map a direct, practical route.",
+  },
+  norway: {
+    city: "Norway",
+    variant: "norway",
+    title: "Norway Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    description:
+      "LuliDigital serves Norwegian enterprises and Nordic businesses with digital marketing, AI automation, SEO, and executive virtual assistant services.",
+    h1: "Norway digital marketing agency. AI automation. Virtual assistant services.",
+    h2: "For Norwegian enterprises, tech companies, and Nordic businesses.",
+    eyebrow: "Norway Digital Studio",
+    positioning:
+      "An international studio serving Norwegian enterprises and Nordic companies with performance marketing, AI workflow automation, and executive virtual assistant services — English-first, built to Nordic standard.",
+    intro:
+      "LuliDigital helps Norwegian founders, enterprise teams, and Nordic businesses with paid media, SEO, brand strategy, AI workflow automation, and executive virtual assistant services from one focused desk.",
+    primaryCta: "Start a Norway Project",
+    secondaryCta: "View All Services",
+    serviceSchema: {
+      name: "Norway Digital Marketing Agency — AI Automation & Virtual Assistant Services",
+      serviceType: [
+        "digital marketing agency Norway",
+        "performance marketing Norway",
+        "paid media management Norway",
+        "brand strategy Norway",
+        "SEO services Norway",
+        "AI automation Norway",
+        "AI workflow automation Norway",
+        "virtual assistant services Norway",
+        "remote executive assistant Norway",
+        "digital marketing agency Oslo",
+      ],
+      description:
+        "Norway digital marketing agency offering performance marketing, paid media, brand strategy, AI workflow automation, and executive virtual assistant services for Norwegian enterprises and Nordic businesses.",
+      areaServed: [
+        { "@type": "Country", name: "Norway" },
+        { "@type": "AdministrativeArea", name: "Europe" },
+      ],
+    },
+    localBusinessSchema: {
+      name: "LuliDigital Norway",
+      logo: `${siteUrl}/favicon.png`,
+      telephone: sharedTelephone,
+      openingHours,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Oslo",
+        addressCountry: "NO",
+      },
+      description:
+        "Norway digital marketing agency for enterprises and Nordic businesses: performance marketing, AI automation, and executive virtual assistant services.",
+    },
+    capabilities: [
+      {
+        label: "Paid Media",
+        title: "Performance marketing for Norwegian enterprises",
+        copy: "Paid media campaigns with enterprise-grade audience logic and creative systems built for the Norwegian and Nordic commercial standard.",
+      },
+      {
+        label: "AI Automation",
+        title: "AI automation for Norwegian teams",
+        copy: "Custom AI assistants, workflow automation, and agent systems that reduce manual work, handle routine queries, and keep operations running cleanly.",
+      },
+      {
+        label: "Brand & SEO",
+        title: "Brand strategy and search visibility",
+        copy: "Clear positioning, high-converting pages, and SEO infrastructure built for Norwegian and Nordic search markets.",
+      },
+      {
+        label: "Virtual Assistant Desk",
+        title: "Executive virtual assistant services",
+        copy: "Inbox, calendar, project coordination, and operational follow-through for Norwegian founders and enterprise leadership teams.",
+      },
+    ],
+    proofTitle: "Nordic precision — with global reach",
+    proofCopy:
+      "Norwegian companies operate to a high standard of quality and efficiency. We build the marketing systems, automation layer, and executive support that matches that standard and helps Norwegian businesses expand beyond the Nordic region.",
+    reviews: [
+      "They matched the Norwegian execution standard and delivered without unnecessary back-and-forth.",
+      "The AI automation genuinely simplified operations that had been manual for too long.",
+      "A reliable partner that understood our market and moved with the right level of precision.",
+    ],
+    formTitle: "Start your Norway project",
+    formCopy: "Send the campaign priority, AI challenge, or operations need. We will respond with a focused, practical plan.",
   },
 };

@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LocalizedStudioLanding from "../components/LocalizedStudioLanding.astro";
+import { localizedOrganizationSchema, markets, regionalAlternates } from "../data/localizedMarkets";
+import { getDailySeoRecommendation, getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
+
+const seoRecommendation = await getDailySeoRecommendation({ geo: "CH", market: "switzerland" });
+const seoTarget = getWeeklyPageSeoTarget("/switzerland");
+
+Astro.response.headers.set("Cache-Control", "s-maxage=21600, stale-while-revalidate=86400");
+
+const market = {
+  ...markets.switzerland,
+  seoRecommendation,
+  serviceSchema: {
+    ...markets.switzerland.serviceSchema,
+    serviceType: [seoRecommendation.keyword, ...markets.switzerland.serviceSchema.serviceType],
+  },
+};
+---
+
+<BaseLayout
+  title={market.title}
+  description={market.description}
+  canonicalPath="/switzerland"
+  serviceSchema={market.serviceSchema}
+  localBusinessSchema={market.localBusinessSchema}
+  organizationSchemaOverride={localizedOrganizationSchema}
+  hreflangLinks={regionalAlternates}
+  seoTarget={seoTarget}
+>
+  <LocalizedStudioLanding market={market} />
+</BaseLayout>

@@ -25,14 +25,6 @@ const regionalFallbackKeywords = {
     "remote executive assistant Africa",
     "digital marketing agency for international companies in Africa",
   ],
-  ZA: [
-    "digital marketing agency South Africa",
-    "AI automation South Africa",
-    "virtual assistant services South Africa",
-    "performance marketing South Africa",
-    "SEO services South Africa",
-    "digital marketing agency Johannesburg",
-  ],
   NL: [
     "digital marketing agency Amsterdam",
     "AI automation Amsterdam",
@@ -53,6 +45,57 @@ const regionalFallbackKeywords = {
     "virtual assistant services Stockholm",
     "performance marketing Stockholm",
     "SEO services Stockholm",
+  ],
+  US: [
+    "digital marketing agency United States",
+    "AI automation services USA",
+    "virtual assistant services US",
+    "performance marketing agency USA",
+    "SEO services United States",
+    "remote executive assistant USA",
+  ],
+  GB: [
+    "digital marketing agency UK",
+    "AI automation services UK",
+    "virtual assistant services UK",
+    "performance marketing agency London",
+    "SEO services United Kingdom",
+    "remote executive assistant UK",
+  ],
+  DK: [
+    "digital marketing agency Denmark",
+    "AI automation Denmark",
+    "virtual assistant services Denmark",
+    "performance marketing Denmark",
+    "SEO services Denmark",
+  ],
+  CH: [
+    "digital marketing agency Switzerland",
+    "AI automation Switzerland",
+    "virtual assistant services Switzerland",
+    "performance marketing Switzerland",
+    "SEO services Switzerland",
+  ],
+  IE: [
+    "digital marketing agency Ireland",
+    "AI automation Ireland",
+    "virtual assistant services Ireland",
+    "performance marketing Ireland",
+    "SEO services Ireland",
+  ],
+  BE: [
+    "digital marketing agency Belgium",
+    "AI automation Belgium",
+    "virtual assistant services Belgium",
+    "performance marketing Belgium",
+    "SEO services Belgium",
+  ],
+  NO: [
+    "digital marketing agency Norway",
+    "AI automation Norway",
+    "virtual assistant services Norway",
+    "performance marketing Norway",
+    "SEO services Norway",
   ],
 };
 
@@ -127,16 +170,6 @@ const pageKeywordTargets = {
       "AI automation for African businesses",
     ],
   },
-  "/south-africa": {
-    page: "South Africa",
-    primary: regionalFallbackKeywords.ZA,
-    secondary: [
-      "digital marketing agency Johannesburg",
-      "SEO services South Africa",
-      "AI workflow automation South Africa",
-      "virtual assistant services South Africa",
-    ],
-  },
   "/amsterdam": {
     page: "Amsterdam",
     primary: regionalFallbackKeywords.NL,
@@ -167,6 +200,76 @@ const pageKeywordTargets = {
       "virtual assistant services Stockholm",
     ],
   },
+  "/united-states": {
+    page: "United States",
+    primary: regionalFallbackKeywords.US,
+    secondary: [
+      "US performance marketing agency",
+      "AI automation for US startups",
+      "remote executive assistant USA",
+      "SEO services for US businesses",
+    ],
+  },
+  "/united-kingdom": {
+    page: "United Kingdom",
+    primary: regionalFallbackKeywords.GB,
+    secondary: [
+      "UK performance marketing agency",
+      "AI automation for UK scale-ups",
+      "remote executive assistant UK",
+      "SEO services for UK businesses",
+    ],
+  },
+  "/denmark": {
+    page: "Denmark",
+    primary: regionalFallbackKeywords.DK,
+    secondary: [
+      "Copenhagen performance marketing",
+      "AI automation for Danish startups",
+      "English digital marketing agency Denmark",
+      "virtual assistant services Denmark",
+    ],
+  },
+  "/switzerland": {
+    page: "Switzerland",
+    primary: regionalFallbackKeywords.CH,
+    secondary: [
+      "Zurich performance marketing",
+      "enterprise AI automation Switzerland",
+      "English digital marketing agency Switzerland",
+      "virtual assistant services Switzerland",
+    ],
+  },
+  "/ireland": {
+    page: "Ireland",
+    primary: regionalFallbackKeywords.IE,
+    secondary: [
+      "Dublin performance marketing",
+      "AI automation for Irish tech startups",
+      "English digital marketing agency Ireland",
+      "virtual assistant services Ireland",
+    ],
+  },
+  "/belgium": {
+    page: "Belgium",
+    primary: regionalFallbackKeywords.BE,
+    secondary: [
+      "Brussels performance marketing",
+      "AI automation for Belgian businesses",
+      "English digital marketing agency Belgium",
+      "virtual assistant services Belgium",
+    ],
+  },
+  "/norway": {
+    page: "Norway",
+    primary: regionalFallbackKeywords.NO,
+    secondary: [
+      "Oslo performance marketing",
+      "AI automation for Norwegian enterprises",
+      "English digital marketing agency Norway",
+      "virtual assistant services Norway",
+    ],
+  },
 };
 
 const serviceSignals = [
@@ -195,9 +298,13 @@ const serviceSignals = [
   "amsterdam",
   "munich",
   "stockholm",
-  "south africa",
-  "johannesburg",
-  "cape town",
+  "united states",
+  "united kingdom",
+  "denmark",
+  "switzerland",
+  "ireland",
+  "belgium",
+  "norway",
   "africa",
   "nigeria",
   "kenya",
@@ -268,7 +375,7 @@ const relevanceScore = (keyword) => {
   }, 0);
 };
 
-const fallbackForToday = (date = new Date(), geo = "ZA") => {
+const fallbackForToday = (date = new Date(), geo = "NL") => {
   const keywords = regionalFallbackKeywords[geo] ?? fallbackKeywords;
   const dayIndex = Math.floor(date.getTime() / ONE_DAY);
   return keywords[dayIndex % keywords.length];
@@ -587,7 +694,7 @@ export const getSearchConsolePageSeoPlan = async ({ date = new Date(), days = 28
 };
 
 export const getDailySeoRecommendation = async ({ forceRefresh = false, geo, market } = {}) => {
-  const selectedGeo = geo || process.env.SEO_AGENT_GEO || "ZA";
+  const selectedGeo = geo || process.env.SEO_AGENT_GEO || "NL";
   const cacheKey = `${selectedGeo}:${market ?? "general"}`;
 
   if (!forceRefresh) {
@@ -648,7 +755,7 @@ export const getDailySeoRecommendation = async ({ forceRefresh = false, geo, mar
 };
 
 export const getBestRegionalSeoRecommendation = async ({
-  geos = process.env.BLOG_SEO_AGENT_GEOS || "NL,DE,SE,ZA",
+  geos = process.env.BLOG_SEO_AGENT_GEOS || "NL,DE,SE,GB,US,DK,CH,IE,BE,NO",
   forceRefresh = false,
 } = {}) => {
   const geoList = String(geos)

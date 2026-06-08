@@ -52,14 +52,14 @@ const breadcrumbSchema = breadcrumbSegments.length > 0 ? {
 } : null;
 
 const organizationSchema = {
-  "@type": ["LocalBusiness", "ProfessionalService"],
+  "@type": "Organization",
   "@id": `${siteUrl}/#organization`,
   "name": "LuliDigital",
   "image": `${siteUrl}/favicon.png`,
   "url": siteUrl,
   "logo": `${siteUrl}/favicon.png`,
   "description": "LuliDigital is an AI Automation, Digital Strategy, and Virtual Assistant Desk services studio built like an agile newsroom and run like a performance lab from Johannesburg, South Africa.",
-  "email": "info@lulidigital.co.za",
+  "email": "info@lulidigital.com",
   "telephone": "+27602551513",
   "priceRange": "$$",
   "contactPoint": [
@@ -67,8 +67,8 @@ const organizationSchema = {
       "@type": "ContactPoint",
       "contactType": "sales and client support",
       "telephone": "+27602551513",
-      "email": "info@lulidigital.co.za",
-      "areaServed": ["ZA", "GB", "NL", "DE", "SE", "US"],
+      "email": "info@lulidigital.com",
+      "areaServed": ["GB", "NL", "DE", "SE", "US"],
       "availableLanguage": ["English"],
     },
   ],
@@ -78,14 +78,15 @@ const organizationSchema = {
     "https://www.sortlist.com/agency/lulidigital",
   ],
   "areaServed": [
-    { "@type": "Country", "name": "South Africa" },
-    { "@type": "Country", "name": "United Kingdom" },
-    { "@type": "Country", "name": "United States" },
-    { "@type": "Country", "name": "Netherlands" },
-    { "@type": "Country", "name": "Germany" },
-    { "@type": "Country", "name": "Sweden" },
-    { "@type": "Place", "name": "Europe" },
-    { "@type": "Place", "name": "Africa" },
+    { "@type": "AdministrativeArea", "name": "United States" },
+    { "@type": "AdministrativeArea", "name": "United Kingdom" },
+    { "@type": "AdministrativeArea", "name": "Netherlands" },
+    { "@type": "AdministrativeArea", "name": "Denmark" },
+    { "@type": "AdministrativeArea", "name": "Sweden" },
+    { "@type": "AdministrativeArea", "name": "Switzerland" },
+    { "@type": "AdministrativeArea", "name": "Ireland" },
+    { "@type": "AdministrativeArea", "name": "Belgium" },
+    { "@type": "AdministrativeArea", "name": "Norway" },
   ],
   "knowsAbout": [
     "executive virtual assistant services",
@@ -301,9 +302,18 @@ const jsonLd = {
     window.setTimeout(callback, 450);
   };
 
-  document.addEventListener("DOMContentLoaded", () => {
+  const initPageEnhancements = () => {
+    if (document.querySelector("[data-bee-rim]")) {
+      initBee();
+    }
     scheduleEnhancements(initEnhancements);
-  });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPageEnhancements, { once: true });
+  } else {
+    initPageEnhancements();
+  }
 
   async function initEnhancements() {
     const [{ initMotion }, { initInkHighlights }] = await Promise.all([
@@ -322,6 +332,9 @@ const jsonLd = {
     const beeEl = document.getElementById("bee-guide");
     if (!beeEl) return;
     const bee = beeEl as HTMLElement;
+    if (bee.dataset.beeInitialized === "true") return;
+    bee.dataset.beeInitialized = "true";
+
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isSmall = window.innerWidth < 700;
 
@@ -333,6 +346,7 @@ const jsonLd = {
     let ty = cy;
 
     let isLanded  = false;
+    let isCupPinned = false;
     let landTimer = 0;
     let lastTilt  = 0;
     let rawScroll = 0;
@@ -394,13 +408,24 @@ const jsonLd = {
       }
 
       isLanded = true;
+      isCupPinned = targetIsRim;
+      bee.classList.toggle("is-cup-landed", targetIsRim);
       bee.classList.add("is-landed");
+      if (targetIsRim) {
+        cx = tx;
+        cy = ty;
+        lastTilt = 0;
+        bee.style.transform = `translate(${cx}px, ${cy}px) rotate(0deg)`;
+      }
       playBuzz(targetIsFinal ? 0.06 : 0.042, targetIsFinal ? 0.24 : 0.18);
       clearTimeout(landTimer);
-      landTimer = window.setTimeout(() => {
-        isLanded = false;
-        bee.classList.remove("is-landed");
-      }, targetIsRim ? 6200 : targetIsFinal ? 3600 : 2200);
+      if (!targetIsRim) {
+        landTimer = window.setTimeout(() => {
+          isLanded = false;
+          isCupPinned = false;
+          bee.classList.remove("is-landed", "is-cup-landed");
+        }, targetIsFinal ? 3600 : 2200);
+      }
     };
 
     const stops = document.querySelectorAll<HTMLElement>("[data-bee-stop], [data-bee-final], [data-bee-rim]");
@@ -425,8 +450,8 @@ const jsonLd = {
     };
 
     if (document.querySelector("[data-bee-rim]")) {
-      window.setTimeout(landOnVisibleRim, 500);
-      window.setTimeout(landOnVisibleRim, 1400);
+      window.setTimeout(landOnVisibleRim, 80);
+      window.setTimeout(landOnVisibleRim, 520);
       window.addEventListener("load", () => window.setTimeout(landOnVisibleRim, 350), { once: true });
     } else {
       window.setTimeout(landOnVisibleRim, 900);
@@ -434,6 +459,11 @@ const jsonLd = {
     }
 
     function tick(ms: number) {
+      if (isCupPinned) {
+        requestAnimationFrame(tick);
+        return;
+      }
+
       if (!isLanded) {
         const docH = document.body.scrollHeight - window.innerHeight;
         const pct  = docH > 0 ? Math.min(rawScroll / docH, 1) : 0;
@@ -549,9 +579,20 @@ const jsonLd = {
   .is-landed .bee-svg {
     animation: beeLanded 1.4s ease-in-out infinite;
   }
+  #bee-guide.is-cup-landed .bee-svg {
+    transform-origin: 44px 54px;
+    animation: beeCupPerch 1.8s ease-in-out infinite;
+  }
+  #bee-guide.is-cup-landed .bee-wings {
+    animation-duration: 1.8s;
+  }
   @keyframes beeLanded {
     0%,100% { transform: translateY(0); }
     50%     { transform: translateY(-4px); }
+  }
+  @keyframes beeCupPerch {
+    0%,100% { transform: translateY(0) rotate(-4deg) scale(.94); }
+    50%     { transform: translateY(-2px) rotate(-2deg) scale(.94); }
   }
   /* Trail dots (only while flying) */
   .bee-trail {
