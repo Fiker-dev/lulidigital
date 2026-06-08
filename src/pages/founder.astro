@@ -1,0 +1,498 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getDailySeoRecommendation, getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
+
+export const prerender = false;
+
+const seoRecommendation = await getDailySeoRecommendation({ geo: "NL", market: "founder" });
+const seoTarget = getWeeklyPageSeoTarget("/founder");
+
+Astro.response.headers.set("Cache-Control", "s-maxage=21600, stale-while-revalidate=86400");
+
+const title = "Fiker Zabate — Founder & Studio Lead | LuliDigital";
+const description = "Meet Fiker, the founder behind LuliDigital's AI Automation, Marketing Desk, and Virtual Assistant Desk. Building fast-scaling capacity from Johannesburg to Europe and the US.";
+
+const personSchema = {
+  "@type": "Person",
+  "@id": "https://lulidigital.com/founder#person",
+  "name": "Fiker Zabate",
+  "jobTitle": "Founder & Studio Lead",
+  "worksFor": { "@id": "https://lulidigital.com/#organization" },
+  "url": "https://lulidigital.com/founder",
+  "image": "https://lulidigital.com/images/founder/fiker-portrait.jpg",
+  "description": "Fiker is the founder of LuliDigital, a digital studio providing AI Automation, Marketing, and Virtual Assistant services to fast-scaling teams across Europe and the US.",
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="/founder"
+  active="founder"
+  ogImage="/images/founder/fiker-portrait.jpg"
+  seoTarget={seoTarget}
+  extraSchemas={[personSchema]}
+>
+
+  <!-- ── HERO ─────────────────────────────────────────────────── -->
+  <section class="founder-hero" data-bee-stop>
+    <div class="fh-inner">
+      <div class="fh-text">
+        <span class="hero-badge" data-reveal="drop">
+          <span class="badge-dot"></span>Founder & Studio Lead
+        </span>
+        <h1 class="fh-name" data-reveal="up" data-reveal-delay="80">
+          Fiker<br/><em>Zabate.</em>
+        </h1>
+        <p class="fh-tagline" data-reveal="up" data-reveal-delay="160">
+          The architect behind three desks — built to give fast-moving founders their time back, their reach extended, and their operations sharp.
+        </p>
+        <div class="fh-actions" data-reveal="up" data-reveal-delay="240">
+          <a class="pill pill--filled" href="/contact">Work With Me <span aria-hidden="true">→</span></a>
+          <a class="pill pill--outline" href="#desks">See the Desks</a>
+        </div>
+      </div>
+      <div class="fh-portrait" data-reveal="float-r" data-reveal-delay="60">
+        <div class="portrait-frame">
+          <img
+            src="/images/founder/fiker-portrait.jpg"
+            alt="Fiker Zabate — Founder of LuliDigital"
+            class="portrait-img"
+            loading="eager"
+            fetchpriority="high"
+            width="520"
+            height="640"
+          />
+          <div class="portrait-glow" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STORY ─────────────────────────────────────────────────── -->
+  <section class="founder-story">
+    <div class="fs-inner">
+      <div class="section-header" data-reveal="up">
+        <span class="eyebrow">Origin Story</span>
+        <h2 class="section-title">Built for a world that moves fast.</h2>
+      </div>
+      <div class="fs-grid">
+        <div class="fs-block" data-reveal="up" data-reveal-delay="0">
+          <span class="fs-label">The Beginning</span>
+          <p>LuliDigital started as a question: why do talented founders spend their best hours on work that shouldn't require their best hours? From Johannesburg, watching too many operators get buried in the operational weight of their own growth — I decided to do something about it.</p>
+        </div>
+        <div class="fs-block" data-reveal="up" data-reveal-delay="80">
+          <span class="fs-label">The Build</span>
+          <p>I designed three desks — Marketing, AI, and Virtual Assistant — each staffed by specialists who work like an in-house team without the overhead. Every desk runs lean, moves fast, and reports clearly so you always know what's happening and why it matters.</p>
+        </div>
+        <div class="fs-block" data-reveal="up" data-reveal-delay="160">
+          <span class="fs-label">The Mission</span>
+          <p>We're wired for founders scaling across borders. Whether you're entering Europe, building your AI stack, or need someone sharp running your inbox and ops — LuliDigital is the capacity you hire before you hire full-time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── THE THREE DESKS ───────────────────────────────────────── -->
+  <section class="founder-desks" id="desks">
+    <div class="fd-inner">
+      <div class="section-header" data-reveal="up">
+        <span class="eyebrow">What I Built</span>
+        <h2 class="section-title">Three desks. One vision.</h2>
+      </div>
+      <div class="fd-grid">
+        <article class="glow-card fd-card" data-tilt="6" data-reveal="up" data-reveal-delay="0">
+          <div class="tilt-layer">
+            <span class="fd-icon" aria-hidden="true">📣</span>
+            <h3 class="fd-card-title">Marketing Desk</h3>
+            <p class="fd-card-desc">SEO, paid media, and brand strategy built for teams entering new markets. Organic growth, performance ads, and content — without the full in-house overhead.</p>
+            <a class="cta-link" href="/marketing-desk">Explore the desk <span class="arr">→</span></a>
+          </div>
+        </article>
+        <article class="glow-card fd-card" data-tilt="6" data-reveal="up" data-reveal-delay="80">
+          <div class="tilt-layer">
+            <span class="fd-icon" aria-hidden="true">⚡</span>
+            <h3 class="fd-card-title">AI Desk</h3>
+            <p class="fd-card-desc">Custom automation, AI agents, voice systems, and workflow integrations. The operational intelligence layer so your team can focus on decisions that matter.</p>
+            <a class="cta-link" href="/ai-desk">Explore the desk <span class="arr">→</span></a>
+          </div>
+        </article>
+        <article class="glow-card fd-card" data-tilt="6" data-reveal="up" data-reveal-delay="160">
+          <div class="tilt-layer">
+            <span class="fd-icon" aria-hidden="true">🛡️</span>
+            <h3 class="fd-card-title">Virtual Assistant Desk</h3>
+            <p class="fd-card-desc">Executive-level remote support — inbox management, calendar control, admin ops, and back-office coverage. Your capacity partner for the operational middle.</p>
+            <a class="cta-link" href="/va-desk">Explore the desk <span class="arr">→</span></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CLIENT PROFILES ──────────────────────────────────────── -->
+  <section class="founder-clients">
+    <div class="fc-inner">
+      <div class="section-header" data-reveal="up">
+        <span class="eyebrow">Who I Work With</span>
+        <h2 class="section-title">Fast-movers. Global ambitions.</h2>
+      </div>
+      <div class="fc-grid">
+        <article class="glow-card fc-card" data-tilt="4" data-reveal="up" data-reveal-delay="0">
+          <div class="tilt-layer">
+            <span class="fc-type">The Scaling Founder</span>
+            <p>Series A or bootstrapped, you've found product-market fit and now you're breaking into Europe or the US. You need reach, brand presence, and ops capacity — fast.</p>
+          </div>
+        </article>
+        <article class="glow-card fc-card" data-tilt="4" data-reveal="up" data-reveal-delay="60">
+          <div class="tilt-layer">
+            <span class="fc-type">The Lean Agency</span>
+            <p>A boutique studio delivering work for larger clients. You need white-label marketing execution, AI tooling, and admin support without growing headcount.</p>
+          </div>
+        </article>
+        <article class="glow-card fc-card" data-tilt="4" data-reveal="up" data-reveal-delay="120">
+          <div class="tilt-layer">
+            <span class="fc-type">The Stretched Operator</span>
+            <p>Head of Ops, COO, or founder wearing all hats. You need an execution partner who gets it done without hand-holding — right inbox, right tone, right deliverable.</p>
+          </div>
+        </article>
+        <article class="glow-card fc-card" data-tilt="4" data-reveal="up" data-reveal-delay="180">
+          <div class="tilt-layer">
+            <span class="fc-type">The AI-First Builder</span>
+            <p>Building something new and want AI embedded from the start. You need an implementation partner who moves fast, integrates deeply, and documents clearly.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FINAL CTA ─────────────────────────────────────────────── -->
+  <section class="founder-cta" data-bee-final>
+    <div class="fcta-inner">
+      <span class="eyebrow fcta-eyebrow" data-blur-in>Let's Talk</span>
+      <h2 class="fcta-title" data-blur-in data-blur-delay="100">
+        Ready to hand off<br/>the hard parts?
+      </h2>
+      <p class="fcta-sub" data-blur-in data-blur-delay="200">
+        Drop me a line. Whether you need one desk or all three — I'll tell you exactly what makes sense for where you are right now.
+      </p>
+      <div class="fcta-actions" data-reveal="up" data-reveal-delay="300">
+        <a class="pill pill--filled" href="/contact">Start the conversation <span aria-hidden="true">→</span></a>
+        <a class="pill pill--ghost" href="https://wa.me/27602551513" target="_blank" rel="noopener noreferrer">WhatsApp directly</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ── Hero ───────────────────────────────────────────── */
+  .founder-hero {
+    padding: clamp(64px, 9vw, 128px) 0 clamp(48px, 7vw, 96px);
+    overflow: hidden;
+    border-bottom: 1px solid rgba(30,24,22,.08);
+  }
+  .fh-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 clamp(18px, 4vw, 48px);
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: clamp(40px, 6vw, 80px);
+    align-items: center;
+  }
+  .fh-name {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(56px, 9vw, 112px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -.04em;
+    margin: 18px 0 20px;
+    color: var(--ink, #141312);
+  }
+  .fh-name em { font-style: italic; color: var(--brand, #7b2d2d); }
+  .fh-tagline {
+    font-size: clamp(15px, 1.7vw, 19px);
+    line-height: 1.65;
+    color: var(--muted, rgba(20,19,18,.65));
+    max-width: 520px;
+    margin: 0 0 32px;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+  .fh-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+  .fh-actions .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 12px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 200ms ease, box-shadow 200ms ease, color 200ms ease, border-color 200ms ease;
+  }
+  .fh-actions .pill--filled {
+    background: var(--brand, #7b2d2d);
+    color: #f9f5ef;
+    box-shadow: 0 10px 28px rgba(123,45,45,.26);
+  }
+  .fh-actions .pill--filled:hover {
+    background: #6a2828;
+    box-shadow: 0 16px 36px rgba(123,45,45,.38);
+  }
+  .fh-actions .pill--outline {
+    border: 1.5px solid var(--brand, #7b2d2d);
+    color: var(--brand, #7b2d2d);
+    background: transparent;
+  }
+  .fh-actions .pill--outline:hover { background: rgba(123,45,45,.06); }
+
+  /* Portrait */
+  .portrait-frame {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    background: linear-gradient(145deg, rgba(245,164,31,.12), rgba(123,45,45,.08));
+  }
+  .portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  .portrait-glow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(123,45,45,.18) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  /* ── Story ──────────────────────────────────────────── */
+  .founder-story {
+    padding: clamp(64px, 8vw, 96px) 0;
+    border-bottom: 1px solid rgba(30,24,22,.08);
+  }
+  .fs-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 clamp(18px, 4vw, 48px);
+  }
+  .fs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(24px, 3vw, 48px);
+    margin-top: 40px;
+  }
+  .fs-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .fs-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--brand, #7b2d2d);
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+  .fs-block p {
+    font-size: clamp(14px, 1.3vw, 16px);
+    line-height: 1.72;
+    color: var(--muted, rgba(20,19,18,.65));
+    margin: 0;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+
+  /* ── Desks ──────────────────────────────────────────── */
+  .founder-desks {
+    padding: clamp(64px, 8vw, 96px) 0;
+    border-bottom: 1px solid rgba(30,24,22,.08);
+  }
+  .fd-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 clamp(18px, 4vw, 48px);
+  }
+  .fd-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .fd-card .tilt-layer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+    padding: 32px 28px;
+  }
+  .fd-icon {
+    font-size: 28px;
+    line-height: 1;
+    display: block;
+  }
+  .fd-card-title {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(20px, 2vw, 26px);
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: 1.1;
+    color: var(--ink, #141312);
+    margin: 0;
+    transition: color 280ms ease;
+  }
+  .fd-card:hover .fd-card-title { color: #f5f0e8; }
+  .fd-card-desc {
+    font-size: 14px;
+    line-height: 1.68;
+    color: var(--muted, rgba(20,19,18,.65));
+    margin: 0;
+    flex: 1;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    transition: color 280ms ease;
+  }
+  .fd-card:hover .fd-card-desc { color: rgba(245,240,232,.72); }
+
+  /* ── Clients ────────────────────────────────────────── */
+  .founder-clients {
+    padding: clamp(64px, 8vw, 96px) 0;
+    border-bottom: 1px solid rgba(30,24,22,.08);
+  }
+  .fc-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 clamp(18px, 4vw, 48px);
+  }
+  .fc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .fc-card .tilt-layer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 28px 24px;
+  }
+  .fc-type {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--brand, #7b2d2d);
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    transition: color 280ms ease;
+  }
+  .fc-card:hover .fc-type { color: rgba(245,164,31,.85); }
+  .fc-card p {
+    font-size: 13px;
+    line-height: 1.68;
+    color: var(--muted, rgba(20,19,18,.65));
+    margin: 0;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    transition: color 280ms ease;
+  }
+  .fc-card:hover p { color: rgba(245,240,232,.72); }
+
+  /* ── Final CTA ──────────────────────────────────────── */
+  .founder-cta {
+    padding: clamp(80px, 10vw, 128px) 0;
+    background: #0f0a09;
+    text-align: center;
+  }
+  .fcta-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 clamp(18px, 4vw, 48px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .fcta-eyebrow { color: rgba(245,164,31,.7); }
+  .fcta-title {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 800;
+    letter-spacing: -.04em;
+    line-height: 1.0;
+    color: rgba(245,240,232,.92);
+    margin: 14px 0 20px;
+  }
+  .fcta-sub {
+    font-size: clamp(15px, 1.5vw, 18px);
+    line-height: 1.65;
+    color: rgba(245,240,232,.55);
+    margin: 0 0 36px;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+  .fcta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    justify-content: center;
+  }
+  .fcta-actions .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 30px;
+    border-radius: 999px;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 12px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 200ms ease, box-shadow 200ms ease, color 200ms ease, border-color 200ms ease;
+  }
+  .fcta-actions .pill--filled {
+    background: var(--brand, #7b2d2d);
+    color: #f9f5ef;
+    box-shadow: 0 10px 28px rgba(123,45,45,.4);
+  }
+  .fcta-actions .pill--filled:hover {
+    background: #6a2828;
+    box-shadow: 0 16px 40px rgba(123,45,45,.55);
+  }
+  .fcta-actions .pill--ghost {
+    border: 1px solid rgba(245,240,232,.2);
+    color: rgba(245,240,232,.7);
+  }
+  .fcta-actions .pill--ghost:hover {
+    border-color: rgba(245,240,232,.42);
+    color: rgba(245,240,232,.92);
+  }
+
+  /* ── Responsive ─────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .fh-inner {
+      grid-template-columns: 1fr;
+    }
+    .fh-portrait {
+      order: -1;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .fs-grid { grid-template-columns: 1fr; gap: 28px; }
+    .fd-grid { grid-template-columns: 1fr 1fr; }
+    .fc-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .fd-grid { grid-template-columns: 1fr; }
+    .fc-grid { grid-template-columns: 1fr; }
+    .fh-actions .pill { width: 100%; justify-content: center; }
+    .fcta-actions .pill { width: 100%; justify-content: center; }
+  }
+</style>

@@ -26,6 +26,7 @@ const ssrPages = [
   '/belgium',
   '/norway',
   '/blog',
+  '/founder',
 ];
 
 // https://astro.build/config

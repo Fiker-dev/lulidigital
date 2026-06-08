@@ -160,6 +160,21 @@ const pageKeywordTargets = {
       "operations support services",
     ],
   },
+  "/founder": {
+    page: "Founder",
+    primary: [
+      "digital studio founder",
+      "AI automation studio founder",
+      "remote digital operations team",
+      "LuliDigital founder Fiker Zabate",
+    ],
+    secondary: [
+      "virtual assistant and AI services founder",
+      "digital studio for scaling teams",
+      "founder-led digital agency",
+      "outsourced operations team",
+    ],
+  },
   "/africa": {
     page: "Africa",
     primary: regionalFallbackKeywords.AFRICA,
