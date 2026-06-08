@@ -374,29 +374,63 @@ const jsonLd = {
 
     window.addEventListener("scroll", () => { rawScroll = window.scrollY; }, { passive: true });
 
-    const stops = document.querySelectorAll<HTMLElement>("[data-bee-stop], [data-bee-final]");
+    const landOnTarget = (target: HTMLElement) => {
+      const r = target.getBoundingClientRect();
+      const targetIsRim = target.hasAttribute("data-bee-rim");
+      const targetIsFinal = target.hasAttribute("data-bee-final") || targetIsRim;
+      const beeOffset = isSmall ? 34 : 48;
+      const maxX = window.innerWidth - (isSmall ? 42 : 58);
+      const maxY = window.innerHeight - (isSmall ? 74 : 84);
+      const leftLanding = r.left - beeOffset;
+      const centerLanding = r.left + Math.min(r.width * 0.42, 180);
+
+      if (targetIsRim) {
+        const beeHalf = isSmall ? 16 : 22;
+        tx = Math.max(8, Math.min(r.left + r.width * 0.5 - beeHalf, maxX));
+        ty = Math.max(isSmall ? 70 : 80, Math.min(r.top - (isSmall ? 8 : 10), maxY));
+      } else {
+        tx = Math.max(8, Math.min(targetIsFinal ? centerLanding : leftLanding, maxX));
+        ty = Math.max(isSmall ? 70 : 80, Math.min(r.top + Math.min(34, r.height * 0.28), maxY));
+      }
+
+      isLanded = true;
+      bee.classList.add("is-landed");
+      playBuzz(targetIsFinal ? 0.06 : 0.042, targetIsFinal ? 0.24 : 0.18);
+      clearTimeout(landTimer);
+      landTimer = window.setTimeout(() => {
+        isLanded = false;
+        bee.classList.remove("is-landed");
+      }, targetIsRim ? 6200 : targetIsFinal ? 3600 : 2200);
+    };
+
+    const stops = document.querySelectorAll<HTMLElement>("[data-bee-stop], [data-bee-final], [data-bee-rim]");
     if (stops.length) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
           if (!e.isIntersecting) return;
-          const r = (e.target as HTMLElement).getBoundingClientRect();
-          const targetIsFinal = (e.target as HTMLElement).hasAttribute("data-bee-final");
-          const beeOffset = isSmall ? 34 : 48;
-          const leftLanding = r.left - beeOffset;
-          const centerLanding = r.left + Math.min(r.width * 0.42, 180);
-          tx = Math.max(8, Math.min(targetIsFinal ? centerLanding : leftLanding, window.innerWidth - (isSmall ? 42 : 58)));
-          ty = Math.max(isSmall ? 70 : 80, Math.min(r.top + Math.min(34, r.height * 0.28), window.innerHeight - (isSmall ? 74 : 84)));
-          isLanded = true;
-          bee.classList.add("is-landed");
-          playBuzz(targetIsFinal ? 0.06 : 0.042, targetIsFinal ? 0.24 : 0.18);
-          clearTimeout(landTimer);
-          landTimer = window.setTimeout(() => {
-            isLanded = false;
-            bee.classList.remove("is-landed");
-          }, targetIsFinal ? 3600 : 2200);
+          landOnTarget(e.target as HTMLElement);
         });
       }, { threshold: isSmall ? 0.32 : 0.45, rootMargin: "0px 0px -12% 0px" });
-      stops.forEach((s) => io.observe(s));
+      stops.forEach((s) => {
+        io.observe(s);
+      });
+    }
+
+    const landOnVisibleRim = () => {
+      const rimTarget = document.querySelector<HTMLElement>("[data-bee-rim]");
+      if (!rimTarget) return;
+      const r = rimTarget.getBoundingClientRect();
+      const visible = r.top < window.innerHeight * 0.86 && r.bottom > 0 && r.width > 0 && r.height > 0;
+      if (visible) landOnTarget(rimTarget);
+    };
+
+    if (document.querySelector("[data-bee-rim]")) {
+      window.setTimeout(landOnVisibleRim, 500);
+      window.setTimeout(landOnVisibleRim, 1400);
+      window.addEventListener("load", () => window.setTimeout(landOnVisibleRim, 350), { once: true });
+    } else {
+      window.setTimeout(landOnVisibleRim, 900);
+      window.setTimeout(landOnVisibleRim, 1800);
     }
 
     function tick(ms: number) {
