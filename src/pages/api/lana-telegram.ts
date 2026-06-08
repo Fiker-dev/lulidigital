@@ -23,6 +23,8 @@ type LanaDecision = {
   pain_point?: string;
   angle?: string;
   tone_notes?: string;
+  cta_text?: string;
+  cta_link?: string;
   slug?: string;
   date?: string;
 };
@@ -73,6 +75,8 @@ Analyze Fiker's message and reply with a JSON object ONLY (no extra text, no mar
   "pain_point": "problem the post addresses or empty string",
   "angle": "unique take or empty string",
   "tone_notes": "tone guidance",
+  "cta_text": "end-of-article CTA text if Fiker specified one, else empty string",
+  "cta_link": "CTA link path — /ai, /marketing, /virtual-assistant, or other page Fiker mentioned, else empty string",
 
   // include for action "publish":
   "slug": "the post slug",
@@ -87,11 +91,13 @@ Analyze Fiker's message and reply with a JSON object ONLY (no extra text, no mar
 
 Rules:
 - Use "draft" when Fiker gives any blog idea, topic, or content request — including "write something else instead".
-- Use "publish" when he says to post/publish a specific draft now.
-- Use "schedule" when he wants to post on a specific date (convert relative dates like "next Tuesday" to YYYY-MM-DD).
+- Use "draft" (NOT "schedule") when Fiker says "schedule it for the blog" or "next blog post" WITHOUT giving a specific date AND without giving an existing slug. The post must exist before it can be scheduled.
+- Use "publish" when he says to post/publish a specific existing draft now.
+- Use "schedule" ONLY when he gives BOTH an existing slug AND a specific date (convert "next Tuesday" to YYYY-MM-DD).
 - Use "unpublish" when he says to take down, remove, hide, or revoke a post. Extract the slug from his message.
 - Use "chat" for questions, strategy talk, or anything else.
 - If Fiker says "take it down" or "remove it" without a slug, ask which post and remind him the slug was in the notification.
+- For cta_link: "AI page" or "ai desk" → "/ai", "marketing" → "/marketing", "VA" or "virtual assistant" → "/virtual-assistant", "landing pages" → pick the most relevant service page based on the topic.
 - For "chat" replies, be helpful and direct. If he's asking about a draft status, tell him to check GitHub Actions.
 - Never mention JSON, commands, or internal workings in your reply.`;
 
@@ -104,7 +110,7 @@ Rules:
     },
     body: JSON.stringify({
       model: MODEL,
-      max_tokens: 400,
+      max_tokens: 600,
       system: systemPrompt,
       messages: [{ role: "user", content: text }],
     }),
@@ -194,6 +200,8 @@ export const POST: APIRoute = async ({ request }) => {
         pain_point: decision.pain_point || "",
         angle: decision.angle || "",
         tone_notes: decision.tone_notes || "Practical, relatable, and solution-focused.",
+        cta_text: decision.cta_text || "",
+        cta_link: decision.cta_link || "",
         publish_status: "draft",
       });
     } else if (decision.action === "publish" && decision.slug) {

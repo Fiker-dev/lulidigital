@@ -10,7 +10,11 @@ const topicsPath = join(__dirname, "blog-topics.json");
 const memoryPath = join(__dirname, "lana-memory.json");
 const topicsData = JSON.parse(readFileSync(topicsPath, "utf8"));
 const memory = existsSync(memoryPath) ? JSON.parse(readFileSync(memoryPath, "utf8")) : { pending_post: null, pending_drafts: [] };
-const queued = memory.pending_post;
+
+// When GitHub dispatches the workflow with explicit env vars (from Telegram),
+// those must win over stale queued memory. Only use memory when no env vars present.
+const hasExplicitEnvVars = !!(process.env.BLOG_TOPIC || process.env.BLOG_DRAFT);
+const queued = hasExplicitEnvVars ? null : memory.pending_post;
 
 const index = topicsData.published_count % topicsData.topics.length;
 // Memory queue takes highest priority — overrides SEO agent and env vars
@@ -20,10 +24,14 @@ const customCategory = queued?.category || process.env.BLOG_CATEGORY?.trim();
 const customPainPoint = queued?.pain_point || process.env.BLOG_PAIN_POINT?.trim();
 const customAngle = queued?.angle || process.env.BLOG_ANGLE?.trim();
 const customToneNotes = queued?.tone_notes || process.env.BLOG_TONE_NOTES?.trim();
-const customCta = queued?.cta_text || null;
-const customCtaLink = queued?.cta_link || null;
+const customCta = queued?.cta_text || process.env.BLOG_CTA_TEXT?.trim() || null;
+const customCtaLink = queued?.cta_link || process.env.BLOG_CTA_LINK?.trim() || null;
 const useSeoAgent = !queued && process.env.BLOG_USE_SEO_AGENT === "true";
-const isDraft = queued?.draft ?? process.env.BLOG_DRAFT === "true";
+// BLOG_DRAFT env var always wins when explicitly provided by a workflow dispatch.
+// Only fall back to queued memory's draft flag for cron-scheduled runs.
+const isDraft = process.env.BLOG_DRAFT !== undefined && process.env.BLOG_DRAFT !== ""
+  ? process.env.BLOG_DRAFT === "true"
+  : (queued?.draft ?? false);
 
 if (queued) {
   console.log(`Using queued instructions from LANa memory: "${queued.topic || "(SEO auto)"}"`);
