@@ -119,28 +119,20 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
-            echo "ERROR: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID secret is not set in GitHub repository secrets."
+            echo "ERROR: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set in GitHub secrets."
             exit 1
           fi
           TITLE=$(cat /tmp/post_title.txt)
           SLUG=$(cat /tmp/post_slug.txt)
           CATEGORY=$(cat /tmp/post_category.txt)
           URL="https://lulidigital.com/blog/${SLUG}"
+          TEXT=$(printf "New post live on LuliDigital\n\n%s: %s\n\n%s\n\nNot happy? Reply: take down %s" "$CATEGORY" "$TITLE" "$URL" "$SLUG")
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=New post live on LuliDigital
-
-${CATEGORY}: ${TITLE}
-
-${URL}
-
-Not happy with it? Reply: take down ${SLUG}")
+            --data-urlencode "text=${TEXT}")
           HTTP_CODE=$(echo "$RESPONSE" | tail -1)
           echo "Telegram response: $RESPONSE"
-          if [ "$HTTP_CODE" != "200" ]; then
-            echo "ERROR: Telegram notification failed with HTTP $HTTP_CODE"
-            exit 1
-          fi
+          if [ "$HTTP_CODE" != "200" ]; then echo "ERROR: Telegram failed HTTP $HTTP_CODE"; exit 1; fi
 
       - name: Send Telegram draft preview
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.publish_status == 'draft' }}
@@ -149,7 +141,7 @@ Not happy with it? Reply: take down ${SLUG}")
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
-            echo "ERROR: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID secret is not set in GitHub repository secrets."
+            echo "ERROR: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set in GitHub secrets."
             exit 1
           fi
           TITLE=$(cat /tmp/post_title.txt)
@@ -157,20 +149,10 @@ Not happy with it? Reply: take down ${SLUG}")
           CATEGORY=$(cat /tmp/post_category.txt)
           DESCRIPTION=$(cat /tmp/post_description.txt)
           PREVIEW_URL="https://github.com/${{ github.repository }}/blob/main/src/content/blog/${SLUG}.md"
+          TEXT=$(printf "Draft ready: %s — %s\n\n%s\n\nRead draft: %s\n\nPublish: /publish %s\nSchedule: /schedule %s YYYY-MM-DD\nDelete: /delete-draft %s" "$CATEGORY" "$TITLE" "$DESCRIPTION" "$PREVIEW_URL" "$SLUG" "$SLUG" "$SLUG")
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=Draft ready: ${CATEGORY} — ${TITLE}
-
-${DESCRIPTION}
-
-Read draft: ${PREVIEW_URL}
-
-Reply to publish: /publish ${SLUG}
-Reply to schedule: /schedule ${SLUG} YYYY-MM-DD
-Reply to delete: /delete-draft ${SLUG}")
+            --data-urlencode "text=${TEXT}")
           HTTP_CODE=$(echo "$RESPONSE" | tail -1)
           echo "Telegram response: $RESPONSE"
-          if [ "$HTTP_CODE" != "200" ]; then
-            echo "ERROR: Telegram notification failed with HTTP $HTTP_CODE"
-            exit 1
-          fi
+          if [ "$HTTP_CODE" != "200" ]; then echo "ERROR: Telegram failed HTTP $HTTP_CODE"; exit 1; fi
