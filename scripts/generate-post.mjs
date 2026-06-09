@@ -39,10 +39,16 @@ if (queued) {
 const seoRecommendation = !customTitle && useSeoAgent ? await getBestRegionalSeoRecommendation({ forceRefresh: true }) : null;
 const localTargets = {
   AFRICA: { label: "Africa Growth Desk", path: "/africa" },
-  ZA: { label: "South Africa", path: "/south-africa" },
-  NL: { label: "Amsterdam", path: "/amsterdam" },
-  DE: { label: "Munich", path: "/munich" },
-  SE: { label: "Stockholm", path: "/stockholm" },
+  NL: { label: "Amsterdam Studio", path: "/amsterdam" },
+  DE: { label: "Munich Studio", path: "/munich" },
+  SE: { label: "Stockholm Studio", path: "/stockholm" },
+  GB: { label: "UK Studio", path: "/united-kingdom" },
+  US: { label: "US Studio", path: "/united-states" },
+  DK: { label: "Denmark Studio", path: "/denmark" },
+  CH: { label: "Switzerland Studio", path: "/switzerland" },
+  IE: { label: "Ireland Studio", path: "/ireland" },
+  BE: { label: "Belgium Studio", path: "/belgium" },
+  NO: { label: "Norway Studio", path: "/norway" },
 };
 const localTarget = seoRecommendation ? localTargets[seoRecommendation.geo] : null;
 const seoAgentTopic = seoRecommendation

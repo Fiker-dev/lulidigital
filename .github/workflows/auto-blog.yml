@@ -86,8 +86,8 @@ jobs:
           BLOG_CTA_TEXT: ${{ github.event.inputs.cta_text }}
           BLOG_CTA_LINK: ${{ github.event.inputs.cta_link }}
           BLOG_USE_SEO_AGENT: ${{ github.event_name == 'schedule' || github.event.inputs.use_seo_agent == 'true' }}
-          SEO_AGENT_GEO: ${{ vars.SEO_AGENT_GEO || 'ZA' }}
-          BLOG_SEO_AGENT_GEOS: ${{ vars.BLOG_SEO_AGENT_GEOS || 'AFRICA,NL,DE,SE,ZA' }}
+          SEO_AGENT_GEO: ${{ vars.SEO_AGENT_GEO || 'NL' }}
+          BLOG_SEO_AGENT_GEOS: ${{ vars.BLOG_SEO_AGENT_GEOS || 'NL,DE,SE,GB,US,DK,CH,IE,BE,NO,AFRICA' }}
 
       - name: Commit and push new post
         run: |
@@ -114,55 +114,63 @@ jobs:
 
       - name: Send Telegram notification
         if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.publish_status != 'draft' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "ERROR: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID secret is not set in GitHub repository secrets."
+            exit 1
+          fi
           TITLE=$(cat /tmp/post_title.txt)
           SLUG=$(cat /tmp/post_slug.txt)
           CATEGORY=$(cat /tmp/post_category.txt)
           URL="https://lulidigital.com/blog/${SLUG}"
-          MESSAGE=$(cat <<EOF
-New post live on LuliDigital
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=New post live on LuliDigital
 
-${CATEGORY}
-${TITLE}
+${CATEGORY}: ${TITLE}
 
 ${URL}
 
-Not happy with it? Reply "take down ${SLUG}" and I'll remove it.
-EOF
-          )
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            --data-urlencode "text=${MESSAGE}"
+Not happy with it? Reply: take down ${SLUG}")
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          echo "Telegram response: $RESPONSE"
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "ERROR: Telegram notification failed with HTTP $HTTP_CODE"
+            exit 1
+          fi
 
       - name: Send Telegram draft preview
         if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.publish_status == 'draft' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "ERROR: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID secret is not set in GitHub repository secrets."
+            exit 1
+          fi
           TITLE=$(cat /tmp/post_title.txt)
           SLUG=$(cat /tmp/post_slug.txt)
           CATEGORY=$(cat /tmp/post_category.txt)
           DESCRIPTION=$(cat /tmp/post_description.txt)
           PREVIEW_URL="https://github.com/${{ github.repository }}/blob/main/src/content/blog/${SLUG}.md"
-          MESSAGE=$(cat <<EOF
-Draft ready for your review
-
-${CATEGORY}
-${TITLE}
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=Draft ready: ${CATEGORY} — ${TITLE}
 
 ${DESCRIPTION}
 
-Read the full draft:
-${PREVIEW_URL}
+Read draft: ${PREVIEW_URL}
 
-To publish now, reply:
-/publish ${SLUG}
-
-To schedule for a date, reply:
-/schedule ${SLUG} YYYY-MM-DD
-
-To delete it, reply:
-/delete-draft ${SLUG}
-EOF
-          )
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            --data-urlencode "text=${MESSAGE}"
+Reply to publish: /publish ${SLUG}
+Reply to schedule: /schedule ${SLUG} YYYY-MM-DD
+Reply to delete: /delete-draft ${SLUG}")
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          echo "Telegram response: $RESPONSE"
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "ERROR: Telegram notification failed with HTTP $HTTP_CODE"
+            exit 1
+          fi
