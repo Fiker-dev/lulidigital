@@ -1,0 +1,67 @@
+name: Monthly SEO Audit
+
+# Runs on the 1st of every month at 8am UTC.
+# Also triggerable manually from GitHub Actions UI.
+
+on:
+  schedule:
+    - cron: '0 8 1 * *'
+  workflow_dispatch:
+
+jobs:
+  seo-audit:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run SEO audit
+        run: node scripts/run-seo-audit.mjs
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN }}
+          GOOGLE_SEARCH_CONSOLE_PROPERTY: ${{ secrets.GOOGLE_SEARCH_CONSOLE_PROPERTY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Commit audit report and fixes
+        run: |
+          git config user.name "LuliDigital Bot"
+          git config user.email "bot@lulidigital.com"
+          git add scripts/seo-audit-*.json src/lib/seo-keyword-overrides.json scripts/lana-memory.json
+          git diff --staged --quiet && echo "No new report to commit" && exit 0
+          git commit -m "Monthly SEO audit + keyword overrides $(date +%Y-%m)"
+          git push
+
+      - name: Send audit report to Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "ERROR: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set."
+            exit 1
+          fi
+          if [ ! -f /tmp/seo-audit-message.txt ]; then
+            echo "No audit message generated (Search Console likely not configured). Skipping Telegram."
+            exit 0
+          fi
+          TEXT=$(cat /tmp/seo-audit-message.txt)
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${TEXT}")
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          echo "Telegram response: $RESPONSE"
+          if [ "$HTTP_CODE" != "200" ]; then echo "ERROR: Telegram failed HTTP $HTTP_CODE"; exit 1; fi

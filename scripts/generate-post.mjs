@@ -16,17 +16,24 @@ const memory = existsSync(memoryPath) ? JSON.parse(readFileSync(memoryPath, "utf
 const hasExplicitEnvVars = !!(process.env.BLOG_TOPIC || process.env.BLOG_DRAFT);
 const queued = hasExplicitEnvVars ? null : memory.pending_post;
 
+// SEO opportunity queue: populated monthly by run-seo-audit.mjs.
+// Consumed one item per blog run when no higher-priority source is active.
+const seoQueue = memory.seo_opportunity_queue ?? [];
+const queuedSeo = !hasExplicitEnvVars && !memory.pending_post && seoQueue.length > 0
+  ? seoQueue[0]
+  : null;
+
 const index = topicsData.published_count % topicsData.topics.length;
-// Memory queue takes highest priority — overrides SEO agent and env vars
-const customTitle = queued?.topic || process.env.BLOG_TOPIC?.trim();
-const customKeyword = queued?.keyword || process.env.BLOG_KEYWORD?.trim();
-const customCategory = queued?.category || process.env.BLOG_CATEGORY?.trim();
-const customPainPoint = queued?.pain_point || process.env.BLOG_PAIN_POINT?.trim();
-const customAngle = queued?.angle || process.env.BLOG_ANGLE?.trim();
-const customToneNotes = queued?.tone_notes || process.env.BLOG_TONE_NOTES?.trim();
+// Priority order: explicit env vars → pending_post (Telegram) → seo_opportunity_queue (audit) → live Trends → fallback rotation
+const customTitle = queued?.topic || queuedSeo?.topic || process.env.BLOG_TOPIC?.trim();
+const customKeyword = queued?.keyword || queuedSeo?.keyword || process.env.BLOG_KEYWORD?.trim();
+const customCategory = queued?.category || queuedSeo?.category || process.env.BLOG_CATEGORY?.trim();
+const customPainPoint = queued?.pain_point || queuedSeo?.pain_point || process.env.BLOG_PAIN_POINT?.trim();
+const customAngle = queued?.angle || queuedSeo?.angle || process.env.BLOG_ANGLE?.trim();
+const customToneNotes = queued?.tone_notes || queuedSeo?.tone_notes || process.env.BLOG_TONE_NOTES?.trim();
 const customCta = queued?.cta_text || process.env.BLOG_CTA_TEXT?.trim() || null;
 const customCtaLink = queued?.cta_link || process.env.BLOG_CTA_LINK?.trim() || null;
-const useSeoAgent = !queued && process.env.BLOG_USE_SEO_AGENT === "true";
+const useSeoAgent = !queued && !queuedSeo && process.env.BLOG_USE_SEO_AGENT === "true";
 // BLOG_DRAFT env var always wins when explicitly provided by a workflow dispatch.
 // Only fall back to queued memory's draft flag for cron-scheduled runs.
 const isDraft = process.env.BLOG_DRAFT !== undefined && process.env.BLOG_DRAFT !== ""
@@ -180,17 +187,20 @@ if (!isCustomTopic) {
   writeFileSync(topicsPath, JSON.stringify(topicsData, null, 2));
 }
 
-// Clear the queued instructions now that they have been used.
-// Track the new draft slug so LANa knows what to show/delete.
-if (queued || existsSync(memoryPath)) {
+// Clear consumed queue item and track new draft slug.
+// Spread ...memory first to preserve review_state and any other fields.
+if (queued || queuedSeo || existsSync(memoryPath)) {
   const updatedMemory = {
+    ...memory,
     pending_post: null,
     pending_drafts: isDraft
       ? [...(memory.pending_drafts || []), post.slug]
       : (memory.pending_drafts || []),
+    seo_opportunity_queue: queuedSeo ? seoQueue.slice(1) : seoQueue,
   };
   writeFileSync(memoryPath, JSON.stringify(updatedMemory, null, 2));
   if (queued) console.log("Queued instructions consumed and cleared from memory.");
+  if (queuedSeo) console.log(`SEO opportunity consumed: "${queuedSeo.keyword}" (${seoQueue.length - 1} remaining in queue)`);
 }
 
 console.log("Done.");

@@ -1,0 +1,200 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
+
+export const prerender = false;
+
+const seoTarget = getWeeklyPageSeoTarget("/work");
+
+Astro.response.headers.set("Cache-Control", "s-maxage=604800, stale-while-revalidate=86400");
+
+const title = "Recent Selected Work | LuliDigital";
+const description = "A selection of recent work from LuliDigital — performance marketing, AI automation, brand strategy, and digital studio projects for founders and fast-scaling teams.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath="/work"
+  active="work"
+  seoTarget={seoTarget}
+>
+
+  <!-- ── HERO ─────────────────────────────────────────────────── -->
+  <section class="work-hero">
+    <div class="wh-inner">
+      <span class="eyebrow" data-reveal="drop">Studio Showreel</span>
+      <h1 class="wh-title" data-reveal="up" data-reveal-delay="80">
+        Recent<br/><em>Selected Work.</em>
+      </h1>
+      <p class="wh-sub" data-reveal="up" data-reveal-delay="160">
+        Marketing systems, AI automations, brand strategy, and digital operations — built for founders who move fast.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── VIDEO ─────────────────────────────────────────────────── -->
+  <section class="work-reel">
+    <div class="reel-wrap">
+      <video
+        id="showreel"
+        class="reel-video"
+        src="/assets/lulidigital-showreel.mp4"
+        controls
+        muted
+        playsinline
+        loop
+        preload="metadata"
+        aria-label="LuliDigital recent selected work showreel"
+      ></video>
+    </div>
+  </section>
+
+  <!-- ── CTA ───────────────────────────────────────────────────── -->
+  <section class="work-cta" data-reveal="up">
+    <div class="wc-inner">
+      <p class="wc-label">Ready to build something like this?</p>
+      <a class="pill pill--filled" href="/contact">Start a project <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+<script>
+  const video = document.getElementById("showreel") as HTMLVideoElement | null;
+  if (video) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(video);
+  }
+</script>
+
+</BaseLayout>
+
+<style>
+  /* ── Hero ───────────────────────────────────────────────────── */
+  .work-hero {
+    padding: clamp(80px, 12vw, 140px) 24px clamp(48px, 6vw, 72px);
+    text-align: center;
+  }
+
+  .wh-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--brand, #7b2d2d);
+    background: color-mix(in srgb, var(--brand, #7b2d2d) 10%, transparent);
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 24px;
+  }
+
+  .wh-title {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -.03em;
+    color: var(--ink, #141312);
+    margin-bottom: 24px;
+  }
+
+  .wh-title em {
+    font-style: italic;
+    color: var(--brand, #7b2d2d);
+  }
+
+  .wh-sub {
+    font-size: clamp(15px, 2vw, 18px);
+    color: color-mix(in srgb, var(--ink, #141312) 60%, transparent);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── Video ───────────────────────────────────────────────────── */
+  .work-reel {
+    padding: 0 clamp(16px, 3vw, 40px) clamp(64px, 8vw, 96px);
+  }
+
+  .reel-wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+      0 2px 0 rgba(255,255,255,.6) inset,
+      0 32px 80px rgba(20, 13, 8, .18),
+      0 2px 8px rgba(20, 13, 8, .08);
+    background: var(--ink, #141312);
+    border: 1px solid color-mix(in srgb, var(--ink, #141312) 12%, transparent);
+  }
+
+  .reel-video {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 480px;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+  }
+
+  @media (max-width: 768px) {
+    .reel-video { min-height: 240px; }
+  }
+
+  /* ── CTA ─────────────────────────────────────────────────────── */
+  .work-cta {
+    padding: clamp(40px, 6vw, 72px) 24px clamp(80px, 10vw, 120px);
+    text-align: center;
+  }
+
+  .wc-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .wc-label {
+    font-size: clamp(15px, 2vw, 18px);
+    color: color-mix(in srgb, var(--ink, #141312) 55%, transparent);
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-decoration: none;
+    transition: background 200ms ease, color 200ms ease, transform 200ms ease;
+  }
+
+  .pill--filled {
+    background: var(--brand, #7b2d2d);
+    color: var(--paper, #f3efe7);
+    border: 1.5px solid var(--brand, #7b2d2d);
+  }
+
+  .pill--filled:hover {
+    background: color-mix(in srgb, var(--brand, #7b2d2d) 85%, black);
+    transform: translateY(-2px);
+  }
+</style>

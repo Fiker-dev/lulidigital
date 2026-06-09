@@ -1,6 +1,20 @@
+import { readFileSync, existsSync } from "fs";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+
 const ONE_DAY = 1000 * 60 * 60 * 24;
 const CACHE_TTL = 1000 * 60 * 60 * 6;
 const SITE_URL = "https://lulidigital.com";
+
+// Load monthly audit overrides (written by run-seo-audit.mjs on the 1st of each month).
+// These replace static fallback keywords with real Search Console opportunity queries.
+let _pageKeywordOverrides = {};
+try {
+  const p = join(dirname(fileURLToPath(import.meta.url)), "seo-keyword-overrides.json");
+  if (existsSync(p)) {
+    _pageKeywordOverrides = JSON.parse(readFileSync(p, "utf8")).pages ?? {};
+  }
+} catch { /* proceed with static targets if file missing or malformed */ }
 
 const cachedRecommendations = new Map();
 
@@ -555,7 +569,13 @@ export const getWeeklyPageSeoTarget = (path = "/", date = new Date()) => {
   const normalizedPath = normalizePath(path);
   const config = pageKeywordTargets[normalizedPath] ?? pageKeywordTargets["/"];
   const weekIndex = weekIndexFor(date);
-  const primaryKeyword = config.primary[weekIndex % config.primary.length];
+
+  // Prepend Search Console opportunity keywords (from monthly audit) before the static rotation.
+  // This ensures real demand signals take priority over curated fallbacks.
+  const overrideKws = _pageKeywordOverrides[normalizedPath]?.primary ?? [];
+  const primaryPool = [...overrideKws, ...config.primary];
+  const primaryKeyword = primaryPool[weekIndex % primaryPool.length];
+
   const secondaryKeywords = config.secondary
     .slice(weekIndex % config.secondary.length)
     .concat(config.secondary.slice(0, weekIndex % config.secondary.length))
@@ -567,7 +587,9 @@ export const getWeeklyPageSeoTarget = (path = "/", date = new Date()) => {
     primaryKeyword,
     secondaryKeywords,
     keywords: [primaryKeyword, ...secondaryKeywords],
-    source: "LuliDigital weekly page keyword rotation",
+    source: overrideKws.length > 0
+      ? `Google Search Console (${_pageKeywordOverrides[normalizedPath]?.source ?? "monthly audit"})`
+      : "LuliDigital weekly page keyword rotation",
     week: weekIndex,
     updatedAt: date.toISOString(),
   };

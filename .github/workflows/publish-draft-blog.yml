@@ -34,11 +34,14 @@ jobs:
       - name: Publish draft
         run: node scripts/publish-draft-post.mjs "${{ github.event.inputs.slug }}" "${{ github.event.inputs.publish_date }}"
 
+      - name: Clear review state from memory
+        run: node scripts/clear-review-state.mjs "${{ github.event.inputs.slug }}"
+
       - name: Commit and push published draft
         run: |
           git config user.name "LuliDigital Bot"
           git config user.email "bot@lulidigital.com"
-          git add src/content/blog/
+          git add src/content/blog/ scripts/lana-memory.json
           git diff --staged --quiet && echo "No draft changes" && exit 0
           git commit -m "Publish draft blog post ${{ github.event.inputs.slug }}"
           git push

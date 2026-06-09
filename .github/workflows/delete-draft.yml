@@ -39,18 +39,17 @@ jobs:
           rm "$FILE"
           echo "Deleted $FILE"
 
-      - name: Remove slug from memory pending_drafts
+      - name: Clear review state and pending_drafts from memory
         run: |
-          node - <<'EOF'
-          import { readFileSync, writeFileSync, existsSync } from "fs";
-          const path = "scripts/lana-memory.json";
-          if (!existsSync(path)) process.exit(0);
-          const memory = JSON.parse(readFileSync(path, "utf8"));
-          const slug = "${{ github.event.inputs.slug }}";
-          memory.pending_drafts = (memory.pending_drafts || []).filter(s => s !== slug);
-          writeFileSync(path, JSON.stringify(memory, null, 2));
-          EOF
-        shell: node {0}
+          node scripts/clear-review-state.mjs "${{ github.event.inputs.slug }}"
+          node -e "
+            const fs=require('fs');
+            const p='scripts/lana-memory.json';
+            if(!fs.existsSync(p)) process.exit(0);
+            const m=JSON.parse(fs.readFileSync(p,'utf8'));
+            m.pending_drafts=(m.pending_drafts||[]).filter(s=>s!=='${{ github.event.inputs.slug }}');
+            fs.writeFileSync(p,JSON.stringify(m,null,2));
+          "
 
       - name: Commit and push
         run: |
@@ -64,12 +63,7 @@ jobs:
       - name: Send Telegram confirmation
         run: |
           SLUG="${{ github.event.inputs.slug }}"
-          MESSAGE=$(cat <<EOF
-Draft deleted: ${SLUG}
-
-It's gone from the repo. Want me to write a new one? Just tell me the topic.
-EOF
-          )
+          TEXT=$(printf "Draft deleted: %s\n\nIt's gone from the repo. Want me to write a new one? Just tell me the topic." "$SLUG")
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            --data-urlencode "text=${MESSAGE}"
+            --data-urlencode "text=${TEXT}"

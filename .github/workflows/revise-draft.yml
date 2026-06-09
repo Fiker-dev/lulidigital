@@ -1,0 +1,76 @@
+name: Revise Draft Blog Post
+
+# Triggered by lana-telegram.ts when Fiker replies with edit instructions
+# during the draft review loop.
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'Draft blog slug to revise'
+        required: true
+        type: string
+      revision_instructions:
+        description: 'Editorial instructions from Fiker'
+        required: true
+        type: string
+      scheduled_for:
+        description: 'Keep the same scheduled date (YYYY-MM-DD)'
+        required: false
+        type: string
+
+jobs:
+  revise-draft:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Revise draft
+        run: node scripts/revise-draft.mjs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          REVISION_SLUG: ${{ github.event.inputs.slug }}
+          REVISION_INSTRUCTIONS: ${{ github.event.inputs.revision_instructions }}
+
+      - name: Commit revised draft
+        run: |
+          git config user.name "LuliDigital Bot"
+          git config user.email "bot@lulidigital.com"
+          git add src/content/blog/ scripts/lana-memory.json
+          git diff --staged --quiet && echo "No changes" && exit 0
+          git commit -m "Revise draft: ${{ github.event.inputs.slug }}"
+          git push
+
+      - name: Send revised preview for approval
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "ERROR: Telegram secrets not set."
+            exit 1
+          fi
+          SLUG="${{ github.event.inputs.slug }}"
+          SCHEDULED_FOR="${{ github.event.inputs.scheduled_for }}"
+          PREVIEW=$(cat /tmp/review_preview.txt)
+          REVISION_COUNT=$(node -e "const fs=require('fs'); const m=JSON.parse(fs.readFileSync('scripts/lana-memory.json','utf8')); process.stdout.write(String(m.review_state?.revision_count||1));")
+          TEXT=$(printf "Revised (edit %s):\n\n%s\n\nStill scheduled for %s — like this version? Reply YES to confirm, or tell me what else to change." "$REVISION_COUNT" "$PREVIEW" "$SCHEDULED_FOR")
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${TEXT}")
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          echo "Telegram response: $RESPONSE"
+          if [ "$HTTP_CODE" != "200" ]; then echo "ERROR: Telegram failed HTTP $HTTP_CODE"; exit 1; fi

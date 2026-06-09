@@ -102,21 +102,8 @@ jobs:
           ANGLE="${{ github.event.inputs.angle }}"
           DRAFT="${{ github.event.inputs.draft }}"
           if [ -z "$TOPIC" ]; then TOPIC="(SEO auto-select)"; fi
-          if [ "$DRAFT" = "true" ]; then
-            STATUS="as a draft"
-          else
-            STATUS="and publish immediately"
-          fi
-          MESSAGE=$(cat <<EOF
-Got it. Queued for the next scheduled post.
-
-Topic: ${TOPIC}
-Angle: ${ANGLE:-not specified}
-Will generate: ${STATUS}
-
-I'll run this on the next scheduled post (Mon, Wed, or Fri at 8am UTC). You can override it anytime by sending new instructions.
-EOF
-          )
+          if [ "$DRAFT" = "true" ]; then STATUS="as a draft"; else STATUS="and publish immediately"; fi
+          TEXT=$(printf "Got it. Queued for the next scheduled post.\n\nTopic: %s\nAngle: %s\nWill generate: %s\n\nI'll run this on the next scheduled post (Mon, Wed, or Fri at 8am UTC). You can override it anytime by sending new instructions." "$TOPIC" "${ANGLE:-not specified}" "$STATUS")
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            --data-urlencode "text=${MESSAGE}"
+            --data-urlencode "text=${TEXT}"

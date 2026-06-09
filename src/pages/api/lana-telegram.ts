@@ -14,8 +14,22 @@ type TelegramUpdate = {
   };
 };
 
+type ReviewState = {
+  slug: string;
+  title: string;
+  preview_text: string;
+  scheduled_for: string;
+  revision_count: number;
+};
+
+type LanaMemory = {
+  pending_post: unknown;
+  pending_drafts: string[];
+  review_state: ReviewState | null;
+};
+
 type LanaDecision = {
-  action: "draft" | "publish" | "schedule" | "unpublish" | "chat";
+  action: "draft" | "publish" | "schedule" | "unpublish" | "approve" | "revise" | "reject" | "chat";
   reply: string;
   topic?: string;
   keyword?: string;
@@ -27,6 +41,7 @@ type LanaDecision = {
   cta_link?: string;
   slug?: string;
   date?: string;
+  revision_instructions?: string;
 };
 
 function getEnv(name: string) {
@@ -48,7 +63,33 @@ async function sendTelegram(chatId: string, text: string) {
   });
 }
 
-async function askLana(text: string): Promise<LanaDecision> {
+async function fetchMemory(): Promise<LanaMemory | null> {
+  const token = getEnv("GITHUB_WORKFLOW_TOKEN");
+  if (!token) return null;
+
+  try {
+    const response = await fetch(
+      `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/scripts/lana-memory.json?ref=${REF}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/vnd.github+json",
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      },
+    );
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    const decoded = Buffer.from(data.content.replace(/\n/g, ""), "base64").toString("utf8");
+    return JSON.parse(decoded) as LanaMemory;
+  } catch {
+    return null;
+  }
+}
+
+async function askLana(text: string, reviewState?: ReviewState | null): Promise<LanaDecision> {
   const apiKey = getEnv("ANTHROPIC_API_KEY");
   if (!apiKey) {
     return { action: "chat", reply: "I'm having trouble thinking right now — try again in a moment." };
@@ -56,16 +97,37 @@ async function askLana(text: string): Promise<LanaDecision> {
 
   const today = new Date().toISOString().split("T")[0];
 
+  let reviewContext = "";
+  if (reviewState) {
+    reviewContext = `
+
+ACTIVE DRAFT REVIEW:
+You are currently in a review loop for a draft post. Fiker is reviewing it and has not yet approved it.
+- Slug: ${reviewState.slug}
+- Title: "${reviewState.title}"
+- Revision count so far: ${reviewState.revision_count}
+- Scheduled for: ${reviewState.scheduled_for}
+- Preview: "${reviewState.preview_text}"
+
+In this mode, interpret Fiker's message as a response to the draft:
+- If he approves (YES, looks good, publish it, schedule it, go ahead, etc.) → action: "approve"
+- If he wants changes (any edit request, feedback, or instructions) → action: "revise", fill revision_instructions with his exact instructions
+- If he rejects (no, delete it, scrap it, don't publish, forget it) → action: "reject"
+- If he asks a question about something else → action: "chat"
+
+Do NOT use "draft", "publish", or "schedule" while a review is active.`;
+  }
+
   const systemPrompt = `You are Lana, the LuliDigital blog assistant. You talk with Fiker (the business owner) on Telegram.
 
 Today's date: ${today}
 
 Personality: direct, warm, like a smart colleague. Keep replies short — this is Telegram.
-
+${reviewContext}
 Analyze Fiker's message and reply with a JSON object ONLY (no extra text, no markdown):
 
 {
-  "action": "draft" | "publish" | "schedule" | "unpublish" | "chat",
+  "action": "draft" | "publish" | "schedule" | "unpublish" | "approve" | "revise" | "reject" | "chat",
   "reply": "your short conversational reply",
 
   // include these only for action "draft":
@@ -86,7 +148,10 @@ Analyze Fiker's message and reply with a JSON object ONLY (no extra text, no mar
   "date": "YYYY-MM-DD",
 
   // include for action "unpublish":
-  "slug": "the post slug to remove"
+  "slug": "the post slug to remove",
+
+  // include for action "revise":
+  "revision_instructions": "exact editorial instructions from Fiker"
 }
 
 Rules:
@@ -190,9 +255,25 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
-    const decision = await askLana(text);
+    const memory = await fetchMemory();
+    const reviewState = memory?.review_state ?? null;
 
-    if (decision.action === "draft" && decision.topic) {
+    const decision = await askLana(text, reviewState);
+
+    if (decision.action === "approve" && reviewState) {
+      await dispatchWorkflow("publish-draft-blog.yml", {
+        slug: reviewState.slug,
+        publish_date: reviewState.scheduled_for,
+      });
+    } else if (decision.action === "revise" && reviewState && decision.revision_instructions) {
+      await dispatchWorkflow("revise-draft.yml", {
+        slug: reviewState.slug,
+        revision_instructions: decision.revision_instructions,
+        scheduled_for: reviewState.scheduled_for,
+      });
+    } else if (decision.action === "reject" && reviewState) {
+      await dispatchWorkflow("delete-draft.yml", { slug: reviewState.slug });
+    } else if (decision.action === "draft" && decision.topic) {
       await dispatchWorkflow("auto-blog.yml", {
         topic: decision.topic,
         keyword: decision.keyword || "",
