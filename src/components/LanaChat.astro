@@ -1,9 +1,4 @@
 ---
-const starters = [
-  "What does LuliDigital help with?",
-  "Which service is right for me?",
-  "How can I contact the desk?",
-];
 ---
 
 <!-- backdrop (mobile) -->
@@ -57,21 +52,8 @@ const starters = [
       </button>
     </header>
 
-    <!-- Welcome screen — shown before first message, hidden after -->
-    <div class="lana-welcome" data-lana-welcome>
-      <p class="lana-welcome__greeting" data-lana-greeting>Good evening</p>
-      <p class="lana-welcome__sub" data-lana-sub>Here to help with your LuliDigital questions.</p>
-    </div>
-
-    <!-- Messages (starts hidden, shown after first exchange) -->
+    <!-- Messages -->
     <div class="lana-chat__messages" data-lana-messages aria-live="polite"></div>
-
-    <!-- Starter chips -->
-    <div class="lana-chat__starters" data-lana-starters>
-      {starters.map((s) => (
-        <button type="button" class="lana-chat__starter" data-lana-starter={s}>{s}</button>
-      ))}
-    </div>
 
     <form class="lana-chat__composer" data-lana-form>
       <label class="sr-only" for="lana-input">Ask Lana</label>
@@ -112,62 +94,26 @@ const starters = [
     const input      = root.querySelector("[data-lana-input]");
     const messagesEl = root.querySelector("[data-lana-messages]");
     const sendBtn    = root.querySelector("[data-lana-send]");
-    const startersEl = root.querySelector("[data-lana-starters]");
-    const starters   = Array.from(root.querySelectorAll("[data-lana-starter]"));
-    const welcomeEl  = root.querySelector("[data-lana-welcome]");
-    const greetingEl = root.querySelector("[data-lana-greeting]");
 
-    // Set time-based greeting in welcome screen
     const h = new Date().getHours();
     const timeWord = h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
-    if (greetingEl) greetingEl.textContent = timeWord;
 
-    // Rotating subtitle phrases
-    const subEl = root.querySelector("[data-lana-sub]");
-    const phrases = [
-      "Here to help with your LuliDigital questions.",
-      "Have an idea you want to bring to light?",
-      "A problem to solve?",
-      "Curious about our services?",
-      "What do you need help with today?",
-    ];
-    let phraseIdx = 0;
-    let rotateTimer = null;
-    if (subEl) {
-      subEl.style.transition = "opacity 300ms ease";
-      rotateTimer = setInterval(() => {
-        phraseIdx = (phraseIdx + 1) % phrases.length;
-        subEl.style.opacity = "0";
-        setTimeout(() => {
-          subEl.textContent = phrases[phraseIdx];
-          subEl.style.opacity = "1";
-        }, 310);
-      }, 3200);
-    }
-
-    // History starts with context message (not shown in welcome view)
     const history = [];
-    const initialAssistantMsg = `${timeWord}, I'm Lana — what can I help you with?`;
-    history.push({ role: "assistant", content: initialAssistantMsg });
+    let greetingDone = false;
 
-    let conversationStarted = false;
-
-    const startConversation = () => {
-      if (conversationStarted) return;
-      conversationStarted = true;
-      if (rotateTimer) { clearInterval(rotateTimer); rotateTimer = null; }
-      if (welcomeEl) {
-        welcomeEl.style.transition = "opacity 220ms ease, transform 220ms ease";
-        welcomeEl.style.opacity = "0";
-        welcomeEl.style.transform = "translateY(-8px)";
-        setTimeout(() => { welcomeEl.style.display = "none"; }, 230);
-      }
-      if (startersEl) { startersEl.dataset.used = "1"; startersEl.style.display = "none"; }
-      messagesEl.style.display = "flex";
-    };
-
-    // Messages area hidden until first exchange
-    messagesEl.style.display = "none";
+    // Helpers
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+    const typeWriter = (el, text, speed) => new Promise(resolve => {
+      let i = 0;
+      const tick = () => {
+        if (i < text.length) {
+          el.textContent += text[i++];
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+          setTimeout(tick, speed ?? (text.length > 60 ? 18 : 24));
+        } else { resolve(); }
+      };
+      tick();
+    });
 
     const localFallback = (msg) => {
       const q = msg.toLowerCase();
@@ -228,7 +174,6 @@ const starters = [
       sendBtn.disabled = on;
       sendBtn.textContent = on ? "…" : "Send";
       input.disabled = on;
-      starters.forEach(s => { s.disabled = on; });
     };
 
     const LEAD_RE    = /\[LEAD:[^\]]*\]/g;
@@ -275,7 +220,6 @@ const starters = [
       const msg = text.trim();
       if (!msg) return;
 
-      startConversation();
       appendUserMsg(msg);
       history.push({ role: "user", content: msg });
       input.value = "";
@@ -372,6 +316,34 @@ const starters = [
       input.focus();
     };
 
+    const runGreeting = async () => {
+      if (greetingDone) return;
+      greetingDone = true;
+
+      showTyping();
+      await sleep(1000);
+      hideTyping();
+
+      const line1 = `${timeWord}! I'm Lana.`;
+      const { row: r1, bubble: b1 } = makeBeeRow(false);
+      messagesEl.appendChild(r1);
+      await typeWriter(b1, line1);
+      history.push({ role: "assistant", content: line1 });
+
+      await sleep(600);
+      showTyping();
+      await sleep(950);
+      hideTyping();
+
+      const line2 = "I'm here to help — a LuliDigital question, an idea you want to bring to light, a problem to solve, or just curious about what we do. What do you need?";
+      const { row: r2, bubble: b2 } = makeBeeRow(false);
+      messagesEl.appendChild(r2);
+      await typeWriter(b2, line2);
+      history.push({ role: "assistant", content: line2 });
+
+      input.focus();
+    };
+
     const mobileTrigger = document.getElementById("lana-mobile-trigger");
     const dispatchClose = () => window.dispatchEvent(new CustomEvent("luli:lana-close"));
     const dispatchOpen  = () => window.dispatchEvent(new CustomEvent("luli:lana-open"));
@@ -379,6 +351,7 @@ const starters = [
     window.addEventListener("luli:lana-open", () => {
       setOpen(true);
       if (mobileTrigger) { mobileTrigger.style.opacity="0"; mobileTrigger.style.pointerEvents="none"; }
+      runGreeting();
     });
     window.addEventListener("luli:lana-close", () => {
       setOpen(false);
@@ -396,10 +369,6 @@ const starters = [
     input.addEventListener("input", autoSize);
     input.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(input.value); }
-    });
-
-    starters.forEach(s => {
-      s.addEventListener("click", () => { dispatchOpen(); sendMessage(s.getAttribute("data-lana-starter") || ""); });
     });
 
     autoSize();
@@ -600,30 +569,6 @@ const starters = [
   }
   .lana-chat__close:hover { background: rgba(20,19,18,.12); color: rgba(20,19,18,.80); }
 
-  /* ── Welcome screen ──────────────────────────────────────────── */
-  .lana-welcome {
-    display: flex; flex-direction: column; align-items: flex-start;
-    padding: 16px 18px 12px;
-    gap: 4px;
-    animation: lanaWelcomeIn 0.45s cubic-bezier(.16,1,.3,1) both;
-  }
-  @keyframes lanaWelcomeIn {
-    from { transform: translateY(10px); opacity: 0; }
-    to   { transform: translateY(0); opacity: 1; }
-  }
-  .lana-welcome__greeting {
-    font-family: var(--font-display, Georgia, serif);
-    font-size: 22px; font-weight: 600;
-    color: rgba(20,19,18,.90);
-    letter-spacing: -.02em; line-height: 1.2;
-    margin: 0;
-  }
-  .lana-welcome__sub {
-    font-size: 13px; color: rgba(20,19,18,.52);
-    line-height: 1.5; margin: 0;
-    min-height: 1.5em;
-  }
-
   /* ── Messages ────────────────────────────────────────────────── */
   .lana-chat__messages {
     display: flex; flex-direction: column; gap: 8px;
@@ -686,27 +631,6 @@ const starters = [
     0%,60%,100% { transform: translateY(0); opacity: .32; }
     30%          { transform: translateY(-5px); opacity: 1; }
   }
-
-  /* ── Starters ────────────────────────────────────────────────── */
-  .lana-chat__starters {
-    display: flex; flex-direction: column; gap: 5px;
-    padding: 4px 16px 10px;
-  }
-  .lana-chat__starter {
-    text-align: left;
-    border: 1px solid rgba(20,19,18,.09);
-    background: rgba(255,255,255,.50);
-    border-radius: 11px; padding: 8px 12px;
-    font-size: 12.5px; color: rgba(20,19,18,.68);
-    cursor: pointer;
-    transition: background 160ms ease, border-color 160ms ease;
-    line-height: 1.35;
-  }
-  .lana-chat__starter:hover {
-    background: rgba(255,255,255,.88);
-    border-color: rgba(245,164,31,.38); color: rgba(20,19,18,.90);
-  }
-  .lana-chat__starter:disabled { opacity: .5; cursor: not-allowed; }
 
   /* ── Composer ────────────────────────────────────────────────── */
   .lana-chat__composer {
