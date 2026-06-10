@@ -22,7 +22,19 @@ const starters = [
 
     <header class="lana-chat__header">
       <div class="lana-chat__identity">
-        <span class="lana-dot" aria-hidden="true"></span>
+        <div class="lana-bee-avatar lana-bee-avatar--header" aria-hidden="true">
+          <svg viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="38" cy="18" rx="21" ry="12" fill="rgba(210,235,255,.65)"/>
+            <ellipse cx="57" cy="19" rx="17" ry="10" fill="rgba(210,235,255,.55)"/>
+            <ellipse cx="42" cy="44" rx="23" ry="16" fill="#F5A41F"/>
+            <rect x="23" y="31" width="10" height="26" rx="7" fill="rgba(20,10,0,.72)"/>
+            <rect x="37" y="30" width="10" height="28" rx="7" fill="rgba(20,10,0,.72)"/>
+            <rect x="51" y="32" width="8" height="24" rx="6" fill="rgba(20,10,0,.72)"/>
+            <circle cx="68" cy="42" r="14" fill="#F5A41F"/>
+            <circle cx="73" cy="37" r="5" fill="#130C04"/>
+            <circle cx="74.5" cy="35.5" r="1.8" fill="white"/>
+          </svg>
+        </div>
         <span class="lana-name">Lana</span>
       </div>
       <button class="lana-chat__close" type="button" aria-label="Close chat" data-lana-close>
@@ -57,6 +69,8 @@ const starters = [
 
 <script is:inline>
   (() => {
+    const BEE_SVG = '<svg viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><ellipse cx="38" cy="18" rx="21" ry="12" fill="rgba(210,235,255,.65)"/><ellipse cx="57" cy="19" rx="17" ry="10" fill="rgba(210,235,255,.55)"/><ellipse cx="42" cy="44" rx="23" ry="16" fill="#F5A41F"/><rect x="23" y="31" width="10" height="26" rx="7" fill="rgba(20,10,0,.72)"/><rect x="37" y="30" width="10" height="28" rx="7" fill="rgba(20,10,0,.72)"/><rect x="51" y="32" width="8" height="24" rx="6" fill="rgba(20,10,0,.72)"/><circle cx="68" cy="42" r="14" fill="#F5A41F"/><circle cx="73" cy="37" r="5" fill="#130C04"/><circle cx="74.5" cy="35.5" r="1.8" fill="white"/></svg>';
+
     let initialized = false;
 
     const initLanaChat = () => {
@@ -98,10 +112,21 @@ const starters = [
       const initialMsg = greeting();
       history.push({ role: "assistant", content: initialMsg });
 
-      const firstMsg = document.createElement("article");
-      firstMsg.className = "lana-chat__message lana-chat__message--assistant";
-      firstMsg.textContent = initialMsg;
-      messagesEl.appendChild(firstMsg);
+      const makeBeeRow = (content) => {
+        const row = document.createElement("div");
+        row.className = "lana-msg-row";
+        const avatar = document.createElement("div");
+        avatar.className = "lana-bee-avatar";
+        avatar.innerHTML = BEE_SVG;
+        const bubble = document.createElement("article");
+        bubble.className = "lana-chat__message lana-chat__message--assistant";
+        bubble.textContent = content;
+        row.appendChild(avatar);
+        row.appendChild(bubble);
+        return row;
+      };
+
+      messagesEl.appendChild(makeBeeRow(initialMsg));
 
       const setOpen = (open) => {
         panel.classList.toggle("is-open", open);
@@ -121,11 +146,35 @@ const starters = [
       };
 
       const appendMsg = (role, content) => {
-        const el = document.createElement("article");
-        el.className = `lana-chat__message lana-chat__message--${role}`;
-        el.textContent = content;
-        messagesEl.appendChild(el);
+        if (role === "assistant") {
+          messagesEl.appendChild(makeBeeRow(content));
+        } else {
+          const el = document.createElement("article");
+          el.className = `lana-chat__message lana-chat__message--${role}`;
+          el.textContent = content;
+          messagesEl.appendChild(el);
+        }
         messagesEl.scrollTop = messagesEl.scrollHeight;
+      };
+
+      const showTyping = () => {
+        const row = document.createElement("div");
+        row.className = "lana-msg-row lana-typing";
+        const avatar = document.createElement("div");
+        avatar.className = "lana-bee-avatar";
+        avatar.innerHTML = BEE_SVG;
+        const bubble = document.createElement("div");
+        bubble.className = "lana-chat__message lana-chat__message--assistant lana-typing__bubble";
+        bubble.innerHTML = "<span></span><span></span><span></span>";
+        row.appendChild(avatar);
+        row.appendChild(bubble);
+        messagesEl.appendChild(row);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      };
+
+      const hideTyping = () => {
+        const t = messagesEl.querySelector(".lana-typing");
+        if (t) t.remove();
       };
 
       const setPending = (on) => {
@@ -133,13 +182,13 @@ const starters = [
         sendBtn.textContent = on ? "…" : "Send";
         input.disabled = on;
         starters.forEach((s) => { s.disabled = on; });
+        if (on) showTyping(); else hideTyping();
       };
 
       const sendMessage = async (text) => {
         const msg = text.trim();
         if (!msg) return;
 
-        // hide starters after first real send
         if (startersEl && !startersEl.dataset.used) {
           startersEl.dataset.used = "1";
           startersEl.style.display = "none";
@@ -172,13 +221,11 @@ const starters = [
         }
       };
 
-      // open via bee click (primary) or backdrop/close
       window.addEventListener("luli:lana-open", () => setOpen(true));
       window.addEventListener("luli:lana-close", () => setOpen(false));
       closeBtn.addEventListener("click", () => setOpen(false));
       if (backdrop) backdrop.addEventListener("click", () => setOpen(false));
 
-      // keyboard dismiss
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && panel.classList.contains("is-open")) setOpen(false);
       });
@@ -226,7 +273,7 @@ const starters = [
     background: rgba(12, 9, 5, 0.48);
     opacity: 0;
     pointer-events: none;
-    z-index: 105;   /* above site header (z-index: 100) */
+    z-index: 105;
     transition: opacity 320ms ease;
   }
   @media (max-width: 640px) {
@@ -256,7 +303,6 @@ const starters = [
       0 8px 24px rgba(180,120,0,.10);
     overflow: hidden;
 
-    /* closed state */
     transform: scale(0.90) translateY(8px);
     opacity: 0;
     visibility: hidden;
@@ -291,7 +337,7 @@ const starters = [
       max-height: 82vh;
       border-radius: 28px 28px 0 0;
       border-bottom: 0;
-      z-index: 110;  /* above backdrop (105) and header (100) */
+      z-index: 110;
       transform-origin: bottom center;
       transform: translateY(105%);
       transition:
@@ -328,20 +374,37 @@ const starters = [
   .lana-chat__identity {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
-  .lana-dot {
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    background: #F5A41F;
-    box-shadow: 0 0 0 3px rgba(245,164,31,.22);
+
+  /* ── Bee avatar (header + messages) ─────────────────────────── */
+  .lana-bee-avatar {
     flex-shrink: 0;
-    animation: dotPulse 2.6s ease-in-out infinite;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(245,164,31,0.14);
+    border: 1.5px solid rgba(245,164,31,0.30);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
   }
-  @keyframes dotPulse {
-    0%, 100% { box-shadow: 0 0 0 3px rgba(245,164,31,.22); }
-    50%       { box-shadow: 0 0 0 6px rgba(245,164,31,.08); }
+  .lana-bee-avatar svg {
+    width: 22px;
+    height: auto;
   }
+  .lana-bee-avatar--header {
+    width: 36px; height: 36px;
+    animation: beeAvatarPulse 2.8s ease-in-out infinite;
+  }
+  .lana-bee-avatar--header svg {
+    width: 24px;
+  }
+  @keyframes beeAvatarPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,164,31,.28); }
+    50%       { box-shadow: 0 0 0 5px rgba(245,164,31,.0); }
+  }
+
   .lana-name {
     font-family: var(--serif, Georgia, serif);
     font-size: 22px;
@@ -380,8 +443,22 @@ const starters = [
   @media (max-width: 640px) {
     .lana-chat__messages { max-height: 38vh; }
   }
+
+  /* Row wrapper for bee avatar + assistant bubble */
+  .lana-msg-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .lana-msg-row .lana-bee-avatar {
+    margin-bottom: 2px;
+  }
+  .lana-msg-row .lana-chat__message {
+    margin: 0;
+  }
+
   .lana-chat__message {
-    max-width: 92%;
+    max-width: 82%;
     padding: 10px 14px;
     border-radius: 16px;
     font-size: 13.5px;
@@ -397,9 +474,31 @@ const starters = [
   }
   .lana-chat__message--user {
     align-self: flex-end;
+    margin-left: auto;
     background: rgba(245,164,31,0.18);
     color: rgba(20,19,18,0.90);
     border-bottom-right-radius: 5px;
+  }
+
+  /* ── Typing indicator ────────────────────────────────────────── */
+  .lana-typing__bubble {
+    padding: 12px 18px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .lana-typing__bubble span {
+    display: block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(20,19,18,0.35);
+    animation: typingDot 1.2s ease-in-out infinite;
+  }
+  .lana-typing__bubble span:nth-child(2) { animation-delay: .2s; }
+  .lana-typing__bubble span:nth-child(3) { animation-delay: .4s; }
+  @keyframes typingDot {
+    0%, 60%, 100% { transform: translateY(0); opacity: .35; }
+    30%            { transform: translateY(-5px); opacity: 1; }
   }
 
   /* ── Starters ────────────────────────────────────────────────── */
