@@ -397,6 +397,33 @@ const jsonLd = {
 
     window.addEventListener("scroll", () => { rawScroll = window.scrollY; }, { passive: true });
 
+    // ── CTA proximity buzz + haptic ──────────────────────────────
+    let lastCtaBuzz = 0;
+    const CTA_SELECTOR = ".pill--filled, .pill--outline, .local-btn--primary";
+    const CTA_RADIUS   = 120; // px from button centre
+    const CTA_COOLDOWN = 2000; // ms between triggers
+
+    window.addEventListener("luli:bee-pass", (rawEv: Event) => {
+      if (reduced || !audioReady) return;
+      const detail = (rawEv as CustomEvent<{ x: number; y: number }>).detail;
+      const now = performance.now();
+      if (now - lastCtaBuzz < CTA_COOLDOWN) return;
+
+      let hit = false;
+      document.querySelectorAll<HTMLElement>(CTA_SELECTOR).forEach((el) => {
+        if (hit) return;
+        const r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) return;
+        const dist = Math.hypot(detail.x - (r.left + r.width / 2), detail.y - (r.top + r.height / 2));
+        if (dist < CTA_RADIUS) hit = true;
+      });
+
+      if (!hit) return;
+      lastCtaBuzz = now;
+      playBuzz(0.055, 0.20);
+      if (navigator.vibrate) navigator.vibrate([40]);
+    }, { passive: true });
+
     const landOnTarget = (target: HTMLElement) => {
       const r = target.getBoundingClientRect();
       const targetIsRim = target.hasAttribute("data-bee-rim");
@@ -426,7 +453,10 @@ const jsonLd = {
         lastTilt = 0;
         bee.style.transform = `translate(${cx}px, ${cy}px) rotate(0deg)`;
       }
-      playBuzz(targetIsFinal ? 0.06 : 0.042, targetIsFinal ? 0.24 : 0.18);
+      if (targetIsFinal || targetIsRim) {
+        playBuzz(0.06, 0.24);
+        if (navigator.vibrate) navigator.vibrate([targetIsRim ? 60 : 40]);
+      }
       clearTimeout(landTimer);
       if (!targetIsRim) {
         landTimer = window.setTimeout(() => {
