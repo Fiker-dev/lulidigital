@@ -195,7 +195,34 @@ const starters = [
         starters.forEach((s) => { s.disabled = on; });
       };
 
-      const LEAD_RE = /\[LEAD:[^\]]*\]/g;
+      const LEAD_RE    = /\[LEAD:[^\]]*\]/g;
+      const CONTACT_RE = /\[CONTACT:reason=([^\]]+)\]/;
+
+      const makeContactActions = () => {
+        const wrap = document.createElement("div");
+        wrap.className = "lana-contact-actions";
+        const emailBtn = document.createElement("a");
+        emailBtn.href = "mailto:info@lulidigital.com";
+        emailBtn.className = "lana-contact-btn lana-contact-btn--email";
+        emailBtn.textContent = "Email us";
+        const waBtn = document.createElement("a");
+        waBtn.href = "https://wa.me/27602551513";
+        waBtn.target = "_blank";
+        waBtn.rel = "noopener noreferrer";
+        waBtn.className = "lana-contact-btn lana-contact-btn--wa";
+        waBtn.textContent = "WhatsApp";
+        wrap.appendChild(emailBtn);
+        wrap.appendChild(waBtn);
+        return wrap;
+      };
+
+      const showErrorMsg = () => {
+        const { row, bubble } = makeBeeRow();
+        bubble.textContent = "Experiencing issues — please tap the contact desk.";
+        messagesEl.appendChild(row);
+        messagesEl.appendChild(makeContactActions());
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      };
 
       const sendMessage = async (text) => {
         const msg = text.trim();
@@ -222,17 +249,20 @@ const starters = [
           });
         } catch {
           hideTyping();
-          const fb = localFallback(msg);
-          const { row, bubble } = makeBeeRow();
-          bubble.textContent = fb;
-          messagesEl.appendChild(row);
-          messagesEl.scrollTop = messagesEl.scrollHeight;
-          history.push({ role: "assistant", content: fb });
+          showErrorMsg();
+          history.push({ role: "assistant", content: "Experiencing issues — please tap the contact desk." });
           setInputLocked(false);
           return;
         }
 
         hideTyping();
+
+        if (!res.ok) {
+          showErrorMsg();
+          history.push({ role: "assistant", content: "Experiencing issues — please tap the contact desk." });
+          setInputLocked(false);
+          return;
+        }
 
         // ── Streaming path ───────────────────────────────────────
         if (res.body) {
@@ -261,8 +291,13 @@ const starters = [
                   const json = JSON.parse(part.slice(6));
                   if (typeof json.t === "string") {
                     fullText += json.t;
-                    // Render live — hide any accumulating [LEAD:...] trigger
-                    bubble.textContent = fullText.replace(LEAD_RE, "").replace(/\[LEAD:[^\]]*$/, "").trimEnd();
+                    // Render live — hide any accumulating triggers
+                    bubble.textContent = fullText
+                      .replace(LEAD_RE, "")
+                      .replace(CONTACT_RE, "")
+                      .replace(/\[LEAD:[^\]]*$/, "")
+                      .replace(/\[CONTACT:[^\]]*$/, "")
+                      .trimEnd();
                     messagesEl.scrollTop = messagesEl.scrollHeight;
                   } else if (json.done) {
                     leadData = json.lead || null;
@@ -273,10 +308,27 @@ const starters = [
             }
           } catch { /* stream interrupted */ }
 
-          // Finalise display text
-          const displayText = fullText.replace(LEAD_RE, "").replace(/\s+/g, " ").trim() || localFallback(msg);
+          // Finalise display text (strip both triggers)
+          const displayText = fullText
+            .replace(LEAD_RE, "")
+            .replace(CONTACT_RE, "")
+            .replace(/\s+/g, " ")
+            .trim() || localFallback(msg);
           bubble.textContent = displayText;
           history.push({ role: "assistant", content: displayText });
+
+          // Check for CONTACT trigger — show email/WhatsApp buttons
+          const contactMatch = fullText.match(CONTACT_RE);
+          if (contactMatch) {
+            const reason = contactMatch[1].trim();
+            messagesEl.appendChild(makeContactActions());
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+            fetch("/api/lana-enquiry", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({ reason }),
+            }).catch(() => {});
+          }
 
           if (leadData?.email) {
             fetch("/api/lana-lead", {
@@ -287,12 +339,8 @@ const starters = [
           }
         } else {
           // Non-streaming fallback (shouldn't happen but defensive)
-          const fb = localFallback(msg);
-          const { row, bubble } = makeBeeRow();
-          bubble.textContent = fb;
-          messagesEl.appendChild(row);
-          messagesEl.scrollTop = messagesEl.scrollHeight;
-          history.push({ role: "assistant", content: fb });
+          showErrorMsg();
+          history.push({ role: "assistant", content: "Experiencing issues — please tap the contact desk." });
         }
 
         setInputLocked(false);
@@ -646,4 +694,36 @@ const starters = [
   }
   .lana-chat__send:hover  { background: #9A5800; }
   .lana-chat__send:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  /* ── Contact action buttons (quick enquiry + error state) ───── */
+  .lana-contact-actions {
+    display: flex;
+    gap: 8px;
+    padding: 4px 18px 10px 52px; /* indent past the bee avatar */
+  }
+  .lana-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 14px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 180ms ease, opacity 180ms ease;
+  }
+  .lana-contact-btn--email {
+    background: rgba(20,19,18,0.08);
+    color: rgba(20,19,18,0.82);
+    border: 1px solid rgba(20,19,18,0.12);
+  }
+  .lana-contact-btn--email:hover {
+    background: rgba(20,19,18,0.14);
+  }
+  .lana-contact-btn--wa {
+    background: #25D366;
+    color: #fff;
+    border: 1px solid transparent;
+  }
+  .lana-contact-btn--wa:hover { background: #1ebe5d; }
 </style>

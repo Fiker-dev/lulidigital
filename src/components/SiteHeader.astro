@@ -24,7 +24,7 @@ const nav = [
       ))}
     </nav>
 
-    <a class="header-cta" href="/contact">Get Started</a>
+    <button class="header-cta" id="header-lana-btn" type="button">Contact Desk</button>
 
     <details class="nav-mobile">
       <summary class="nav-burger" aria-label="Open navigation menu">
@@ -54,6 +54,12 @@ const nav = [
     </details>
   </div>
 </header>
+
+<script is:inline>
+  document.getElementById("header-lana-btn")?.addEventListener("click", () => {
+    window.dispatchEvent(new CustomEvent("luli:lana-open"));
+  });
+</script>
 
 <style>
   .mast {
