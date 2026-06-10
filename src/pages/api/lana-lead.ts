@@ -10,34 +10,38 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(JSON.stringify({ ok: false }), { status: 500 });
   }
 
-  let body: { name?: string; email?: string; note?: string };
+  let body: {
+    name?: string; email?: string; phone?: string;
+    whatsapp?: string; pref?: string; note?: string;
+  };
   try {
     body = await request.json();
   } catch {
     return new Response(JSON.stringify({ ok: false }), { status: 400 });
   }
 
-  const { name = "Unknown", email = "–", note = "–" } = body;
+  const { name = "–", email = "–", phone = "–", whatsapp = "–", pref = "–", note = "–" } = body;
 
-  const text = [
+  const lines = [
     "New lead from Lana",
     "",
-    `Name: ${name}`,
-    `Email: ${email}`,
-    `Note: ${note}`,
+    `Name:      ${name}`,
+    `Email:     ${email}`,
+    `Phone:     ${phone}`,
+    `WhatsApp:  ${whatsapp}`,
+    `Prefers:   ${pref}`,
+    `Note:      ${note}`,
     "",
-    "Reply to this email or reach out within 1 business day.",
-  ].join("\n");
+    "Follow up within 1 business day.",
+  ];
 
   try {
     await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ chat_id: chatId, text }),
+      body: JSON.stringify({ chat_id: chatId, text: lines.join("\n") }),
     });
-  } catch {
-    // non-blocking — don't fail the response
-  }
+  } catch { /* non-blocking */ }
 
   return new Response(JSON.stringify({ ok: true }), {
     status: 200,

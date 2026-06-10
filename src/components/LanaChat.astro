@@ -71,6 +71,16 @@ const starters = [
   (() => {
     const BEE_SVG = '<svg viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><ellipse cx="38" cy="18" rx="21" ry="12" fill="rgba(210,235,255,.65)"/><ellipse cx="57" cy="19" rx="17" ry="10" fill="rgba(210,235,255,.55)"/><ellipse cx="42" cy="44" rx="23" ry="16" fill="#F5A41F"/><rect x="23" y="31" width="10" height="26" rx="7" fill="rgba(20,10,0,.72)"/><rect x="37" y="30" width="10" height="28" rx="7" fill="rgba(20,10,0,.72)"/><rect x="51" y="32" width="8" height="24" rx="6" fill="rgba(20,10,0,.72)"/><circle cx="68" cy="42" r="14" fill="#F5A41F"/><circle cx="73" cy="37" r="5" fill="#130C04"/><circle cx="74.5" cy="35.5" r="1.8" fill="white"/></svg>';
 
+    // Detect which market page the visitor is on
+    const MARKET_MAP = {
+      "/amsterdam": "Netherlands", "/stockholm": "Sweden", "/munich": "Germany",
+      "/africa": "Africa", "/united-states": "United States",
+      "/united-kingdom": "United Kingdom", "/denmark": "Denmark",
+      "/switzerland": "Switzerland", "/ireland": "Ireland",
+      "/belgium": "Belgium", "/norway": "Norway",
+    };
+    const currentMarket = MARKET_MAP[window.location.pathname] || null;
+
     let initialized = false;
 
     const initLanaChat = () => {
@@ -93,26 +103,30 @@ const starters = [
       const localFallback = (msg) => {
         const q = msg.toLowerCase();
         if (q.includes("contact") || q.includes("email") || q.includes("whatsapp") || q.includes("phone"))
-          return "You can reach the desk on WhatsApp at +27 60 255 1513 or by email at info@lulidigital.com. WhatsApp is usually the fastest.";
+          return "You can reach the team at info@lulidigital.com or WhatsApp +27 60 255 1513 — WhatsApp is fastest.";
         if (q.includes("marketing") || q.includes("brand") || q.includes("ads"))
-          return "The Marketing Desk helps with brand positioning, creative direction, and paid media. A good fit for launches, rebrands, and stronger visibility.";
+          return "The Marketing Desk handles positioning, creative direction, and paid media. Great for launches, rebrands, and growth.";
         if (q.includes("ai") || q.includes("chatbot") || q.includes("automation"))
-          return "The AI Desk builds chatbots, assistants, and workflows that answer questions and take repetitive work off your team.";
-        if (q.includes("virtual assistant") || q.includes("operations") || q.includes("admin"))
-          return "The Virtual Assistant Desk supports operations, admin, follow-through, and project coordination.";
-        return "LuliDigital helps with Marketing, AI systems, and Virtual Assistant support. Contact the desk on WhatsApp at +27 60 255 1513.";
+          return "The AI Desk builds assistants and workflows that keep things moving. Humans stay in control — the AI handles the repetitive work.";
+        if (q.includes("virtual assistant") || q.includes("va") || q.includes("operations"))
+          return "The VA Desk covers operations, inbox, calendar, and project coordination for leaders who need reliable backup.";
+        return "LuliDigital helps with Marketing, AI, and Virtual Assistant Desk support. Tell me a bit about your business and I'll point you in the right direction.";
       };
 
       const greeting = () => {
         const h = new Date().getHours();
-        return `${h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening"}, I'm Lana. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.`;
+        const time = h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+        const market = currentMarket;
+        if (market) return `${time}, I'm Lana. Tell me what's going on in your business and I'll help you figure out the right next step.`;
+        return `${time}, I'm Lana. What brings you here today?`;
       };
 
       const history = [];
       const initialMsg = greeting();
       history.push({ role: "assistant", content: initialMsg });
 
-      const makeBeeRow = (content) => {
+      // Create a bee row — returns { row, bubble } so callers can stream into bubble
+      const makeBeeRow = () => {
         const row = document.createElement("div");
         row.className = "lana-msg-row";
         const avatar = document.createElement("div");
@@ -120,13 +134,14 @@ const starters = [
         avatar.innerHTML = BEE_SVG;
         const bubble = document.createElement("article");
         bubble.className = "lana-chat__message lana-chat__message--assistant";
-        bubble.textContent = content;
         row.appendChild(avatar);
         row.appendChild(bubble);
-        return row;
+        return { row, bubble };
       };
 
-      messagesEl.appendChild(makeBeeRow(initialMsg));
+      const { row: greetRow, bubble: greetBubble } = makeBeeRow();
+      greetBubble.textContent = initialMsg;
+      messagesEl.appendChild(greetRow);
 
       const setOpen = (open) => {
         panel.classList.toggle("is-open", open);
@@ -145,15 +160,11 @@ const starters = [
         input.style.height = Math.min(input.scrollHeight, 140) + "px";
       };
 
-      const appendMsg = (role, content) => {
-        if (role === "assistant") {
-          messagesEl.appendChild(makeBeeRow(content));
-        } else {
-          const el = document.createElement("article");
-          el.className = `lana-chat__message lana-chat__message--${role}`;
-          el.textContent = content;
-          messagesEl.appendChild(el);
-        }
+      const appendUserMsg = (content) => {
+        const el = document.createElement("article");
+        el.className = "lana-chat__message lana-chat__message--user";
+        el.textContent = content;
+        messagesEl.appendChild(el);
         messagesEl.scrollTop = messagesEl.scrollHeight;
       };
 
@@ -177,13 +188,14 @@ const starters = [
         if (t) t.remove();
       };
 
-      const setPending = (on) => {
+      const setInputLocked = (on) => {
         sendBtn.disabled = on;
         sendBtn.textContent = on ? "…" : "Send";
         input.disabled = on;
         starters.forEach((s) => { s.disabled = on; });
-        if (on) showTyping(); else hideTyping();
       };
+
+      const LEAD_RE = /\[LEAD:[^\]]*\]/g;
 
       const sendMessage = async (text) => {
         const msg = text.trim();
@@ -194,39 +206,97 @@ const starters = [
           startersEl.style.display = "none";
         }
 
-        appendMsg("user", msg);
+        appendUserMsg(msg);
         history.push({ role: "user", content: msg });
         input.value = "";
         autoSize();
-        setPending(true);
+        setInputLocked(true);
+        showTyping();
 
+        let res;
         try {
-          const res  = await fetch("/api/lana", {
+          res = await fetch("/api/lana", {
             method: "POST",
             headers: { "content-type": "application/json" },
-            body: JSON.stringify({ messages: history.slice(-14) }),
+            body: JSON.stringify({ messages: history.slice(-14), market: currentMarket }),
           });
-          const data  = await res.json();
-          const reply = res.ok && typeof data.reply === "string" && data.reply.trim()
-            ? data.reply.trim()
-            : localFallback(msg);
-          appendMsg("assistant", reply);
-          history.push({ role: "assistant", content: reply });
-          // fire lead notification silently if API captured a lead
-          if (res.ok && data.lead && data.lead.email) {
+        } catch {
+          hideTyping();
+          const fb = localFallback(msg);
+          const { row, bubble } = makeBeeRow();
+          bubble.textContent = fb;
+          messagesEl.appendChild(row);
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+          history.push({ role: "assistant", content: fb });
+          setInputLocked(false);
+          return;
+        }
+
+        hideTyping();
+
+        // ── Streaming path ───────────────────────────────────────
+        if (res.body) {
+          const { row, bubble } = makeBeeRow();
+          messagesEl.appendChild(row);
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+
+          const reader = res.body.getReader();
+          const decoder = new TextDecoder();
+          let buf = "";
+          let fullText = "";
+          let leadData = null;
+
+          try {
+            outer: while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
+
+              buf += decoder.decode(value, { stream: true });
+              const parts = buf.split("\n\n");
+              buf = parts.pop() ?? "";
+
+              for (const part of parts) {
+                if (!part.startsWith("data: ")) continue;
+                try {
+                  const json = JSON.parse(part.slice(6));
+                  if (typeof json.t === "string") {
+                    fullText += json.t;
+                    // Render live — hide any accumulating [LEAD:...] trigger
+                    bubble.textContent = fullText.replace(LEAD_RE, "").replace(/\[LEAD:[^\]]*$/, "").trimEnd();
+                    messagesEl.scrollTop = messagesEl.scrollHeight;
+                  } else if (json.done) {
+                    leadData = json.lead || null;
+                    break outer;
+                  }
+                } catch { /* skip malformed chunk */ }
+              }
+            }
+          } catch { /* stream interrupted */ }
+
+          // Finalise display text
+          const displayText = fullText.replace(LEAD_RE, "").replace(/\s+/g, " ").trim() || localFallback(msg);
+          bubble.textContent = displayText;
+          history.push({ role: "assistant", content: displayText });
+
+          if (leadData?.email) {
             fetch("/api/lana-lead", {
               method: "POST",
               headers: { "content-type": "application/json" },
-              body: JSON.stringify(data.lead),
+              body: JSON.stringify(leadData),
             }).catch(() => {});
           }
-        } catch {
+        } else {
+          // Non-streaming fallback (shouldn't happen but defensive)
           const fb = localFallback(msg);
-          appendMsg("assistant", fb);
+          const { row, bubble } = makeBeeRow();
+          bubble.textContent = fb;
+          messagesEl.appendChild(row);
+          messagesEl.scrollTop = messagesEl.scrollHeight;
           history.push({ role: "assistant", content: fb });
-        } finally {
-          setPending(false);
         }
+
+        setInputLocked(false);
+        input.focus();
       };
 
       window.addEventListener("luli:lana-open", () => setOpen(true));
