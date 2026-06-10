@@ -6,7 +6,7 @@ export const prerender = false;
 const MODEL = "claude-sonnet-4-6";
 
 // ── Cal.com booking link — replace with your real link once set up ──
-const BOOKING_LINK = "https://cal.com/lulidigital/discovery";
+const BOOKING_LINK = "https://cal.com/cal.com-lulidigitaldiscovery/30min";
 
 const MARKET_NAMES: Record<string, string> = {
   "/amsterdam":      "Netherlands",
