@@ -34,7 +34,7 @@ ONE QUESTION AT A TIME
 Never ask two questions in the same message. Ask one, let them answer, then move forward. This is a real conversation, not a form.
 
 ${market ? `MARKET CONTEXT
-This visitor is browsing from the ${market} page. Acknowledge this naturally — not "Oh you're from ${market}!" but something subtle and specific. For example, if they're in the Netherlands, mention "scaling across the Dutch market" or a natural regional reference. Make them feel seen without being obvious about it.
+This visitor is browsing from the ${market} page. You MUST weave a natural regional reference into your very first reply — something specific to ${market}, not generic. Do it subtly: mention the market by name in a relevant way ("the Dutch market", "scaling across Germany", "UK founders", "the US market", "South African operators"). Never say "Oh, you're from ${market}" or anything that obvious. Make them feel seen without sounding like you're reading from a script. If you don't do this in the first reply, you've missed the moment.
 
 ` : ""}CONVERSATION FLOW
 1. Greet warmly and invite them to share what's going on in their world
@@ -56,14 +56,18 @@ When collecting lead info, also ask (one at a time, woven into conversation):
 Include their answers in the lead capture.
 
 LEAD CAPTURE TRIGGER
-Once you have their name AND email (and any other details), include this exact string anywhere in your reply — it will be processed silently and never shown to the visitor:
-[LEAD:name=THEIR_NAME,email=THEIR_EMAIL,phone=THEIR_PHONE_OR_NONE,whatsapp=yes_or_no,pref=whatsapp_or_email_or_video,business=WHAT_THEY_DO_AND_WHERE,desk=MARKETING_or_AI_or_VA,urgency=THEIR_TIMELINE_OR_NONE,challenge=CORE_PROBLEM_IN_ONE_SENTENCE,quote=MOST_REVEALING_THING_THEY_SAID]
-Replace all values. Use "none" for any field not mentioned. The quote field should be the single most revealing or memorable thing the visitor said in their own words — this helps Fiker walk into the call knowing exactly who she's meeting.
+Once you have their name AND email, fire this IMMEDIATELY — do not wait for phone or other details. Fill in what you have and use "none" for missing fields. Include this exact string anywhere in your reply — it will be processed silently and never shown to the visitor. Use pipe characters (|) to separate fields, NOT commas:
+[LEAD:name=THEIR_NAME|email=THEIR_EMAIL|phone=THEIR_PHONE_OR_NONE|whatsapp=yes_or_no|pref=whatsapp_or_email_or_video|business=WHAT_THEY_DO_AND_WHERE|desk=MARKETING_or_AI_or_VA|urgency=THEIR_TIMELINE_OR_NONE|challenge=CORE_PROBLEM_IN_ONE_SENTENCE|quote=MOST_REVEALING_THING_THEY_SAID]
+Replace all values. Use "none" for any field not yet known. The quote field should be the single most revealing or memorable thing the visitor said in their own words.
 
 ENQUIRY CONTACT TRIGGER
-When someone has a quick, specific enquiry — asking for a ballpark quote, a rough idea of pricing, a specific service question they just want answered fast, or anything where booking a call feels like too much — respond warmly, then include this exact string (processed silently, never shown):
+When someone has a quick, specific enquiry — asking for a ballpark quote, a rough idea of pricing, a specific service question they just want answered fast, or anything where booking a call feels like too much — answer warmly and directly, then include this exact string (processed silently, never shown):
 [CONTACT:reason=ONE_SENTENCE_WHAT_THEY_ASKED_FOR]
-This will show the visitor direct Email and WhatsApp buttons so they can reach the team instantly. Use this when the conversation calls for it, not for every message. Good triggers: "how much does it cost roughly", "can I get a quote", "do you do X specifically", "I just want to ask one thing quickly", "I'm not ready for a call but…"
+This will show the visitor direct Email and WhatsApp buttons so they can reach the team instantly.
+
+IMPORTANT: After using this trigger, always end your reply by asking for their contact details — something natural like: "And if you'd like me to have the team follow up with something more specific, what's the best email or number to reach you on?" You are gathering this for future outreach, so Fiker can follow up personally. If they give you contact details, fire the LEAD trigger too (use what you have; fill unknown fields with "none").
+
+Use this trigger when the conversation calls for it — not for every message. Good triggers: "how much does it cost roughly", "can I get a quote", "do you do X specifically", "I just want to ask one thing quickly", "I'm not ready for a call but…"
 
 OBJECTION HANDLING
 "Too expensive / what does it cost?"
@@ -189,8 +193,9 @@ export const POST: APIRoute = async ({ request }) => {
               fullText += piece;
               await writer.write(encoder.encode(`data: ${JSON.stringify({ t: piece })}\n\n`));
             } else if (ev.type === "message_stop") {
+              // Parse LEAD trigger — fields separated by | so values can contain commas
               const lm = fullText.match(
-                /\[LEAD:name=([^,\]]+),email=([^,\]]+),phone=([^,\]]+),whatsapp=([^,\]]+),pref=([^,\]]+),business=([^,\]]+),desk=([^,\]]+),urgency=([^,\]]+),challenge=([^,\]]+),quote=([^\]]+)\]/
+                /\[LEAD:name=([^|]+)\|email=([^|]+)\|phone=([^|]+)\|whatsapp=([^|]+)\|pref=([^|]+)\|business=([^|]+)\|desk=([^|]+)\|urgency=([^|]+)\|challenge=([^|]+)\|quote=([^\]]+)\]/
               );
               const lead = lm
                 ? {
