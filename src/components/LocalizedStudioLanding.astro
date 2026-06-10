@@ -209,123 +209,48 @@ const currentMarketPath = `/${market.variant}`;
   </section>
 
   <section id="local-contact" class="local-contact reveal-block">
-    <!-- UK_CONTACT_PLACEHOLDER: swap in a UK-specific phone number and contact routing for geo-targeted landing pages. -->
     <div>
-      <p class="local-eyebrow">{isMunich ? "Corporate Lead Desk" : isStockholm ? "Consultation" : "Contact"}</p>
+      <p class="local-eyebrow">Get Started</p>
       <h2>{market.formTitle}</h2>
       <p>{market.formCopy}</p>
-      {isStockholm && (
-        <a class="quick-consult" href="https://wa.me/27602551513" target="_blank" rel="noopener noreferrer">
-          Quick-action consultation
-        </a>
-      )}
     </div>
 
-    <form class="lead-form" id="lead-form" novalidate>
-      <label>
-        <span>Name</span>
-        <input name="name" autocomplete="name" required />
-      </label>
-      <label>
-        <span>{isMunich ? "Corporate email" : "Email"}</span>
-        <input name="email" type="email" autocomplete="email" required />
-      </label>
-      <label>
-        <span>{isMunich ? "Company / enterprise unit" : "Company"}</span>
-        <input name="company" autocomplete="organization" />
-      </label>
-      <label>
-        <span>What are you looking for?</span>
-        <select name="looking_for" required>
-          <option value="">Select one</option>
-          <option>Automated marketing campaign</option>
-          <option>Premium brand asset production</option>
-          <option>AI-driven production workflow</option>
-          <option>Website or landing page system</option>
-          <option>Enterprise campaign optimization</option>
-        </select>
-      </label>
-      <label>
-        <span>Timeline</span>
-        <select name="timeline" required>
-          <option value="">Select one</option>
-          <option>ASAP / this month</option>
-          <option>1-3 months</option>
-          <option>3-6 months</option>
-          <option>Planning ahead</option>
-        </select>
-      </label>
-      <label>
-        <span>Preferred consult channel</span>
-        <select name="preferred_channel">
-          <option>Email reply</option>
-          <option>WhatsApp</option>
-          <option>Video call</option>
-        </select>
-      </label>
-      <label>
-        <span>Campaign priority</span>
-        <textarea name="message" rows="4" placeholder="Tell us the market, offer, asset need, or campaign bottleneck." required></textarea>
-      </label>
-      <button type="submit" class="form-submit-btn">{isMunich ? "Send Corporate Brief" : "Send Brief"}</button>
-      <p class="form-error" hidden></p>
-    </form>
-
-    <div class="form-success" hidden>
-      <div class="form-success__icon">
-        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="24" cy="24" r="20"/>
-          <path d="M15 24l7 7 11-14"/>
+    <div class="lana-invite">
+      <div class="lana-invite__bee" aria-hidden="true">
+        <svg viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="38" cy="18" rx="21" ry="12" fill="rgba(210,235,255,.65)"/>
+          <ellipse cx="57" cy="19" rx="17" ry="10" fill="rgba(210,235,255,.55)"/>
+          <ellipse cx="42" cy="44" rx="23" ry="16" fill="#F5A41F"/>
+          <rect x="23" y="31" width="10" height="26" rx="7" fill="rgba(20,10,0,.72)"/>
+          <rect x="37" y="30" width="10" height="28" rx="7" fill="rgba(20,10,0,.72)"/>
+          <rect x="51" y="32" width="8" height="24" rx="6" fill="rgba(20,10,0,.72)"/>
+          <circle cx="68" cy="42" r="14" fill="#F5A41F"/>
+          <circle cx="73" cy="37" r="5" fill="#130C04"/>
+          <circle cx="74.5" cy="35.5" r="1.8" fill="white"/>
         </svg>
       </div>
-      <p class="form-success__title">Brief received.</p>
-      <p class="form-success__body">We'll review it and reply within 24 hours. Check your inbox for a confirmation.</p>
+      <div class="lana-invite__text">
+        <p class="lana-invite__name">Lana</p>
+        <p class="lana-invite__desc">Tell me what you're building and I'll walk you through your options, match you to the right desk, and connect you with Fiker when you're ready.</p>
+      </div>
+      <button class="lana-invite__btn" data-open-lana>
+        Chat with Lana
+      </button>
+      <p class="lana-invite__fallback">
+        Prefer email? <a href="mailto:info@lulidigital.com">info@lulidigital.com</a>
+        &nbsp;·&nbsp; WhatsApp: <a href="https://wa.me/27602551513" target="_blank" rel="noopener noreferrer">+27 60 255 1513</a>
+      </p>
     </div>
   </section>
 </section>
 
 <script>
-  // Lead form → /api/contact
-  const leadForm = document.getElementById("lead-form") as HTMLFormElement | null;
-  if (leadForm) {
-    leadForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const btn = leadForm.querySelector<HTMLButtonElement>(".form-submit-btn");
-      const errorEl = leadForm.querySelector<HTMLParagraphElement>(".form-error");
-      const successEl = leadForm.nextElementSibling as HTMLElement | null;
-
-      if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
-      if (errorEl) { errorEl.hidden = true; errorEl.textContent = ""; }
-
-      const data = Object.fromEntries(new FormData(leadForm));
-
-      try {
-        const res = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-        const json = await res.json();
-
-        if (!res.ok || !json.ok) {
-          throw new Error(json.error ?? "Something went wrong. Please try again.");
-        }
-
-        // Show success, hide form
-        leadForm.hidden = true;
-        if (successEl) successEl.hidden = false;
-      } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : "Something went wrong. Please try again.";
-        if (errorEl) { errorEl.textContent = msg; errorEl.hidden = false; }
-        if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label ?? "Send Brief"; }
-      }
+  // Open Lana chat from the invite button
+  document.querySelectorAll("[data-open-lana]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      window.dispatchEvent(new CustomEvent("luli:lana-open"));
     });
-
-    // Store original button label for error recovery
-    const btn = leadForm.querySelector<HTMLButtonElement>(".form-submit-btn");
-    if (btn) btn.dataset.label = btn.textContent ?? "Send Brief";
-  }
+  });
 
   const revealBlocks = Array.from(document.querySelectorAll(".reveal-block"));
 
@@ -650,6 +575,79 @@ const currentMarketPath = `/${market.variant}`;
     padding: 86px 0;
     border-top: 1px solid var(--local-line);
   }
+
+  /* ── Lana invite (replaces the old lead form) ─────────────────── */
+  .lana-invite {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 36px 40px;
+    border-radius: 24px;
+    background:
+      radial-gradient(ellipse at 90% 10%, rgba(245,164,31,.14) 0%, transparent 50%),
+      linear-gradient(160deg, rgba(255,252,240,1) 0%, rgba(255,248,220,1) 100%);
+    border: 1px solid rgba(245,164,31,.22);
+    box-shadow: 0 8px 32px rgba(180,120,0,.08), 0 2px 0 rgba(255,255,255,.9) inset;
+    align-self: start;
+  }
+  .lana-invite__bee {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: rgba(245,164,31,.15);
+    border: 1.5px solid rgba(245,164,31,.30);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .lana-invite__bee svg { width: 38px; height: auto; }
+  .lana-invite__text { display: flex; flex-direction: column; gap: 6px; }
+  .lana-invite__name {
+    font-family: var(--serif, Georgia, serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: rgba(20,19,18,.92);
+    margin: 0;
+  }
+  .lana-invite__desc {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: rgba(20,19,18,.62);
+    margin: 0;
+    max-width: 38ch;
+  }
+  .lana-invite__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 100px;
+    border: 0;
+    background: #B86B00;
+    color: white;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 200ms ease, transform 200ms ease;
+  }
+  .lana-invite__btn:hover {
+    background: #9A5800;
+    transform: translateY(-1px);
+  }
+  .lana-invite__fallback {
+    font-size: 12.5px;
+    color: rgba(20,19,18,.42);
+    margin: 0;
+  }
+  .lana-invite__fallback a {
+    color: rgba(20,19,18,.58);
+    text-decoration: underline;
+    text-decoration-color: rgba(20,19,18,.22);
+  }
+  .lana-invite__fallback a:hover { color: rgba(20,19,18,.80); }
 
   .local-seo-pulse{
     display: grid;

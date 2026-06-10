@@ -204,7 +204,7 @@ const starters = [
           const res  = await fetch("/api/lana", {
             method: "POST",
             headers: { "content-type": "application/json" },
-            body: JSON.stringify({ messages: history.slice(-8) }),
+            body: JSON.stringify({ messages: history.slice(-14) }),
           });
           const data  = await res.json();
           const reply = res.ok && typeof data.reply === "string" && data.reply.trim()
@@ -212,6 +212,14 @@ const starters = [
             : localFallback(msg);
           appendMsg("assistant", reply);
           history.push({ role: "assistant", content: reply });
+          // fire lead notification silently if API captured a lead
+          if (res.ok && data.lead && data.lead.email) {
+            fetch("/api/lana-lead", {
+              method: "POST",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify(data.lead),
+            }).catch(() => {});
+          }
         } catch {
           const fb = localFallback(msg);
           appendMsg("assistant", fb);

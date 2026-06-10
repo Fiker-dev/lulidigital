@@ -359,6 +359,17 @@ const jsonLd = {
       window.addEventListener("luli:lana-open", () => hint.classList.remove("is-visible"), { once: true });
     }
 
+    // bee disappears when chat opens — she stepped into the chat
+    bee.style.transition = "opacity 400ms ease";
+    window.addEventListener("luli:lana-open", () => {
+      bee.style.opacity = "0";
+      bee.style.pointerEvents = "none";
+    });
+    window.addEventListener("luli:lana-close", () => {
+      bee.style.opacity = "1";
+      bee.style.pointerEvents = "auto";
+    });
+
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isSmall = window.innerWidth < 700;
 
