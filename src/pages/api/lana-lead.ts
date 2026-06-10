@@ -11,8 +11,9 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   let body: {
-    name?: string; email?: string; phone?: string;
-    whatsapp?: string; pref?: string; note?: string;
+    name?: string; email?: string; phone?: string; whatsapp?: string;
+    pref?: string; business?: string; desk?: string; urgency?: string;
+    challenge?: string; quote?: string;
   };
   try {
     body = await request.json();
@@ -20,19 +21,40 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(JSON.stringify({ ok: false }), { status: 400 });
   }
 
-  const { name = "–", email = "–", phone = "–", whatsapp = "–", pref = "–", note = "–" } = body;
+  const {
+    name     = "–",  email    = "–",  phone   = "–",
+    whatsapp = "–",  pref     = "–",  business = "–",
+    desk     = "–",  urgency  = "–",  challenge = "–",
+    quote    = "–",
+  } = body;
+
+  const none = (v: string) => (v === "none" || v === "–" || !v) ? "–" : v;
 
   const lines = [
-    "New lead from Lana",
+    "Meeting Brief — Fiker x " + name,
     "",
-    `Name:      ${name}`,
-    `Email:     ${email}`,
-    `Phone:     ${phone}`,
-    `WhatsApp:  ${whatsapp}`,
-    `Prefers:   ${pref}`,
-    `Note:      ${note}`,
+    "WHO",
+    "Name:       " + none(name),
+    "Email:      " + none(email),
+    "Phone:      " + none(phone),
+    "WhatsApp:   " + none(whatsapp) + (pref && none(pref) !== "–" ? "  |  Prefers: " + none(pref) : ""),
     "",
-    "Follow up within 1 business day.",
+    "THEIR BUSINESS",
+    none(business),
+    "",
+    "DESK INTEREST",
+    none(desk),
+    "",
+    "CORE CHALLENGE",
+    none(challenge),
+    "",
+    "URGENCY / TIMELINE",
+    none(urgency),
+    "",
+    "WHAT LANA HEARD",
+    none(quote) !== "–" ? `"${none(quote)}"` : "–",
+    "",
+    "Walk in prepared. Follow up within 1 business day.",
   ];
 
   try {

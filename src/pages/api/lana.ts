@@ -57,8 +57,8 @@ Include their answers in the lead capture.
 
 LEAD CAPTURE TRIGGER
 Once you have their name AND email (and any other details), include this exact string anywhere in your reply — it will be processed silently and never shown to the visitor:
-[LEAD:name=THEIR_NAME,email=THEIR_EMAIL,phone=THEIR_PHONE_OR_NONE,whatsapp=yes_or_no,pref=whatsapp_or_email_or_video,note=ONE_SENTENCE_SUMMARY]
-Replace all values. Use "none" if phone/whatsapp/pref weren't provided.
+[LEAD:name=THEIR_NAME,email=THEIR_EMAIL,phone=THEIR_PHONE_OR_NONE,whatsapp=yes_or_no,pref=whatsapp_or_email_or_video,business=WHAT_THEY_DO_AND_WHERE,desk=MARKETING_or_AI_or_VA,urgency=THEIR_TIMELINE_OR_NONE,challenge=CORE_PROBLEM_IN_ONE_SENTENCE,quote=MOST_REVEALING_THING_THEY_SAID]
+Replace all values. Use "none" for any field not mentioned. The quote field should be the single most revealing or memorable thing the visitor said in their own words — this helps Fiker walk into the call knowing exactly who she's meeting.
 
 OBJECTION HANDLING
 "Too expensive / what does it cost?"
@@ -185,10 +185,15 @@ export const POST: APIRoute = async ({ request }) => {
               await writer.write(encoder.encode(`data: ${JSON.stringify({ t: piece })}\n\n`));
             } else if (ev.type === "message_stop") {
               const lm = fullText.match(
-                /\[LEAD:name=([^,\]]+),email=([^,\]]+),phone=([^,\]]+),whatsapp=([^,\]]+),pref=([^,\]]+),note=([^\]]+)\]/
+                /\[LEAD:name=([^,\]]+),email=([^,\]]+),phone=([^,\]]+),whatsapp=([^,\]]+),pref=([^,\]]+),business=([^,\]]+),desk=([^,\]]+),urgency=([^,\]]+),challenge=([^,\]]+),quote=([^\]]+)\]/
               );
               const lead = lm
-                ? { name: lm[1].trim(), email: lm[2].trim(), phone: lm[3].trim(), whatsapp: lm[4].trim(), pref: lm[5].trim(), note: lm[6].trim() }
+                ? {
+                    name: lm[1].trim(), email: lm[2].trim(), phone: lm[3].trim(),
+                    whatsapp: lm[4].trim(), pref: lm[5].trim(), business: lm[6].trim(),
+                    desk: lm[7].trim(), urgency: lm[8].trim(), challenge: lm[9].trim(),
+                    quote: lm[10].trim(),
+                  }
                 : null;
               await writer.write(encoder.encode(`data: ${JSON.stringify({ done: true, lead })}\n\n`));
             }
