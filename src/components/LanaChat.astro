@@ -6,43 +6,48 @@ const starters = [
 ];
 ---
 
-<div class="lana-chat" data-lana-chat>
-  <button class="lana-chat__toggle" type="button" data-lana-toggle aria-expanded="false" aria-controls="lana-panel">
-    <span class="lana-chat__badge">Lana</span>
-    <span class="lana-chat__label">Chat with the desk</span>
-  </button>
+<!-- backdrop (mobile only — dims page behind sheet) -->
+<div class="lana-backdrop" data-lana-backdrop aria-hidden="true"></div>
 
-  <section class="lana-chat__panel" id="lana-panel" hidden>
+<div class="lana-chat" data-lana-chat>
+  <section
+    class="lana-chat__panel"
+    id="lana-panel"
+    role="dialog"
+    aria-label="Chat with Lana"
+    aria-modal="true"
+  >
+    <!-- drag handle (mobile) -->
+    <div class="lana-chat__handle" aria-hidden="true"></div>
+
     <header class="lana-chat__header">
-      <div>
-        <p class="lana-chat__eyebrow">LuliDigital Assistant</p>
-        <h2>Lana</h2>
+      <div class="lana-chat__identity">
+        <span class="lana-dot" aria-hidden="true"></span>
+        <span class="lana-name">Lana</span>
       </div>
-      <button class="lana-chat__close" type="button" aria-label="Close chat" data-lana-close>×</button>
+      <button class="lana-chat__close" type="button" aria-label="Close chat" data-lana-close>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
     </header>
 
-    <div class="lana-chat__intro">Ask about services or contact details.</div>
+    <div class="lana-chat__messages" data-lana-messages aria-live="polite"></div>
 
-    <div class="lana-chat__messages" data-lana-messages aria-live="polite">
-      <article class="lana-chat__message lana-chat__message--assistant">
-        Hi, I&apos;m Lana. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.
-      </article>
-    </div>
-
-    <div class="lana-chat__starters">
-      {starters.map((starter) => (
-        <button type="button" class="lana-chat__starter" data-lana-starter={starter}>{starter}</button>
+    <div class="lana-chat__starters" data-lana-starters>
+      {starters.map((s) => (
+        <button type="button" class="lana-chat__starter" data-lana-starter={s}>{s}</button>
       ))}
     </div>
 
     <form class="lana-chat__composer" data-lana-form>
-      <label class="sr-only" for="lana-input">Ask Lana a question</label>
+      <label class="sr-only" for="lana-input">Ask Lana</label>
       <textarea
         id="lana-input"
         name="message"
         rows="1"
         maxlength="800"
-        placeholder="Ask Lana something..."
+        placeholder="Ask Lana something…"
         data-lana-input
       ></textarea>
       <button type="submit" class="lana-chat__send" data-lana-send>Send</button>
@@ -58,61 +63,56 @@ const starters = [
       if (initialized) return;
       initialized = true;
 
-      const root = document.querySelector("[data-lana-chat]");
+      const root     = document.querySelector("[data-lana-chat]");
+      const backdrop = document.querySelector("[data-lana-backdrop]");
       if (!root) return;
 
-      const toggle = root.querySelector("[data-lana-toggle]");
-      const panel = root.querySelector("#lana-panel");
-      const closeButton = root.querySelector("[data-lana-close]");
-      const form = root.querySelector("[data-lana-form]");
-      const input = root.querySelector("[data-lana-input]");
+      const panel      = root.querySelector("#lana-panel");
+      const closeBtn   = root.querySelector("[data-lana-close]");
+      const form       = root.querySelector("[data-lana-form]");
+      const input      = root.querySelector("[data-lana-input]");
       const messagesEl = root.querySelector("[data-lana-messages]");
-      const sendButton = root.querySelector("[data-lana-send]");
-      const starters = Array.from(root.querySelectorAll("[data-lana-starter]"));
+      const sendBtn    = root.querySelector("[data-lana-send]");
+      const startersEl = root.querySelector("[data-lana-starters]");
+      const starters   = Array.from(root.querySelectorAll("[data-lana-starter]"));
 
-      const localFallbackReply = (message) => {
-        const query = message.toLowerCase();
-        if (query.includes("contact") || query.includes("email") || query.includes("whatsapp") || query.includes("phone")) {
+      const localFallback = (msg) => {
+        const q = msg.toLowerCase();
+        if (q.includes("contact") || q.includes("email") || q.includes("whatsapp") || q.includes("phone"))
           return "You can reach the desk on WhatsApp at +27 60 255 1513 or by email at info@lulidigital.com. WhatsApp is usually the fastest.";
-        }
-        if (query.includes("marketing") || query.includes("brand") || query.includes("ads")) {
-          return "The Marketing Desk helps with brand positioning, creative direction, and paid media. It is a good fit for launches, rebrands, and stronger visibility.";
-        }
-        if (query.includes("ai") || query.includes("chatbot") || query.includes("assistant") || query.includes("automation")) {
-          return "The AI Desk helps with chatbots, assistants, and practical workflows that answer questions and take repetitive work off your team.";
-        }
-        if (query.includes("virtual assistant") || query.includes("operations") || query.includes("admin") || query.includes("project")) {
-          return "The Virtual Assistant Desk supports operations, admin, follow-through, and project coordination so work moves more cleanly.";
-        }
-        return "LuliDigital helps with Marketing, AI systems, and Virtual Assistant Desk support. If you want, ask about one area, or contact the desk on WhatsApp at +27 60 255 1513.";
+        if (q.includes("marketing") || q.includes("brand") || q.includes("ads"))
+          return "The Marketing Desk helps with brand positioning, creative direction, and paid media. A good fit for launches, rebrands, and stronger visibility.";
+        if (q.includes("ai") || q.includes("chatbot") || q.includes("automation"))
+          return "The AI Desk builds chatbots, assistants, and workflows that answer questions and take repetitive work off your team.";
+        if (q.includes("virtual assistant") || q.includes("operations") || q.includes("admin"))
+          return "The Virtual Assistant Desk supports operations, admin, follow-through, and project coordination.";
+        return "LuliDigital helps with Marketing, AI systems, and Virtual Assistant support. Contact the desk on WhatsApp at +27 60 255 1513.";
       };
 
-      const getTimeAwareGreeting = () => {
-        const hour = new Date().getHours();
-        if (hour < 12) return "Good morning";
-        if (hour < 18) return "Good afternoon";
-        return "Good evening";
+      const greeting = () => {
+        const h = new Date().getHours();
+        return `${h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening"}, I'm Lana. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.`;
       };
 
-      const initialGreeting = `${getTimeAwareGreeting()}, I’m Lana. I can help you understand what LuliDigital offers, point you to the right desk, or help you reach the team.`;
-      messagesEl.innerHTML = "";
+      const history = [];
+      const initialMsg = greeting();
+      history.push({ role: "assistant", content: initialMsg });
 
-      const initialMessage = document.createElement("article");
-      initialMessage.className = "lana-chat__message lana-chat__message--assistant";
-      initialMessage.textContent = initialGreeting;
-      messagesEl.appendChild(initialMessage);
-
-      const history = [
-        {
-          role: "assistant",
-          content: initialGreeting,
-        },
-      ];
+      const firstMsg = document.createElement("article");
+      firstMsg.className = "lana-chat__message lana-chat__message--assistant";
+      firstMsg.textContent = initialMsg;
+      messagesEl.appendChild(firstMsg);
 
       const setOpen = (open) => {
-        panel.hidden = !open;
-        toggle.setAttribute("aria-expanded", String(open));
-        if (open) input.focus();
+        panel.classList.toggle("is-open", open);
+        if (backdrop) backdrop.classList.toggle("is-open", open);
+        panel.setAttribute("aria-hidden", String(!open));
+        if (open) {
+          input.focus();
+          document.body.classList.toggle("lana-open", true);
+        } else {
+          document.body.classList.remove("lana-open");
+        }
       };
 
       const autoSize = () => {
@@ -120,91 +120,88 @@ const starters = [
         input.style.height = Math.min(input.scrollHeight, 140) + "px";
       };
 
-      const appendMessage = (role, content) => {
-        const item = document.createElement("article");
-        item.className = `lana-chat__message lana-chat__message--${role}`;
-        item.textContent = content;
-        messagesEl.appendChild(item);
+      const appendMsg = (role, content) => {
+        const el = document.createElement("article");
+        el.className = `lana-chat__message lana-chat__message--${role}`;
+        el.textContent = content;
+        messagesEl.appendChild(el);
         messagesEl.scrollTop = messagesEl.scrollHeight;
       };
 
-      const setPending = (pending) => {
-        sendButton.disabled = pending;
-        sendButton.textContent = pending ? "Sending..." : "Send";
-        input.disabled = pending;
-        starters.forEach((starter) => {
-          starter.disabled = pending;
-        });
+      const setPending = (on) => {
+        sendBtn.disabled = on;
+        sendBtn.textContent = on ? "…" : "Send";
+        input.disabled = on;
+        starters.forEach((s) => { s.disabled = on; });
       };
 
       const sendMessage = async (text) => {
-        const message = text.trim();
-        if (!message) return;
+        const msg = text.trim();
+        if (!msg) return;
 
-        appendMessage("user", message);
-        history.push({ role: "user", content: message });
+        // hide starters after first real send
+        if (startersEl && !startersEl.dataset.used) {
+          startersEl.dataset.used = "1";
+          startersEl.style.display = "none";
+        }
+
+        appendMsg("user", msg);
+        history.push({ role: "user", content: msg });
         input.value = "";
         autoSize();
         setPending(true);
 
         try {
-          const response = await fetch("/api/lana", {
+          const res  = await fetch("/api/lana", {
             method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({
-              messages: history.slice(-8),
-            }),
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ messages: history.slice(-8) }),
           });
-
-          const data = await response.json();
-          const reply = response.ok && typeof data.reply === "string" && data.reply.trim()
+          const data  = await res.json();
+          const reply = res.ok && typeof data.reply === "string" && data.reply.trim()
             ? data.reply.trim()
-            : localFallbackReply(message);
-
-          appendMessage("assistant", reply);
+            : localFallback(msg);
+          appendMsg("assistant", reply);
           history.push({ role: "assistant", content: reply });
         } catch {
-          const fallback = localFallbackReply(message);
-          appendMessage("assistant", fallback);
-          history.push({ role: "assistant", content: fallback });
+          const fb = localFallback(msg);
+          appendMsg("assistant", fb);
+          history.push({ role: "assistant", content: fb });
         } finally {
           setPending(false);
         }
       };
 
-      toggle.addEventListener("click", () => setOpen(panel.hidden));
-      closeButton.addEventListener("click", () => setOpen(false));
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        sendMessage(input.value);
+      // open via bee click (primary) or backdrop/close
+      window.addEventListener("luli:lana-open", () => setOpen(true));
+      window.addEventListener("luli:lana-close", () => setOpen(false));
+      closeBtn.addEventListener("click", () => setOpen(false));
+      if (backdrop) backdrop.addEventListener("click", () => setOpen(false));
+
+      // keyboard dismiss
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && panel.classList.contains("is-open")) setOpen(false);
       });
 
+      form.addEventListener("submit", (e) => { e.preventDefault(); sendMessage(input.value); });
       input.addEventListener("input", autoSize);
-      input.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" && !event.shiftKey) {
-          event.preventDefault();
-          sendMessage(input.value);
-        }
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(input.value); }
       });
 
-      starters.forEach((starter) => {
-        starter.addEventListener("click", () => {
+      starters.forEach((s) => {
+        s.addEventListener("click", () => {
           setOpen(true);
-          sendMessage(starter.getAttribute("data-lana-starter") || "");
+          sendMessage(s.getAttribute("data-lana-starter") || "");
         });
       });
 
       autoSize();
     };
 
-    const earlyToggle = document.querySelector("[data-lana-toggle]");
-    earlyToggle?.addEventListener("pointerdown", initLanaChat, { once: true, passive: true });
-
     const schedule = window.requestIdleCallback
-      ? (callback) => window.requestIdleCallback(callback, { timeout: 1800 })
-      : (callback) => window.setTimeout(callback, 900);
+      ? (fn) => window.requestIdleCallback(fn, { timeout: 1800 })
+      : (fn) => window.setTimeout(fn, 900);
 
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", () => schedule(initLanaChat), { once: true });
@@ -215,223 +212,260 @@ const starters = [
 </script>
 
 <style>
-  .sr-only{
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0;
+    margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+    white-space: nowrap; border: 0;
   }
 
-  .lana-chat{
+  /* ── Backdrop (mobile) ───────────────────────────────────────── */
+  .lana-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(12, 9, 5, 0.48);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 39;
+    transition: opacity 320ms ease;
+  }
+  @media (max-width: 640px) {
+    .lana-backdrop { display: block; }
+    .lana-backdrop.is-open { opacity: 1; pointer-events: auto; }
+  }
+
+  /* ── Wrapper ─────────────────────────────────────────────────── */
+  .lana-chat {
     position: fixed;
     right: 20px;
     bottom: 20px;
     z-index: 40;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
   }
 
-  .lana-chat__toggle{
-    width: auto;
-    border: 1px solid rgba(20, 19, 18, 0.15);
+  /* ── Panel — desktop bloom ───────────────────────────────────── */
+  .lana-chat__panel {
+    width: min(348px, calc(100vw - 32px));
+    border-radius: 24px;
+    border: 1px solid rgba(20,19,18,0.12);
     background:
-      radial-gradient(circle at 18% 20%, rgba(255, 212, 90, .42), transparent 32%),
-      linear-gradient(180deg, rgba(255, 250, 232, 0.98), rgba(255, 241, 194, 0.98));
-    color: var(--ink);
-    border-radius: 22px;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
-    padding: 14px 16px;
+      radial-gradient(ellipse at 80% 0%, rgba(245,164,31,.18) 0%, transparent 55%),
+      linear-gradient(175deg, rgba(255,252,240,0.99) 0%, rgba(255,244,204,0.99) 100%);
+    box-shadow:
+      0 2px 0 rgba(255,255,255,.8) inset,
+      0 28px 60px rgba(0,0,0,.14),
+      0 8px 24px rgba(180,120,0,.10);
+    overflow: hidden;
+
+    /* closed state */
+    transform: scale(0.90) translateY(8px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform-origin: right bottom;
+    transition:
+      transform 340ms cubic-bezier(.16,1,.3,1),
+      opacity   260ms ease,
+      visibility 0s   340ms;
+  }
+  .lana-chat__panel.is-open {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+      transform 340ms cubic-bezier(.16,1,.3,1),
+      opacity   260ms ease,
+      visibility 0s 0s;
+  }
+
+  /* ── Panel — mobile bottom sheet ────────────────────────────── */
+  @media (max-width: 640px) {
+    .lana-chat {
+      right: 0; bottom: 0;
+      left: 0; width: 100%;
+    }
+    .lana-chat__panel {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      width: 100%;
+      max-height: 82vh;
+      border-radius: 28px 28px 0 0;
+      border-bottom: 0;
+      transform-origin: bottom center;
+      transform: translateY(105%);
+      transition:
+        transform  400ms cubic-bezier(.16,1,.3,1),
+        visibility 0s   400ms;
+    }
+    .lana-chat__panel.is-open {
+      transform: translateY(0);
+      transition:
+        transform  400ms cubic-bezier(.16,1,.3,1),
+        visibility 0s 0s;
+    }
+  }
+
+  /* ── Drag handle ─────────────────────────────────────────────── */
+  .lana-chat__handle {
+    display: none;
+    width: 36px; height: 4px;
+    border-radius: 2px;
+    background: rgba(20,19,18,0.16);
+    margin: 14px auto 0;
+  }
+  @media (max-width: 640px) {
+    .lana-chat__handle { display: block; }
+  }
+
+  /* ── Header ──────────────────────────────────────────────────── */
+  .lana-chat__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 14px;
-    cursor: pointer;
+    padding: 16px 18px 0;
   }
-
-  .lana-chat__badge{
-    display: inline-flex;
+  .lana-chat__identity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lana-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: #F5A41F;
+    box-shadow: 0 0 0 3px rgba(245,164,31,.22);
+    flex-shrink: 0;
+    animation: dotPulse 2.6s ease-in-out infinite;
+  }
+  @keyframes dotPulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(245,164,31,.22); }
+    50%       { box-shadow: 0 0 0 6px rgba(245,164,31,.08); }
+  }
+  .lana-name {
+    font-family: var(--serif, Georgia, serif);
+    font-size: 22px;
+    font-weight: 600;
+    color: rgba(20,19,18,0.92);
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .lana-chat__close {
+    display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 58px;
-    height: 34px;
-    border-radius: 999px;
-    background: rgba(245, 164, 31, 0.24);
-    color: var(--honey-dark);
-    font-size: 12px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    font-weight: 700;
-  }
-
-  .lana-chat__label{
-    font-size: 14px;
-    letter-spacing: 0.02em;
-    color: rgba(20, 19, 18, 0.86);
-  }
-
-  .lana-chat__panel{
-    margin-top: 12px;
-    width: min(344px, calc(100vw - 24px));
-    border-radius: 28px;
-    border: 1px solid rgba(20, 19, 18, 0.14);
-    background:
-      linear-gradient(30deg, transparent 33%, rgba(182,109,0,.12) 34%, rgba(182,109,0,.12) 35%, transparent 36%),
-      linear-gradient(150deg, transparent 33%, rgba(182,109,0,.1) 34%, rgba(182,109,0,.1) 35%, transparent 36%),
-      linear-gradient(180deg, rgba(255, 250, 232, 0.98), rgba(255, 241, 194, 0.98));
-    background-size: 42px 72px, 42px 72px, auto;
-    box-shadow: 0 22px 52px rgba(0, 0, 0, 0.16);
-    overflow: hidden;
-    backdrop-filter: blur(12px);
-  }
-
-  .lana-chat__header{
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 18px 18px 12px;
-  }
-
-  .lana-chat__header h2{
-    margin: 4px 0 0;
-    font-size: clamp(23px, 7vw, 31px);
-    line-height: .98;
-    text-wrap: balance;
-  }
-
-  .lana-chat__eyebrow{
-    margin: 0;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    color: rgba(20, 19, 18, 0.58);
-  }
-
-  .lana-chat__close{
+    width: 32px; height: 32px;
     border: 0;
-    background: transparent;
-    color: rgba(20, 19, 18, 0.52);
-    font-size: 28px;
-    line-height: 1;
+    background: rgba(20,19,18,0.06);
+    border-radius: 50%;
+    color: rgba(20,19,18,0.55);
     cursor: pointer;
+    transition: background 200ms ease, color 200ms ease;
+  }
+  .lana-chat__close:hover {
+    background: rgba(20,19,18,0.12);
+    color: rgba(20,19,18,0.80);
   }
 
-  .lana-chat__intro{
-    padding: 0 18px 12px;
-    color: rgba(20, 19, 18, 0.66);
-    font-size: 13px;
-    line-height: 1.45;
-  }
-
-  .lana-chat__messages{
+  /* ── Messages ────────────────────────────────────────────────── */
+  .lana-chat__messages {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    max-height: 300px;
+    max-height: 280px;
     overflow-y: auto;
-    padding: 0 18px 14px;
+    padding: 14px 18px 10px;
+    overscroll-behavior: contain;
   }
-
-  .lana-chat__message{
-    max-width: 100%;
-    padding: 11px 13px;
+  @media (max-width: 640px) {
+    .lana-chat__messages { max-height: 38vh; }
+  }
+  .lana-chat__message {
+    max-width: 92%;
+    padding: 10px 14px;
     border-radius: 16px;
-    font-size: 13px;
-    line-height: 1.48;
+    font-size: 13.5px;
+    line-height: 1.5;
     white-space: pre-wrap;
     text-wrap: pretty;
   }
-
-  .lana-chat__message--assistant{
-    background: rgba(255, 255, 255, 0.72);
-    border: 1px solid rgba(20, 19, 18, 0.08);
-    color: rgba(20, 19, 18, 0.88);
+  .lana-chat__message--assistant {
+    background: rgba(255,255,255,0.78);
+    border: 1px solid rgba(20,19,18,0.07);
+    color: rgba(20,19,18,0.88);
+    border-bottom-left-radius: 5px;
   }
-
-  .lana-chat__message--user{
+  .lana-chat__message--user {
     align-self: flex-end;
-    background: rgba(245, 164, 31, 0.2);
-    color: rgba(20, 19, 18, 0.9);
+    background: rgba(245,164,31,0.18);
+    color: rgba(20,19,18,0.90);
+    border-bottom-right-radius: 5px;
   }
 
-  .lana-chat__starters{
+  /* ── Starters ────────────────────────────────────────────────── */
+  .lana-chat__starters {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 0 18px 14px;
+    flex-direction: column;
+    gap: 6px;
+    padding: 4px 18px 12px;
   }
-
-  .lana-chat__starter{
-    border: 1px solid rgba(20, 19, 18, 0.1);
-    background: rgba(255, 255, 255, 0.55);
-    border-radius: 999px;
-    padding: 8px 12px;
-    font-size: 12px;
-    color: rgba(20, 19, 18, 0.78);
+  .lana-chat__starter {
+    text-align: left;
+    border: 1px solid rgba(20,19,18,0.10);
+    background: rgba(255,255,255,0.50);
+    border-radius: 12px;
+    padding: 9px 13px;
+    font-size: 12.5px;
+    color: rgba(20,19,18,0.72);
     cursor: pointer;
+    transition: background 180ms ease, border-color 180ms ease;
+    line-height: 1.35;
   }
+  .lana-chat__starter:hover {
+    background: rgba(255,255,255,0.85);
+    border-color: rgba(245,164,31,0.35);
+    color: rgba(20,19,18,0.90);
+  }
+  .lana-chat__starter:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  .lana-chat__composer{
+  /* ── Composer ────────────────────────────────────────────────── */
+  .lana-chat__composer {
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: 10px;
-    padding: 0 18px 18px;
+    gap: 8px;
+    padding: 6px 14px 16px;
   }
-
-  .lana-chat__composer textarea{
+  .lana-chat__composer textarea {
     resize: none;
-    border: 1px solid rgba(20, 19, 18, 0.12);
-    border-radius: 16px;
-    padding: 12px 14px;
+    border: 1px solid rgba(20,19,18,0.12);
+    border-radius: 14px;
+    padding: 11px 14px;
     font: inherit;
-    min-height: 48px;
+    font-size: 13.5px;
+    min-height: 44px;
     max-height: 140px;
-    background: rgba(255, 255, 255, 0.84);
-    color: var(--ink);
+    background: rgba(255,255,255,0.82);
+    color: rgba(20,19,18,0.92);
+    outline: none;
+    transition: border-color 180ms ease;
   }
-
-  .lana-chat__send{
+  .lana-chat__composer textarea:focus {
+    border-color: rgba(245,164,31,0.55);
+  }
+  .lana-chat__send {
+    align-self: flex-end;
     border: 0;
-    border-radius: 16px;
-    padding: 0 16px;
-    min-height: 48px;
-    background: var(--honey-dark);
+    border-radius: 14px;
+    padding: 0 18px;
+    height: 44px;
+    background: #B86B00;
     color: white;
     font: inherit;
+    font-size: 13.5px;
     font-weight: 600;
     cursor: pointer;
+    letter-spacing: 0.01em;
+    transition: background 180ms ease, opacity 180ms ease;
   }
-
-  .lana-chat__send:disabled,
-  .lana-chat__starter:disabled{
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  @media (max-width: 640px){
-    .lana-chat{
-      right: 12px;
-      bottom: 12px;
-    }
-
-    .lana-chat__toggle,
-    .lana-chat__panel{
-      width: min(100vw - 24px, 380px);
-    }
-
-    .lana-chat__panel{
-      max-height: min(82vh, 720px);
-    }
-
-    .lana-chat__messages{
-      max-height: 250px;
-    }
-  }
+  .lana-chat__send:hover  { background: #9A5800; }
+  .lana-chat__send:disabled { opacity: 0.55; cursor: not-allowed; }
 </style>

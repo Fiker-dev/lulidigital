@@ -244,7 +244,8 @@ const jsonLd = {
 
     <!-- ══════════════════════════ FLYING BEE GUIDE ═══════════════ -->
     {showBee && (
-      <div id="bee-guide" aria-hidden="true">
+      <div id="bee-guide" role="button" tabindex="0" aria-label="Chat with Lana">
+        <span class="bee-hint" aria-hidden="true"></span>
         <svg class="bee-svg" viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg">
           <!-- Wings -->
           <g class="bee-wings">
@@ -343,6 +344,20 @@ const jsonLd = {
     const bee = beeEl as HTMLElement;
     if (bee.dataset.beeInitialized === "true") return;
     bee.dataset.beeInitialized = "true";
+
+    // ── Bee as chat trigger ──────────────────────────────────────
+    const openLana = () => window.dispatchEvent(new CustomEvent("luli:lana-open"));
+    bee.addEventListener("click", openLana);
+    bee.addEventListener("keydown", (ev: KeyboardEvent) => {
+      if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); openLana(); }
+    });
+
+    // show hint bubble after 4s; hide it once chat is opened
+    const hint = bee.querySelector<HTMLElement>(".bee-hint");
+    if (hint) {
+      window.setTimeout(() => hint.classList.add("is-visible"), 4000);
+      window.addEventListener("luli:lana-open", () => hint.classList.remove("is-visible"), { once: true });
+    }
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isSmall = window.innerWidth < 700;
@@ -584,11 +599,17 @@ const jsonLd = {
     position: fixed;
     left: 0; top: 0;           /* origin; JS uses translate() to position */
     z-index: 90;
-    pointer-events: none;
+    pointer-events: auto;
+    cursor: pointer;
     will-change: transform;
     filter: drop-shadow(0 3px 8px rgba(180,120,0,.22));
     transition: filter 400ms ease;
   }
+  #bee-guide:hover .bee-svg,
+  #bee-guide:focus-visible .bee-svg {
+    filter: drop-shadow(0 0 8px rgba(245,164,31,.55));
+  }
+  #bee-guide:focus-visible { outline: none; }
   #bee-guide.is-landed {
     filter: drop-shadow(0 6px 16px rgba(180,120,0,.35));
   }
@@ -633,6 +654,28 @@ const jsonLd = {
     0%,100% { transform: translateY(0) rotate(-4deg) scale(.94); }
     50%     { transform: translateY(-2px) rotate(-2deg) scale(.94); }
   }
+  /* Hint bubble — appears after a delay to invite the click */
+  .bee-hint {
+    position: absolute;
+    top: -6px; right: -6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #F5A41F;
+    box-shadow: 0 0 0 0 rgba(245,164,31,.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 400ms ease;
+  }
+  .bee-hint.is-visible {
+    opacity: 1;
+    animation: hintPulse 1.8s ease-out infinite;
+  }
+  @keyframes hintPulse {
+    0%   { box-shadow: 0 0 0 0   rgba(245,164,31,.55); }
+    70%  { box-shadow: 0 0 0 9px rgba(245,164,31,.0);  }
+    100% { box-shadow: 0 0 0 0   rgba(245,164,31,.0);  }
+  }
+
   /* Trail dots (only while flying) */
   .bee-trail {
     position: absolute;
