@@ -425,12 +425,13 @@ const jsonLd = {
 
     // ── CTA proximity buzz + haptic ──────────────────────────────
     let lastCtaBuzz = 0;
-    const CTA_SELECTOR = ".pill--filled, .pill--outline, .local-btn--primary";
-    const CTA_RADIUS   = 120; // px from button centre
-    const CTA_COOLDOWN = 2000; // ms between triggers
+    const CTA_SELECTOR = ".pill--filled, .pill--outline, .local-btn--primary, .header-cta, .lana-trigger";
+    // Mobile: bee hugs left edge while CTAs are centered — use wider horizontal tolerance
+    const CTA_RADIUS_X = isSmall ? 260 : 140;
+    const CTA_RADIUS_Y = isSmall ? 90  : 100;
+    const CTA_COOLDOWN = 2800; // ms between triggers
 
     window.addEventListener("luli:bee-pass", (rawEv: Event) => {
-      if (reduced || !audioReady) return;
       const detail = (rawEv as CustomEvent<{ x: number; y: number }>).detail;
       const now = performance.now();
       if (now - lastCtaBuzz < CTA_COOLDOWN) return;
@@ -440,14 +441,15 @@ const jsonLd = {
         if (hit) return;
         const r = el.getBoundingClientRect();
         if (r.bottom < 0 || r.top > window.innerHeight) return;
-        const dist = Math.hypot(detail.x - (r.left + r.width / 2), detail.y - (r.top + r.height / 2));
-        if (dist < CTA_RADIUS) hit = true;
+        const dx = Math.abs(detail.x - (r.left + r.width  / 2));
+        const dy = Math.abs(detail.y - (r.top  + r.height / 2));
+        if (dx < CTA_RADIUS_X && dy < CTA_RADIUS_Y) hit = true;
       });
 
       if (!hit) return;
       lastCtaBuzz = now;
-      playBuzz(0.055, 0.20);
-      if (navigator.vibrate) navigator.vibrate([40]);
+      if (!reduced && audioReady) playBuzz(0.08, 0.22);
+      if (navigator.vibrate) navigator.vibrate([18, 12, 18, 12, 32]);
     }, { passive: true });
 
     const landOnTarget = (target: HTMLElement) => {
