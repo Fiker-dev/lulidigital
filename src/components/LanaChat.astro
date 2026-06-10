@@ -226,7 +226,7 @@ const starters = [
     background: rgba(12, 9, 5, 0.48);
     opacity: 0;
     pointer-events: none;
-    z-index: 39;
+    z-index: 105;   /* above site header (z-index: 100) */
     transition: opacity 320ms ease;
   }
   @media (max-width: 640px) {
@@ -291,6 +291,7 @@ const starters = [
       max-height: 82vh;
       border-radius: 28px 28px 0 0;
       border-bottom: 0;
+      z-index: 110;  /* above backdrop (105) and header (100) */
       transform-origin: bottom center;
       transform: translateY(105%);
       transition:
