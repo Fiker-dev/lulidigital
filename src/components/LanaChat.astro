@@ -9,6 +9,22 @@ const starters = [
 <!-- backdrop (mobile only — dims page behind sheet) -->
 <div class="lana-backdrop" data-lana-backdrop aria-hidden="true"></div>
 
+<!-- Mobile chat trigger — visible only on small screens when chat is closed -->
+<button class="lana-mobile-trigger" id="lana-mobile-trigger" type="button" aria-label="Chat with Lana">
+  <svg class="lana-trigger-bee" viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse cx="38" cy="18" rx="21" ry="12" fill="rgba(210,235,255,.7)"/>
+    <ellipse cx="57" cy="19" rx="17" ry="10" fill="rgba(210,235,255,.6)"/>
+    <ellipse cx="42" cy="44" rx="23" ry="16" fill="#F5A41F"/>
+    <rect x="23" y="31" width="10" height="26" rx="7" fill="rgba(20,10,0,.72)"/>
+    <rect x="37" y="30" width="10" height="28" rx="7" fill="rgba(20,10,0,.72)"/>
+    <rect x="51" y="32" width="8" height="24" rx="6" fill="rgba(20,10,0,.72)"/>
+    <circle cx="68" cy="42" r="14" fill="#F5A41F"/>
+    <circle cx="73" cy="37" r="5" fill="#130C04"/>
+    <circle cx="74.5" cy="35.5" r="1.8" fill="white"/>
+  </svg>
+  <span class="lana-trigger-label">Chat with Lana</span>
+</button>
+
 <div class="lana-chat" data-lana-chat>
   <section
     class="lana-chat__panel"
@@ -347,8 +363,18 @@ const starters = [
         input.focus();
       };
 
-      window.addEventListener("luli:lana-open", () => setOpen(true));
-      window.addEventListener("luli:lana-close", () => setOpen(false));
+      const mobileTrigger = document.getElementById("lana-mobile-trigger");
+
+      const syncTriggerVisibility = (open) => {
+        if (mobileTrigger) {
+          mobileTrigger.style.opacity = open ? "0" : "1";
+          mobileTrigger.style.pointerEvents = open ? "none" : "auto";
+        }
+      };
+
+      window.addEventListener("luli:lana-open", () => { setOpen(true); syncTriggerVisibility(true); });
+      window.addEventListener("luli:lana-close", () => { setOpen(false); syncTriggerVisibility(false); });
+      if (mobileTrigger) mobileTrigger.addEventListener("click", () => window.dispatchEvent(new CustomEvent("luli:lana-open")));
       closeBtn.addEventListener("click", () => setOpen(false));
       if (backdrop) backdrop.addEventListener("click", () => setOpen(false));
 
@@ -694,6 +720,44 @@ const starters = [
   }
   .lana-chat__send:hover  { background: #9A5800; }
   .lana-chat__send:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  /* ── Mobile chat trigger button ─────────────────────────────── */
+  .lana-mobile-trigger {
+    display: none;
+  }
+  @media (max-width: 640px) {
+    .lana-mobile-trigger {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: fixed;
+      bottom: 20px;
+      right: 16px;
+      z-index: 120;
+      background: #B86B00;
+      color: white;
+      border: 0;
+      border-radius: 28px;
+      padding: 10px 18px 10px 12px;
+      font-family: var(--font-body, sans-serif);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(184,107,0,0.35), 0 1px 4px rgba(0,0,0,0.15);
+      transition: opacity 280ms ease, transform 280ms ease, background 180ms ease;
+    }
+    .lana-mobile-trigger:hover { background: #9A5800; }
+    .lana-mobile-trigger:active { transform: scale(0.97); }
+  }
+  .lana-trigger-bee {
+    width: 28px;
+    height: auto;
+    flex-shrink: 0;
+  }
+  .lana-trigger-label {
+    white-space: nowrap;
+  }
 
   /* ── Contact action buttons (quick enquiry + error state) ───── */
   .lana-contact-actions {
