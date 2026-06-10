@@ -730,6 +730,7 @@ export const getSearchConsolePageSeoPlan = async ({ date = new Date(), days = 28
   }
 };
 
+/** @param {{ forceRefresh?: boolean; geo?: string; market?: string }} [opts] */
 export const getDailySeoRecommendation = async ({ forceRefresh = false, geo, market } = {}) => {
   const selectedGeo = geo || process.env.SEO_AGENT_GEO || "NL";
   const cacheKey = `${selectedGeo}:${market ?? "general"}`;

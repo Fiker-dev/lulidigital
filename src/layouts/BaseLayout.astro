@@ -39,7 +39,7 @@ const breadcrumbSchema = breadcrumbSegments.length > 0 ? {
       "name": "Home",
       "item": `${siteUrl}/`,
     },
-    ...breadcrumbSegments.map((segment, index) => {
+    ...breadcrumbSegments.map((segment: string, index: number) => {
       const path = `/${breadcrumbSegments.slice(0, index + 1).join("/")}`;
 
       return {
@@ -47,7 +47,7 @@ const breadcrumbSchema = breadcrumbSegments.length > 0 ? {
         "position": index + 2,
         "name": segment
           .split("-")
-          .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+          .map((part: string) => part.charAt(0).toUpperCase() + part.slice(1))
           .join(" "),
         "item": new URL(path, siteUrl).toString(),
       };
@@ -170,7 +170,7 @@ const webpageSchema = {
     "keywords": seoTarget.keywords,
     "about": [
       { "@id": `${siteUrl}/#organization` },
-      ...seoTarget.keywords.map((keyword) => ({
+      ...seoTarget.keywords.map((keyword: string) => ({
         "@type": "Thing",
         "name": keyword,
       })),
@@ -213,7 +213,7 @@ const jsonLd = {
     )}
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href={canonicalUrl} />
-    {hreflangLinks.map((link) => (
+    {hreflangLinks.map((link: { hreflang: string; href: string }) => (
       <link rel="alternate" hreflang={link.hreflang} href={link.href} />
     ))}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -308,7 +308,7 @@ const jsonLd = {
       window.requestIdleCallback(callback, { timeout: 1200 });
       return;
     }
-    window.setTimeout(callback, 450);
+    setTimeout(callback, 450);
   };
 
   const initPageEnhancements = () => {

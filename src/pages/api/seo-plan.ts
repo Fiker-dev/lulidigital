@@ -9,7 +9,7 @@ export const GET: APIRoute = async ({ url }) => {
   const seoPlan = useSearchConsole ? await getSearchConsolePageSeoPlan() : null;
   const fallbackPlan = path ? null : getWeeklyPageSeoPlan();
   const plan = path
-    ? (seoPlan?.plan.find((target) => target.path === path) ?? getWeeklyPageSeoTarget(path))
+    ? (seoPlan?.plan.find((target: { path: string }) => target.path === path) ?? getWeeklyPageSeoTarget(path))
     : (seoPlan?.plan ?? fallbackPlan);
 
   return new Response(JSON.stringify(path ? plan : {

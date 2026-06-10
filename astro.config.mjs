@@ -47,7 +47,7 @@ export default defineConfig({
       priority: 0.8,
       serialize(item) {
         // bump homepage and market pages priority
-        if (item.url === `${site}/`) return { ...item, priority: 1.0, changefreq: 'daily' };
+        if (item.url === `${site}/`) return { ...item, priority: 1.0, changefreq: /** @type {any} */ ('daily') };
         if (['/marketing-desk', '/ai-desk', '/va-desk', '/contact'].some(p => item.url.endsWith(p))) {
           return { ...item, priority: 0.9 };
         }

@@ -113,7 +113,7 @@ const currentMarketPath = `/${market.variant}`;
     </div>
 
     <div class:list={["capability-grid", isAmsterdam && "capability-grid--bento", isMunich && "capability-grid--catalog", isStockholm && "capability-grid--minimal"]}>
-      {market.capabilities.map((item, index) => (
+      {market.capabilities.map((item: any, index: number) => (
         <article class="capability-card" style={`--i:${index}`}>
           <span>{item.label}</span>
           <h3>{item.title}</h3>
@@ -194,7 +194,7 @@ const currentMarketPath = `/${market.variant}`;
 
     <div class="review-carousel reveal-block" data-review-carousel>
       <div class="review-track">
-        {market.reviews.map((review, index) => (
+        {market.reviews.map((review: any, index: number) => (
           <article class:list={["review-card", index === 0 && "is-active"]}>
             <p>{review}</p>
             <span>LuliDigital client review</span>
@@ -350,7 +350,7 @@ const currentMarketPath = `/${market.variant}`;
     const next = carousel.querySelector("[data-review-next]");
     let active = 0;
 
-    const show = (index) => {
+    const show = (index: number) => {
       active = (index + cards.length) % cards.length;
       cards.forEach((card, cardIndex) => {
         card.classList.toggle("is-active", cardIndex === active);
@@ -362,17 +362,19 @@ const currentMarketPath = `/${market.variant}`;
   });
 
   document.querySelectorAll("[data-tilt-card]").forEach((card) => {
-    card.addEventListener("pointermove", (event) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width - 0.5) * 10;
-      const y = ((event.clientY - rect.top) / rect.height - 0.5) * -10;
-      card.style.setProperty("--rx", `${y}deg`);
-      card.style.setProperty("--ry", `${x}deg`);
+    const el = card as HTMLElement;
+    el.addEventListener("pointermove", (event) => {
+      const e = event as PointerEvent;
+      const rect = el.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
+      const y = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
+      el.style.setProperty("--rx", `${y}deg`);
+      el.style.setProperty("--ry", `${x}deg`);
     });
 
-    card.addEventListener("pointerleave", () => {
-      card.style.removeProperty("--rx");
-      card.style.removeProperty("--ry");
+    el.addEventListener("pointerleave", () => {
+      el.style.removeProperty("--rx");
+      el.style.removeProperty("--ry");
     });
   });
 </script>
