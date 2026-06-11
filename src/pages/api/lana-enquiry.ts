@@ -1,19 +1,27 @@
 import type { APIRoute } from "astro";
+import { assertSameOrigin, jsonResponse, rateLimit, readJsonBody } from "../../lib/security";
 
 export const prerender = false;
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async (context) => {
+  const { request, url } = context;
+  const originError = assertSameOrigin(request, url);
+  if (originError) return originError;
+
+  const limited = rateLimit(context, { key: "lana-enquiry", limit: 8, windowMs: 60_000 });
+  if (limited) return limited;
+
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const chatId   = process.env.TELEGRAM_CHAT_ID;
 
   if (!botToken || !chatId) {
-    return new Response(JSON.stringify({ ok: true }), { status: 200 });
+    return jsonResponse({ ok: true });
   }
 
-  let body: { reason?: string } = {};
-  try { body = await request.json(); } catch { /* ignore */ }
+  const parsed = await readJsonBody<{ reason?: string }>(request, 2_048);
+  const body = parsed.ok ? parsed.data : {};
 
-  const reason = body.reason?.trim() || "Quick enquiry";
+  const reason = typeof body.reason === "string" ? body.reason.trim().slice(0, 500) : "Quick enquiry";
   const text = [
     "Quick Enquiry ↗",
     "",
@@ -31,8 +39,5 @@ export const POST: APIRoute = async ({ request }) => {
     });
   } catch { /* non-blocking */ }
 
-  return new Response(JSON.stringify({ ok: true }), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
+  return jsonResponse({ ok: true });
 };

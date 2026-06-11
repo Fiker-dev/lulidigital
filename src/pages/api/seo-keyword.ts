@@ -1,9 +1,14 @@
 import type { APIRoute } from "astro";
 import { getBestRegionalSeoRecommendation, getDailySeoRecommendation } from "../../lib/seoAgent.js";
+import { jsonResponse, rateLimit } from "../../lib/security";
 
 export const prerender = false;
 
-export const GET: APIRoute = async ({ url }) => {
+export const GET: APIRoute = async (context) => {
+  const { url } = context;
+  const limited = rateLimit(context, { key: "seo-keyword", limit: 30, windowMs: 60_000 });
+  if (limited) return limited;
+
   const geo = url.searchParams.get("geo")?.trim().toUpperCase();
   const market = url.searchParams.get("market")?.trim();
   const allMarkets = url.searchParams.get("all") === "true";
@@ -11,10 +16,9 @@ export const GET: APIRoute = async ({ url }) => {
     ? await getBestRegionalSeoRecommendation()
     : await getDailySeoRecommendation({ geo, market });
 
-  return new Response(JSON.stringify(recommendation), {
+  return jsonResponse(recommendation, {
     status: 200,
     headers: {
-      "Content-Type": "application/json",
       "Cache-Control": "s-maxage=21600, stale-while-revalidate=86400",
     },
   });

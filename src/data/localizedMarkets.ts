@@ -26,18 +26,12 @@ export const localizedOrganizationSchema = {
   "description": "LuliDigital provides premium digital marketing, AI-driven business automation solutions, and specialized executive virtual assistant services for founders and modern brands across the United States, United Kingdom, Europe, and Africa.",
   "email": "info@lulidigital.com",
   "telephone": sharedTelephone,
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Johannesburg",
-    "addressCountry": "ZA",
-  },
   "sameAs": [
     "https://www.linkedin.com/company/lulidigital",
     "https://clutch.co/profile/lulidigital",
     "https://www.sortlist.com/agency/lulidigital",
   ],
   "areaServed": [
-    { "@type": "AdministrativeArea", "name": "South Africa" },
     { "@type": "AdministrativeArea", "name": "United States" },
     { "@type": "AdministrativeArea", "name": "United Kingdom" },
     { "@type": "AdministrativeArea", "name": "Europe" },
@@ -76,7 +70,7 @@ export const markets = {
     h2: "For international teams, funded startups, exporters, agencies, and dollar-earning service businesses across Africa.",
     eyebrow: "Africa Growth Desk",
     positioning:
-      "An Africa-based international studio helping companies that sell beyond borders build sharper marketing, cleaner automation, and stronger executive operations.",
+    "An international studio helping companies that sell beyond borders build sharper marketing, cleaner automation, and stronger executive operations.",
     intro:
       "LuliDigital works with African companies serving global clients, international teams operating on the continent, and founders who need their digital presence, systems, and execution to match a dollar-paying market.",
     primaryCta: "Start an Africa Project",
@@ -107,11 +101,6 @@ export const markets = {
       logo: `${siteUrl}/favicon.png`,
       telephone: sharedTelephone,
       openingHours,
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Johannesburg",
-        addressCountry: "ZA",
-      },
       description:
         "Africa-focused digital studio for international companies, funded startups, exporters, and dollar-earning service businesses.",
     },

@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { Resend } from "resend";
+import { assertSameOrigin, jsonResponse, rateLimit, readJsonBody } from "../../lib/security";
 
 export const prerender = false;
 
@@ -27,24 +28,22 @@ const normalizeField = (value: unknown, maxLength: number) =>
 const isValidEmail = (value: string) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= 254;
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async (context) => {
+  const { request, url } = context;
+  const originError = assertSameOrigin(request, url);
+  if (originError) return originError;
+
+  const limited = rateLimit(context, { key: "contact", limit: 5, windowMs: 60_000 });
+  if (limited) return limited;
+
   const resendKey = import.meta.env.RESEND_API_KEY ?? process.env.RESEND_API_KEY;
   if (!resendKey) {
-    return new Response(
-      JSON.stringify({ error: "Server configuration error." }),
-      { status: 500, headers: { "Content-Type": "application/json" } },
-    );
+    return jsonResponse({ error: "Server configuration error." }, { status: 500 });
   }
 
-  let body: ContactBody;
-  try {
-    body = await request.json();
-  } catch {
-    return new Response(JSON.stringify({ error: "Invalid request." }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
+  const parsed = await readJsonBody<ContactBody>(request, 8_192);
+  if (!parsed.ok) return parsed.response;
+  const body = parsed.data;
 
   const name = normalizeField(body.name, 120);
   const email = normalizeField(body.email, 254).toLowerCase();
@@ -55,10 +54,7 @@ export const POST: APIRoute = async ({ request }) => {
   const message = normalizeField(body.message, 2000);
 
   if (!name || !email || !lookingFor || !timeline || !message || !isValidEmail(email)) {
-    return new Response(JSON.stringify({ error: "Missing required fields." }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
-    });
+    return jsonResponse({ error: "Missing required fields." }, { status: 400 });
   }
 
   const resend = new Resend(resendKey);
@@ -227,14 +223,8 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (internalResult.error || clientResult.error) {
     console.error("Resend error:", internalResult.error ?? clientResult.error);
-    return new Response(JSON.stringify({ error: "Failed to send. Please try WhatsApp or email directly." }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return jsonResponse({ error: "Failed to send. Please try WhatsApp or email directly." }, { status: 500 });
   }
 
-  return new Response(JSON.stringify({ ok: true }), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
+  return jsonResponse({ ok: true });
 };

@@ -11,7 +11,7 @@ const serviceRedirectPaths = new Map([
   ["/virtual-assistant", "/va-desk"],
 ]);
 
-export const onRequest = defineMiddleware((context, next) => {
+export const onRequest = defineMiddleware(async (context, next) => {
   const url = new URL(context.request.url);
   const originalUrl = url.toString();
   const trimmedPath = url.pathname === "/" ? "/" : url.pathname.replace(/\/+$/, "");
@@ -28,5 +28,31 @@ export const onRequest = defineMiddleware((context, next) => {
     return context.redirect(url.toString(), 301);
   }
 
-  return next();
+  const response = await next();
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+  response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
+  response.headers.set(
+    "Content-Security-Policy",
+    [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: https:",
+      "font-src 'self' data:",
+      "connect-src 'self'",
+      "media-src 'self'",
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "upgrade-insecure-requests",
+    ].join("; "),
+  );
+
+  if (url.protocol === "https:") {
+    response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  }
+
+  return response;
 });

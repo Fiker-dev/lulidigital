@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { timingSafeEqual } from "../../lib/security";
 
 export const prerender = false;
 
@@ -228,7 +229,7 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response("Webhook secret is not configured", { status: 500 });
   }
 
-  if (headerSecret !== webhookSecret) {
+  if (!headerSecret || !timingSafeEqual(headerSecret, webhookSecret)) {
     return new Response("Unauthorized", { status: 401 });
   }
 

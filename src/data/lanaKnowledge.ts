@@ -33,7 +33,7 @@ const chunks: LanaKnowledgeChunk[] = [
   {
     id: "countries",
     title: "Countries and Markets",
-    text: "LuliDigital operates across Europe, the UK, the US, and Africa. Active markets include the Netherlands, Germany, Sweden, United Kingdom, United States, Denmark, Switzerland, Ireland, Belgium, Norway, and Africa. The studio is headquartered in South Africa (Johannesburg) and works with businesses in these regions remotely. If a client is in one of these markets, that context helps shape the right approach.",
+    text: "LuliDigital operates across Europe, the UK, the US, and Africa. Active markets include the Netherlands, Germany, Sweden, United Kingdom, United States, Denmark, Switzerland, Ireland, Belgium, Norway, and Africa. The studio works with businesses in these regions remotely. If a client is in one of these markets, that context helps shape the right approach.",
   },
   {
     id: "fit",

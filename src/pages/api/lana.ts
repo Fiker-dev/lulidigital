@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { getAllKnowledge, getFallbackReply } from "../../data/lanaKnowledge";
+import { assertSameOrigin, rateLimit, readJsonBody } from "../../lib/security";
 
 export const prerender = false;
 
@@ -12,7 +13,7 @@ const MARKET_NAMES: Record<string, string> = {
   "/amsterdam":      "Netherlands",
   "/stockholm":      "Sweden",
   "/munich":         "Germany",
-  "/africa":         "Africa (South Africa)",
+  "/africa":         "Africa",
   "/united-states":  "United States",
   "/united-kingdom": "United Kingdom",
   "/denmark":        "Denmark",
@@ -34,7 +35,7 @@ ONE QUESTION AT A TIME
 Never ask two questions in the same message. Ask one, let them answer, then move forward. This is a real conversation, not a form.
 
 ${market ? `MARKET CONTEXT
-This visitor is browsing from the ${market} page. You MUST weave a natural regional reference into your very first reply — something specific to ${market}, not generic. Do it subtly: mention the market by name in a relevant way ("the Dutch market", "scaling across Germany", "UK founders", "the US market", "South African operators"). Never say "Oh, you're from ${market}" or anything that obvious. Make them feel seen without sounding like you're reading from a script. If you don't do this in the first reply, you've missed the moment.
+This visitor is browsing from the ${market} page. You MUST weave a natural regional reference into your very first reply — something specific to ${market}, not generic. Do it subtly: mention the market by name in a relevant way ("the Dutch market", "scaling across Germany", "UK founders", "the US market", "African operators"). Never say "Oh, you're from ${market}" or anything that obvious. Make them feel seen without sounding like you're reading from a script. If you don't do this in the first reply, you've missed the moment.
 
 ` : ""}CONVERSATION FLOW
 1. Greet warmly and invite them to share what's going on in their world
@@ -111,18 +112,22 @@ type RequestBody = {
   market?: string;
 };
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async (context) => {
+  const { request, url } = context;
+  const originError = assertSameOrigin(request, url);
+  if (originError) return originError;
+
+  const limited = rateLimit(context, { key: "lana-chat", limit: 20, windowMs: 60_000 });
+  if (limited) return limited;
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return fallbackStream("Something went wrong on my end. You can reach the team directly at info@lulidigital.com.");
   }
 
-  let body: RequestBody;
-  try {
-    body = await request.json();
-  } catch {
-    return fallbackStream("Something went wrong. Please try again.");
-  }
+  const parsed = await readJsonBody<RequestBody>(request, 32_768);
+  if (!parsed.ok) return parsed.response;
+  const body = parsed.data;
 
   const messages = Array.isArray(body.messages) ? body.messages : [];
   const sanitized = messages
@@ -136,7 +141,10 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const latestUser = [...sanitized].reverse().find((m) => m.role === "user")?.content ?? "";
-  const market = typeof body.market === "string" ? body.market : null;
+  const requestedMarket = typeof body.market === "string" ? body.market : "";
+  const market = Object.prototype.hasOwnProperty.call(MARKET_NAMES, requestedMarket)
+    ? MARKET_NAMES[requestedMarket]
+    : null;
   const system = buildSystem(market);
 
   const anthropicRes = await fetch("https://api.anthropic.com/v1/messages", {

@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { getBestRegionalSeoRecommendation, getDailySeoRecommendation, getSearchConsolePageSeoPlan } from "../../../lib/seoAgent.js";
+import { timingSafeEqual } from "../../../lib/security";
 
 export const prerender = false;
 
@@ -28,7 +29,7 @@ export const GET: APIRoute = async ({ request }) => {
     });
   }
 
-  if (authHeader !== `Bearer ${cronSecret}`) {
+  if (!authHeader || !timingSafeEqual(authHeader, `Bearer ${cronSecret}`)) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
       status: 401,
       headers: { "Content-Type": "application/json" },
