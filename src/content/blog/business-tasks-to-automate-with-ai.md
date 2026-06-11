@@ -1,6 +1,6 @@
 ---
-title: "5 Business Tasks You Should Be Automating with AI Right Now (No Technical Team Required)"
-description: "Most founders and executives are still doing these five tasks manually. Here's how AI automation handles each one — and how long it actually takes to set up."
+title: "Your Team Is Still Doing These 5 Things Manually. AI Fixed That Months Ago."
+description: "Most founders waste hours every week on tasks AI handles in seconds. Here's exactly which five to automate first — and how fast you can actually set them up."
 pubDate: 2026-05-30
 category: "AI Automation"
 readingTime: "6 min read"

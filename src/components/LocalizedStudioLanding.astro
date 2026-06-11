@@ -3,6 +3,7 @@ const { market } = Astro.props;
 const isAmsterdam = market.variant === "amsterdam";
 const isMunich = market.variant === "munich";
 const isStockholm = market.variant === "stockholm";
+const hasCustomVisual = isAmsterdam || isMunich || isStockholm;
 const marketLinks = [
   { href: "/united-states", label: "United States", copy: "Founders and remote-first teams" },
   { href: "/united-kingdom", label: "United Kingdom", copy: "Founders and scale-ups" },
@@ -82,6 +83,29 @@ const currentMarketPath = `/${market.variant}`;
           <div class="asset-strip" aria-hidden="true">
             <span></span><span></span><span></span><span></span>
           </div>
+        </div>
+      )}
+
+      {!hasCustomVisual && (
+        <div class="studio-signal">
+          <div class="signal-top">
+            <span>Studio Signal</span>
+            <span class="signal-live">● LIVE</span>
+          </div>
+          <div class="signal-bars" aria-hidden="true">
+            <span style="--sh:68%"></span>
+            <span style="--sh:44%"></span>
+            <span style="--sh:84%"></span>
+            <span style="--sh:52%"></span>
+            <span style="--sh:76%"></span>
+            <span style="--sh:38%"></span>
+          </div>
+          <div class="signal-desks" aria-hidden="true">
+            <div><strong>Marketing</strong><span class="signal-dot"></span></div>
+            <div><strong>AI Desk</strong><span class="signal-dot"></span></div>
+            <div><strong>VA Desk</strong><span class="signal-dot"></span></div>
+          </div>
+          <p class="signal-market">{market.city}</p>
         </div>
       )}
     </aside>
@@ -718,7 +742,6 @@ const currentMarketPath = `/${market.variant}`;
     padding: 22px;
     border: 1px solid var(--local-line);
     background: rgba(255,255,255,.32);
-    transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
   }
 
   .local-landing--stockholm .capability-card{
@@ -933,6 +956,84 @@ const currentMarketPath = `/${market.variant}`;
     color: var(--local-accent);
   }
 
+  /* ── Default studio signal visual ───────────────────────────── */
+  .studio-signal {
+    width: min(100%, 420px);
+    padding: 26px 24px 22px;
+    border: 1px solid var(--local-line);
+    background: var(--local-ink);
+    color: var(--local-bg);
+    box-shadow: 18px 18px 0 rgba(123,45,45,.14);
+    animation: studioFloat 7s ease-in-out infinite;
+  }
+  .signal-top {
+    display: flex; justify-content: space-between;
+    font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .signal-live { color: #3dcc7a; }
+  .signal-bars {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 8px; align-items: flex-end; height: 140px; margin-bottom: 24px;
+  }
+  .signal-bars span {
+    height: var(--sh);
+    background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.28));
+    transform-origin: bottom;
+    animation: barRise 900ms cubic-bezier(.16,1,.3,1) both,
+               signalPulse 2.6s ease-in-out infinite calc(var(--si, 0) * 0.22s);
+  }
+  .signal-bars span:nth-child(1){ --si:0; }
+  .signal-bars span:nth-child(2){ --si:1; }
+  .signal-bars span:nth-child(3){ --si:2; }
+  .signal-bars span:nth-child(4){ --si:3; }
+  .signal-bars span:nth-child(5){ --si:4; }
+  .signal-bars span:nth-child(6){ --si:5; }
+  .signal-desks {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 10px; border-top: 1px solid rgba(255,255,255,.14); padding-top: 18px;
+  }
+  .signal-desks div {
+    display: flex; flex-direction: column; gap: 7px;
+    font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  }
+  .signal-desks strong { font-weight: 600; font-size: 12px; }
+  .signal-dot {
+    display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; background: #3dcc7a;
+    box-shadow: 0 0 0 2px rgba(61,204,122,.25);
+    animation: dotPulse 2s ease-in-out infinite;
+  }
+  .signal-market {
+    margin: 18px 0 0;
+    font-size: 42px; font-weight: 700; line-height: .9;
+    letter-spacing: -.03em; opacity: .18;
+    font-family: ui-serif, Georgia, serif;
+  }
+  @keyframes signalPulse {
+    0%,100%{ opacity: .55; }
+    50%{ opacity: 1; }
+  }
+  @keyframes dotPulse {
+    0%,100%{ box-shadow: 0 0 0 2px rgba(61,204,122,.25); }
+    50%{ box-shadow: 0 0 0 5px rgba(61,204,122,.12); }
+  }
+
+  /* ── Capability card stagger entrance ───────────────────────── */
+  .capability-card {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 560ms ease calc(var(--i, 0) * 80ms),
+      transform 560ms cubic-bezier(.16,1,.3,1) calc(var(--i, 0) * 80ms),
+      border-color 220ms ease,
+      background 220ms ease;
+  }
+  .local-section.is-visible .capability-card {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   @keyframes studioFloat{
     0%, 100%{ transform: translateY(0); }
     50%{ transform: translateY(-10px); }
@@ -1006,15 +1107,18 @@ const currentMarketPath = `/${market.variant}`;
     .stockholm-glass,
     .ams-console,
     .munich-dashboard,
+    .studio-signal,
     .ams-console__grid span,
     .dash-bars span,
+    .signal-bars span,
     .asset-strip span{
       animation: none !important;
       transition: none !important;
       transform: none !important;
     }
 
-    .reveal-block{
+    .reveal-block,
+    .capability-card{
       opacity: 1 !important;
     }
   }

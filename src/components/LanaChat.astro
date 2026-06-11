@@ -384,6 +384,22 @@
     if (window.__lanaOpenQueued) { window.__lanaOpenQueued = false; dispatchOpen(); }
   };
 
+  // Hide trigger pill while user is reading/scrolling — don't block content
+  (() => {
+    const pill = document.getElementById("lana-mobile-trigger");
+    if (!pill) return;
+    let scrollTimer = null;
+    let chatOpen = false;
+    window.addEventListener("luli:lana-open",  () => { chatOpen = true; });
+    window.addEventListener("luli:lana-close", () => { chatOpen = false; });
+    window.addEventListener("scroll", () => {
+      if (chatOpen) return;
+      pill.classList.add("is-scrolling");
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => pill.classList.remove("is-scrolling"), 800);
+    }, { passive: true });
+  })();
+
   window.__lanaOpenQueued = false;
   const earlyOpen = () => { window.__lanaOpenQueued = true; };
   window.addEventListener("luli:lana-open", earlyOpen, { once: true });
@@ -446,8 +462,23 @@
   }
   .lana-trigger:hover  { background: #9A5800; transform: translateY(-1px); }
   .lana-trigger:active { transform: scale(0.97); }
+  .lana-trigger.is-scrolling {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(6px) scale(0.95);
+  }
   .lana-trigger__bee  { width: 22px; height: auto; flex-shrink: 0; }
   .lana-trigger__label { white-space: nowrap; }
+
+  @media (max-width: 640px) {
+    .lana-trigger {
+      padding: 7px 13px 7px 8px;
+      font-size: 12px;
+      bottom: 16px;
+      right: 16px;
+    }
+    .lana-trigger__bee { width: 19px; }
+  }
 
   /* ── Backdrop ────────────────────────────────────────────────── */
   .lana-backdrop {
@@ -648,7 +679,14 @@
   /* ── Composer ────────────────────────────────────────────────── */
   .lana-chat__composer {
     display: grid; grid-template-columns: 1fr auto;
-    gap: 8px; padding: 6px 12px 14px;
+    gap: 8px;
+    padding: 6px 12px 14px;
+    padding-bottom: max(14px, env(safe-area-inset-bottom, 14px));
+  }
+  @media (max-width: 640px) {
+    .lana-chat__composer {
+      padding: 6px 12px max(18px, calc(env(safe-area-inset-bottom, 0px) + 18px));
+    }
   }
   .lana-chat__composer textarea {
     resize: none;

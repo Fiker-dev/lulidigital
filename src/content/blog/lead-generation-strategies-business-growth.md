@@ -1,6 +1,6 @@
 ---
-title: "Lead Generation That Actually Works: A Framework for Founders Who Need Results"
-description: "Stop chasing vanity metrics. Learn proven lead generation strategies that fill your pipeline with qualified prospects ready to buy."
+title: "Stop Posting Into the Void. Here's the Lead Generation System Founders Actually Use."
+description: "Content without a system is just noise. Here's the framework that turns consistent effort into a pipeline you can actually predict and close from."
 pubDate: 2026-06-07
 category: "Digital Marketing"
 readingTime: "7 min read"

@@ -1,6 +1,6 @@
 ---
-title: "AI Chatbot vs Live Chat: Which Is Right for Your Business"
-description: "Choosing between AI chatbot vs live chat? Get practical guidance on costs, implementation, and ROI to make the right decision for your business."
+title: "Your Customers Message You After Hours. What Happens Next Decides Whether They Stay."
+description: "A missed message at 11pm costs more than most founders realise. Here's the honest breakdown of AI chat vs human support — and when each one actually pays off."
 pubDate: 2026-06-10
 category: "AI Automation"
 readingTime: "8 min read"

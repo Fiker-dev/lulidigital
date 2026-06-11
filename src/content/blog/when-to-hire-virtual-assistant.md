@@ -1,6 +1,6 @@
 ---
-title: "How to Know When You Are Ready to Hire a Virtual Assistant"
-description: "Discover the clear signs you're ready to hire virtual assistant help. From calendar chaos to revenue thresholds, learn when delegation makes financial sense."
+title: "The Day You Actually Needed a VA Was Probably Three Months Ago."
+description: "Most founders hire a virtual assistant six months too late. Here are the specific signs that the time is now — before the overwhelm makes the decision for you."
 pubDate: 2026-06-09
 category: "Virtual Assistant"
 readingTime: "7 min read"

@@ -414,11 +414,11 @@ export const markets = {
       "LuliDigital serves US founders and remote-first teams with digital marketing, AI automation, SEO, paid media, and executive virtual assistant services.",
     h1: "US digital marketing agency. AI automation. Virtual assistant services.",
     h2: "For US founders, SaaS teams, and remote-first businesses.",
-    eyebrow: "United States Digital Studio",
+    eyebrow: "United States Growth Desk",
     positioning:
-      "A remote-first international studio serving US founders and growth teams with performance marketing, AI workflow automation, and executive virtual assistant services — built for the speed and standards of the US market.",
+      "The US market moves fast and punishes hesitation. LuliDigital gives US founders a lean execution layer — marketing that compounds, AI that actually automates, and operations that don't fall apart at scale.",
     intro:
-      "LuliDigital helps US-based founders, SaaS businesses, and remote-first teams with paid media, SEO, brand strategy, AI workflow automation, conversational AI assistants, and executive virtual assistant services from one focused desk.",
+      "Built for SaaS founders, DTC brands, and remote-first teams who need marketing that converts, systems that scale, and operational support that never slips. One studio, three desks, no agency overhead.",
     primaryCta: "Start a US Project",
     secondaryCta: "View All Services",
     serviceSchema: {
@@ -494,11 +494,11 @@ export const markets = {
       "LuliDigital serves UK founders and scale-ups with digital marketing, AI automation, SEO, paid media, and executive virtual assistant services.",
     h1: "UK digital marketing agency. AI automation. Virtual assistant services.",
     h2: "For UK founders, agencies, and scale-ups.",
-    eyebrow: "United Kingdom Digital Studio",
+    eyebrow: "United Kingdom Growth Desk",
     positioning:
-      "An international studio serving UK founders, agencies, and scale-ups with performance marketing, AI workflow automation, and executive virtual assistant services — delivered in English, built to global standard.",
+      "UK founders don't need another agency. They need execution. LuliDigital is the remote studio that runs the marketing, builds the AI systems, and keeps operations clean — so you can focus on growing.",
     intro:
-      "LuliDigital helps UK-based founders, marketing teams, and scale-ups with paid media, SEO, brand strategy, AI workflow automation, and executive virtual assistant services from one focused desk.",
+      "We work with UK founders and scale-ups who've outgrown the chaos but aren't ready to build a full in-house team. Paid media, AI automation, and executive VA support — all from one desk, without the overhead.",
     primaryCta: "Start a UK Project",
     secondaryCta: "View All Services",
     serviceSchema: {

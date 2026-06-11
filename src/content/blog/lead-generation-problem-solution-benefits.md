@@ -1,6 +1,6 @@
 ---
-title: "Lead Generation: The Real Problem, Working Solutions, and Who Actually Wins"
-description: "Stop chasing random prospects. Learn how consistent lead generation systems work, who benefits most, and practical steps to build yours."
+title: "You're Not Losing Deals Because Your Product Is Weak. You're Losing Them Before They Start."
+description: "Most founders think lead gen is about volume. The real problem is earlier — the moment someone finds you and decides in 8 seconds whether to keep reading."
 pubDate: 2026-06-07
 category: "Digital Marketing"
 readingTime: "7 min read"

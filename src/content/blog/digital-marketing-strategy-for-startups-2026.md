@@ -1,6 +1,6 @@
 ---
-title: "Digital Marketing Strategy for Startups: Where to Start in 2026"
-description: "No-fluff digital marketing strategy guide for startups. Get practical tactics that work in 2026 without burning budget or time."
+title: "Most Startups Build Their Marketing in the Wrong Order. Here's the Sequence That Works."
+description: "Channel before audience. Ads before story. Most startups do it backwards and wonder why nothing sticks. Here's what to build first — and why the order matters."
 pubDate: 2026-06-03
 category: "Digital Marketing"
 readingTime: "6 min read"
