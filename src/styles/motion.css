@@ -215,12 +215,11 @@
   color: rgba(43,26,5,.78);
 }
 .glow-card.is-card-near {
-  animation: cardBreath 4.8s ease-in-out infinite;
-  animation-delay: var(--card-drift-delay, 0s);
+  animation: none;
 }
 .glow-card.is-card-near::after {
-  animation: cardSteam 3.6s ease-in-out infinite;
-  opacity: .75;
+  animation: none;
+  opacity: 0;
 }
 .glow-card.is-card-engaged {
   transform: perspective(900px) translateY(-14px) rotateX(5deg) rotateY(-6deg) scale(1.035);
@@ -236,7 +235,16 @@
   animation-name: cardFloatIdle;
 }
 .glow-card[data-motion-kind="steam"].is-card-near::after {
-  opacity: .95;
+  opacity: 0;
+}
+.glow-card.is-card-near,
+.glow-card.is-bee-passed {
+  animation: none !important;
+}
+.glow-card.is-card-near::after,
+.glow-card.is-bee-passed::after {
+  animation: none !important;
+  opacity: 0;
 }
 .glow-card.is-card-engaged .tilt-layer {
   transform: translateZ(30px) translateY(-3px);
@@ -291,6 +299,12 @@
   vertical-align: -0.12em;
   animation: blink 900ms step-end infinite;
 }
+.card-typed.is-type-complete::after,
+.glow-card.is-card-near .card-typed::after,
+.glow-card.is-bee-passed .card-typed::after {
+  content: none;
+  animation: none;
+}
 .glow-card:hover .card-typed,
 .glow-card.is-card-engaged .card-typed {
   color: rgba(245,240,232,.72);
@@ -299,6 +313,10 @@
 /* ── Card Float After Reveal ────────────────────────────────── */
 .card-float-active {
   animation: cardDrift 5s ease-in-out infinite;
+}
+.card-float-active.is-card-near,
+.card-float-active.is-bee-passed {
+  animation: none;
 }
 .card-float-active:nth-child(2) { animation-delay: -1.8s; }
 .card-float-active:nth-child(3) { animation-delay: -3.5s; }

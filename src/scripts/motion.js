@@ -249,6 +249,7 @@ export function initMotion() {
 
     const glazeCard = (card, hold = false) => {
       if (reduced || !card) return;
+      if (card.classList.contains("is-card-near") || card.classList.contains("is-bee-passed")) return;
       const now = performance.now();
       if (card === lastGlazedCard && now - lastGlazeAt < 450) return;
       lastGlazedCard = card;
@@ -317,7 +318,10 @@ export function initMotion() {
           closest = card;
         }
       });
-      if (closest) glazeCard(closest, false);
+      if (closest) {
+        closest.classList.add("is-bee-passed");
+        clearGlaze(closest);
+      }
     }, { passive: true });
 
     if (!reduced) {
@@ -325,6 +329,7 @@ export function initMotion() {
         (entries) => {
           entries.forEach((entry) => {
             entry.target.classList.toggle("is-card-near", entry.isIntersecting);
+            if (entry.isIntersecting) clearGlaze(entry.target);
           });
         },
         { threshold: 0.45 }
@@ -350,7 +355,11 @@ export function initMotion() {
           const tick = () => {
             node.textContent = raw.slice(0, i);
             i += 1;
-            if (i <= raw.length) window.setTimeout(tick, 28);
+            if (i <= raw.length) {
+              window.setTimeout(tick, 28);
+            } else {
+              node.classList.add("is-type-complete");
+            }
           };
           window.setTimeout(tick, 180);
           typeIo.unobserve(node);

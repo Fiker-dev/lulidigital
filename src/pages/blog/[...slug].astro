@@ -46,12 +46,28 @@ function formatDate(date: Date) {
   extraSchemas={[articleSchema]}
   ogType="article"
 >
+  <div id="read-progress" aria-hidden="true"></div>
+
+  <!-- Bee reading companion — follows scroll on desktop -->
+  <button id="blog-bee" aria-label="Chat with Lana" title="Chat with Lana">
+    <svg viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g class="lw"><ellipse cx="38" cy="18" rx="21" ry="12" fill="rgba(210,235,255,.75)"/><ellipse cx="57" cy="19" rx="17" ry="10" fill="rgba(210,235,255,.65)"/></g>
+      <ellipse cx="42" cy="44" rx="23" ry="16" fill="#F5A41F"/>
+      <rect x="23" y="31" width="10" height="26" rx="7" fill="rgba(20,10,0,.72)"/>
+      <rect x="37" y="30" width="10" height="28" rx="7" fill="rgba(20,10,0,.72)"/>
+      <rect x="51" y="32" width="8" height="24" rx="6" fill="rgba(20,10,0,.72)"/>
+      <circle cx="68" cy="42" r="14" fill="#F5A41F"/>
+      <circle cx="73" cy="37" r="5" fill="#130C04"/>
+      <circle cx="74.5" cy="35.5" r="1.8" fill="white"/>
+    </svg>
+  </button>
+
   <main class="post-page">
     <nav class="post-back">
       <a href="/blog">← The Desk Report</a>
     </nav>
 
-    <header class="post-header">
+    <header class="post-header reveal-header">
       <div class="post-header__meta">
         <span class="post-category">{post.data.category}</span>
         {post.data.readingTime && <span class="post-time">{post.data.readingTime}</span>}
@@ -65,35 +81,201 @@ function formatDate(date: Date) {
 
     <hr class="rule" />
 
-    <article class="post-body prose">
+    <article class="post-body prose" id="post-article">
       <Content />
     </article>
 
     <hr class="rule rule--bottom" />
 
     <footer class="post-footer">
-      <div class="post-footer__cta">
-        <p class="footer-kicker">LuliDigital</p>
+      <div class="post-footer__cta reveal-cta">
+        <p class="footer-kicker">Ready to move?</p>
+        <p class="footer-headline">Let's build something that doesn't need explaining.</p>
         <p class="footer-line">Marketing, AI automation, and executive virtual assistant services for founders and growing teams.</p>
         <div class="footer-links">
-          <a href="/ai-desk">AI Desk →</a>
-          <a href="/marketing-desk">Marketing Desk →</a>
-          <a href="/va-desk">Virtual Assistant Desk →</a>
+          <a href="/ai-desk" class="footer-pill">AI Desk →</a>
+          <a href="/marketing-desk" class="footer-pill">Marketing Desk →</a>
+          <a href="/va-desk" class="footer-pill">VA Desk →</a>
         </div>
       </div>
       <a class="back-link" href="/blog">← Back to The Desk Report</a>
     </footer>
   </main>
 
+  <style is:global>
+    /* Reading progress bar */
+    #read-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: #b01616;
+      z-index: 9999;
+      transition: width 80ms linear;
+      pointer-events: none;
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* Entrance keyframe */
+    @keyframes hdReveal {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header entrance stagger */
+    .reveal-header .post-header__meta {
+      animation: hdReveal 600ms cubic-bezier(.16,1,.3,1) 80ms both;
+    }
+    .reveal-header .post-title {
+      animation: hdReveal 720ms cubic-bezier(.16,1,.3,1) 200ms both;
+    }
+    .reveal-header .post-description {
+      animation: hdReveal 680ms cubic-bezier(.16,1,.3,1) 360ms both;
+    }
+
+    /* Prose h2 scroll reveal */
+    .prose h2 {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity 560ms ease,
+        transform 560ms cubic-bezier(.16,1,.3,1);
+    }
+    .prose h2.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Pull quote blockquotes */
+    .prose blockquote {
+      margin: 40px -12px !important;
+      padding: 26px 30px 26px 28px !important;
+      border-left: none !important;
+      border-radius: 14px;
+      background: rgba(176,22,22,.06);
+      font-size: clamp(17px, 2.1vw, 20px) !important;
+      font-style: normal !important;
+      font-weight: 600;
+      line-height: 1.52 !important;
+      letter-spacing: -.015em;
+      color: rgba(18,18,18,.9) !important;
+      position: relative;
+    }
+    .prose blockquote::before {
+      content: '\201C';
+      position: absolute;
+      top: 8px; left: 16px;
+      font-size: 64px;
+      line-height: 1;
+      color: rgba(176,22,22,.2);
+      font-weight: 900;
+      pointer-events: none;
+    }
+    .prose blockquote > :global(p) {
+      margin: 0 !important;
+    }
+
+    /* Section ornament (HR inside prose) */
+    .prose hr {
+      border: none !important;
+      margin: 52px auto !important;
+      height: 20px !important;
+      position: relative;
+      overflow: visible;
+      width: auto;
+    }
+    .prose hr::after {
+      content: '\00B7\00A0\00B7\00A0\00B7';
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      letter-spacing: 4px;
+      color: rgba(176,22,22,.38);
+      white-space: nowrap;
+    }
+
+    /* Lead paragraph — first p in article gets a larger open */
+    .prose > :global(p:first-child) {
+      font-size: 19px;
+      line-height: 1.78;
+      color: rgba(18,18,18,.88);
+    }
+
+    /* Blog bee reading companion */
+    #blog-bee {
+      display: none;
+      position: fixed;
+      left: calc(50% + 392px);
+      top: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(252,244,226,.92);
+      border: 1px solid rgba(176,22,22,.14);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      cursor: pointer;
+      z-index: 190;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      /* JS controls translateY; smooth it */
+      transition: top 260ms cubic-bezier(.16,1,.3,1),
+                  background 200ms ease,
+                  border-color 200ms ease,
+                  transform 200ms ease;
+      will-change: top;
+    }
+    /* Only show when there's room beside the 720px column */
+    @media (min-width: 1020px) {
+      #blog-bee { display: flex; }
+    }
+    #blog-bee:hover {
+      background: rgba(245,164,31,.18);
+      border-color: rgba(176,22,22,.3);
+      transform: scale(1.08);
+    }
+    #blog-bee:active { transform: scale(0.96); }
+    #blog-bee svg {
+      width: 24px;
+      height: auto;
+    }
+    #blog-bee .lw {
+      animation: lanaWing 0.44s ease-in-out infinite alternate;
+      transform-origin: 56px 20px;
+    }
+
+    /* Footer CTA reveal */
+    .reveal-cta {
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity 700ms ease,
+        transform 700ms cubic-bezier(.16,1,.3,1);
+    }
+    .reveal-cta.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 600px) {
+      .prose blockquote {
+        margin: 32px -4px !important;
+        padding: 20px 20px 20px 20px !important;
+      }
+    }
+  </style>
+
   <style>
-    .post-page{
+    .post-page {
       max-width: 720px;
       margin: 0 auto;
       padding: 56px 24px 80px;
       color: rgba(18,18,18,.9);
     }
 
-    .post-back a{
+    .post-back a {
       font-size: 12px;
       letter-spacing: .12em;
       text-transform: uppercase;
@@ -102,13 +284,11 @@ function formatDate(date: Date) {
       transition: color 180ms ease;
     }
 
-    .post-back a:hover{ color: rgba(18,18,18,.85); }
+    .post-back a:hover { color: rgba(18,18,18,.85); }
 
-    .post-header{
-      margin-top: 32px;
-    }
+    .post-header { margin-top: 32px; }
 
-    .post-header__meta{
+    .post-header__meta {
       display: flex;
       align-items: center;
       gap: 16px;
@@ -116,7 +296,7 @@ function formatDate(date: Date) {
       flex-wrap: wrap;
     }
 
-    .post-category{
+    .post-category {
       font-size: 10px;
       letter-spacing: .18em;
       text-transform: uppercase;
@@ -124,21 +304,21 @@ function formatDate(date: Date) {
       font-weight: 600;
     }
 
-    .post-time, .post-date{
+    .post-time, .post-date {
       font-size: 11px;
       letter-spacing: .08em;
       color: rgba(18,18,18,.45);
     }
 
-    .post-title{
-      font-size: clamp(30px, 4vw, 46px);
+    .post-title {
+      font-size: clamp(30px, 4vw, 48px);
       font-weight: 700;
-      line-height: 1.1;
+      line-height: 1.08;
       letter-spacing: -.03em;
       margin: 0 0 16px;
     }
 
-    .post-description{
+    .post-description {
       font-size: 17px;
       line-height: 1.72;
       color: rgba(18,18,18,.65);
@@ -146,131 +326,129 @@ function formatDate(date: Date) {
       font-style: italic;
     }
 
-    .rule{
+    .rule {
       border: none;
       border-top: 1px solid rgba(18,18,18,.12);
       margin: 32px 0;
     }
 
-    .rule--bottom{
-      margin: 48px 0 32px;
-    }
+    .rule--bottom { margin: 56px 0 36px; }
 
-    /* Post body typography */
-    .prose{
+    /* Prose typography */
+    .prose {
       font-size: 17px;
-      line-height: 1.82;
+      line-height: 1.84;
       color: rgba(18,18,18,.86);
     }
 
-    .prose :global(h2){
-      font-size: clamp(20px, 2.6vw, 26px);
+    .prose :global(h2) {
+      font-size: clamp(21px, 2.7vw, 27px);
       font-weight: 700;
-      letter-spacing: -.02em;
+      letter-spacing: -.022em;
       line-height: 1.2;
-      margin: 42px 0 14px;
+      margin: 52px 0 14px;
       color: rgba(18,18,18,.95);
     }
 
-    .prose :global(h3){
-      font-size: 18px;
+    .prose :global(h3) {
+      font-size: 19px;
       font-weight: 700;
-      letter-spacing: -.01em;
-      margin: 28px 0 10px;
+      letter-spacing: -.012em;
+      margin: 30px 0 10px;
       color: rgba(18,18,18,.92);
     }
 
-    .prose :global(p){
-      margin: 0 0 20px;
-    }
+    .prose :global(p) { margin: 0 0 20px; }
 
-    .prose :global(ul), .prose :global(ol){
+    .prose :global(ul),
+    .prose :global(ol) {
       padding-left: 22px;
       margin: 0 0 20px;
     }
 
-    .prose :global(li){
+    .prose :global(li) {
       margin-bottom: 8px;
       line-height: 1.72;
     }
 
-    .prose :global(a){
+    .prose :global(a) {
       color: #b01616;
       text-decoration: underline;
       text-underline-offset: 3px;
     }
 
-    .prose :global(a:hover){
-      opacity: .75;
-    }
+    .prose :global(a:hover) { opacity: .75; }
 
-    .prose :global(strong){
+    .prose :global(strong) {
       font-weight: 700;
       color: rgba(18,18,18,.95);
     }
 
-    .prose :global(blockquote){
-      margin: 24px 0;
-      padding-left: 18px;
-      border-left: 3px solid rgba(176,22,22,.22);
-      font-style: italic;
-      color: rgba(18,18,18,.72);
-    }
-
-    .prose :global(hr){
-      border: none;
-      border-top: 1px solid rgba(18,18,18,.12);
-      margin: 36px 0;
-    }
-
-    /* Footer CTA */
-    .post-footer{
+    /* Footer CTA — dark */
+    .post-footer {
       display: flex;
       flex-direction: column;
       gap: 24px;
     }
 
-    .post-footer__cta{
-      background: rgba(245,241,232,.7);
-      border: 1px solid rgba(18,18,18,.1);
-      border-radius: 14px;
-      padding: 28px 28px 24px;
+    .post-footer__cta {
+      background: rgb(13,13,13);
+      border-radius: 20px;
+      padding: 44px 40px 40px;
+      color: rgba(255,255,255,.9);
     }
 
-    .footer-kicker{
+    .footer-kicker {
       font-size: 10px;
       letter-spacing: .22em;
       text-transform: uppercase;
-      color: rgba(18,18,18,.5);
+      color: rgba(255,255,255,.38);
       margin: 0 0 10px;
     }
 
-    .footer-line{
-      font-size: 15px;
-      line-height: 1.65;
-      color: rgba(18,18,18,.78);
-      margin: 0 0 18px;
+    .footer-headline {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 700;
+      letter-spacing: -.026em;
+      line-height: 1.14;
+      color: #fff;
+      margin: 0 0 12px;
     }
 
-    .footer-links{
+    .footer-line {
+      font-size: 15px;
+      line-height: 1.68;
+      color: rgba(255,255,255,.52);
+      margin: 0 0 26px;
+    }
+
+    .footer-links {
       display: flex;
-      gap: 20px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
-    .footer-links a{
-      font-size: 12px;
+    .footer-pill {
+      display: inline-block;
+      padding: 9px 20px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 100px;
+      font-size: 11px;
       letter-spacing: .12em;
       text-transform: uppercase;
-      color: #b01616;
+      color: rgba(255,255,255,.78);
       text-decoration: none;
       font-weight: 600;
-      transition: opacity 180ms ease;
+      transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
     }
 
-    .footer-links a:hover{ opacity: .7; }
+    .footer-pill:hover {
+      background: rgba(255,255,255,.1);
+      border-color: rgba(255,255,255,.32);
+      color: #fff;
+    }
 
-    .back-link{
+    .back-link {
       font-size: 12px;
       letter-spacing: .12em;
       text-transform: uppercase;
@@ -279,10 +457,81 @@ function formatDate(date: Date) {
       transition: color 180ms ease;
     }
 
-    .back-link:hover{ color: rgba(18,18,18,.85); }
+    .back-link:hover { color: rgba(18,18,18,.85); }
 
-    @media (max-width: 600px){
-      .post-page{ padding: 40px 18px 60px; }
+    @media (max-width: 600px) {
+      .post-page { padding: 40px 18px 60px; }
+      .post-footer__cta { padding: 32px 24px 28px; }
+      .post-title { font-size: clamp(26px, 7vw, 36px); }
     }
   </style>
+
+  <script>
+    // Reading progress bar
+    const bar = document.getElementById("read-progress");
+    if (bar) {
+      const update = () => {
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = total > 0 ? `${Math.min(100, (window.scrollY / total) * 100)}%` : "0%";
+      };
+      window.addEventListener("scroll", update, { passive: true });
+      update();
+    }
+
+    // Scroll-reveal h2 headings
+    const article = document.getElementById("post-article");
+    if (article) {
+      const headings = article.querySelectorAll("h2");
+      if (headings.length) {
+        const io = new IntersectionObserver(
+          (entries) => entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
+          }),
+          { threshold: 0.12, rootMargin: "0px 0px -48px 0px" }
+        );
+        headings.forEach((h) => io.observe(h));
+      }
+    }
+
+    // Footer CTA reveal
+    const cta = document.querySelector(".reveal-cta");
+    if (cta) {
+      const io2 = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add("is-visible"); io2.unobserve(e.target); }
+        }),
+        { threshold: 0.15 }
+      );
+      io2.observe(cta);
+    }
+
+    // Mark body so LanaChat skips scroll-hide on blog pages
+    document.body.classList.add("is-blog");
+
+    // Bee reading companion — follows scroll beside the article
+    const blogBee = document.getElementById("blog-bee");
+    const postArticle = document.getElementById("post-article");
+    if (blogBee && postArticle) {
+      const moveBee = () => {
+        const rect = postArticle.getBoundingClientRect();
+        const articleTop    = rect.top  + window.scrollY;
+        const articleBottom = articleTop + rect.height;
+        // Where the reader's eye is (viewport center-ish)
+        const eyeY    = window.scrollY + window.innerHeight * 0.42;
+        const progress = Math.max(0, Math.min(1, (eyeY - articleTop) / (articleBottom - articleTop)));
+        // Map to a comfortable fixed-position range (stay inside viewport)
+        const minY = Math.max(88, rect.top + 8);
+        const maxY = window.innerHeight - 96;
+        const targetTop = minY + progress * Math.max(0, maxY - minY);
+        blogBee.style.top = `${targetTop}px`;
+      };
+      window.addEventListener("scroll", moveBee, { passive: true });
+      moveBee();
+
+      // Clicking the bee opens Lana chat
+      blogBee.addEventListener("click", () => {
+        window.dispatchEvent(new CustomEvent("luli:lana-open"));
+      });
+    }
+  </script>
 </BaseLayout>

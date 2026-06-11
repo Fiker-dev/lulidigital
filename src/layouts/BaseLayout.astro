@@ -389,6 +389,22 @@ const jsonLd = {
     let audioReady = false;
     let lastBuzz = 0;
     let lastPassSignal = 0;
+    const buzzEnabled = !reduced;
+    const CARD_SELECTOR = ".glow-card";
+
+    const updateReadingZone = (x: number, y: number) => {
+      let nearReadableCard = false;
+      document.querySelectorAll<HTMLElement>(CARD_SELECTOR).forEach((card) => {
+        if (nearReadableCard) return;
+        const r = card.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) return;
+        const dx = Math.abs(x - (r.left + r.width / 2));
+        const dy = Math.abs(y - (r.top + r.height / 2));
+        if (dx < (isSmall ? 220 : 280) && dy < (isSmall ? 190 : 230)) nearReadableCard = true;
+      });
+      bee.classList.toggle("is-reading-zone", nearReadableCard);
+      return nearReadableCard;
+    };
 
     const unlockAudio = () => {
       if (audioReady) return;
@@ -396,24 +412,24 @@ const jsonLd = {
       if (!AudioCtor) return;
       audioCtx = new AudioCtor();
       audioReady = true;
-      playBuzz(0.03, 0.11);
     };
 
     window.addEventListener("pointerdown", unlockAudio, { once: true, passive: true });
 
-    function playBuzz(volume = 0.045, duration = 0.18) {
-      if (!audioReady || !audioCtx || reduced) return;
+    function playBuzz(volume = 0.012, duration = 0.08) {
+      if (!audioReady || !audioCtx || !buzzEnabled) return;
       const now = audioCtx.currentTime;
-      if (now - lastBuzz < 1.2) return;
+      if (now - lastBuzz < 8) return;
       lastBuzz = now;
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
-      osc.type = "sawtooth";
-      osc.frequency.setValueAtTime(170, now);
-      osc.frequency.linearRampToValueAtTime(235, now + duration * 0.45);
-      osc.frequency.linearRampToValueAtTime(150, now + duration);
+      const safeVolume = Math.min(volume, isSmall ? 0.006 : 0.01);
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(150, now);
+      osc.frequency.linearRampToValueAtTime(172, now + duration * 0.45);
+      osc.frequency.linearRampToValueAtTime(142, now + duration);
       gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.exponentialRampToValueAtTime(volume, now + 0.018);
+      gain.gain.exponentialRampToValueAtTime(safeVolume, now + 0.018);
       gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
@@ -448,8 +464,7 @@ const jsonLd = {
 
       if (!hit) return;
       lastCtaBuzz = now;
-      if (!reduced && audioReady) playBuzz(0.08, 0.22);
-      if (navigator.vibrate) navigator.vibrate([18, 12, 18, 12, 32]);
+      if (!reduced && audioReady) playBuzz(0.004, 0.055);
     }, { passive: true });
 
     const landOnTarget = (target: HTMLElement) => {
@@ -482,8 +497,7 @@ const jsonLd = {
         bee.style.transform = `translate(${cx}px, ${cy}px) rotate(0deg)`;
       }
       if (targetIsFinal || targetIsRim) {
-        playBuzz(0.06, 0.24);
-        if (navigator.vibrate) navigator.vibrate([targetIsRim ? 60 : 40]);
+        playBuzz(0.006, 0.07);
       }
       clearTimeout(landTimer);
       if (!targetIsRim) {
@@ -548,10 +562,13 @@ const jsonLd = {
       bee.style.transform = `translate(${cx}px, ${cy}px) rotate(${lastTilt}deg)`;
       if (!reduced && ms - lastPassSignal > 520) {
         lastPassSignal = ms;
+        const passX = cx + (isSmall ? 18 : 24);
+        const passY = cy + (isSmall ? 17 : 21);
+        updateReadingZone(passX, passY);
         window.dispatchEvent(new CustomEvent("luli:bee-pass", {
           detail: {
-            x: cx + (isSmall ? 18 : 24),
-            y: cy + (isSmall ? 17 : 21),
+            x: passX,
+            y: passY,
             landed: isLanded,
           },
         }));
@@ -634,7 +651,7 @@ const jsonLd = {
   /* Wings flap fast while flying */
   .bee-wings {
     transform-origin: 48px 20px;
-    animation: wingFlap 0.15s ease-in-out infinite alternate;
+    animation: wingFlap 0.28s ease-in-out infinite alternate;
   }
   /* Wings barely move when landed */
   .is-landed .bee-wings {
@@ -650,7 +667,7 @@ const jsonLd = {
   }
   /* Landed: gentle body bob */
   .is-landed .bee-svg {
-    animation: beeLanded 1.4s ease-in-out infinite;
+    animation: beeLanded 2.8s ease-in-out infinite;
   }
   #bee-guide.is-cup-landed .bee-svg {
     transform-origin: 44px 54px;
@@ -658,6 +675,16 @@ const jsonLd = {
   }
   #bee-guide.is-cup-landed .bee-wings {
     animation-duration: 1.8s;
+  }
+  #bee-guide.is-reading-zone {
+    opacity: .46;
+    filter: drop-shadow(0 2px 5px rgba(180,120,0,.12));
+  }
+  #bee-guide.is-reading-zone .bee-wings {
+    animation-duration: 1.8s;
+  }
+  #bee-guide.is-reading-zone .bee-trail {
+    opacity: 0;
   }
   @keyframes beeLanded {
     0%,100% { transform: translateY(0); }
@@ -681,7 +708,7 @@ const jsonLd = {
   }
   .bee-hint.is-visible {
     opacity: 1;
-    animation: hintPulse 1.8s ease-out infinite;
+    animation: hintPulse 3.4s ease-out 2;
   }
   @keyframes hintPulse {
     0%   { box-shadow: 0 0 0 0   rgba(245,164,31,.55); }
@@ -705,13 +732,13 @@ const jsonLd = {
     border-radius: 50%;
     background: #F5A41F;
     opacity: 0;
-    animation: trailFade 0.8s ease-out infinite;
+    animation: trailFade 1.4s ease-out infinite;
   }
   .t1 { animation-delay: 0s;   width: 4px; height: 4px; }
   .t2 { animation-delay: .16s; width: 3px; height: 3px; }
   .t3 { animation-delay: .32s; width: 2px; height: 2px; }
   @keyframes trailFade {
-    0%   { opacity: .6; transform: translateX(4px) translateY(0); }
+    0%   { opacity: .32; transform: translateX(4px) translateY(0); }
     100% { opacity: 0;  transform: translateX(12px) translateY(8px); }
   }
   @media (max-width: 699px) {

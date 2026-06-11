@@ -12,6 +12,8 @@ function formatDate(date: Date) {
 }
 
 const postSlug = (post: { id: string }) => post.id.replace(/\.md$/, "");
+
+const [featured, ...rest] = posts;
 ---
 
 <BaseLayout
@@ -28,95 +30,154 @@ const postSlug = (post: { id: string }) => post.id.replace(/\.md$/, "");
 
     <hr class="rule" />
 
+    {featured && (
+      <a class="post-card post-card--featured reveal-card" href={`/blog/${postSlug(featured)}`} style="--i:0">
+        <div class="post-meta">
+          <span class="post-category">{featured.data.category}</span>
+          {featured.data.readingTime && <span class="post-time">{featured.data.readingTime}</span>}
+        </div>
+        <h2 class="post-title post-title--featured">{featured.data.title}</h2>
+        <p class="post-excerpt">{featured.data.description}</p>
+        <div class="post-footer">
+          <time class="post-date" datetime={featured.data.pubDate.toISOString()}>
+            {formatDate(featured.data.pubDate)}
+          </time>
+          <span class="post-link">Read →</span>
+        </div>
+      </a>
+    )}
+
     <section class="posts-grid" aria-label="Blog posts">
-      {posts.map((post) => (
-        <article class="post-card">
+      {rest.map((post, i) => (
+        <a class="post-card reveal-card" href={`/blog/${postSlug(post)}`} style={`--i:${i + 1}`}>
           <div class="post-meta">
             <span class="post-category">{post.data.category}</span>
             {post.data.readingTime && <span class="post-time">{post.data.readingTime}</span>}
           </div>
-          <h2 class="post-title">
-            <a href={`/blog/${postSlug(post)}`}>{post.data.title}</a>
-          </h2>
+          <h2 class="post-title">{post.data.title}</h2>
           <p class="post-excerpt">{post.data.description}</p>
           <div class="post-footer">
             <time class="post-date" datetime={post.data.pubDate.toISOString()}>
               {formatDate(post.data.pubDate)}
             </time>
-            <a class="post-link" href={`/blog/${postSlug(post)}`}>Read →</a>
+            <span class="post-link">Read →</span>
           </div>
-        </article>
+        </a>
       ))}
     </section>
   </main>
 
   <style>
-    .blog-page{
+    .blog-page {
       max-width: 1040px;
       margin: 0 auto;
       padding: 64px 24px 80px;
       color: rgba(18,18,18,.9);
     }
 
-    .blog-header{
-      padding-bottom: 40px;
-    }
+    .blog-header { padding-bottom: 40px; }
 
-    .kicker{
+    .kicker {
       font-size: 11px;
       letter-spacing: .22em;
       text-transform: uppercase;
       color: rgba(18,18,18,.5);
       margin: 0 0 14px;
+      opacity: 0;
+      animation: blgReveal 600ms cubic-bezier(.16,1,.3,1) 60ms both;
     }
 
-    .blog-title{
+    .blog-title {
       font-size: clamp(44px, 5vw, 66px);
       font-weight: 700;
       line-height: .96;
       letter-spacing: -.03em;
       margin: 0 0 16px;
+      opacity: 0;
+      animation: blgReveal 700ms cubic-bezier(.16,1,.3,1) 160ms both;
     }
 
-    .blog-sub{
+    .blog-sub {
       max-width: 640px;
       font-size: 16px;
       line-height: 1.72;
       color: rgba(18,18,18,.65);
       margin: 0;
+      opacity: 0;
+      animation: blgReveal 700ms cubic-bezier(.16,1,.3,1) 280ms both;
     }
 
-    .rule{
+    @keyframes blgReveal {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .rule {
       border: none;
       border-top: 1px solid rgba(18,18,18,.12);
       margin: 0 0 48px;
     }
 
-    .posts-grid{
+    /* Featured post — full width, hero treatment */
+    .post-card--featured {
+      display: block;
+      padding: 32px 0 36px;
+      border-top: 2px solid rgba(18,18,18,.12);
+      margin-bottom: 56px;
+    }
+
+    .post-title--featured {
+      font-size: clamp(24px, 3.4vw, 38px) !important;
+      max-width: 760px;
+    }
+
+    .post-card--featured .post-excerpt {
+      font-size: 15px;
+      max-width: 680px;
+    }
+
+    /* Card grid */
+    .posts-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 48px 56px;
     }
 
-    @media (max-width: 720px){
-      .posts-grid{ grid-template-columns: 1fr; gap: 36px; }
+    @media (max-width: 720px) {
+      .posts-grid { grid-template-columns: 1fr; gap: 36px; }
     }
 
-    .post-card{
+    /* Base post card */
+    .post-card {
       display: flex;
       flex-direction: column;
       gap: 10px;
       padding-top: 4px;
       border-top: 2px solid rgba(18,18,18,.1);
+      text-decoration: none;
+      color: inherit;
+      opacity: 0;
+      transform: translateY(18px);
+      transition:
+        opacity 560ms ease calc(var(--i, 0) * 72ms),
+        transform 560ms cubic-bezier(.16,1,.3,1) calc(var(--i, 0) * 72ms),
+        border-color 220ms ease;
     }
 
-    .post-meta{
+    .post-card.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .post-card:hover { border-color: rgba(176,22,22,.28); }
+
+    .post-meta {
       display: flex;
       align-items: center;
       gap: 14px;
     }
 
-    .post-category{
+    .post-category {
       font-size: 10px;
       letter-spacing: .18em;
       text-transform: uppercase;
@@ -124,31 +185,24 @@ const postSlug = (post: { id: string }) => post.id.replace(/\.md$/, "");
       font-weight: 600;
     }
 
-    .post-time{
+    .post-time {
       font-size: 11px;
       letter-spacing: .1em;
       color: rgba(18,18,18,.45);
     }
 
-    .post-title{
+    .post-title {
       font-size: clamp(20px, 2.4vw, 26px);
       font-weight: 700;
       line-height: 1.18;
       letter-spacing: -.02em;
       margin: 0;
-    }
-
-    .post-title a{
-      color: inherit;
-      text-decoration: none;
       transition: opacity 180ms ease;
     }
 
-    .post-title a:hover{
-      opacity: .7;
-    }
+    .post-card:hover .post-title { opacity: .72; }
 
-    .post-excerpt{
+    .post-excerpt {
       font-size: 14px;
       line-height: 1.72;
       color: rgba(18,18,18,.65);
@@ -156,7 +210,7 @@ const postSlug = (post: { id: string }) => post.id.replace(/\.md$/, "");
       flex: 1;
     }
 
-    .post-footer{
+    .post-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -165,22 +219,39 @@ const postSlug = (post: { id: string }) => post.id.replace(/\.md$/, "");
       margin-top: 4px;
     }
 
-    .post-date{
+    .post-date {
       font-size: 11px;
       letter-spacing: .08em;
       color: rgba(18,18,18,.45);
     }
 
-    .post-link{
+    .post-link {
       font-size: 11px;
       letter-spacing: .14em;
       text-transform: uppercase;
       color: #b01616;
-      text-decoration: none;
       font-weight: 600;
       transition: opacity 180ms ease;
     }
 
-    .post-link:hover{ opacity: .7; }
+    .post-card:hover .post-link { opacity: .7; }
+
+    @media (max-width: 600px) {
+      .blog-page { padding: 40px 18px 60px; }
+      .post-card--featured { margin-bottom: 36px; }
+    }
   </style>
+
+  <script>
+    const cards = document.querySelectorAll(".reveal-card");
+    if (cards.length) {
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
+        }),
+        { threshold: 0.08, rootMargin: "0px 0px -32px 0px" }
+      );
+      cards.forEach((c) => io.observe(c));
+    }
+  </script>
 </BaseLayout>
