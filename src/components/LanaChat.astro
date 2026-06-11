@@ -208,12 +208,20 @@
       input.style.height = Math.min(input.scrollHeight, 140) + "px";
     };
 
+    const hbee = root.querySelector(".lana-hbee");
+
     const setOpen = (open) => {
       panel.classList.toggle("is-open", open);
       if (backdrop) backdrop.classList.toggle("is-open", open);
       panel.setAttribute("aria-hidden", String(!open));
-      if (open) { input.focus(); document.body.classList.add("lana-open"); }
-      else       { document.body.classList.remove("lana-open"); }
+      if (open) {
+        input.focus();
+        document.body.classList.add("lana-open");
+        if (hbee) hbee.classList.add("is-alive");
+      } else {
+        document.body.classList.remove("lana-open");
+        if (hbee) hbee.classList.remove("is-alive");
+      }
     };
 
     const sendMessage = async (text) => {
@@ -545,6 +553,10 @@
     overflow: hidden;
   }
   .lana-hbee svg { width: 23px; height: auto; }
+
+  /* Wings dormant until chat opens — overrides global .lw */
+  .lana-hbee .lw { animation: none; }
+  .lana-hbee.is-alive .lw { animation: lanaWing 0.42s ease-in-out infinite alternate; }
 
   .lana-name {
     font-family: var(--font-display, Georgia, serif);
