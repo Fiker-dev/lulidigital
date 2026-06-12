@@ -47,7 +47,7 @@ const vaMarquee = [
 >
 
   <!-- ═══════════════════════════════════════════════════════ HERO -->
-  <section class="va-hero" aria-label="Virtual Assistant services" data-bee-stop>
+  <section class="va-hero" aria-label="Virtual Assistant services" data-bee-stop data-atmosphere="hero" data-hive-section>
     <div class="va-desk-field" aria-hidden="true"></div>
 
     <div class="va-hero-split">
@@ -112,7 +112,7 @@ const vaMarquee = [
     </div>
   </div>
 
-  <section class="selling-point selling-point--va" aria-label="Human virtual assistant paired with AI selling point" data-reveal="up" data-bee-stop>
+  <section class="selling-point selling-point--va" aria-label="Human virtual assistant paired with AI selling point" data-reveal="up" data-bee-stop data-atmosphere="va" data-hive-section>
     <span class="eyebrow">Human + AI Support</span>
     <h2 class="selling-title">You get a human virtual assistant paired with an AI executive assistant.</h2>
     <p class="selling-copy">
@@ -130,7 +130,7 @@ const vaMarquee = [
   </section>
 
   <!-- ════════════════════════ HUMAN + AI HONEYCOMB STORY -->
-  <section class="delegation-section" aria-label="How human and AI assistant support work together" data-reveal="up" data-bee-stop>
+  <section class="delegation-section" aria-label="How human and AI assistant support work together" data-reveal="up" data-bee-stop data-atmosphere="va" data-hive-section>
     <div class="delegation-heading">
       <div>
         <span class="eyebrow">How Delegation Works</span>
@@ -347,6 +347,7 @@ const vaMarquee = [
 
   <!-- ══════════════════════════════ BOLD DARK STATEMENT -->
   <section class="bold-statement" aria-label="VA promise">
+    <div class="bs-hive-overlay" aria-hidden="true">⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡</div>
     <div class="bs-inner">
       <p class="bs-line" data-reveal="up" data-reveal-delay="0">Your time is finite.</p>
       <p class="bs-line bs-accent" data-reveal="up" data-reveal-delay="140">Delegate everything else.</p>
@@ -393,7 +394,8 @@ const vaMarquee = [
   </div>
 
   <!-- ═══════════════════════════════════════════════════════ CTA -->
-  <section class="va-cta-section" aria-label="Hire a virtual assistant" data-reveal="fade" data-bee-final>
+  <section class="va-cta-section" aria-label="Hire a virtual assistant" data-reveal="fade" data-bee-final data-atmosphere="cta" data-hive-section>
+    <div class="hive-glow-ring" style="width:600px;height:600px;left:50%;top:50%;transform:translate(-50%,-50%)" aria-hidden="true"></div>
     <h2 class="cta-title" data-blur-in>Hire your virtual assistant today.</h2>
     <p class="cta-sub" data-blur-in data-blur-delay="150">Side by side. So you don't carry it alone.</p>
     <div data-stagger data-stagger-gap="80" class="cta-links">
@@ -849,7 +851,7 @@ const vaMarquee = [
   .svc-card.is-honey-glazed .svc-footer { color: #4b2a00; }
 
   /* ── CTA ────────────────────────────────────────────────────── */
-  .va-cta-section { text-align: center; padding: 80px 0 40px; border-top: 1px solid rgba(30,24,22,.1); }
+  .va-cta-section { text-align: center; padding: 80px 0 40px; border-top: 1px solid rgba(30,24,22,.1); position: relative; overflow: hidden; isolation: isolate; }
   .cta-title {
     font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -.03em; margin: 0 0 10px;
     font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);

@@ -1,0 +1,781 @@
+/* ============================================================
+   HIVE VITALITY SYSTEM — LuliDigital
+   All styles for the living, scroll-driven hive ecosystem.
+   Layered on top of motion.css. Never overwrites base tokens.
+   ============================================================ */
+
+/* ── Custom Properties ───────────────────────────────────────── */
+:root {
+  --hive-energy:   0;           /* 0 → 1, set by hive.js on scroll */
+  --honey-bright:  #ffd45a;
+  --honey-mid:     #f5a41f;
+  --honey-dim:     rgba(245, 164, 31, 0.18);
+  --hive-glow:     rgba(245, 164, 31, 0.10);
+}
+
+/* ── Phase States ────────────────────────────────────────────── */
+/* JS sets data-hive-phase="0|1|2|3" on <html> */
+[data-hive-phase="0"] { --phase-glow: 0;    --phase-speed: 1;    }
+[data-hive-phase="1"] { --phase-glow: 0.3;  --phase-speed: 0.75; }
+[data-hive-phase="2"] { --phase-glow: 0.65; --phase-speed: 0.5;  }
+[data-hive-phase="3"] { --phase-glow: 1;    --phase-speed: 0.3;  }
+
+/* ── Ambient Hex Grid ────────────────────────────────────────── */
+#hive-ambient-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  /* Sits behind all page content but above the white background */
+}
+
+.hcell {
+  position: absolute;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--honey-mid);
+  pointer-events: none;
+  user-select: none;
+  opacity: calc(0.04 + var(--hive-energy, 0) * 0.16);
+  animation: hcellBreathe
+    calc((3.8s - var(--hive-energy, 0) * 1.6s) * max(0.4, 1))
+    var(--cd, 0s)
+    ease-in-out
+    infinite;
+  will-change: opacity, transform;
+  transition:
+    opacity      800ms ease,
+    text-shadow  400ms ease,
+    transform    280ms cubic-bezier(.34, 1.4, .64, 1);
+}
+
+.hcell.is-prox {
+  opacity: calc(0.22 + var(--cell-prox, 0) * 0.55) !important;
+  text-shadow: 0 0 16px rgba(245, 164, 31, calc(var(--cell-prox, 0) * 0.7));
+  transform: scale(calc(1 + var(--cell-prox, 0) * 0.22));
+  transition:
+    opacity     140ms ease,
+    text-shadow 140ms ease,
+    transform   180ms cubic-bezier(.34, 1.56, .64, 1);
+}
+
+/* Phase 3 — hive fully alive: cells glow */
+[data-hive-phase="3"] .hcell {
+  animation-duration: calc(2.2s + var(--cd, 0s));
+  color: var(--honey-bright);
+}
+
+@keyframes hcellBreathe {
+  0%, 100% { transform: scale(1);    }
+  50%      { transform: scale(1.06); }
+}
+
+/* ── Particle System ─────────────────────────────────────────── */
+[data-particle-zone] {
+  position: relative;
+  overflow: hidden;
+}
+
+.hive-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--honey-mid);
+  left: var(--sx, 50%);
+  top:  var(--sy, 50%);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  box-shadow: 0 0 6px rgba(245, 164, 31, 0.55);
+  animation: particleTravel var(--dur, 2000ms) ease-in-out forwards;
+}
+
+.hive-particle--marketing { background: var(--honey-mid); }
+.hive-particle--ai        { background: var(--honey-bright); width: 2.5px; height: 2.5px; }
+.hive-particle--va        { background: rgba(245, 164, 31, 0.8); }
+.hive-particle--web       { background: var(--brand); width: 2.5px; height: 2.5px; box-shadow: 0 0 5px rgba(123,45,45,0.5); }
+
+@keyframes particleTravel {
+  0%  { opacity: 0;   transform: translate(0, 0) scale(0.4); }
+  12% { opacity: 0.9; transform: translate(0, 0) scale(1);   }
+  80% { opacity: 0.6;  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(
+        calc(var(--tx, 50%) - var(--sx, 50%)),
+        calc(var(--ty, 50%) - var(--sy, 50%))
+      )
+      scale(0.2);
+  }
+}
+
+/* ── Lana's Golden Trail ─────────────────────────────────────── */
+#lana-trail {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 88;     /* just below the bee (z-index 90) */
+  overflow: hidden;
+}
+
+.lana-trail-cell {
+  position: absolute;
+  left: var(--lx, 0px);
+  top:  var(--ly, 0px);
+  transform: translate(-50%, -50%) scale(0.6);
+  font-size: 13px;
+  color: var(--honey-mid);
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 0 10px rgba(245, 164, 31, 0.5);
+  animation: trailCellIn 0.4s cubic-bezier(.34, 1.56, .64, 1) forwards;
+  will-change: opacity, transform;
+}
+
+.lana-trail-cell::before { content: '⬡'; }
+
+.lana-trail-cell.is-fading {
+  animation: trailCellOut 1.4s ease forwards;
+}
+
+@keyframes trailCellIn {
+  from { opacity: 0;   transform: translate(-50%, -50%) scale(0.3) rotate(-20deg); }
+  to   { opacity: 0.55; transform: translate(-50%, -50%) scale(1)   rotate(0deg);  }
+}
+
+@keyframes trailCellOut {
+  from { opacity: 0.55; transform: translate(-50%, -50%) scale(1) rotate(0deg);   }
+  to   { opacity: 0;    transform: translate(-50%, -60%) scale(0.6) rotate(8deg); }
+}
+
+/* ── Hive Connection Paths (inline SVG in sections) ─────────── */
+.hive-connect-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 0;
+}
+
+.hive-path-line {
+  fill: none;
+  stroke: rgba(245, 164, 31, 0.22);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-dasharray: 5 4;
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+
+.hive-connect-svg.is-drawn .hive-path-line {
+  opacity: 1;
+  animation: pathPulse 3s ease-in-out infinite;
+}
+
+.path-traveler {
+  fill: rgba(245, 164, 31, 0.75);
+  filter: url(#hive-glow-filter);
+}
+
+@keyframes pathPulse {
+  0%, 100% { stroke: rgba(245, 164, 31, 0.22); }
+  50%       { stroke: rgba(245, 164, 31, 0.45); }
+}
+
+/* ── Section Atmosphere Transitions ─────────────────────────── */
+/* Each section has a subtle environmental mood that
+   activates when it enters the viewport. */
+
+[data-atmosphere] {
+  transition: background 800ms ease;
+}
+
+/* Hero → Curiosity: soft warm glow at rest */
+[data-atmosphere="hero"].is-atmosphere-active {
+  /* Hero background: handled by existing orbs + signal field */
+}
+
+/* Problem → Tension: slight cool tinge */
+[data-atmosphere="problem"].is-atmosphere-active {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(30, 14, 14, 0.03) 100%
+  );
+}
+
+/* Services/Bento → Momentum: energized amber warmth */
+[data-atmosphere="services"].is-atmosphere-active {
+  background: linear-gradient(
+    135deg,
+    rgba(245, 164, 31, 0.025) 0%,
+    transparent 50%,
+    rgba(123, 45, 45, 0.02) 100%
+  );
+}
+
+/* VA → Relief: calm, cool-tinted clarity */
+[data-atmosphere="va"].is-atmosphere-active {
+  background: linear-gradient(
+    135deg,
+    rgba(40, 76, 99, 0.03) 0%,
+    transparent 70%
+  );
+}
+
+/* AI → Intelligence: deep warm golden intelligence */
+[data-atmosphere="ai"].is-atmosphere-active {
+  background: linear-gradient(
+    135deg,
+    rgba(43, 26, 5, 0.04) 0%,
+    rgba(245, 164, 31, 0.02) 60%,
+    transparent 100%
+  );
+}
+
+/* CTA → Confidence: full activation glow */
+[data-atmosphere="cta"].is-atmosphere-active {
+  background: linear-gradient(
+    180deg,
+    rgba(245, 164, 31, 0.03) 0%,
+    rgba(123, 45, 45, 0.04) 50%,
+    rgba(245, 164, 31, 0.02) 100%
+  );
+}
+
+/* ── Emotional State Background Pulse ────────────────────────── */
+[data-emotion="momentum"] #hive-ambient-grid .hcell {
+  animation-duration: 2.4s;
+}
+[data-emotion="confidence"] #hive-ambient-grid .hcell {
+  animation-duration: 1.8s;
+  color: var(--honey-bright);
+}
+
+/* ── Desk Transformation: Marketing ─────────────────────────── */
+.mkt-transform {
+  position: relative;
+  height: 52px;
+  margin: 8px 0 14px;
+  overflow: hidden;
+}
+
+.mkt-dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(245, 164, 31, 0.35);
+  transition:
+    left 800ms cubic-bezier(.16, 1, .3, 1),
+    top  800ms cubic-bezier(.16, 1, .3, 1),
+    background 400ms ease,
+    opacity 400ms ease;
+  left: var(--sx, 50%);
+  top:  var(--sy, 50%);
+}
+
+.mkt-dot.is-converging {
+  left: calc(50% + var(--offset-x, 0px));
+  top:  50%;
+  background: var(--honey-mid);
+  box-shadow: 0 0 8px rgba(245, 164, 31, 0.4);
+}
+
+.mkt-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--honey-mid);
+  opacity: 0;
+  transition:
+    transform 500ms cubic-bezier(.34, 1.56, .64, 1),
+    opacity   400ms ease;
+}
+
+.mkt-center.is-lit {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  box-shadow:
+    0 0 0 4px rgba(245, 164, 31, 0.2),
+    0 0 20px rgba(245, 164, 31, 0.35);
+  animation: mktCenterPulse 2.2s ease-in-out infinite 0.5s;
+}
+
+/* Signal lines radiating from center */
+.mkt-center::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid rgba(245, 164, 31, 0.3);
+  animation: mktRingExpand 2.2s ease-out infinite 0.6s;
+}
+
+@keyframes mktCenterPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(245,164,31,.2), 0 0 20px rgba(245,164,31,.35); }
+  50%      { box-shadow: 0 0 0 8px rgba(245,164,31,.12), 0 0 28px rgba(245,164,31,.5); }
+}
+
+@keyframes mktRingExpand {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0;   }
+}
+
+/* ── Desk Transformation: AI ─────────────────────────────────── */
+.ai-transform {
+  position: relative;
+  height: 56px;
+  margin: 8px 0 14px;
+  overflow: visible;
+}
+
+.ai-net-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ai-node {
+  fill: rgba(245, 164, 31, 0.25);
+  stroke: rgba(245, 164, 31, 0.5);
+  stroke-width: 1;
+  opacity: 0;
+  transition:
+    opacity   400ms cubic-bezier(.34, 1.4, .64, 1),
+    fill      300ms ease,
+    r         400ms cubic-bezier(.34, 1.56, .64, 1);
+  transition-delay: var(--nd, 0ms);
+}
+
+.ai-node.is-active {
+  opacity: 1;
+  fill: rgba(245, 164, 31, 0.6);
+  animation: aiNodePulse 2.4s ease-in-out infinite var(--nd, 0ms);
+}
+
+.ai-line {
+  stroke: rgba(245, 164, 31, 0.25);
+  stroke-width: 0.8;
+  stroke-linecap: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  transition:
+    stroke-dashoffset 600ms cubic-bezier(.16, 1, .3, 1),
+    stroke 300ms ease;
+  transition-delay: var(--ld, 0ms);
+}
+
+.ai-line.is-drawn {
+  stroke-dashoffset: 0;
+  stroke: rgba(245, 164, 31, 0.45);
+  animation: aiLinePulse 3s ease-in-out infinite var(--ld, 0ms);
+}
+
+@keyframes aiNodePulse {
+  0%, 100% { r: 3;   opacity: 0.8; }
+  50%      { r: 4.2; opacity: 1;   }
+}
+
+@keyframes aiLinePulse {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1;   }
+}
+
+/* ── Desk Transformation: VA ─────────────────────────────────── */
+.va-transform {
+  position: relative;
+  height: 56px;
+  margin: 8px 0 14px;
+  overflow: hidden;
+}
+
+.va-item {
+  position: absolute;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(245, 164, 31, 0.28);
+  width: var(--chaos-w, 60%);
+  left: var(--chaos-x, 10%);
+  top: var(--chaos-y, 20px);
+  opacity: 0.4;
+  transform: rotate(var(--chaos-r, 0deg));
+  transition:
+    left      700ms cubic-bezier(.16, 1, .3, 1),
+    top       700ms cubic-bezier(.16, 1, .3, 1),
+    width     700ms cubic-bezier(.16, 1, .3, 1),
+    transform 700ms cubic-bezier(.16, 1, .3, 1),
+    opacity   400ms ease,
+    background 400ms ease;
+  transition-delay: var(--vd, 0ms);
+}
+
+.va-item.is-chaotic {
+  opacity: 0.8;
+  background: rgba(245, 164, 31, 0.55);
+}
+
+.va-item.is-ordered {
+  left: 4%;
+  top:  var(--order-y, 10px);
+  width: var(--order-w, 85%);
+  transform: rotate(0deg);
+  opacity: 0.9;
+  background: rgba(245, 164, 31, 0.55);
+  box-shadow: 0 1px 6px rgba(245, 164, 31, 0.2);
+}
+
+/* ── Desk Transformation: Web Design ────────────────────────── */
+.web-transform {
+  position: relative;
+  height: 52px;
+  margin: 8px 0 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+
+.web-bar {
+  border-radius: 3px;
+  background: rgba(30, 24, 22, 0.1);
+  transition:
+    background    700ms cubic-bezier(.16, 1, .3, 1),
+    border-radius 700ms cubic-bezier(.16, 1, .3, 1),
+    box-shadow    700ms ease,
+    width         700ms cubic-bezier(.16, 1, .3, 1);
+  transition-delay: var(--wd, 0ms);
+}
+
+.web-bar--hero    { height: 18px; width: 100%; --wd: 0ms; }
+.web-bar--content { height: 8px;  width: 72%;  --wd: 80ms; }
+.web-bar--action  { height: 11px; width: 38%;  border-radius: 999px; --wd: 160ms; }
+
+[data-desk-transform="web"].is-designed .web-bar--hero {
+  background: linear-gradient(135deg, var(--brand, #7b2d2d), rgba(123,45,45,0.65));
+  border-radius: 5px;
+  box-shadow: 0 3px 14px rgba(123,45,45,0.3);
+}
+
+[data-desk-transform="web"].is-designed .web-bar--content {
+  background: rgba(245, 164, 31, 0.38);
+  border-radius: 3px;
+}
+
+[data-desk-transform="web"].is-designed .web-bar--action {
+  background: var(--honey-mid);
+  box-shadow: 0 2px 10px rgba(245, 164, 31, 0.32);
+  width: 52%;
+}
+
+/* ── Section Connectors (vertical hive-flow lines) ───────────── */
+.hive-section-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 64px;
+  position: relative;
+  margin: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.hive-section-connector svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ── Desk State Tags ─────────────────────────────────────────── */
+/* Show the before → after narrative inside each card */
+.desk-state-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--font-body, 'DM Sans', sans-serif);
+  color: var(--muted);
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+.dst-before {
+  opacity: 0.45;
+  position: relative;
+}
+
+.dst-before::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 50%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 600ms cubic-bezier(.16,1,.3,1), opacity 400ms ease;
+  transition-delay: 0.3s;
+}
+
+.is-atmosphere-active .dst-before::after,
+.is-hive-active .dst-before::after {
+  opacity: 0.6;
+  transform: scaleX(1);
+}
+
+.dst-arrow {
+  color: var(--honey-mid);
+  font-size: 12px;
+  display: inline-block;
+  animation: dstArrow 2.4s ease-in-out infinite;
+}
+
+.dst-after {
+  color: var(--ink);
+  font-weight: 700;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 500ms ease 0.6s, transform 500ms cubic-bezier(.16,1,.3,1) 0.6s;
+}
+
+.is-atmosphere-active .dst-after,
+.is-hive-active .dst-after {
+  opacity: 1;
+  transform: none;
+}
+
+.glow-card:hover .dst-after {
+  color: rgba(245, 240, 232, 0.9);
+}
+
+@keyframes dstArrow {
+  0%, 100% { transform: translateX(0);   opacity: 0.6; }
+  50%      { transform: translateX(3px); opacity: 1;   }
+}
+
+/* ── Hive Signal Flow (dot train between desks) ──────────────── */
+.hive-signal-flow {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 10px 0 4px;
+}
+
+.hsf-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--honey-mid);
+  opacity: 0;
+  animation: hsfPing 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.hsf-dot:nth-child(1) { animation-delay: 0s;    }
+.hsf-dot:nth-child(2) { animation-delay: 0.18s; }
+.hsf-dot:nth-child(3) { animation-delay: 0.36s; }
+.hsf-dot:nth-child(4) { animation-delay: 0.54s; }
+.hsf-dot:nth-child(5) { animation-delay: 0.72s; }
+.hsf-dot:nth-child(6) { animation-delay: 0.90s; }
+
+@keyframes hsfPing {
+  0%, 100% { opacity: 0;   transform: scale(0.6); }
+  50%      { opacity: 0.85; transform: scale(1);   }
+}
+
+/* ── Hive Glow Ring (ambient bloom behind focal sections) ─────── */
+.hive-glow-ring {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(245, 164, 31, 0.07) 0%,
+    rgba(245, 164, 31, 0.03) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: hiveRingPulse
+    calc((4.5s - var(--hive-energy, 0) * 1.8s))
+    ease-in-out
+    infinite;
+  opacity: calc(0.4 + var(--hive-energy, 0) * 0.6);
+  will-change: transform, opacity;
+}
+
+@keyframes hiveRingPulse {
+  0%, 100% { transform: scale(1);    }
+  50%      { transform: scale(1.15); }
+}
+
+/* ── Honeycomb Section: Enhanced Breathing ───────────────────── */
+/* The existing .hc-a / .hc-b chars get faster as hive wakes */
+.hc-a {
+  animation-duration: calc((3s - var(--hive-energy, 0) * 1.2s));
+}
+.hc-b {
+  animation-duration: calc((3s - var(--hive-energy, 0) * 1.2s));
+  animation-delay: calc(var(--hive-energy, 0) * -0.3s);
+}
+
+/* Phase 3: honeycomb glows fully */
+[data-hive-phase="3"] .hc-a {
+  color: var(--honey-bright) !important;
+  text-shadow: 0 0 18px rgba(245, 164, 31, 0.5);
+}
+
+[data-hive-phase="3"] .hc-b {
+  color: var(--honey-mid) !important;
+  text-shadow: 0 0 12px rgba(245, 164, 31, 0.3);
+}
+
+/* ── Bold Dark Statement: Hive Overlay Text ──────────────────── */
+/* In the dark statement section, hex chars appear faintly */
+.bs-hive-overlay {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.08;
+  font-size: clamp(28px, 4vw, 52px);
+  letter-spacing: 0.3em;
+  color: var(--honey-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  animation: bsHiveFloat 8s ease-in-out infinite;
+}
+
+@keyframes bsHiveFloat {
+  0%, 100% { opacity: 0.06; transform: translateY(0);  }
+  50%      { opacity: 0.12; transform: translateY(-8px); }
+}
+
+/* ── CTA Section: Fully Activated Hive ──────────────────────── */
+[data-atmosphere="cta"].is-atmosphere-active .hive-glow-ring {
+  animation-duration: 1.8s;
+  opacity: 0.9;
+}
+
+/* Pulse the filled CTA button in sync with hive energy */
+[data-atmosphere="cta"].is-atmosphere-active .pill--filled {
+  animation: ctaPulse 3.2s ease-in-out infinite;
+}
+
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 8px 28px rgba(123,45,45,.35); }
+  50%      { box-shadow: 0 16px 40px rgba(123,45,45,.52), 0 0 24px rgba(245,164,31,.18); }
+}
+
+/* ── Scroll Progress Bar: Honey Tint ─────────────────────────── */
+/* As hive energy rises, the scroll bar shifts from wine → amber */
+.scroll-bar {
+  background: color-mix(
+    in srgb,
+    var(--brand) calc(100% - var(--hive-energy, 0) * 60% * 100%),
+    var(--honey-mid) calc(var(--hive-energy, 0) * 60% * 100%)
+  );
+}
+
+/* Fallback for browsers without color-mix */
+@supports not (background: color-mix(in srgb, red 50%, blue)) {
+  .scroll-bar { background: var(--brand); }
+}
+
+/* ── How Flow: Active Connection Lines ───────────────────────── */
+/* Arrows between how-nodes animate in sync with hive energy */
+.how-arrow path {
+  stroke: rgba(123, 45, 45, calc(0.2 + var(--hive-energy, 0) * 0.35));
+  transition: stroke 600ms ease;
+}
+
+[data-hive-phase="2"] .how-node--accent,
+[data-hive-phase="3"] .how-node--accent {
+  box-shadow: 0 0 0 2px rgba(245, 164, 31, 0.3);
+  animation: accentNodePulse 2.8s ease-in-out infinite;
+}
+
+@keyframes accentNodePulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(245,164,31,.3); }
+  50%      { box-shadow: 0 0 0 6px rgba(245,164,31,.12), 0 10px 28px rgba(123,45,45,.22); }
+}
+
+/* ── Hero: Signal Nodes get more alive with scroll ───────────── */
+.signal-node__core {
+  box-shadow: 0 0 calc(22px + var(--hive-energy, 0) * 18px) rgba(127, 26, 26, calc(0.48 + var(--hive-energy, 0) * 0.3));
+}
+
+/* ── Bento Grid: Active cell state ───────────────────────────── */
+/* When a bento card's particle zone is active, the card glows */
+.bento-card.is-atmosphere-active,
+.bento-card[data-particle-zone].is-atmosphere-active {
+  box-shadow:
+    0 0 0 1px rgba(245, 164, 31, 0.12),
+    0 24px 56px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Glow Filter Def (injected by BaseLayout) ────────────────── */
+/* Used by path traveler dots */
+.hive-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ── Reduced Motion Overrides ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .hcell,
+  .hive-particle,
+  .lana-trail-cell,
+  .mkt-dot,
+  .mkt-center,
+  .mkt-center::after,
+  .ai-node,
+  .ai-line,
+  .va-item,
+  .web-bar,
+  .hive-glow-ring,
+  .hsf-dot,
+  .dst-arrow,
+  .bs-hive-overlay,
+  .hc-a, .hc-b,
+  .path-traveler {
+    animation: none !important;
+    transition: none !important;
+  }
+  .hcell {
+    opacity: 0.05;
+  }
+  .lana-trail-cell { display: none; }
+  .hive-particle   { display: none; }
+  [data-atmosphere="cta"].is-atmosphere-active .pill--filled {
+    animation: none !important;
+  }
+  .scroll-bar { background: var(--brand); }
+}
+
+/* ── Mobile Optimisations ────────────────────────────────────── */
+@media (max-width: 680px) {
+  .hcell { font-size: 16px; }
+  .mkt-transform,
+  .ai-transform,
+  .va-transform,
+  .web-transform {
+    height: 44px;
+  }
+  .hive-signal-flow { gap: 3px; }
+  .hsf-dot { width: 3px; height: 3px; }
+  .bs-hive-overlay { font-size: clamp(20px, 6vw, 32px); }
+}

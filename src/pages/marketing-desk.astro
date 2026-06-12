@@ -47,7 +47,7 @@ const mktMarquee = [
 >
 
   <!-- ═══════════════════════════════════════════════════════ HERO -->
-  <section class="mkt-hero" aria-label="Marketing services" data-bee-stop>
+  <section class="mkt-hero" aria-label="Marketing services" data-bee-stop data-atmosphere="hero" data-hive-section>
     <div class="mkt-signal-field" aria-hidden="true"></div>
 
     <div class="mkt-hero-split">
@@ -128,7 +128,7 @@ const mktMarquee = [
     </div>
   </div>
 
-  <section class="selling-point selling-point--marketing" aria-label="AI powered digital marketing selling point" data-reveal="up" data-bee-stop>
+  <section class="selling-point selling-point--marketing" aria-label="AI powered digital marketing selling point" data-reveal="up" data-bee-stop data-atmosphere="marketing" data-hive-section>
     <span class="eyebrow">Why This Works</span>
     <h2 class="selling-title">You get digital marketing powered by AI, guided by human strategy.</h2>
     <p class="selling-copy">
@@ -210,7 +210,7 @@ const mktMarquee = [
   </div>
 
   <!-- ══════════════════════════════════════════ SERVICE BENTO GRID -->
-  <section class="mkt-services" aria-label="Marketing services we offer" data-reveal="up" data-bee-stop>
+  <section class="mkt-services" aria-label="Marketing services we offer" data-reveal="up" data-bee-stop data-atmosphere="services" data-hive-section>
     <span class="eyebrow">What We Do</span>
     <div class="bento-grid" data-stagger data-stagger-gap="70">
 
@@ -307,6 +307,7 @@ const mktMarquee = [
 
   <!-- ══════════════════════════════ BOLD DARK STATEMENT -->
   <section class="bold-statement" aria-label="Marketing promise">
+    <div class="bs-hive-overlay" aria-hidden="true">⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡</div>
     <div class="bs-inner">
       <p class="bs-line" data-reveal="up" data-reveal-delay="0">Invisible brands go nowhere.</p>
       <p class="bs-line bs-accent" data-reveal="up" data-reveal-delay="140">Let's fix that.</p>
@@ -352,7 +353,8 @@ const mktMarquee = [
   </div>
 
   <!-- ═══════════════════════════════════════════════════════ CTA -->
-  <section class="mkt-cta-section" aria-label="Get started with marketing" data-reveal="fade" data-bee-final>
+  <section class="mkt-cta-section" aria-label="Get started with marketing" data-reveal="fade" data-bee-final data-atmosphere="cta" data-hive-section>
+    <div class="hive-glow-ring" style="width:600px;height:600px;left:50%;top:50%;transform:translate(-50%,-50%)" aria-hidden="true"></div>
     <h2 class="cta-title" data-blur-in>You built it. We broadcast it.</h2>
     <p class="cta-sub" data-blur-in data-blur-delay="150">Let us help you put it out there for the world to see.</p>
     <div data-stagger data-stagger-gap="80" class="cta-links">
@@ -573,7 +575,7 @@ const mktMarquee = [
   @media (max-width: 560px) { .strategy-flow { grid-template-columns: 1fr; } }
 
   /* ── CTA ────────────────────────────────────────────────────── */
-  .mkt-cta-section { text-align: center; padding: 80px 0 40px; border-top: 1px solid rgba(30,24,22,.1); }
+  .mkt-cta-section { text-align: center; padding: 80px 0 40px; border-top: 1px solid rgba(30,24,22,.1); position: relative; overflow: hidden; isolation: isolate; }
   .cta-title {
     font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -.03em; margin: 0 0 10px;
     font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);

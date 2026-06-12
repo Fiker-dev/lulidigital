@@ -43,7 +43,7 @@ const aiMarquee = [
 >
 
   <!-- ═══════════════════════════════════════════════════════ HERO -->
-  <section class="ai-hero" aria-label="AI services" data-bee-stop>
+  <section class="ai-hero" aria-label="AI services" data-bee-stop data-atmosphere="hero" data-hive-section>
     <div class="ai-matrix-field" aria-hidden="true"></div>
 
     <div class="ai-hero-split">
@@ -103,7 +103,7 @@ const aiMarquee = [
     </div>
   </div>
 
-  <section class="selling-point selling-point--ai" aria-label="AI automation selling point" data-reveal="up" data-bee-stop>
+  <section class="selling-point selling-point--ai" aria-label="AI automation selling point" data-reveal="up" data-bee-stop data-atmosphere="ai" data-hive-section>
     <span class="eyebrow">The Advantage</span>
     <h2 class="selling-title">You get practical AI that supports the work your team already does.</h2>
     <p class="selling-copy">
@@ -171,7 +171,7 @@ const aiMarquee = [
   </div>
 
   <!-- ═════════════════════════════════════ HONEYCOMB AI LOOP -->
-  <section class="loop-section" aria-label="How the AI agent assistant improves over time" data-reveal="up" data-bee-stop>
+  <section class="loop-section" aria-label="How the AI agent assistant improves over time" data-reveal="up" data-bee-stop data-atmosphere="ai" data-hive-section>
     <div class="loop-heading">
       <div>
         <span class="eyebrow">The AI Hive</span>
@@ -300,6 +300,7 @@ const aiMarquee = [
 
   <!-- ══════════════════════════════ BOLD DARK STATEMENT -->
   <section class="bold-statement" aria-label="AI promise">
+    <div class="bs-hive-overlay" aria-hidden="true">⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡</div>
     <div class="bs-inner">
       <p class="bs-line" data-reveal="up" data-reveal-delay="0">Stop doing what machines</p>
       <p class="bs-line bs-accent" data-reveal="up" data-reveal-delay="140">can do better.</p>
@@ -345,7 +346,8 @@ const aiMarquee = [
   </div>
 
   <!-- ═══════════════════════════════════════════════════════ CTA -->
-  <section class="ai-cta" aria-label="Get started with AI" data-reveal="fade" data-bee-final>
+  <section class="ai-cta" aria-label="Get started with AI" data-reveal="fade" data-bee-final data-atmosphere="cta" data-hive-section>
+    <div class="hive-glow-ring" style="width:600px;height:600px;left:50%;top:50%;transform:translate(-50%,-50%)" aria-hidden="true"></div>
     <h2 class="cta-title" data-blur-in>Ready to automate?</h2>
     <p class="cta-sub">Most systems ship in 2–6 weeks.</p>
     <div data-stagger data-stagger-gap="80" class="cta-links">
@@ -746,7 +748,7 @@ const aiMarquee = [
   .mini-card.is-honey-glazed .mini-desc { color: rgba(43,26,5,.76); }
 
   /* ── CTA ────────────────────────────────────────────────────── */
-  .ai-cta { text-align: center; padding: 80px 0 40px; border-top: 1px solid rgba(30,24,22,.1); }
+  .ai-cta { text-align: center; padding: 80px 0 40px; border-top: 1px solid rgba(30,24,22,.1); position: relative; overflow: hidden; isolation: isolate; }
   .cta-title { font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -.03em; margin: 0 0 10px; font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
   .cta-sub { font-size: 15px; color: var(--muted, rgba(20,19,18,.62)); margin: 0 0 28px; font-family: var(--font-body, "DM Sans", sans-serif); }
   .cta-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }

@@ -1,0 +1,774 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
+
+export const prerender = false;
+
+const seoTarget = getWeeklyPageSeoTarget("/web-design-desk");
+
+Astro.response.headers.set("Cache-Control", "s-maxage=604800, stale-while-revalidate=86400");
+
+const serviceSchema = {
+  "name": "Premium Web Design, Landing Page Design & UI Experience Services",
+  "serviceType": [
+    "web design services",
+    "premium web design",
+    "landing page design",
+    "conversion-optimised web design",
+    "brand-aligned web design",
+    "UI design services",
+    "website redesign services",
+    "web design for founders",
+    "web design for small business",
+    "Astro web design",
+    "custom website design",
+    "web design agency",
+  ],
+  "description": "LuliDigital builds premium, brand-aligned websites and landing pages for founders and growing businesses — designed to convert, built to perform, and shipped in weeks.",
+};
+
+const webMarquee = [
+  "Brand Aligned", "Conversion Ready", "Performance First", "Premium UI",
+  "Landing Pages", "Mobile Perfect", "SEO Structured", "Shipped in Weeks",
+  "Custom Design", "Astro Powered", "Visual Identity", "Always Fast",
+];
+---
+
+<BaseLayout
+  title="Premium Web Design, Landing Page Design & UI Experience | LuliDigital"
+  description="LuliDigital builds premium, brand-aligned websites and landing pages for founders and growing businesses — designed to convert, built to perform, and shipped in weeks."
+  active="web-design"
+  seoTarget={seoTarget}
+  serviceSchema={serviceSchema}
+>
+
+  <!-- ═══════════════════════════════════════════════════════ HERO -->
+  <section class="wd-hero" aria-label="Web Design services" data-bee-stop data-atmosphere="hero" data-hive-section>
+    <div class="wd-grid-field" aria-hidden="true"></div>
+
+    <div class="wd-hero-split">
+      <div class="wd-hero-text">
+        <span class="eyebrow wd-eyebrow" data-blur-in>Design Studio</span>
+        <h1 class="wd-title" data-word-reveal>
+          Websites that convert. Designs that are remembered.
+        </h1>
+        <p class="wd-sub" data-blur-in data-blur-delay="200">
+          Premium, brand-aligned web design for founders and growing businesses —
+          built to perform, optimised to convert, and shipped in weeks, not months.
+        </p>
+        <div class="wd-ctas" data-stagger data-stagger-gap="80">
+          <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">Start a project →</a>
+          <a class="pill pill--outline magnetic" href="/marketing-desk">Marketing Desk →</a>
+        </div>
+      </div>
+
+      <!-- Animated design preview character -->
+      <div class="wd-preview" aria-hidden="true">
+        <div class="wdp-header">
+          <div class="wdp-dots">
+            <span class="wdp-dot"></span>
+            <span class="wdp-dot"></span>
+            <span class="wdp-dot"></span>
+          </div>
+          <span class="wdp-url">lulidigital.com</span>
+        </div>
+        <div class="wdp-body">
+          <!-- Hero block -->
+          <div class="wdp-block wdp-block--hero">
+            <div class="wdp-bar wdp-bar--h1"></div>
+            <div class="wdp-bar wdp-bar--sub"></div>
+            <div class="wdp-bar wdp-bar--cta"></div>
+          </div>
+          <!-- Content cards -->
+          <div class="wdp-cards">
+            <div class="wdp-card wdp-card--1" style="--wci:0"></div>
+            <div class="wdp-card wdp-card--2" style="--wci:1"></div>
+            <div class="wdp-card wdp-card--3" style="--wci:2"></div>
+          </div>
+          <!-- Metrics row -->
+          <div class="wdp-metrics">
+            <div class="wdp-metric" style="--wmi:0"><span class="wdp-metric-num">98</span><span class="wdp-metric-label">Perf</span></div>
+            <div class="wdp-metric" style="--wmi:1"><span class="wdp-metric-num">100</span><span class="wdp-metric-label">SEO</span></div>
+            <div class="wdp-metric" style="--wmi:2"><span class="wdp-metric-num">100</span><span class="wdp-metric-label">A11y</span></div>
+          </div>
+        </div>
+        <div class="wdp-glow" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════ MARQUEE -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      {[...webMarquee, ...webMarquee].map((item) => (
+        <span class="marquee-item">{item}</span>
+      ))}
+    </div>
+  </div>
+
+  <section class="selling-point selling-point--web" aria-label="Premium web design selling point" data-reveal="up" data-bee-stop data-atmosphere="web" data-hive-section>
+    <span class="eyebrow">The Difference</span>
+    <h2 class="selling-title">You get a website your business can actually grow on.</h2>
+    <p class="selling-copy">
+      Most websites are built quickly and look like every other template in the market.
+      We design brand-aligned, conversion-optimised experiences that feel premium, load fast,
+      and make every visitor understand why you are worth choosing.
+    </p>
+    <p class="selling-copy selling-copy--direct">
+      Want to know what your website could look like? Talk to the desk and we will walk you through the approach.
+    </p>
+    <div class="selling-links">
+      <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">WhatsApp the desk</a>
+      <a class="pill pill--outline magnetic" href="mailto:info@lulidigital.com">Email the desk</a>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ TRANSFORMATION SHOWCASE -->
+  <section class="transform-section" aria-label="Web design transformation: before and after" data-reveal="up" data-bee-stop data-atmosphere="web" data-hive-section>
+    <span class="eyebrow">The Transformation</span>
+    <h2 class="section-title">Ordinary to premium. In one project.</h2>
+
+    <div class="transform-split">
+      <!-- Before -->
+      <div class="transform-panel transform-panel--before" aria-label="Before: ordinary site">
+        <div class="tp-label tp-label--before">Before</div>
+        <div class="tp-mock tp-mock--before">
+          <div class="tp-nav tp-nav--plain">
+            <div class="tp-nav-logo--plain"></div>
+            <div class="tp-nav-links--plain">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="tp-hero--plain">
+            <div class="tp-h1--plain"></div>
+            <div class="tp-sub--plain"></div>
+            <div class="tp-sub--plain tp-sub--plain-2"></div>
+            <div class="tp-btn--plain"></div>
+          </div>
+          <div class="tp-cards--plain">
+            <div class="tp-card--plain"></div>
+            <div class="tp-card--plain"></div>
+            <div class="tp-card--plain"></div>
+          </div>
+        </div>
+        <ul class="tp-notes">
+          <li>Generic template layout</li>
+          <li>No brand personality</li>
+          <li>Weak visual hierarchy</li>
+        </ul>
+      </div>
+
+      <!-- Arrow -->
+      <div class="transform-arrow" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="rgba(245,164,31,.35)" stroke-width="1.5"/>
+          <path d="M16 24 L32 24" stroke="var(--honey-mid)" stroke-width="2" stroke-linecap="round"/>
+          <path d="M26 18 L33 24 L26 30" stroke="var(--honey-mid)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="transform-arrow-label">Design</span>
+      </div>
+
+      <!-- After -->
+      <div class="transform-panel transform-panel--after" aria-label="After: premium experience">
+        <div class="tp-label tp-label--after">After</div>
+        <div class="tp-mock tp-mock--after">
+          <div class="tp-nav tp-nav--premium">
+            <div class="tp-nav-logo--premium"></div>
+            <div class="tp-nav-links--premium">
+              <span></span><span></span>
+              <span class="tp-nav-cta"></span>
+            </div>
+          </div>
+          <div class="tp-hero--premium">
+            <div class="tp-eyebrow--premium"></div>
+            <div class="tp-h1--premium"></div>
+            <div class="tp-h1--premium tp-h1--premium-2"></div>
+            <div class="tp-sub--premium"></div>
+            <div class="tp-btns--premium">
+              <div class="tp-btn--premium-filled"></div>
+              <div class="tp-btn--premium-outline"></div>
+            </div>
+          </div>
+          <div class="tp-cards--premium">
+            <div class="tp-card--premium" style="--pci:0"></div>
+            <div class="tp-card--premium" style="--pci:1"></div>
+            <div class="tp-card--premium" style="--pci:2"></div>
+          </div>
+          <div class="tp-glow-orb" aria-hidden="true"></div>
+        </div>
+        <ul class="tp-notes tp-notes--after">
+          <li>Distinctive brand personality</li>
+          <li>Clear visual hierarchy</li>
+          <li>Optimised to convert</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ METRICS STRIP -->
+  <div class="metrics-strip" aria-label="Web design impact" data-reveal="up">
+    <div class="metric-item">
+      <span class="metric-num metric-word">Weeks</span>
+      <span class="metric-label">to launch, not months</span>
+    </div>
+    <div class="metric-divider" aria-hidden="true"></div>
+    <div class="metric-item">
+      <span class="metric-num metric-word">Premium</span>
+      <span class="metric-label">feel that earns trust instantly</span>
+    </div>
+    <div class="metric-divider" aria-hidden="true"></div>
+    <div class="metric-item">
+      <span class="metric-num metric-word">Converts</span>
+      <span class="metric-label">visitors into action, not just views</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ SERVICE BENTO GRID -->
+  <section class="wd-services" aria-label="Web design services we offer" data-reveal="up" data-bee-stop data-atmosphere="services" data-hive-section>
+    <span class="eyebrow">What We Build</span>
+    <div class="bento-grid" data-stagger data-stagger-gap="70">
+
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="float-l" data-reveal-delay="0">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:10px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          </div>
+          <h3 class="svc-title">Brand Website Design</h3>
+          <p class="svc-desc">Full website design and build — strategy, visual identity application, layout architecture, and performance-optimised delivery that represents your business at its best.</p>
+        </div>
+      </article>
+
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="drop" data-reveal-delay="80">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:10px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 19-9-9 19-2-8-8-2z"/></svg>
+          </div>
+          <h3 class="svc-title">Landing Page Design</h3>
+          <p class="svc-desc">Conversion-focused single pages built for specific campaigns, offers, or audiences — with clear hierarchy, compelling copy structure, and measurable outcomes.</p>
+        </div>
+      </article>
+
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="float-r" data-reveal-delay="160">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:10px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
+          </div>
+          <h3 class="svc-title">UI Experience Design</h3>
+          <p class="svc-desc">Premium interface design for web apps, dashboards, and digital products — visual systems, component libraries, and interaction patterns that feel effortless to use.</p>
+        </div>
+      </article>
+
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="float-l" data-reveal-delay="80">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:10px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/></svg>
+          </div>
+          <h3 class="svc-title">Website Redesign</h3>
+          <p class="svc-desc">Existing site transformations — audit, strategy, visual refresh, and rebuild. We diagnose what is holding your current site back and fix it properly.</p>
+        </div>
+      </article>
+
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="pop" data-reveal-delay="160">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:10px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </div>
+          <h3 class="svc-title">Design Systems</h3>
+          <p class="svc-desc">Component libraries, token systems, and visual guidelines that scale — so every new page or campaign stays on brand without needing to start from scratch.</p>
+        </div>
+      </article>
+
+      <article class="glow-card svc-card" data-tilt="7" data-reveal="float-r" data-reveal-delay="240">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:10px;height:100%">
+          <div class="svc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <h3 class="svc-title">Performance &amp; SEO</h3>
+          <p class="svc-desc">Technical performance optimisation, Lighthouse audits, Core Web Vitals, and SEO-structured markup — so your beautiful site also ranks and loads at full speed.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════ PROCESS TIMELINE -->
+  <section class="wd-process" aria-label="Web design process" data-reveal="up" data-bee-stop>
+    <span class="eyebrow">The Process</span>
+    <h2 class="section-title">Strategy first. Design second. Launch fast.</h2>
+
+    <div class="timeline" data-stagger data-stagger-gap="110">
+      <div class="timeline-step">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-content">
+          <h3 class="timeline-num">01</h3>
+          <h4 class="timeline-name">Discovery</h4>
+          <p class="timeline-desc">Brand voice, audience, goals, conversion targets</p>
+        </div>
+      </div>
+      <div class="timeline-connector" aria-hidden="true"></div>
+      <div class="timeline-step">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-content">
+          <h3 class="timeline-num">02</h3>
+          <h4 class="timeline-name">Design</h4>
+          <p class="timeline-desc">Visual direction, layout system, component design</p>
+        </div>
+      </div>
+      <div class="timeline-connector" aria-hidden="true"></div>
+      <div class="timeline-step">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-content">
+          <h3 class="timeline-num">03</h3>
+          <h4 class="timeline-name">Build</h4>
+          <p class="timeline-desc">Performance-first development, mobile-perfect</p>
+        </div>
+      </div>
+      <div class="timeline-connector" aria-hidden="true"></div>
+      <div class="timeline-step">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-content">
+          <h3 class="timeline-num">04</h3>
+          <h4 class="timeline-name">Launch</h4>
+          <p class="timeline-desc">QA, Lighthouse audit, SEO check, go live</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="process-note">Best for: New launches, rebrands, campaign pages — delivered in 2–6 weeks.</p>
+  </section>
+
+  <!-- ══════════════════════════════ BOLD DARK STATEMENT -->
+  <section class="bold-statement" aria-label="Web design promise">
+    <div class="bs-hive-overlay" aria-hidden="true">⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡</div>
+    <div class="bs-inner">
+      <p class="bs-line" data-reveal="up" data-reveal-delay="0">Your site is your first impression.</p>
+      <p class="bs-line bs-accent" data-reveal="up" data-reveal-delay="140">Make it unforgettable.</p>
+    </div>
+    <div class="bs-reel" aria-hidden="true">
+      <div class="bs-reel-track">
+        <span class="bsr-word">Design</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Convert</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Perform</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Brand</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Launch</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Design</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Convert</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Perform</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Brand</span><span class="bsr-sep">—</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════ LIVE DESK FEED -->
+  <div class="desk-feed" aria-hidden="true">
+    <span class="df-badge"><span class="df-dot"></span>Live</span>
+    <div class="df-track-wrap">
+      <div class="df-track">
+        {[
+          "Landing page live — Lighthouse 98/100 performance",
+          "Brand website shipped — mobile-perfect, conversion-ready",
+          "Design system delivered — 42 components, fully documented",
+          "Homepage redesign complete — bounce rate down 34%",
+          "New campaign page launched — aligned with paid media brief",
+          "Performance audit done — Core Web Vitals all green",
+          "Landing page live — Lighthouse 98/100 performance",
+          "Brand website shipped — mobile-perfect, conversion-ready",
+          "Design system delivered — 42 components, fully documented",
+        ].map((item) => (
+          <>
+            <span class="df-item">{item}</span>
+            <span class="df-sep" aria-hidden="true">·</span>
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ CTA -->
+  <section class="wd-cta-section" aria-label="Start a web design project" data-reveal="fade" data-bee-final data-atmosphere="cta" data-hive-section>
+    <div class="hive-glow-ring" style="width:600px;height:600px;left:50%;top:50%;transform:translate(-50%,-50%)" aria-hidden="true"></div>
+    <h2 class="cta-title" data-blur-in>Ready to build something premium?</h2>
+    <p class="cta-sub" data-blur-in data-blur-delay="150">Most projects go from brief to live in 2–6 weeks.</p>
+    <div data-stagger data-stagger-gap="80" class="cta-links">
+      <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">WhatsApp us →</a>
+      <a class="pill pill--outline magnetic" href="mailto:info@lulidigital.com">Email the desk →</a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+
+<style>
+  /* ── Hero ───────────────────────────────────────────────────── */
+  .wd-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 88px 0 72px;
+    isolation: isolate;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(123,45,45,.14), transparent 32%),
+      linear-gradient(135deg, rgba(123,45,45,.06), transparent 40%),
+      linear-gradient(180deg, rgba(255,255,255,.28), transparent 70%);
+  }
+  .wd-grid-field {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(90deg, rgba(123,45,45,.07) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(123,45,45,.05) 1px, transparent 1px),
+      radial-gradient(circle at 74% 26%, rgba(245,164,31,.18), transparent 28%);
+    background-size: 64px 64px, 64px 64px, 100% 100%;
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    animation: wdGridPan 20s linear infinite;
+  }
+  @keyframes wdGridPan {
+    to { background-position: 64px 0, 0 64px, 0 0; }
+  }
+  .wd-eyebrow { color: var(--brand, #7b2d2d); }
+
+  .wd-hero-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+    gap: clamp(28px, 5vw, 48px);
+    align-items: center;
+  }
+  .wd-hero-text { text-align: left; }
+
+  .wd-title {
+    font-size: clamp(32px, 4.5vw, 60px);
+    font-weight: 700; line-height: 1.06; letter-spacing: -.035em;
+    margin: 14px 0 20px;
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    color: var(--ink, #141312); max-width: 580px;
+  }
+  .wd-sub {
+    font-size: clamp(15px, 1.8vw, 17px); line-height: 1.65;
+    color: var(--muted, rgba(20,19,18,.66)); margin: 0 0 32px; max-width: 480px;
+  }
+  .wd-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* Pills */
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px;
+    border-radius: 999px; font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+    font-weight: 700; text-decoration: none; cursor: pointer; will-change: transform;
+    transition: box-shadow 250ms ease, background 200ms ease, color 200ms ease;
+  }
+  .pill--filled { background: var(--brand); color: #f9f5ef; box-shadow: 0 8px 28px rgba(123,45,45,.35); }
+  .pill--filled:hover { box-shadow: 0 14px 36px rgba(123,45,45,.48); background: #6a2828; }
+  .pill--outline { border: 1.5px solid var(--brand); color: var(--brand); }
+  .pill--outline:hover { background: rgba(123,45,45,.07); }
+
+  /* ── Design Preview Character ───────────────────────────────── */
+  .wd-preview {
+    position: relative;
+    background: var(--paper-card, #f6f2ea);
+    border: 1px solid rgba(30,24,22,.12);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(61,37,20,.12), 0 2px 8px rgba(123,45,45,.07);
+    animation: wdFloat 6s ease-in-out infinite;
+    will-change: transform;
+  }
+  @keyframes wdFloat {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    45%     { transform: translateY(-11px) rotate(.25deg); }
+    75%     { transform: translateY(-5px) rotate(-.15deg); }
+  }
+  .wdp-header {
+    display: flex; align-items: center; gap: 8px; padding: 10px 14px 9px;
+    border-bottom: 1px solid rgba(30,24,22,.08);
+    background: rgba(123,45,45,.06);
+  }
+  .wdp-dots { display: flex; gap: 5px; }
+  .wdp-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(30,24,22,.15);
+  }
+  .wdp-dot:nth-child(1) { background: #ff5f57; }
+  .wdp-dot:nth-child(2) { background: #febc2e; }
+  .wdp-dot:nth-child(3) { background: #28c840; }
+  .wdp-url {
+    font-size: 10px; letter-spacing: .08em;
+    color: var(--muted, rgba(20,19,18,.45));
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    flex: 1; text-align: center;
+  }
+  .wdp-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .wdp-block--hero {
+    background: linear-gradient(135deg, var(--brand, #7b2d2d), #3d1414);
+    border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 7px;
+    animation: wdHeroShift 5s ease-in-out infinite;
+  }
+  @keyframes wdHeroShift {
+    0%,100% { background: linear-gradient(135deg, #7b2d2d, #3d1414); }
+    50%     { background: linear-gradient(155deg, #6a2828, #531f1f); }
+  }
+  .wdp-bar {
+    border-radius: 3px;
+    background: rgba(255,255,255,.22);
+    animation: wdBarFade 3.5s ease-in-out infinite;
+  }
+  .wdp-bar--h1  { height: 12px; width: 78%; animation-delay: 0ms; }
+  .wdp-bar--sub { height: 6px;  width: 58%; animation-delay: 200ms; }
+  .wdp-bar--cta {
+    height: 18px; width: 36%; margin-top: 4px;
+    border-radius: 999px;
+    background: rgba(245,164,31,.75);
+    box-shadow: 0 2px 8px rgba(245,164,31,.3);
+    animation: wdCtaBlink 2s ease-in-out infinite;
+  }
+  @keyframes wdBarFade {
+    0%,100% { opacity: .7; } 50% { opacity: 1; }
+  }
+  @keyframes wdCtaBlink {
+    0%,100% { box-shadow: 0 2px 8px rgba(245,164,31,.3); }
+    50%     { box-shadow: 0 4px 16px rgba(245,164,31,.55); }
+  }
+  .wdp-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .wdp-card {
+    height: 42px; border-radius: 7px;
+    background: rgba(123,45,45,.08);
+    border: 1px solid rgba(123,45,45,.1);
+    opacity: 0;
+    transform: translateY(6px);
+    animation: wdCardIn 400ms cubic-bezier(.34,1.4,.64,1) forwards;
+    animation-delay: calc(var(--wci, 0) * 120ms + 600ms);
+  }
+  @keyframes wdCardIn { to { opacity: 1; transform: translateY(0); } }
+  .wdp-metrics {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+    border-top: 1px solid rgba(30,24,22,.07); padding-top: 10px;
+  }
+  .wdp-metric {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    opacity: 0;
+    animation: wdMetricIn 350ms ease forwards;
+    animation-delay: calc(var(--wmi, 0) * 100ms + 1000ms);
+  }
+  @keyframes wdMetricIn { to { opacity: 1; } }
+  .wdp-metric-num {
+    font-size: 14px; font-weight: 800; letter-spacing: -.025em;
+    color: var(--brand, #7b2d2d);
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+  }
+  .wdp-metric-label {
+    font-size: 8px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted, rgba(20,19,18,.45)); font-weight: 600;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+  .wdp-glow {
+    position: absolute; right: -30%; top: -20%;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,164,31,.18), transparent 70%);
+    pointer-events: none;
+    animation: wdGlowPulse 4s ease-in-out infinite;
+  }
+  @keyframes wdGlowPulse {
+    0%,100% { transform: scale(1); opacity: .6; }
+    50%     { transform: scale(1.2); opacity: 1; }
+  }
+
+  /* ── Transformation Showcase ────────────────────────────────── */
+  .transform-section { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
+  .transform-split {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: clamp(16px, 3vw, 32px);
+    align-items: start;
+    margin-top: 32px;
+  }
+  .transform-panel {
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(30,24,22,.1);
+    background: var(--paper-card, #f6f2ea);
+  }
+  .transform-panel--after {
+    border-color: rgba(123,45,45,.2);
+    background:
+      radial-gradient(circle at 90% 10%, rgba(245,164,31,.12), transparent 30%),
+      var(--paper-card, #f6f2ea);
+    box-shadow: 0 12px 36px rgba(123,45,45,.1);
+  }
+  .tp-label {
+    display: inline-block; font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 800; padding: 3px 8px; border-radius: 4px; margin-bottom: 12px;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+  .tp-label--before { background: rgba(30,24,22,.08); color: var(--muted, rgba(20,19,18,.55)); }
+  .tp-label--after  { background: rgba(123,45,45,.1); color: var(--brand, #7b2d2d); }
+
+  /* Before mock */
+  .tp-mock { border-radius: 8px; overflow: hidden; border: 1px solid rgba(30,24,22,.1); margin-bottom: 14px; background: #fff; }
+  .tp-nav { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-bottom: 1px solid rgba(30,24,22,.06); }
+  .tp-nav--plain { background: #f5f5f5; }
+  .tp-nav-logo--plain { width: 48px; height: 8px; border-radius: 2px; background: rgba(30,24,22,.18); }
+  .tp-nav-links--plain { display: flex; gap: 6px; margin-left: auto; }
+  .tp-nav-links--plain span { width: 22px; height: 6px; border-radius: 2px; background: rgba(30,24,22,.1); }
+  .tp-hero--plain { padding: 14px 10px; display: flex; flex-direction: column; gap: 6px; background: #fafafa; }
+  .tp-h1--plain { height: 10px; width: 80%; border-radius: 2px; background: rgba(30,24,22,.2); }
+  .tp-sub--plain { height: 6px; width: 65%; border-radius: 2px; background: rgba(30,24,22,.1); }
+  .tp-sub--plain-2 { width: 50%; }
+  .tp-btn--plain { height: 14px; width: 36%; border-radius: 3px; background: rgba(30,24,22,.15); margin-top: 4px; }
+  .tp-cards--plain { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 8px 10px 10px; background: #fafafa; }
+  .tp-card--plain { height: 32px; border-radius: 4px; background: rgba(30,24,22,.06); border: 1px solid rgba(30,24,22,.08); }
+
+  /* After mock */
+  .tp-mock--after { background: #f9f5ef; position: relative; overflow: hidden; }
+  .tp-nav--premium { background: linear-gradient(135deg, #2b1610, #7b2d2d); border-bottom-color: rgba(255,255,255,.1); }
+  .tp-nav-logo--premium { width: 52px; height: 8px; border-radius: 2px; background: rgba(255,255,255,.35); }
+  .tp-nav-links--premium { display: flex; gap: 6px; margin-left: auto; align-items: center; }
+  .tp-nav-links--premium span { width: 22px; height: 5px; border-radius: 2px; background: rgba(255,255,255,.3); }
+  .tp-nav-cta { width: 32px !important; height: 14px !important; border-radius: 999px !important; background: rgba(245,164,31,.8) !important; box-shadow: 0 2px 6px rgba(245,164,31,.3); }
+  .tp-hero--premium {
+    padding: 16px 10px 12px; display: flex; flex-direction: column; gap: 5px;
+    background: linear-gradient(135deg, rgba(123,45,45,.06), transparent 60%);
+  }
+  .tp-eyebrow--premium { height: 5px; width: 38%; border-radius: 999px; background: rgba(123,45,45,.3); }
+  .tp-h1--premium { height: 12px; width: 82%; border-radius: 3px; background: rgba(20,19,18,.25); }
+  .tp-h1--premium-2 { width: 60%; }
+  .tp-sub--premium { height: 6px; width: 70%; border-radius: 2px; background: rgba(20,19,18,.12); margin-top: 2px; }
+  .tp-btns--premium { display: flex; gap: 6px; margin-top: 6px; }
+  .tp-btn--premium-filled { height: 16px; width: 40%; border-radius: 999px; background: var(--brand, #7b2d2d); box-shadow: 0 3px 10px rgba(123,45,45,.3); }
+  .tp-btn--premium-outline { height: 16px; width: 30%; border-radius: 999px; border: 1px solid rgba(123,45,45,.4); }
+  .tp-cards--premium { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 8px 10px 10px; }
+  .tp-card--premium {
+    height: 38px; border-radius: 6px;
+    background: rgba(123,45,45,.07);
+    border: 1px solid rgba(123,45,45,.12);
+    opacity: 0;
+    animation: wdCardIn 400ms cubic-bezier(.34,1.4,.64,1) forwards;
+    animation-delay: calc(var(--pci, 0) * 100ms + 400ms);
+    box-shadow: 0 2px 8px rgba(123,45,45,.07);
+  }
+  .tp-glow-orb {
+    position: absolute; right: -10%; top: 10%;
+    width: 100px; height: 100px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,164,31,.25), transparent 70%);
+    pointer-events: none;
+    animation: wdGlowPulse 3.5s ease-in-out infinite;
+  }
+
+  /* Notes */
+  .tp-notes { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 5px; }
+  .tp-notes li {
+    font-size: 12px; color: var(--muted, rgba(20,19,18,.6));
+    padding-left: 14px; position: relative;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    line-height: 1.5;
+  }
+  .tp-notes li::before { content: "–"; position: absolute; left: 0; opacity: .5; }
+  .tp-notes--after li { color: rgba(20,19,18,.75); }
+  .tp-notes--after li::before { content: "✓"; color: var(--brand, #7b2d2d); opacity: .8; }
+
+  .transform-arrow {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    padding-top: 48px;
+  }
+  .transform-arrow svg { width: 40px; height: 40px; animation: arrowPulse 2.5s ease-in-out infinite; }
+  @keyframes arrowPulse { 0%,100%{opacity:.7;transform:scale(1)} 50%{opacity:1;transform:scale(1.08)} }
+  .transform-arrow-label {
+    font-size: 9px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700;
+    color: var(--honey-mid); font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+
+  /* ── Process ────────────────────────────────────────────────── */
+  .wd-process { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
+  .timeline { display: flex; align-items: flex-start; margin: 36px 0 24px; overflow-x: auto; }
+  .timeline-step { flex: 1; min-width: 120px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 0 8px; }
+  .timeline-dot {
+    width: 12px; height: 12px; border-radius: 50%; background: var(--brand, #7b2d2d); flex-shrink: 0;
+    animation: tdotPulse 2.4s ease-in-out infinite;
+  }
+  .timeline-step:nth-child(3) .timeline-dot { animation-delay: .6s; }
+  .timeline-step:nth-child(5) .timeline-dot { animation-delay: 1.2s; }
+  .timeline-step:nth-child(7) .timeline-dot { animation-delay: 1.8s; }
+  @keyframes tdotPulse { 0%,100%{box-shadow:0 0 0 0 rgba(123,45,45,0)} 50%{box-shadow:0 0 0 5px rgba(123,45,45,.15)} }
+  .timeline-connector { width: 48px; height: 1px; background: var(--brand, #7b2d2d); opacity: .28; margin-top: 6px; flex-shrink: 0; }
+  .timeline-num { font-size: 11px; font-weight: 700; letter-spacing: .12em; color: var(--brand, #7b2d2d); margin: 0; }
+  .timeline-name { font-size: 14px; font-weight: 700; letter-spacing: -.01em; margin: 0; color: var(--ink, #141312); font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
+  .timeline-desc { font-size: 12px; color: var(--muted, rgba(20,19,18,.6)); line-height: 1.5; margin: 0; }
+  .process-note { font-size: 13px; color: var(--muted, rgba(20,19,18,.55)); margin: 0; }
+
+  /* ── Services ───────────────────────────────────────────────── */
+  .wd-services { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
+  .svc-card { padding: 26px 24px; min-height: 200px; }
+  .wd-services .svc-card {
+    background:
+      linear-gradient(160deg, rgba(255,255,255,.46), rgba(246,242,234,.78)),
+      var(--paper-card);
+  }
+  .wd-services .svc-card:hover {
+    background: linear-gradient(160deg, #2a1410, #5f2a1f 62%, #8a421f);
+  }
+  .svc-icon {
+    width: 40px; height: 40px; border-radius: 10px; background: rgba(123,45,45,.1);
+    display: grid; place-items: center; color: var(--brand); flex-shrink: 0;
+    transition: background 350ms ease, color 300ms ease, transform 400ms cubic-bezier(.34,1.56,.64,1);
+  }
+  .svc-card:hover .svc-icon { background: rgba(123,45,45,.35); color: #f9f5ef; transform: rotate(8deg) scale(1.12); }
+  .svc-title {
+    font-size: clamp(16px, 1.8vw, 19px); font-weight: 700; margin: 0;
+    letter-spacing: -.015em;
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    line-height: 1.2; color: var(--ink, #141312);
+    transition: color 300ms ease;
+  }
+  .svc-card:hover .svc-title { color: rgba(245,240,232,.95); }
+  .svc-desc { font-size: 13px; line-height: 1.65; color: var(--muted, rgba(20,19,18,.62)); margin: 0; transition: color 300ms ease; flex: 1; }
+  .svc-card:hover .svc-desc { color: rgba(245,240,232,.65); }
+
+  /* ── CTA ────────────────────────────────────────────────────── */
+  .wd-cta-section {
+    text-align: center; padding: 80px 0 40px;
+    border-top: 1px solid rgba(30,24,22,.1);
+    position: relative; overflow: hidden; isolation: isolate;
+  }
+  .cta-title { font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -.03em; margin: 0 0 10px; font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif); }
+  .cta-sub { font-size: 15px; color: var(--muted, rgba(20,19,18,.62)); margin: 0 0 28px; font-family: var(--font-body, "DM Sans", sans-serif); }
+  .cta-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .wd-hero-split { grid-template-columns: 1fr; }
+    .wd-hero-text { text-align: center; }
+    .wd-title { max-width: 100%; margin-left: auto; margin-right: auto; }
+    .wd-sub { max-width: 100%; }
+    .wd-ctas { justify-content: center; }
+    .wd-preview { max-width: 360px; margin: 0 auto; }
+    .transform-split { grid-template-columns: 1fr; }
+    .transform-arrow { padding-top: 0; flex-direction: row; }
+    .transform-arrow svg { width: 32px; height: 32px; }
+  }
+  @media (max-width: 680px) {
+    .wd-hero { padding: 48px 0 42px; }
+    .wd-title { font-size: clamp(32px, 11vw, 44px); }
+    .wd-sub { font-size: 15px; line-height: 1.58; }
+    .wd-ctas .pill { width: 100%; justify-content: center; }
+    .timeline { flex-direction: column; align-items: center; gap: 14px; }
+    .timeline-connector { width: 1px; height: 24px; margin: 0; }
+    .timeline-step { width: 100%; min-width: 0; align-items: flex-start; text-align: left; flex-direction: row; }
+    .timeline-content { display: grid; gap: 2px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wd-grid-field,
+    .wd-preview,
+    .wdp-block--hero,
+    .wdp-bar,
+    .wdp-bar--cta,
+    .wdp-card,
+    .wdp-metric,
+    .wdp-glow,
+    .tp-card--premium,
+    .timeline-dot,
+    .transform-arrow svg { animation: none !important; }
+    .wdp-card,
+    .wdp-metric,
+    .tp-card--premium { opacity: 1; transform: none; }
+  }
+</style>

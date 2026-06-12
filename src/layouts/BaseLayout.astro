@@ -1,6 +1,7 @@
 ---
 import "../styles/theme.css";
 import "../styles/motion.css";
+import "../styles/hive.css";
 import SiteHeader from "../components/SiteHeader.astro";
 import LanaChat from "../components/LanaChat.astro";
 import SiteFooter from "../components/SiteFooter.astro";
@@ -242,6 +243,14 @@ const jsonLd = {
   <body>
     <div class="scroll-bar" aria-hidden="true"></div>
 
+    <!-- ═════════════════ HIVE AMBIENT HEX GRID ═══════════════════ -->
+    <!-- JS fills this with ⬡ cells; opacity driven by --hive-energy -->
+    <div id="hive-ambient-grid" aria-hidden="true"></div>
+
+    <!-- ══════════════════ LANA TRAIL CONTAINER ═══════════════════ -->
+    <!-- Hex ⬡ cells left in Lana's wake; positioned in fixed space -->
+    <div id="lana-trail" aria-hidden="true"></div>
+
     <!-- ══════════════════════════ FLYING BEE GUIDE ═══════════════ -->
     {showBee && (
       <div id="bee-guide" role="button" tabindex="0" aria-label="Chat with Lana">
@@ -326,9 +335,10 @@ const jsonLd = {
   }
 
   async function initEnhancements() {
-    const [{ initMotion }, { initInkHighlights }] = await Promise.all([
+    const [{ initMotion }, { initInkHighlights }, { initHive }] = await Promise.all([
       import("../scripts/motion.js"),
       import("../scripts/inkHighlight.js"),
+      import("../scripts/hive.js"),
     ]);
 
     initMotion();
@@ -336,6 +346,7 @@ const jsonLd = {
     initMagnetic();
     initScrollProgress();
     initBee();
+    initHive();
   }
 
   function initBee() {

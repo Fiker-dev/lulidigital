@@ -43,7 +43,7 @@ const marqueeItems2 = [
 >
 
   <!-- ═══════════════════════════════════════════════════════ HERO -->
-  <section class="hero" aria-label="Introduction">
+  <section class="hero" aria-label="Introduction" data-atmosphere="hero" data-hive-section>
     <div class="hero-orb orb-a" aria-hidden="true"></div>
     <div class="hero-orb orb-b" aria-hidden="true"></div>
     <div class="hero-orb orb-c" aria-hidden="true"></div>
@@ -122,7 +122,7 @@ const marqueeItems2 = [
   </div>
 
   <!-- ═════════════════════════════════════ STORY: THE PROBLEM -->
-  <section class="story-problem" aria-label="The problem we solve">
+  <section class="story-problem" aria-label="The problem we solve" data-atmosphere="problem" data-hive-section>
     <div class="problem-inner honey-text-block" data-reveal="up" data-bee-stop>
       <span class="eyebrow">Sound familiar?</span>
       <div class="problem-grid">
@@ -163,7 +163,7 @@ const marqueeItems2 = [
   </section>
 
   <!-- ═════════════════════════════════ STORY: THE SOLUTION -->
-  <section class="bento-section" aria-label="Services" data-bee-stop>
+  <section class="bento-section" aria-label="Services" data-bee-stop data-atmosphere="services" data-hive-section>
     <!-- Honeycomb fits the bee theme -->
     <div class="honeycomb" aria-hidden="true" data-reveal="fade">
       <pre class="honeycomb-pre">
@@ -196,13 +196,29 @@ const marqueeItems2 = [
     </div>
 
     <div class="bento-grid">
-      <article class="glow-card bento-card" data-motion-kind="float" data-reveal="float-l" data-reveal-delay="0" data-tilt="9">
+      <article class="glow-card bento-card" data-motion-kind="float" data-reveal="float-l" data-reveal-delay="0" data-tilt="9" data-particle-zone="marketing">
         <div class="tilt-layer" style="display:flex;flex-direction:column;gap:14px;height:100%">
           <div class="bento-num" aria-hidden="true">01</div>
           <div class="bento-icon" aria-hidden="true">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
           </div>
           <h3 class="bento-title">Marketing Desk</h3>
+          <!-- Desk state: scattered → coordinated -->
+          <div class="desk-state-tag" aria-hidden="true">
+            <span class="dst-before">scattered signals</span>
+            <span class="dst-arrow">→</span>
+            <span class="dst-after">coordinated growth</span>
+          </div>
+          <!-- Transformation visual -->
+          <div class="mkt-transform" aria-hidden="true" data-desk-transform="marketing">
+            <div class="mkt-dot" style="--sx:8%;--sy:18%;--offset-x:-18px"></div>
+            <div class="mkt-dot" style="--sx:82%;--sy:12%;--offset-x:16px"></div>
+            <div class="mkt-dot" style="--sx:15%;--sy:74%;--offset-x:-14px"></div>
+            <div class="mkt-dot" style="--sx:78%;--sy:68%;--offset-x:12px"></div>
+            <div class="mkt-dot" style="--sx:48%;--sy:8%;--offset-x:0px"></div>
+            <div class="mkt-dot" style="--sx:52%;--sy:82%;--offset-x:0px"></div>
+            <div class="mkt-center"></div>
+          </div>
           <p class="card-typed" data-card-type="AI finds the angle. Strategy makes it sell."></p>
           <ul class="bento-list">
             <li style="--li-i:0">Brand strategy &amp; positioning</li>
@@ -213,13 +229,44 @@ const marqueeItems2 = [
         </div>
       </article>
 
-      <article class="glow-card bento-card" data-motion-kind="pop" data-reveal="drop" data-reveal-delay="130" data-tilt="9">
+      <article class="glow-card bento-card" data-motion-kind="pop" data-reveal="drop" data-reveal-delay="130" data-tilt="9" data-particle-zone="ai">
         <div class="tilt-layer" style="display:flex;flex-direction:column;gap:14px;height:100%">
           <div class="bento-num" aria-hidden="true">02</div>
           <div class="bento-icon" aria-hidden="true">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><circle cx="12" cy="14" r="2"/></svg>
           </div>
           <h3 class="bento-title">AI Desk</h3>
+          <!-- Desk state: disconnected → intelligent network -->
+          <div class="desk-state-tag" aria-hidden="true">
+            <span class="dst-before">disconnected data</span>
+            <span class="dst-arrow">→</span>
+            <span class="dst-after">intelligent automation</span>
+          </div>
+          <!-- AI network transformation visual -->
+          <div class="ai-transform" aria-hidden="true" data-desk-transform="ai">
+            <svg class="ai-net-svg" viewBox="0 0 120 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <filter id="ai-node-glow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="2" result="blur"/>
+                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <!-- Connection lines (draw on activation) -->
+              <line class="ai-line" x1="22" y1="18" x2="58" y2="10" style="--ld:320ms"/>
+              <line class="ai-line" x1="58" y1="10" x2="98" y2="22" style="--ld:440ms"/>
+              <line class="ai-line" x1="22" y1="18" x2="42" y2="44" style="--ld:540ms"/>
+              <line class="ai-line" x1="58" y1="10" x2="42" y2="44" style="--ld:620ms"/>
+              <line class="ai-line" x1="98" y1="22" x2="42" y2="44" style="--ld:700ms"/>
+              <line class="ai-line" x1="58" y1="10" x2="78" y2="44" style="--ld:780ms"/>
+              <line class="ai-line" x1="98" y1="22" x2="78" y2="44" style="--ld:840ms"/>
+              <!-- Nodes (appear sequentially) -->
+              <circle class="ai-node" cx="22" cy="18" r="4" style="--nd:0ms" filter="url(#ai-node-glow)"/>
+              <circle class="ai-node" cx="58" cy="10" r="4" style="--nd:120ms" filter="url(#ai-node-glow)"/>
+              <circle class="ai-node" cx="98" cy="22" r="4" style="--nd:240ms" filter="url(#ai-node-glow)"/>
+              <circle class="ai-node" cx="42" cy="44" r="3.5" style="--nd:360ms" filter="url(#ai-node-glow)"/>
+              <circle class="ai-node" cx="78" cy="44" r="3.5" style="--nd:460ms" filter="url(#ai-node-glow)"/>
+            </svg>
+          </div>
           <p class="card-typed" data-card-type="Your support layer keeps working after hours."></p>
           <ul class="bento-list">
             <li style="--li-i:0">Conversational AI assistants</li>
@@ -230,13 +277,26 @@ const marqueeItems2 = [
         </div>
       </article>
 
-      <article class="glow-card bento-card" data-motion-kind="rise" data-reveal="float-r" data-reveal-delay="260" data-tilt="9">
+      <article class="glow-card bento-card" data-motion-kind="rise" data-reveal="float-r" data-reveal-delay="260" data-tilt="9" data-particle-zone="va">
         <div class="tilt-layer" style="display:flex;flex-direction:column;gap:14px;height:100%">
           <div class="bento-num" aria-hidden="true">03</div>
           <div class="bento-icon" aria-hidden="true">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
           <h3 class="bento-title">Virtual Assistant Desk</h3>
+          <!-- Desk state: chaos → ordered operations -->
+          <div class="desk-state-tag" aria-hidden="true">
+            <span class="dst-before">daily chaos</span>
+            <span class="dst-arrow">→</span>
+            <span class="dst-after">operations that run</span>
+          </div>
+          <!-- VA chaos → order transformation -->
+          <div class="va-transform" aria-hidden="true" data-desk-transform="va">
+            <div class="va-item" style="--chaos-x:28%;--chaos-y:6px;--chaos-r:-9deg;--chaos-w:52%;--order-y:6px;--order-w:88%;--vd:0ms"></div>
+            <div class="va-item" style="--chaos-x:12%;--chaos-y:18px;--chaos-r:12deg;--chaos-w:40%;--order-y:20px;--order-w:70%;--vd:60ms"></div>
+            <div class="va-item" style="--chaos-x:38%;--chaos-y:30px;--chaos-r:-6deg;--chaos-w:48%;--order-y:34px;--order-w:55%;--vd:120ms"></div>
+            <div class="va-item" style="--chaos-x:8%;--chaos-y:42px;--chaos-r:14deg;--chaos-w:44%;--order-y:48px;--order-w:80%;--vd:180ms"></div>
+          </div>
           <p class="card-typed" data-card-type="Human care. AI backup. Cleaner weeks."></p>
           <ul class="bento-list">
             <li style="--li-i:0">Inbox &amp; calendar management</li>
@@ -246,11 +306,47 @@ const marqueeItems2 = [
           <a class="cta-link" href="/va-desk">Explore <span class="arr">→</span></a>
         </div>
       </article>
+
+      <article class="glow-card bento-card" data-motion-kind="float" data-reveal="pop" data-reveal-delay="390" data-tilt="9" data-particle-zone="web">
+        <div class="tilt-layer" style="display:flex;flex-direction:column;gap:14px;height:100%">
+          <div class="bento-num" aria-hidden="true">04</div>
+          <div class="bento-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          </div>
+          <h3 class="bento-title">Web Design Desk</h3>
+          <div class="desk-state-tag" aria-hidden="true">
+            <span class="dst-before">ordinary site</span>
+            <span class="dst-arrow">→</span>
+            <span class="dst-after">premium experience</span>
+          </div>
+          <div class="web-transform" aria-hidden="true" data-desk-transform="web">
+            <div class="web-bar web-bar--hero"></div>
+            <div class="web-bar web-bar--content"></div>
+            <div class="web-bar web-bar--action"></div>
+          </div>
+          <p class="card-typed" data-card-type="Ordinary to premium. Designed to convert."></p>
+          <ul class="bento-list">
+            <li style="--li-i:0">Brand-aligned web design</li>
+            <li style="--li-i:1">Landing pages that convert</li>
+            <li style="--li-i:2">Premium UI experiences</li>
+          </ul>
+          <a class="cta-link" href="/web-design-desk">Explore <span class="arr">→</span></a>
+        </div>
+      </article>
     </div>
   </section>
 
+  <!-- ══════════════════════════════ HIVE SIGNAL FLOW ══════════ -->
+  <div class="hive-signal-flow" aria-hidden="true">
+    {Array.from({length: 10}).map(() => <span class="hsf-dot"></span>)}
+    <span class="hsf-label">signal active</span>
+    {Array.from({length: 10}).map(() => <span class="hsf-dot"></span>)}
+  </div>
+
   <!-- ══════════════════════════ BOLD DARK STATEMENT (Floema) -->
-  <section class="bold-statement" aria-label="Our promise">
+  <section class="bold-statement" aria-label="Our promise" data-atmosphere="statement" data-hive-section>
+    <!-- Living hive overlay: hex chars drift in the dark -->
+    <div class="bs-hive-overlay" aria-hidden="true">⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡</div>
     <div class="bs-inner">
       <p class="bs-line" data-reveal="up" data-reveal-delay="0">You run your business.</p>
       <p class="bs-line bs-accent" data-reveal="up" data-reveal-delay="120">We run everything else.</p>
@@ -259,13 +355,13 @@ const marqueeItems2 = [
       <div class="bs-reel-track">
         <span class="bsr-word">Marketing</span><span class="bsr-sep">—</span>
         <span class="bsr-word">AI Automation</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Virtual Assistant Desk</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Virtual Assistant</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Web Design</span><span class="bsr-sep">—</span>
         <span class="bsr-word">Marketing</span><span class="bsr-sep">—</span>
         <span class="bsr-word">AI Automation</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Virtual Assistant Desk</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Virtual Assistant</span><span class="bsr-sep">—</span>
+        <span class="bsr-word">Web Design</span><span class="bsr-sep">—</span>
         <span class="bsr-word">Marketing</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">AI Automation</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Virtual Assistant Desk</span><span class="bsr-sep">—</span>
       </div>
     </div>
   </section>
@@ -277,7 +373,7 @@ const marqueeItems2 = [
   </div>
 
   <!-- ═════════════════════════════════════════════ HOW ASCII -->
-  <section class="how-section" aria-label="How LuliDigital works" data-reveal="up">
+  <section class="how-section" aria-label="How LuliDigital works" data-reveal="up" data-atmosphere="how" data-hive-section data-hive-node="how">
     <span class="eyebrow">How It Works</span>
     <h2 class="section-title">Marketing feeds the machine.<br/>The VA runs it. AI scales it.</h2>
     <div class="how-flow" data-reveal="fade" data-reveal-delay="280" aria-label="Service flow: Marketing feeds VA, VA feeds AI">
@@ -306,6 +402,24 @@ const marqueeItems2 = [
       </div>
     </div>
     <p class="how-desc">Each desk is distinct but connected. Marketing builds the signal. The VA keeps operations clean. AI scales what works — without scaling headcount.</p>
+
+    <!-- Animated connection lines between how-nodes -->
+    <div class="how-connect-wrap" aria-hidden="true">
+      <svg class="hive-connect-svg" viewBox="0 0 900 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="hive-glow-filter" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Bezier path: Marketing → VA → AI -->
+        <path class="hive-path-line" data-hive-path="how"
+          d="M60,30 C200,8 320,52 450,30 C580,8 700,52 840,30"
+          stroke-dasharray="8 5"
+        />
+        <!-- Animated traveler dot will be spawned by JS -->
+      </svg>
+    </div>
   </section>
 
   <!-- ══════════════════════════════════════════ WAVE GUIDE -->
@@ -346,7 +460,7 @@ const marqueeItems2 = [
   </div>
 
   <!-- ═══════════════════════════════ WHAT ACTUALLY CHANGES -->
-  <section class="usecases-section" aria-label="Use cases" data-bee-stop>
+  <section class="usecases-section" aria-label="Use cases" data-bee-stop data-atmosphere="usecases" data-hive-section>
     <div class="section-header" data-reveal="up">
       <span class="eyebrow">In Practice</span>
       <h2 class="section-title">What actually<br/>changes.</h2>
@@ -438,7 +552,10 @@ const marqueeItems2 = [
   </div>
 
   <!-- ══════════════════════════════════════════════════ CTA -->
-  <section class="final-cta" aria-label="Contact" data-reveal="fade" data-bee-stop>
+  <section class="final-cta" aria-label="Contact" data-reveal="fade" data-bee-stop data-atmosphere="cta" data-hive-section>
+    <!-- Fully activated hive glow ring for the confidence moment -->
+    <div class="hive-glow-ring" style="width:700px;height:700px;left:50%;top:50%;transform:translate(-50%,-50%)" aria-hidden="true"></div>
+
     <div class="cta-inner">
       <span class="eyebrow">The next step</span>
       <h2 class="cta-big" data-blur-in>Be smart.<br/>Get help.</h2>
@@ -1215,5 +1332,48 @@ const marqueeItems2 = [
     .signal-field {
       opacity: .52;
     }
+  }
+
+  /* ── Hive Signal Flow (between sections) ────────────────────── */
+  .hive-signal-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hsf-label {
+    font-size: 9px;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    color: rgba(245,164,31,.35);
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-weight: 600;
+    padding: 0 12px;
+    flex-shrink: 0;
+  }
+
+  /* ── How Connect ────────────────────────────────────────────── */
+  .how-connect-wrap {
+    width: 100%;
+    height: 44px;
+    position: relative;
+    margin-top: 24px;
+    overflow: visible;
+  }
+
+  /* ── Final CTA: position context ───────────────────────────── */
+  .final-cta { position: relative; overflow: hidden; }
+
+  /* ── bold-statement: position context for overlay ───────────── */
+  .bold-statement { position: relative; }
+  .bs-inner { position: relative; z-index: 1; }
+
+  /* Mobile: hide heavier ornaments */
+  @media (max-width: 680px) {
+    .how-connect-wrap { display: none; }
+    .mkt-transform, .ai-transform, .va-transform { display: none; }
   }
 </style>
