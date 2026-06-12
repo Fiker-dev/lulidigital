@@ -10,7 +10,7 @@ const seoTarget = getWeeklyPageSeoTarget("/founder");
 Astro.response.headers.set("Cache-Control", "s-maxage=21600, stale-while-revalidate=86400");
 
 const title = "Fiker Abate — Founder & Studio Lead | LuliDigital";
-const description = "Meet Fiker, the founder behind LuliDigital's AI Automation, Marketing Desk, and Virtual Assistant Desk. Building fast-scaling capacity for teams across Europe, the UK, and the US.";
+const description = "Former healthcare worker. Now founder of LuliDigital — a creative agency built to take brands from invisible to unforgettable.";
 
 const personSchema = {
   "@type": "Person",
@@ -20,7 +20,7 @@ const personSchema = {
   "worksFor": { "@id": "https://lulidigital.com/#organization" },
   "url": "https://lulidigital.com/founder",
   "image": "https://lulidigital.com/images/founder/fiker-portrait.jpg",
-  "description": "Fiker is the founder of LuliDigital, a digital studio providing AI Automation, Marketing, and Virtual Assistant services to fast-scaling teams across Europe and the US.",
+  "description": "Fiker Abate is the founder of LuliDigital, a creative agency providing AI Automation, Marketing, and Virtual Assistant services to fast-scaling teams across Europe and the US.",
 };
 ---
 
@@ -35,415 +35,473 @@ const personSchema = {
 >
 
   <!-- ── HERO ─────────────────────────────────────────────────── -->
-  <section class="founder-hero" data-bee-stop>
-    <div class="fh-inner">
-      <div class="fh-text">
-        <span class="hero-badge" data-reveal="drop">
-          <span class="badge-dot"></span>Founder & Studio Lead
-        </span>
-        <h1 class="fh-name" data-reveal="up" data-reveal-delay="80">
-          Fiker<br/><em>Abate.</em>
-        </h1>
-        <p class="fh-tagline" data-reveal="up" data-reveal-delay="160">
-          The architect behind three desks — built to give fast-moving founders their time back, their reach extended, and their operations sharp.
+  <section class="f-hero" data-atmosphere="hero" data-hive-section>
+    <div class="f-hero__inner">
+      <div class="f-hero__text">
+        <span class="f-badge">Founder & Studio Lead</span>
+        <h1 class="f-hero__name">Fiker<br/><em>Abate.</em></h1>
+        <p class="f-hero__line">
+          Healthcare worker.<br/>
+          <strong>Agency builder.</strong>
         </p>
-        <div class="fh-actions" data-reveal="up" data-reveal-delay="240">
-          <a class="pill pill--filled" href="/contact">Work With Me <span aria-hidden="true">→</span></a>
-          <a class="pill pill--outline" href="#desks">See the Desks</a>
-        </div>
+        <a class="f-cta-pill" href="/contact">Work with me <span aria-hidden="true">→</span></a>
       </div>
-      <div class="fh-portrait" data-reveal="float-r" data-reveal-delay="60">
-        <div class="portrait-frame">
+      <div class="f-hero__portrait">
+        <div class="f-portrait-frame">
           <img
             src="/images/founder/fiker-portrait.jpg"
             alt="Fiker Abate — Founder of LuliDigital"
-            class="portrait-img"
+            width="520" height="640"
             loading="eager"
             fetchpriority="high"
-            width="520"
-            height="640"
           />
-          <div class="portrait-glow" aria-hidden="true"></div>
+          <div class="f-portrait-overlay" aria-hidden="true"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── STORY ─────────────────────────────────────────────────── -->
-  <section class="founder-story">
-    <div class="fs-inner">
-      <div class="section-header" data-reveal="up">
-        <span class="eyebrow">Origin Story</span>
-        <h2 class="section-title">Built for a world that moves fast.</h2>
+  <!-- ── THE ARC ───────────────────────────────────────────────── -->
+  <section class="f-arc" data-atmosphere="hero" data-hive-section>
+    <div class="f-arc__inner">
+      <div class="f-arc__panel f-arc__panel--before" data-reveal="up">
+        <span class="f-arc__label">Then</span>
+        <p class="f-arc__copy">
+          Hospital corridors.<br/>12-hour shifts.<br/>Someone else's ceiling.
+        </p>
       </div>
-      <div class="fs-grid">
-        <div class="fs-block" data-reveal="up" data-reveal-delay="0">
-          <span class="fs-label">The Beginning</span>
-          <p>LuliDigital started as a question: why do talented founders spend their best hours on work that shouldn't require their best hours? Watching too many operators get buried in the operational weight of their own growth, I decided to do something about it.</p>
+      <div class="f-arc__divider" aria-hidden="true">
+        <span class="f-arc__arrow">↓</span>
+        <span class="f-arc__since">LuliDigital</span>
+        <span class="f-arc__arrow">↓</span>
+      </div>
+      <div class="f-arc__panel f-arc__panel--after" data-reveal="up" data-reveal-delay="80">
+        <span class="f-arc__label">Now</span>
+        <p class="f-arc__copy">
+          A creative agency.<br/>Built from scratch.<br/><strong>No ceiling.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHO THIS IS FOR ───────────────────────────────────────── -->
+  <section class="f-who" data-atmosphere="marketing" data-hive-section>
+    <div class="f-who__inner">
+      <span class="f-eyebrow">This is for you if —</span>
+      <ul class="f-who__list" role="list">
+        <li data-reveal="up" data-reveal-delay="0">Your work is brilliant. <em>Your brand isn't showing it.</em></li>
+        <li data-reveal="up" data-reveal-delay="60">You're doing everything. <em>Something has to give.</em></li>
+        <li data-reveal="up" data-reveal-delay="120">You're ready to grow. <em>You just need the team.</em></li>
+        <li data-reveal="up" data-reveal-delay="180">You've outgrown where you started. <em>You just haven't moved yet.</em></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── THE LIFT ───────────────────────────────────────────────── -->
+  <section class="f-lift" data-atmosphere="ai" data-hive-section>
+    <div class="f-lift__inner">
+      <span class="f-eyebrow">What changes</span>
+      <div class="f-lift__rows">
+        <div class="f-lift__row" data-reveal="up" data-reveal-delay="0">
+          <span class="f-lift__before">Invisible</span>
+          <span class="f-lift__bridge" aria-hidden="true">→</span>
+          <span class="f-lift__after">Unmissable</span>
         </div>
-        <div class="fs-block" data-reveal="up" data-reveal-delay="80">
-          <span class="fs-label">The Build</span>
-          <p>I designed three desks — Marketing, AI, and Virtual Assistant — each staffed by specialists who work like an in-house team without the overhead. Every desk runs lean, moves fast, and reports clearly so you always know what's happening and why it matters.</p>
+        <div class="f-lift__row" data-reveal="up" data-reveal-delay="60">
+          <span class="f-lift__before">Scattered</span>
+          <span class="f-lift__bridge" aria-hidden="true">→</span>
+          <span class="f-lift__after">Strategic</span>
         </div>
-        <div class="fs-block" data-reveal="up" data-reveal-delay="160">
-          <span class="fs-label">The Mission</span>
-          <p>We're wired for founders scaling across borders. Whether you're entering Europe, building your AI stack, or need someone sharp running your inbox and ops — LuliDigital is the capacity you hire before you hire full-time.</p>
+        <div class="f-lift__row" data-reveal="up" data-reveal-delay="120">
+          <span class="f-lift__before">Overwhelmed</span>
+          <span class="f-lift__bridge" aria-hidden="true">→</span>
+          <span class="f-lift__after">Operating</span>
+        </div>
+        <div class="f-lift__row" data-reveal="up" data-reveal-delay="180">
+          <span class="f-lift__before">Average presence</span>
+          <span class="f-lift__bridge" aria-hidden="true">→</span>
+          <span class="f-lift__after">Premium brand</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── THE THREE DESKS ───────────────────────────────────────── -->
-  <section class="founder-desks" id="desks">
-    <div class="fd-inner">
-      <div class="section-header" data-reveal="up">
-        <span class="eyebrow">What I Built</span>
-        <h2 class="section-title">Three desks. One vision.</h2>
-      </div>
-      <div class="fd-grid">
-        <article class="glow-card fd-card" data-tilt="6" data-reveal="up" data-reveal-delay="0">
-          <div class="tilt-layer">
-            <span class="fd-icon" aria-hidden="true">📣</span>
-            <h3 class="fd-card-title">Marketing Desk</h3>
-            <p class="fd-card-desc">SEO, paid media, and brand strategy built for teams entering new markets. Organic growth, performance ads, and content — without the full in-house overhead.</p>
-            <a class="cta-link" href="/marketing-desk">Explore the desk <span class="arr">→</span></a>
-          </div>
-        </article>
-        <article class="glow-card fd-card" data-tilt="6" data-reveal="up" data-reveal-delay="80">
-          <div class="tilt-layer">
-            <span class="fd-icon" aria-hidden="true">⚡</span>
-            <h3 class="fd-card-title">AI Desk</h3>
-            <p class="fd-card-desc">Custom automation, AI agents, voice systems, and workflow integrations. The operational intelligence layer so your team can focus on decisions that matter.</p>
-            <a class="cta-link" href="/ai-desk">Explore the desk <span class="arr">→</span></a>
-          </div>
-        </article>
-        <article class="glow-card fd-card" data-tilt="6" data-reveal="up" data-reveal-delay="160">
-          <div class="tilt-layer">
-            <span class="fd-icon" aria-hidden="true">🛡️</span>
-            <h3 class="fd-card-title">Virtual Assistant Desk</h3>
-            <p class="fd-card-desc">Executive-level remote support — inbox management, calendar control, admin ops, and back-office coverage. Your capacity partner for the operational middle.</p>
-            <a class="cta-link" href="/va-desk">Explore the desk <span class="arr">→</span></a>
-          </div>
-        </article>
+  <!-- ── THE DESKS ─────────────────────────────────────────────── -->
+  <section class="f-desks" data-atmosphere="services" data-hive-section>
+    <div class="f-desks__inner">
+      <span class="f-eyebrow">The tools I built</span>
+      <div class="f-desks__list">
+        <a class="f-desk-item" href="/marketing-desk" data-reveal="up" data-reveal-delay="0">
+          <span class="f-desk-num">01</span>
+          <span class="f-desk-name">Marketing Desk</span>
+          <span class="f-desk-word">Reach</span>
+          <span class="f-desk-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="f-desk-item" href="/ai-desk" data-reveal="up" data-reveal-delay="60">
+          <span class="f-desk-num">02</span>
+          <span class="f-desk-name">AI Desk</span>
+          <span class="f-desk-word">Leverage</span>
+          <span class="f-desk-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="f-desk-item" href="/va-desk" data-reveal="up" data-reveal-delay="120">
+          <span class="f-desk-num">03</span>
+          <span class="f-desk-name">VA Desk</span>
+          <span class="f-desk-word">Capacity</span>
+          <span class="f-desk-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="f-desk-item" href="/web-design-desk" data-reveal="up" data-reveal-delay="180">
+          <span class="f-desk-num">04</span>
+          <span class="f-desk-name">Web Design Desk</span>
+          <span class="f-desk-word">Presence</span>
+          <span class="f-desk-arrow" aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- ── CLIENT PROFILES ──────────────────────────────────────── -->
-  <section class="founder-clients">
-    <div class="fc-inner">
-      <div class="section-header" data-reveal="up">
-        <span class="eyebrow">Who I Work With</span>
-        <h2 class="section-title">Fast-movers. Global ambitions.</h2>
-      </div>
-      <div class="fc-grid">
-        <article class="glow-card fc-card" data-tilt="4" data-reveal="up" data-reveal-delay="0">
-          <div class="tilt-layer">
-            <span class="fc-type">The Scaling Founder</span>
-            <p>Series A or bootstrapped, you've found product-market fit and now you're breaking into Europe or the US. You need reach, brand presence, and ops capacity — fast.</p>
-          </div>
-        </article>
-        <article class="glow-card fc-card" data-tilt="4" data-reveal="up" data-reveal-delay="60">
-          <div class="tilt-layer">
-            <span class="fc-type">The Lean Agency</span>
-            <p>A boutique studio delivering work for larger clients. You need white-label marketing execution, AI tooling, and admin support without growing headcount.</p>
-          </div>
-        </article>
-        <article class="glow-card fc-card" data-tilt="4" data-reveal="up" data-reveal-delay="120">
-          <div class="tilt-layer">
-            <span class="fc-type">The Stretched Operator</span>
-            <p>Head of Ops, COO, or founder wearing all hats. You need an execution partner who gets it done without hand-holding — right inbox, right tone, right deliverable.</p>
-          </div>
-        </article>
-        <article class="glow-card fc-card" data-tilt="4" data-reveal="up" data-reveal-delay="180">
-          <div class="tilt-layer">
-            <span class="fc-type">The AI-First Builder</span>
-            <p>Building something new and want AI embedded from the start. You need an implementation partner who moves fast, integrates deeply, and documents clearly.</p>
-          </div>
-        </article>
+  <!-- ── CTA ───────────────────────────────────────────────────── -->
+  <section class="f-final" data-atmosphere="cta" data-hive-section data-bee-final>
+    <div class="f-final__inner">
+      <p class="f-final__pre">You've seen the arc.</p>
+      <h2 class="f-final__title">Ready to<br/><em>move up?</em></h2>
+      <div class="f-final__actions">
+        <a class="f-cta-pill f-cta-pill--light" href="/contact">Start the conversation <span aria-hidden="true">→</span></a>
+        <a class="f-cta-pill f-cta-pill--ghost" href="https://wa.me/27602551513" target="_blank" rel="noopener noreferrer">WhatsApp Fiker</a>
       </div>
     </div>
-  </section>
-
-  <!-- ── FINAL CTA ─────────────────────────────────────────────── -->
-  <section class="founder-cta" data-bee-final>
-    <div class="fcta-inner">
-      <span class="eyebrow fcta-eyebrow" data-blur-in>Let's Talk</span>
-      <h2 class="fcta-title" data-blur-in data-blur-delay="100">
-        Ready to hand off<br/>the hard parts?
-      </h2>
-      <p class="fcta-sub" data-blur-in data-blur-delay="200">
-        Drop me a line. Whether you need one desk or all three — I'll tell you exactly what makes sense for where you are right now.
-      </p>
-      <div class="fcta-actions" data-reveal="up" data-reveal-delay="300">
-        <a class="pill pill--filled" href="/contact">Start the conversation <span aria-hidden="true">→</span></a>
-        <a class="pill pill--ghost" href="https://wa.me/27602551513" target="_blank" rel="noopener noreferrer">WhatsApp directly</a>
-      </div>
-    </div>
+    <div class="hive-glow-ring" aria-hidden="true"></div>
   </section>
 
 </BaseLayout>
 
 <style>
-  /* ── Hero ───────────────────────────────────────────── */
-  .founder-hero {
-    padding: clamp(64px, 9vw, 128px) 0 clamp(48px, 7vw, 96px);
+
+  /* ─── HERO ──────────────────────────────────────────── */
+  .f-hero {
+    padding: clamp(72px, 10vw, 140px) 0 clamp(56px, 8vw, 100px);
     overflow: hidden;
-    border-bottom: 1px solid rgba(30,24,22,.08);
   }
-  .fh-inner {
-    max-width: 1120px;
+  .f-hero__inner {
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 clamp(18px, 4vw, 48px);
+    padding: 0 clamp(20px, 5vw, 56px);
     display: grid;
-    grid-template-columns: 1fr 420px;
+    grid-template-columns: 1fr 380px;
     gap: clamp(40px, 6vw, 80px);
     align-items: center;
   }
-  .fh-name {
-    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
-    font-size: clamp(56px, 9vw, 112px);
-    font-weight: 900;
-    line-height: 0.95;
-    letter-spacing: -.04em;
-    margin: 18px 0 20px;
-    color: var(--ink, #141312);
-  }
-  .fh-name em { font-style: italic; color: var(--brand, #7b2d2d); }
-  .fh-tagline {
-    font-size: clamp(15px, 1.7vw, 19px);
-    line-height: 1.65;
-    color: var(--muted, rgba(20,19,18,.65));
-    max-width: 520px;
-    margin: 0 0 32px;
-    font-family: var(--font-body, "DM Sans", sans-serif);
-  }
-  .fh-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-  }
-  .fh-actions .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 28px;
-    border-radius: 999px;
-    font-family: var(--font-body, "DM Sans", sans-serif);
-    font-size: 12px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    font-weight: 700;
-    text-decoration: none;
-    transition: background 200ms ease, box-shadow 200ms ease, color 200ms ease, border-color 200ms ease;
-  }
-  .fh-actions .pill--filled {
-    background: var(--brand, #7b2d2d);
-    color: #f9f5ef;
-    box-shadow: 0 10px 28px rgba(123,45,45,.26);
-  }
-  .fh-actions .pill--filled:hover {
-    background: #6a2828;
-    box-shadow: 0 16px 36px rgba(123,45,45,.38);
-  }
-  .fh-actions .pill--outline {
-    border: 1.5px solid var(--brand, #7b2d2d);
-    color: var(--brand, #7b2d2d);
-    background: transparent;
-  }
-  .fh-actions .pill--outline:hover { background: rgba(123,45,45,.06); }
-
-  /* Portrait */
-  .portrait-frame {
-    position: relative;
-    border-radius: 24px;
-    overflow: hidden;
-    aspect-ratio: 4/5;
-    background: linear-gradient(145deg, rgba(245,164,31,.12), rgba(123,45,45,.08));
-  }
-  .portrait-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-  }
-  .portrait-glow {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(123,45,45,.18) 0%, transparent 55%);
-    pointer-events: none;
-  }
-
-  /* ── Story ──────────────────────────────────────────── */
-  .founder-story {
-    padding: clamp(64px, 8vw, 96px) 0;
-    border-bottom: 1px solid rgba(30,24,22,.08);
-  }
-  .fs-inner {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 clamp(18px, 4vw, 48px);
-  }
-  .fs-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(24px, 3vw, 48px);
-    margin-top: 40px;
-  }
-  .fs-block {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .fs-label {
+  .f-badge {
+    display: inline-block;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--brand, #7b2d2d);
     font-family: var(--font-body, "DM Sans", sans-serif);
+    margin-bottom: 20px;
   }
-  .fs-block p {
-    font-size: clamp(14px, 1.3vw, 16px);
-    line-height: 1.72;
-    color: var(--muted, rgba(20,19,18,.65));
-    margin: 0;
-    font-family: var(--font-body, "DM Sans", sans-serif);
+  .f-hero__name {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(64px, 10vw, 120px);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -.04em;
+    color: var(--ink, #141312);
+    margin: 0 0 28px;
   }
-
-  /* ── Desks ──────────────────────────────────────────── */
-  .founder-desks {
-    padding: clamp(64px, 8vw, 96px) 0;
-    border-bottom: 1px solid rgba(30,24,22,.08);
+  .f-hero__name em {
+    font-style: italic;
+    color: var(--brand, #7b2d2d);
   }
-  .fd-inner {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 clamp(18px, 4vw, 48px);
+  .f-hero__line {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(20px, 2.8vw, 34px);
+    line-height: 1.3;
+    color: var(--muted, rgba(20,19,18,.55));
+    margin: 0 0 36px;
+    font-weight: 400;
   }
-  .fd-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-    margin-top: 40px;
+  .f-hero__line strong {
+    color: var(--ink, #141312);
+    font-weight: 700;
   }
-  .fd-card .tilt-layer {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    height: 100%;
-    padding: 32px 28px;
+  .f-portrait-frame {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    background: linear-gradient(145deg, rgba(245,164,31,.1), rgba(123,45,45,.07));
   }
-  .fd-icon {
-    font-size: 28px;
-    line-height: 1;
+  .f-portrait-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
     display: block;
   }
-  .fd-card-title {
-    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
-    font-size: clamp(20px, 2vw, 26px);
-    font-weight: 700;
-    letter-spacing: -.02em;
-    line-height: 1.1;
-    color: var(--ink, #141312);
-    margin: 0;
-    transition: color 280ms ease;
+  .f-portrait-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(123,45,45,.22) 0%, transparent 50%);
+    pointer-events: none;
   }
-  .fd-card:hover .fd-card-title { color: #f5f0e8; }
-  .fd-card-desc {
-    font-size: 14px;
-    line-height: 1.68;
-    color: var(--muted, rgba(20,19,18,.65));
-    margin: 0;
-    flex: 1;
-    font-family: var(--font-body, "DM Sans", sans-serif);
-    transition: color 280ms ease;
-  }
-  .fd-card:hover .fd-card-desc { color: rgba(245,240,232,.72); }
 
-  /* ── Clients ────────────────────────────────────────── */
-  .founder-clients {
-    padding: clamp(64px, 8vw, 96px) 0;
+  /* ─── ARC ───────────────────────────────────────────── */
+  .f-arc {
+    padding: clamp(56px, 7vw, 96px) 0;
+    border-top: 1px solid rgba(30,24,22,.08);
     border-bottom: 1px solid rgba(30,24,22,.08);
   }
-  .fc-inner {
-    max-width: 1120px;
+  .f-arc__inner {
+    max-width: 640px;
     margin: 0 auto;
-    padding: 0 clamp(18px, 4vw, 48px);
-  }
-  .fc-grid {
+    padding: 0 clamp(20px, 5vw, 56px);
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-top: 40px;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 32px;
+    align-items: center;
   }
-  .fc-card .tilt-layer {
+  .f-arc__panel {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 28px 24px;
+    gap: 14px;
   }
-  .fc-type {
+  .f-arc__panel--after {
+    text-align: right;
+  }
+  .f-arc__label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+  .f-arc__panel--before .f-arc__label { color: rgba(20,19,18,.35); }
+  .f-arc__panel--after  .f-arc__label { color: var(--brand, #7b2d2d); }
+  .f-arc__copy {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(18px, 2.2vw, 26px);
+    line-height: 1.35;
+    margin: 0;
+  }
+  .f-arc__panel--before .f-arc__copy { color: rgba(20,19,18,.38); }
+  .f-arc__panel--after  .f-arc__copy { color: var(--ink, #141312); }
+  .f-arc__panel--after  .f-arc__copy strong { color: var(--brand, #7b2d2d); }
+  .f-arc__divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--honey-mid, #f5a41f);
+  }
+  .f-arc__arrow {
+    font-size: 18px;
+    opacity: .5;
+  }
+  .f-arc__since {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    color: var(--honey-mid, #f5a41f);
+    writing-mode: vertical-rl;
+    padding: 8px 0;
+  }
+
+  /* ─── WHO ───────────────────────────────────────────── */
+  .f-who {
+    padding: clamp(72px, 9vw, 120px) 0;
+  }
+  .f-who__inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 56px);
+  }
+  .f-eyebrow {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--brand, #7b2d2d);
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    margin-bottom: 36px;
+  }
+  .f-who__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .f-who__list li {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(22px, 3.2vw, 40px);
+    font-weight: 600;
+    line-height: 1.2;
+    color: rgba(20,19,18,.28);
+    padding: clamp(18px, 2.5vw, 28px) 0;
+    border-bottom: 1px solid rgba(30,24,22,.07);
+    transition: color 400ms ease;
+  }
+  .f-who__list li:hover { color: var(--ink, #141312); }
+  .f-who__list li em {
+    font-style: italic;
+    color: var(--ink, #141312);
+  }
+
+  /* ─── LIFT ──────────────────────────────────────────── */
+  .f-lift {
+    padding: clamp(72px, 9vw, 120px) 0;
+    background: #0f0a09;
+    border-top: 1px solid rgba(245,164,31,.08);
+    border-bottom: 1px solid rgba(245,164,31,.08);
+  }
+  .f-lift .f-eyebrow { color: rgba(245,164,31,.5); }
+  .f-lift__inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 56px);
+  }
+  .f-lift__rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .f-lift__row {
+    display: grid;
+    grid-template-columns: 1fr 48px 1fr;
+    align-items: center;
+    padding: clamp(16px, 2.2vw, 26px) 0;
+    border-bottom: 1px solid rgba(245,240,232,.05);
+  }
+  .f-lift__before {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(20px, 2.8vw, 36px);
+    font-weight: 400;
+    font-style: italic;
+    color: rgba(245,240,232,.22);
+    text-align: right;
+  }
+  .f-lift__bridge {
+    text-align: center;
+    color: rgba(245,164,31,.35);
+    font-size: 20px;
+  }
+  .f-lift__after {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(20px, 2.8vw, 36px);
+    font-weight: 700;
+    color: rgba(245,240,232,.88);
+  }
+
+  /* ─── DESKS ─────────────────────────────────────────── */
+  .f-desks {
+    padding: clamp(72px, 9vw, 120px) 0;
+    border-bottom: 1px solid rgba(30,24,22,.08);
+  }
+  .f-desks__inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 56px);
+  }
+  .f-desks__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 8px;
+  }
+  .f-desk-item {
+    display: grid;
+    grid-template-columns: 40px 1fr auto 28px;
+    align-items: center;
+    gap: 20px;
+    padding: clamp(18px, 2.2vw, 26px) 0;
+    border-bottom: 1px solid rgba(30,24,22,.08);
+    text-decoration: none;
+    transition: background 240ms ease;
+    border-radius: 4px;
+  }
+  .f-desk-item:hover { background: rgba(123,45,45,.04); }
+  .f-desk-item:hover .f-desk-arrow { opacity: 1; transform: translateX(4px); }
+  .f-desk-item:hover .f-desk-name { color: var(--brand, #7b2d2d); }
+  .f-desk-num {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    color: rgba(20,19,18,.25);
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+  .f-desk-name {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(18px, 2.2vw, 28px);
+    font-weight: 600;
+    color: var(--ink, #141312);
+    transition: color 240ms ease;
+  }
+  .f-desk-word {
     font-size: 10px;
     font-weight: 700;
     letter-spacing: .2em;
     text-transform: uppercase;
+    color: var(--honey-mid, #f5a41f);
+    font-family: var(--font-body, "DM Sans", sans-serif);
+  }
+  .f-desk-arrow {
     color: var(--brand, #7b2d2d);
-    font-family: var(--font-body, "DM Sans", sans-serif);
-    transition: color 280ms ease;
+    font-size: 16px;
+    opacity: 0.3;
+    transition: opacity 240ms ease, transform 240ms ease;
   }
-  .fc-card:hover .fc-type { color: rgba(245,164,31,.85); }
-  .fc-card p {
-    font-size: 13px;
-    line-height: 1.68;
-    color: var(--muted, rgba(20,19,18,.65));
-    margin: 0;
-    font-family: var(--font-body, "DM Sans", sans-serif);
-    transition: color 280ms ease;
-  }
-  .fc-card:hover p { color: rgba(245,240,232,.72); }
 
-  /* ── Final CTA ──────────────────────────────────────── */
-  .founder-cta {
-    padding: clamp(80px, 10vw, 128px) 0;
+  /* ─── CTA ───────────────────────────────────────────── */
+  .f-final {
+    padding: clamp(96px, 12vw, 160px) 0;
     background: #0f0a09;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
   }
-  .fcta-inner {
-    max-width: 680px;
+  .f-final__inner {
+    max-width: 640px;
     margin: 0 auto;
-    padding: 0 clamp(18px, 4vw, 48px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 0 clamp(20px, 5vw, 56px);
+    position: relative;
+    z-index: 1;
   }
-  .fcta-eyebrow { color: rgba(245,164,31,.7); }
-  .fcta-title {
-    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
-    font-size: clamp(36px, 6vw, 72px);
-    font-weight: 800;
-    letter-spacing: -.04em;
-    line-height: 1.0;
-    color: rgba(245,240,232,.92);
-    margin: 14px 0 20px;
-  }
-  .fcta-sub {
-    font-size: clamp(15px, 1.5vw, 18px);
-    line-height: 1.65;
-    color: rgba(245,240,232,.55);
-    margin: 0 0 36px;
+  .f-final__pre {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(245,164,31,.5);
     font-family: var(--font-body, "DM Sans", sans-serif);
+    margin: 0 0 20px;
   }
-  .fcta-actions {
+  .f-final__title {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 900;
+    letter-spacing: -.04em;
+    line-height: 0.95;
+    color: rgba(245,240,232,.92);
+    margin: 0 0 40px;
+  }
+  .f-final__title em {
+    font-style: italic;
+    color: var(--honey-mid, #f5a41f);
+  }
+  .f-final__actions {
     display: flex;
     flex-wrap: wrap;
     gap: 14px;
-    align-items: center;
     justify-content: center;
   }
-  .fcta-actions .pill {
+
+  /* ─── SHARED PILL ───────────────────────────────────── */
+  .f-cta-pill {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -455,44 +513,50 @@ const personSchema = {
     text-transform: uppercase;
     font-weight: 700;
     text-decoration: none;
-    transition: background 200ms ease, box-shadow 200ms ease, color 200ms ease, border-color 200ms ease;
-  }
-  .fcta-actions .pill--filled {
     background: var(--brand, #7b2d2d);
     color: #f9f5ef;
-    box-shadow: 0 10px 28px rgba(123,45,45,.4);
+    box-shadow: 0 10px 28px rgba(123,45,45,.28);
+    transition: background 200ms ease, box-shadow 200ms ease;
   }
-  .fcta-actions .pill--filled:hover {
+  .f-cta-pill:hover {
     background: #6a2828;
-    box-shadow: 0 16px 40px rgba(123,45,45,.55);
+    box-shadow: 0 16px 40px rgba(123,45,45,.4);
   }
-  .fcta-actions .pill--ghost {
+  .f-cta-pill--light {
+    background: rgba(245,240,232,.92);
+    color: #0f0a09;
+    box-shadow: 0 10px 28px rgba(0,0,0,.2);
+  }
+  .f-cta-pill--light:hover {
+    background: #fff;
+    box-shadow: 0 16px 40px rgba(0,0,0,.3);
+  }
+  .f-cta-pill--ghost {
+    background: transparent;
     border: 1px solid rgba(245,240,232,.2);
     color: rgba(245,240,232,.7);
+    box-shadow: none;
   }
-  .fcta-actions .pill--ghost:hover {
-    border-color: rgba(245,240,232,.42);
+  .f-cta-pill--ghost:hover {
+    border-color: rgba(245,240,232,.45);
     color: rgba(245,240,232,.92);
   }
 
-  /* ── Responsive ─────────────────────────────────────── */
-  @media (max-width: 900px) {
-    .fh-inner {
-      grid-template-columns: 1fr;
-    }
-    .fh-portrait {
-      order: -1;
-      max-width: 300px;
-      margin: 0 auto;
-    }
-    .fs-grid { grid-template-columns: 1fr; gap: 28px; }
-    .fd-grid { grid-template-columns: 1fr 1fr; }
-    .fc-grid { grid-template-columns: 1fr 1fr; }
+  /* ─── RESPONSIVE ────────────────────────────────────── */
+  @media (max-width: 860px) {
+    .f-hero__inner { grid-template-columns: 1fr; }
+    .f-hero__portrait { order: -1; max-width: 280px; margin: 0 auto; }
+    .f-arc__inner { grid-template-columns: 1fr; text-align: center; }
+    .f-arc__panel--after { text-align: center; }
+    .f-arc__divider { flex-direction: row; writing-mode: horizontal-tb; }
+    .f-arc__since { writing-mode: horizontal-tb; padding: 0 8px; }
+    .f-lift__row { grid-template-columns: 1fr 32px 1fr; }
+    .f-desk-item { grid-template-columns: 32px 1fr auto; }
+    .f-desk-arrow { display: none; }
   }
-  @media (max-width: 560px) {
-    .fd-grid { grid-template-columns: 1fr; }
-    .fc-grid { grid-template-columns: 1fr; }
-    .fh-actions .pill { width: 100%; justify-content: center; }
-    .fcta-actions .pill { width: 100%; justify-content: center; }
+  @media (max-width: 500px) {
+    .f-who__list li { font-size: clamp(18px, 5vw, 24px); }
+    .f-lift__before, .f-lift__after { font-size: clamp(17px, 4.5vw, 22px); }
+    .f-final__actions .f-cta-pill { width: 100%; justify-content: center; }
   }
 </style>
