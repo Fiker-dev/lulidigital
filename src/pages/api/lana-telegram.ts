@@ -101,6 +101,39 @@ function parseDirectControl(text: string, memory: LanaMemory | null): LanaDecisi
   };
 }
 
+function parseReviewReply(text: string, reviewState: ReviewState | null): LanaDecision | null {
+  if (!reviewState) return null;
+
+  const compact = text.trim();
+
+  const approvePattern = /^(yes|yep|yeah|y|ok|okay|approved?|approve it|approve and publish|publish|publish it|post|post it|ship|ship it|send it|go ahead|looks good|looks good to me|all good|good to go|fine|perfect|love it|that works|run it|do it|schedule it|put it live|make it live|green light|thumbs up|proceed)\b[.! ]*$/i;
+  if (approvePattern.test(compact)) {
+    return {
+      action: "approve",
+      reply: `Approved. Publishing ${reviewState.slug} now.`,
+    };
+  }
+
+  const rejectPattern = /^(no|nope|nah|reject|reject it|delete|delete it|scrap|scrap it|kill it|drop it|bin it|trash it|forget it|do not publish|don't publish|dont publish|not this|not this one|cancel|cancel it|remove draft|remove it)\b[.! ]*$/i;
+  if (rejectPattern.test(compact)) {
+    return {
+      action: "reject",
+      reply: `Got it. Removing draft ${reviewState.slug}.`,
+    };
+  }
+
+  const asksForChanges = /\b(change|revise|rewrite|edit|adjust|fix|make it|make this|can you|could you|please|shorter|longer|more|less|natural|human|premium|specific|different|title|headline|intro|opening|cta|tone|angle|countries|keyword|seo|remove|add|include|mention|avoid|sounds|doesn't sound|does not sound)\b/i.test(compact);
+  if (asksForChanges) {
+    return {
+      action: "revise",
+      reply: `I'll revise ${reviewState.slug} with that feedback.`,
+      revision_instructions: compact,
+    };
+  }
+
+  return null;
+}
+
 async function sendTelegram(chatId: string, text: string) {
   const token = getEnv("TELEGRAM_BOT_TOKEN");
   if (!token) return;
@@ -170,9 +203,9 @@ You are currently in a review loop for a draft post. Fiker is reviewing it and h
 - Preview: "${reviewState.preview_text}"
 
 In this mode, interpret Fiker's message as a response to the draft:
-- If he approves (YES, looks good, publish it, schedule it, go ahead, etc.) → action: "approve"
-- If he wants changes (any edit request, feedback, or instructions) → action: "revise", fill revision_instructions with his exact instructions
-- If he rejects (no, delete it, scrap it, don't publish, forget it) → action: "reject"
+- If he approves (YES, approved, looks good, ship it, publish it, post it, schedule it, go ahead, green light, good to go, etc.) → action: "approve"
+- If he wants changes (any edit request, feedback, "make it more natural", "change the title", "include other countries", "less SEO", etc.) → action: "revise", fill revision_instructions with his exact instructions
+- If he rejects (no, reject it, delete it, scrap it, don't publish, not this one, cancel it, forget it) → action: "reject"
 - If he asks a question about something else → action: "chat"
 
 Do NOT use "draft", "publish", or "schedule" while a review is active.`;
@@ -328,7 +361,7 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response("OK");
     }
 
-    const decision = parseDirectControl(text, memory) ?? await askLana(text, reviewState);
+    const decision = parseDirectControl(text, memory) ?? parseReviewReply(text, reviewState) ?? await askLana(text, reviewState);
 
     if (decision.action === "approve" && reviewState) {
       await dispatchWorkflow("publish-draft-blog.yml", {
