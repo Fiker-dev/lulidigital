@@ -390,18 +390,29 @@ function initDeskTransforms() {
 }
 
 function watchTransform(selector, callback) {
-  const zone = document.querySelector(selector);
-  if (!zone) return;
+  // Watch ALL matching elements (multiple cards on same page)
+  const zones = document.querySelectorAll(selector);
+  if (!zones.length) return;
 
-  let fired = false;
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting || fired) return;
-      fired = true;
-      callback(zone);
-      io.unobserve(e.target);
-    });
-  }, { threshold: 0.52 });
+  zones.forEach((zone) => {
+    let fired = false;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting || fired) return;
+        fired = true;
+        // Mark the parent card so desk-state-tag CSS triggers
+        const card = zone.closest('.glow-card, .bento-card, article');
+        if (card) {
+          card.classList.add('is-hive-active');
+          // Add to parent section too for atmosphere CSS selectors
+          const section = zone.closest('[data-atmosphere]');
+          if (section) section.classList.add('is-atmosphere-active');
+        }
+        callback(zone);
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.15 }); // Fire early — user just needs to see it
 
-  io.observe(zone);
+    io.observe(zone);
+  });
 }
