@@ -485,10 +485,10 @@
   }
   .lana-trigger:hover  { background: #9A5800; transform: translateY(-1px); }
   .lana-trigger:active { transform: scale(0.97); }
+  /* Stay visible while scrolling — just soften so it never blocks reading */
   .lana-trigger.is-scrolling {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(6px) scale(0.95);
+    opacity: 0.72;
+    transform: scale(0.97);
   }
   .lana-trigger__bee  { width: 22px; height: auto; flex-shrink: 0; }
   .lana-trigger__label { white-space: nowrap; }

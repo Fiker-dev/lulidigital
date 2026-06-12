@@ -303,22 +303,6 @@ const jsonLd = {
       </div>
     )}
 
-    <!-- ══════════════ FLOATING LANA CHAT TRIGGER ══════════════ -->
-    <button id="float-chat" type="button" aria-label="Chat with Lana">
-      <svg class="fc-icon" width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-        <ellipse cx="11" cy="9" rx="6" ry="3.4" fill="rgba(249,245,239,.55)" transform="rotate(-32 11 9)"/>
-        <ellipse cx="21" cy="9" rx="6" ry="3.4" fill="rgba(249,245,239,.55)" transform="rotate(32 21 9)"/>
-        <ellipse cx="16" cy="18" rx="9" ry="7.5" fill="#f5a41f"/>
-        <path d="M11 11.6c-1.4 1.6-2.2 3.9-2.2 6.4s.8 4.8 2.2 6.4" stroke="#1e1816" stroke-width="2.6" stroke-linecap="round" fill="none"/>
-        <path d="M16 10.5v15" stroke="#1e1816" stroke-width="2.6" stroke-linecap="round"/>
-        <path d="M21 11.6c1.4 1.6 2.2 3.9 2.2 6.4s-.8 4.8-2.2 6.4" stroke="#1e1816" stroke-width="2.6" stroke-linecap="round" fill="none"/>
-        <circle cx="13" cy="16.5" r="1.3" fill="#1e1816"/>
-        <circle cx="19" cy="16.5" r="1.3" fill="#1e1816"/>
-      </svg>
-      <span class="fc-label">Chat with Lana</span>
-      <span class="fc-pulse" aria-hidden="true"></span>
-    </button>
-
     <SiteHeader active={active} />
     <main class="page">
       <slot />
@@ -341,7 +325,6 @@ const jsonLd = {
     if (document.querySelector("[data-bee-rim]")) {
       initBee();
     }
-    initFloatChat();
     scheduleEnhancements(initEnhancements);
   };
 
@@ -623,21 +606,6 @@ const jsonLd = {
     });
   }
 
-  function initFloatChat() {
-    const btn = document.getElementById('float-chat') as HTMLButtonElement | null;
-    if (!btn) return;
-    let chatOpen = false;
-    const show = () =>
-      btn.classList.toggle('is-visible', !chatOpen && window.scrollY > 120);
-    btn.addEventListener('click', () =>
-      window.dispatchEvent(new CustomEvent('luli:lana-open'))
-    );
-    window.addEventListener('luli:lana-open',  () => { chatOpen = true;  show(); });
-    window.addEventListener('luli:lana-close', () => { chatOpen = false; show(); });
-    window.addEventListener('scroll', show, { passive: true });
-    show();
-  }
-
   function initScrollProgress() {
     const bar = document.querySelector<HTMLElement>(".scroll-bar");
     if (!bar) return;
@@ -799,73 +767,4 @@ const jsonLd = {
     }
   }
 
-  /* ── Floating Lana Chat Trigger ─────────────────────────────── */
-  #float-chat {
-    position: fixed;
-    bottom: 28px;
-    right: 24px;
-    z-index: 180;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--brand, #7b2d2d);
-    color: #f9f5ef;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    border-radius: 999px;
-    padding: 13px 22px 13px 16px;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: .06em;
-    font-family: var(--font-body, "DM Sans", sans-serif);
-    box-shadow: 0 8px 28px rgba(123,45,45,.42), 0 2px 8px rgba(0,0,0,.12);
-    opacity: 0;
-    transform: translateY(20px) scale(0.92);
-    pointer-events: none;
-    transition:
-      opacity   380ms cubic-bezier(.16,1,.3,1),
-      transform 380ms cubic-bezier(.34,1.56,.64,1),
-      box-shadow 250ms ease,
-      background 200ms ease;
-    will-change: opacity, transform;
-  }
-  #float-chat.is-visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
-  }
-  #float-chat:hover {
-    background: #6a2828;
-    box-shadow: 0 14px 36px rgba(123,45,45,.55), 0 0 0 2px rgba(245,164,31,.4), 0 3px 12px rgba(0,0,0,.14);
-    transform: translateY(-2px) scale(1.02);
-  }
-  #float-chat:focus-visible {
-    outline: 2px solid var(--honey-mid, #f5a41f);
-    outline-offset: 3px;
-  }
-  .fc-icon { flex-shrink: 0; }
-  .fc-label { line-height: 1; white-space: nowrap; }
-  .fc-pulse {
-    position: absolute;
-    inset: -3px;
-    border-radius: 999px;
-    border: 2px solid rgba(123,45,45,.45);
-    animation: fcPulse 2.8s ease-out infinite;
-    pointer-events: none;
-  }
-  @keyframes fcPulse {
-    0%   { transform: scale(1);    opacity: .7; }
-    100% { transform: scale(1.22); opacity: 0;  }
-  }
-  @media (max-width: 500px) {
-    #float-chat { padding: 13px 16px; bottom: 20px; right: 16px; }
-    .fc-label { display: none; }
-    #float-chat { padding: 13px; border-radius: 50%; width: 52px; height: 52px; justify-content: center; }
-    .fc-icon { width: 22px; height: 22px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    #float-chat { transition: opacity 200ms ease; }
-    .fc-pulse { animation: none; }
-  }
 </style>
