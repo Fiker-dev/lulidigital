@@ -27,6 +27,11 @@ type LanaMemory = {
   pending_post: unknown;
   pending_drafts: string[];
   review_state: ReviewState | null;
+  latest_live_post?: {
+    slug: string;
+    title: string;
+    published_at: string;
+  };
 };
 
 type LanaDecision = {
@@ -51,6 +56,42 @@ function getEnv(name: string) {
 
 function normalizeChatId(value: number | string | undefined) {
   return value === undefined ? "" : String(value);
+}
+
+function normalizeSlug(value: string) {
+  return value
+    .replace(/^https?:\/\/(?:www\.)?lulidigital\.com\/blog\//i, "")
+    .replace(/^\/?blog\//i, "")
+    .replace(/\.md$/i, "")
+    .replace(/[.,!?;:)\]]+$/g, "")
+    .trim();
+}
+
+function parseDirectControl(text: string, memory: LanaMemory | null): LanaDecision | null {
+  const compact = text.trim();
+  const lower = compact.toLowerCase();
+  const unpublishIntent = /\b(take\s+down|take\s+it\s+down|remove|hide|unpublish|revoke)\b/i.test(compact);
+
+  if (!unpublishIntent) return null;
+
+  const urlMatch = compact.match(/https?:\/\/(?:www\.)?lulidigital\.com\/blog\/([a-z0-9-]+)/i);
+  const commandMatch = compact.match(/\b(?:take\s+down|remove|hide|unpublish|revoke)\s+(.+)$/i);
+  const directSlug = urlMatch?.[1] || (commandMatch ? normalizeSlug(commandMatch[1]) : "");
+  const fallbackSlug = lower.includes("take it down") ? memory?.latest_live_post?.slug : "";
+  const slug = normalizeSlug(directSlug || fallbackSlug || "");
+
+  if (!slug) {
+    return {
+      action: "chat",
+      reply: "Send me the slug or URL and I will take it down. Example: take down my-post-slug",
+    };
+  }
+
+  return {
+    action: "unpublish",
+    slug,
+    reply: `Taking it down now: ${slug}`,
+  };
 }
 
 async function sendTelegram(chatId: string, text: string) {
@@ -163,7 +204,7 @@ Rules:
 - Use "unpublish" when he says to take down, remove, hide, or revoke a post. Extract the slug from his message.
 - Use "chat" for questions, strategy talk, or anything else.
 - If Fiker says "take it down" or "remove it" without a slug, ask which post and remind him the slug was in the notification.
-- For cta_link: "AI page" or "ai desk" → "/ai", "marketing" → "/marketing", "VA" or "virtual assistant" → "/virtual-assistant", "landing pages" → pick the most relevant service page based on the topic.
+- For cta_link: "AI page" or "ai desk" → "/ai-desk", "marketing" → "/marketing-desk", "VA" or "virtual assistant" → "/va-desk", "landing pages" → pick the most relevant service page based on the topic.
 - For "chat" replies, be helpful and direct. If he's asking about a draft status, tell him to check GitHub Actions.
 - Never mention JSON, commands, or internal workings in your reply.`;
 
@@ -259,7 +300,7 @@ export const POST: APIRoute = async ({ request }) => {
     const memory = await fetchMemory();
     const reviewState = memory?.review_state ?? null;
 
-    const decision = await askLana(text, reviewState);
+    const decision = parseDirectControl(text, memory) ?? await askLana(text, reviewState);
 
     if (decision.action === "approve" && reviewState) {
       await dispatchWorkflow("publish-draft-blog.yml", {

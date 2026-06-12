@@ -4,7 +4,7 @@ description: "Most Amsterdam businesses have three people touching their SEO, fi
 pubDate: 2026-06-10
 category: "Digital Marketing"
 readingTime: "7 min read"
-draft: false
+draft: true
 ---
 
 Your Amsterdam business is probably drowning in SEO chaos right now. You've got three different people touching your website, five tools tracking different metrics, and a content calendar that looks like it survived a hurricane. Meanwhile, your organic traffic resembles a heart monitor during a panic attack, and you're spending more time explaining why rankings dropped than actually fixing anything. Sound familiar? The problem isn't that SEO is complicated. The problem is that most businesses treat SEO like a side project instead of a core business system.

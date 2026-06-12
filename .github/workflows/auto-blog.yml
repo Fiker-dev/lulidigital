@@ -130,9 +130,8 @@ jobs:
           fi
           TITLE=$(cat /tmp/post_title.txt)
           SLUG=$(cat /tmp/post_slug.txt)
-          CATEGORY=$(cat /tmp/post_category.txt)
           URL="https://lulidigital.com/blog/${SLUG}"
-          TEXT=$(printf "New post live on LuliDigital\n\n%s: %s\n\n%s\n\nNot happy? Reply: take down %s" "$CATEGORY" "$TITLE" "$URL" "$SLUG")
+          TEXT=$(printf "New post live on LuliDigital\n\n%s\n\n%s\n\nNot happy? Reply: take down %s" "$TITLE" "$URL" "$SLUG")
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "text=${TEXT}")

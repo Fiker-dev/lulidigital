@@ -4,7 +4,7 @@ description: "Learn how Amsterdam's structured approach to business operations c
 pubDate: 2026-06-12
 category: "AI Automation"
 readingTime: "7 min read"
-draft: false
+draft: true
 ---
 
 Your business system probably looks like Amsterdam's old canal network before the city planners got their hands on it. Random pathways connecting to other random pathways, with no one quite sure where anything leads or why it was built that way in the first place. Every time you try to trace a process from start to finish, you end up lost in some digital equivalent of a medieval side street.

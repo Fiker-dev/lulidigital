@@ -58,11 +58,78 @@ const localTargets = {
   NO: { label: "Norway Studio", path: "/norway" },
 };
 const localTarget = seoRecommendation ? localTargets[seoRecommendation.geo] : null;
+
+function slugify(value) {
+  return value
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 72)
+    .replace(/-+$/g, "");
+}
+
+function naturalSeoTopic(recommendation) {
+  const keyword = recommendation.keyword;
+  const geoLabel = localTargets[recommendation.geo]?.label?.replace(" Studio", "") ?? "global teams";
+  const lower = keyword.toLowerCase();
+
+  if (lower.includes("seo")) {
+    return {
+      title: `Why SEO Falls Apart When It Is Treated Like a Side Task`,
+      angle: `Use ${keyword} as the research target, but write for founders across ${geoLabel} and similar markets. Explain the operational problem behind poor SEO without repeating the keyword awkwardly.`,
+    };
+  }
+
+  if (lower.includes("virtual assistant") || lower.includes("executive assistant")) {
+    return {
+      title: `The Founder Support System That Stops Small Tasks Becoming Big Problems`,
+      angle: `Use ${keyword} as the research target, but make the article feel like practical operating advice for teams in ${geoLabel} and other active LuliDigital markets.`,
+    };
+  }
+
+  if (lower.includes("ai") || lower.includes("automation") || lower.includes("agent")) {
+    return {
+      title: `The AI Automations Worth Building Before Your Team Gets Busier`,
+      angle: `Use ${keyword} as the research target, but avoid turning the location or keyword into the headline. Write across ${geoLabel} and other international teams.`,
+    };
+  }
+
+  return {
+    title: `The Cleaner Growth System Most Busy Teams Are Missing`,
+    angle: `Use ${keyword} as the research target, but keep the headline human and useful. Mention ${geoLabel} naturally only where it helps the reader.`,
+  };
+}
+
+function titleLooksStuffed(title, keyword) {
+  const normalizedTitle = title.toLowerCase();
+  const normalizedKeyword = keyword.toLowerCase();
+  const keywordWords = normalizedKeyword.split(/[^a-z0-9]+/).filter((word) => word.length > 3);
+  const repeatedKeywordWords = keywordWords.filter((word) => (normalizedTitle.match(new RegExp(`\\b${word}\\b`, "g")) || []).length > 1);
+
+  return (
+    normalizedTitle.includes(`how to use ${normalizedKeyword}`) ||
+    normalizedTitle.includes("build a cleaner business system") ||
+    repeatedKeywordWords.length >= 2 ||
+    title.length > 88
+  );
+}
+
+function slugLooksStuffed(slug) {
+  return (
+    slug.length > 74 ||
+    /^how-to-use-.+-build-(a-)?cleaner-business-system$/.test(slug) ||
+    /(.+-){9,}/.test(slug)
+  );
+}
+
+const naturalSeo = seoRecommendation ? naturalSeoTopic(seoRecommendation) : null;
 const seoAgentTopic = seoRecommendation
   ? {
-      title: `How to Use ${seoRecommendation.keyword} to Build a Cleaner Business System`,
+      title: naturalSeo.title,
       category: customCategory || inferSeoCategory(seoRecommendation.keyword),
       keyword: customKeyword || seoRecommendation.keyword,
+      angle: naturalSeo.angle,
       source: seoRecommendation.source,
       localTarget,
     }
@@ -117,11 +184,11 @@ Category: ${topic.category}
 ${seoAgentTopic ? `Keyword research source: ${seoAgentTopic.source}` : ""}
 ${seoAgentTopic?.localTarget ? `Local landing page to link naturally in the article: [${seoAgentTopic.localTarget.label}](${seoAgentTopic.localTarget.path})` : ""}
 ${customPainPoint ? `Reader pain point to address: ${customPainPoint}` : ""}
-${customAngle ? `Specific angle to use: ${customAngle}` : ""}
+${customAngle || seoAgentTopic?.angle ? `Specific angle to use: ${customAngle || seoAgentTopic.angle}` : ""}
 ${customToneNotes ? `Tone notes from the editor: ${customToneNotes}` : ""}
 ${customCta ? `End-of-article CTA text: "${customCta}"${customCtaLink ? ` — link it to ${customCtaLink}` : ""}` : ""}
 
-The article should give genuinely useful, actionable advice. It should feel like pain relief for a founder who is tired of vague advice and wants the next practical move. Structure it with a strong opening paragraph, 4-6 H2 sections, and a closing section. Include a relevant internal link to the LuliDigital service page at the end (use markdown link format to either /ai, /marketing, or /virtual-assistant depending on the topic). If a local landing page is provided, include exactly one natural internal link to that local page as well.`;
+The article should give genuinely useful, actionable advice. It should feel like pain relief for a founder who is tired of vague advice and wants the next practical move. Structure it with a strong opening paragraph, 4-6 H2 sections, and a closing section. Include a relevant internal link to the LuliDigital service page at the end (use markdown link format to either /ai-desk, /marketing-desk, or /va-desk depending on the topic). If a local landing page is provided, include exactly one natural internal link to that local page as well.`;
 
 const response = await fetch("https://api.anthropic.com/v1/messages", {
   method: "POST",
@@ -154,6 +221,15 @@ try {
 } catch (e) {
   console.error("Failed to parse response as JSON:", raw.slice(0, 500));
   process.exit(1);
+}
+
+if (titleLooksStuffed(post.title, topic.keyword)) {
+  console.error(`Generated title looks keyword-stuffed: ${post.title}`);
+  process.exit(1);
+}
+
+if (!post.slug || slugLooksStuffed(post.slug)) {
+  post.slug = slugify(post.title);
 }
 
 const today = new Date().toISOString().split("T")[0];
@@ -189,7 +265,7 @@ if (!isCustomTopic) {
 
 // Clear consumed queue item and track new draft slug.
 // Spread ...memory first to preserve review_state and any other fields.
-if (queued || queuedSeo || existsSync(memoryPath)) {
+if (queued || queuedSeo || existsSync(memoryPath) || !isDraft) {
   const updatedMemory = {
     ...memory,
     pending_post: null,
@@ -197,6 +273,11 @@ if (queued || queuedSeo || existsSync(memoryPath)) {
       ? [...(memory.pending_drafts || []), post.slug]
       : (memory.pending_drafts || []),
     seo_opportunity_queue: queuedSeo ? seoQueue.slice(1) : seoQueue,
+    latest_live_post: isDraft ? memory.latest_live_post : {
+      slug: post.slug,
+      title: post.title,
+      published_at: today,
+    },
   };
   writeFileSync(memoryPath, JSON.stringify(updatedMemory, null, 2));
   if (queued) console.log("Queued instructions consumed and cleared from memory.");
