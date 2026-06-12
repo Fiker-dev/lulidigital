@@ -328,14 +328,6 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response("OK");
     }
 
-    if (callbackData.startsWith("blog_reject:")) {
-      const slug = normalizeSlug(callbackData.replace(/^blog_reject:/, ""));
-      await dispatchWorkflow("delete-draft.yml", { slug });
-      await answerCallbackQuery(update.callback_query?.id, "Rejected. Removing draft.");
-      await sendTelegram(chatId, `Rejected. Removing draft ${slug}.`);
-      return new Response("OK");
-    }
-
     const decision = parseDirectControl(text, memory) ?? await askLana(text, reviewState);
 
     if (decision.action === "approve" && reviewState) {
