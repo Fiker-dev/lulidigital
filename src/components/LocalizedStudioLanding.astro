@@ -21,7 +21,7 @@ const currentMarketPath = `/${market.variant}`;
 ---
 
 <section class:list={["local-landing", `local-landing--${market.variant}`]}>
-  <section class="local-hero reveal-block">
+  <section class="local-hero reveal-block" data-atmosphere="hero" data-hive-section>
     <div class="local-hero__copy">
       <p class="local-eyebrow">{market.eyebrow}</p>
       <h1>{market.h1}</h1>
@@ -130,7 +130,7 @@ const currentMarketPath = `/${market.variant}`;
     </section>
   )}
 
-  <section id="capabilities" class="local-section reveal-block">
+  <section id="capabilities" class="local-section reveal-block" data-atmosphere="services" data-hive-section>
     <div class="section-head">
       <p class="local-eyebrow">Studio Capabilities</p>
       <h2>{market.h2}</h2>
@@ -166,7 +166,7 @@ const currentMarketPath = `/${market.variant}`;
     </section>
   )}
 
-  <section class="local-services reveal-block">
+  <section class="local-services reveal-block" data-atmosphere="services" data-hive-section>
     <div class="section-head">
       <p class="local-eyebrow">Full Studio Suite</p>
       <h2>Marketing, AI &amp; operations — serving {market.city} and beyond.</h2>
@@ -209,7 +209,7 @@ const currentMarketPath = `/${market.variant}`;
     </div>
   </section>
 
-  <section class:list={["local-proof", isStockholm && "local-proof--dark"]}>
+  <section class:list={["local-proof", isStockholm && "local-proof--dark"]} data-atmosphere="marketing" data-hive-section>
     <div class="proof-copy reveal-block">
       <p class="local-eyebrow">{isAmsterdam ? "Case Study" : isMunich ? "Global Collaboration" : "Client Signal"}</p>
       <h2>{market.proofTitle}</h2>
@@ -232,7 +232,7 @@ const currentMarketPath = `/${market.variant}`;
     </div>
   </section>
 
-  <section id="local-contact" class="local-contact reveal-block">
+  <section id="local-contact" class="local-contact reveal-block" data-atmosphere="cta" data-hive-section>
     <div>
       <p class="local-eyebrow">Get Started</p>
       <h2>{market.formTitle}</h2>
