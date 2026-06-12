@@ -33,11 +33,11 @@ on:
       publish_status:
         description: 'Publish immediately or save as hidden draft'
         required: false
-        default: 'publish'
+        default: 'draft'
         type: choice
         options:
-          - publish
           - draft
+          - publish
       cta_text:
         description: 'End-of-article CTA button text'
         required: false
@@ -84,7 +84,7 @@ jobs:
           BLOG_PAIN_POINT: ${{ github.event.inputs.pain_point }}
           BLOG_ANGLE: ${{ github.event.inputs.angle }}
           BLOG_TONE_NOTES: ${{ github.event.inputs.tone_notes }}
-          BLOG_DRAFT: ${{ github.event.inputs.publish_status == 'draft' }}
+          BLOG_DRAFT: ${{ github.event_name == 'schedule' || github.event.inputs.publish_status != 'publish' }}
           BLOG_CTA_TEXT: ${{ github.event.inputs.cta_text }}
           BLOG_CTA_LINK: ${{ github.event.inputs.cta_link }}
           BLOG_USE_SEO_AGENT: ${{ github.event_name == 'schedule' || github.event.inputs.use_seo_agent == 'true' }}
@@ -92,7 +92,7 @@ jobs:
           BLOG_SEO_AGENT_GEOS: ${{ vars.BLOG_SEO_AGENT_GEOS || 'NL,DE,SE,GB,US,DK,CH,IE,BE,NO,AFRICA' }}
 
       - name: Save review state (draft only)
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.publish_status == 'draft' }}
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.publish_status != 'publish' }}
         run: node scripts/save-review-state.mjs
 
       - name: Commit and push new post
@@ -101,11 +101,15 @@ jobs:
           git config user.email "bot@lulidigital.com"
           git add src/content/blog/ scripts/blog-topics.json scripts/lana-memory.json
           git diff --staged --quiet && echo "No changes" && exit 0
-          git commit -m "Auto: publish $(cat /tmp/post_title.txt)"
+          if [ "${{ github.event_name == 'schedule' || github.event.inputs.publish_status != 'publish' }}" = "true" ]; then
+            git commit -m "Auto: draft $(cat /tmp/post_title.txt)"
+          else
+            git commit -m "Auto: publish $(cat /tmp/post_title.txt)"
+          fi
           git push
 
       - name: Publish Google Business Profile post
-        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.publish_status != 'draft' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.publish_status == 'publish' }}
         run: |
           TITLE=$(cat /tmp/post_title.txt)
           DESCRIPTION=$(cat /tmp/post_description.txt)
@@ -119,7 +123,7 @@ jobs:
           GOOGLE_LOCATION_ID: ${{ secrets.GOOGLE_LOCATION_ID }}
 
       - name: Send Telegram notification
-        if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.publish_status != 'draft' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.publish_status == 'publish' }}
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -140,7 +144,7 @@ jobs:
           if [ "$HTTP_CODE" != "200" ]; then echo "ERROR: Telegram failed HTTP $HTTP_CODE"; exit 1; fi
 
       - name: Send draft preview for approval
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.publish_status == 'draft' }}
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.publish_status != 'publish' }}
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -153,10 +157,13 @@ jobs:
           DESCRIPTION=$(cat /tmp/post_description.txt)
           PREVIEW=$(cat /tmp/review_preview.txt)
           SCHEDULED_FOR=$(cat /tmp/review_scheduled_for.txt)
-          TEXT=$(printf "%s\n\n%s\n\n%s\n\nScheduled for %s — like it? Reply YES to schedule it, or tell me what to change." "$TITLE" "$DESCRIPTION" "$PREVIEW" "$SCHEDULED_FOR")
+          SLUG=$(cat /tmp/post_slug.txt)
+          TEXT=$(printf "Draft ready for approval\n\n%s\n\n%s\n\n%s\n\nPlanned slot: %s\nSlug: %s\n\nUse the button below, reply YES, or tell me what to change." "$TITLE" "$DESCRIPTION" "$PREVIEW" "$SCHEDULED_FOR" "$SLUG")
+          REPLY_MARKUP=$(printf '{"inline_keyboard":[[{"text":"Approve and publish","callback_data":"blog_approve:%s"}],[{"text":"Reject draft","callback_data":"blog_reject:%s"}]]}' "$SLUG" "$SLUG")
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=${TEXT}")
+            --data-urlencode "text=${TEXT}" \
+            --data-urlencode "reply_markup=${REPLY_MARKUP}")
           HTTP_CODE=$(echo "$RESPONSE" | tail -1)
           echo "Telegram response: $RESPONSE"
           if [ "$HTTP_CODE" != "200" ]; then echo "ERROR: Telegram failed HTTP $HTTP_CODE"; exit 1; fi

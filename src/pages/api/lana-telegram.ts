@@ -13,6 +13,13 @@ type TelegramUpdate = {
     chat?: { id?: number | string };
     text?: string;
   };
+  callback_query?: {
+    id?: string;
+    data?: string;
+    message?: {
+      chat?: { id?: number | string };
+    };
+  };
 };
 
 type ReviewState = {
@@ -102,6 +109,17 @@ async function sendTelegram(chatId: string, text: string) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ chat_id: chatId, text, disable_web_page_preview: true }),
+  });
+}
+
+async function answerCallbackQuery(callbackQueryId: string | undefined, text: string) {
+  const token = getEnv("TELEGRAM_BOT_TOKEN");
+  if (!token || !callbackQueryId) return;
+
+  await fetch(`https://api.telegram.org/bot${token}/answerCallbackQuery`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ callback_query_id: callbackQueryId, text }),
   });
 }
 
@@ -281,11 +299,12 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response("Invalid request", { status: 400 });
   }
 
-  const chatId = normalizeChatId(update.message?.chat?.id);
+  const chatId = normalizeChatId(update.message?.chat?.id ?? update.callback_query?.message?.chat?.id);
   const allowedChatId = getEnv("TELEGRAM_CHAT_ID");
+  const callbackData = update.callback_query?.data?.trim() || "";
   const text = update.message?.text?.trim() || "";
 
-  if (!chatId || !text) return new Response("OK");
+  if (!chatId || (!text && !callbackData)) return new Response("OK");
 
   if (/^\/?myid$/i.test(text)) {
     await sendTelegram(chatId, `Your chat ID: ${chatId}`);
@@ -299,6 +318,23 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const memory = await fetchMemory();
     const reviewState = memory?.review_state ?? null;
+
+    if (callbackData.startsWith("blog_approve:")) {
+      const slug = normalizeSlug(callbackData.replace(/^blog_approve:/, ""));
+      const publishDate = reviewState?.slug === slug ? reviewState.scheduled_for : "";
+      await dispatchWorkflow("publish-draft-blog.yml", { slug, publish_date: publishDate });
+      await answerCallbackQuery(update.callback_query?.id, "Approved. Publishing now.");
+      await sendTelegram(chatId, `Approved. Publishing ${slug} now.`);
+      return new Response("OK");
+    }
+
+    if (callbackData.startsWith("blog_reject:")) {
+      const slug = normalizeSlug(callbackData.replace(/^blog_reject:/, ""));
+      await dispatchWorkflow("delete-draft.yml", { slug });
+      await answerCallbackQuery(update.callback_query?.id, "Rejected. Removing draft.");
+      await sendTelegram(chatId, `Rejected. Removing draft ${slug}.`);
+      return new Response("OK");
+    }
 
     const decision = parseDirectControl(text, memory) ?? await askLana(text, reviewState);
 

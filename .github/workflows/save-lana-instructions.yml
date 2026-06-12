@@ -43,11 +43,11 @@ on:
       draft:
         description: 'Generate as draft instead of publishing immediately'
         required: false
-        default: 'false'
+        default: 'true'
         type: choice
         options:
-          - 'false'
           - 'true'
+          - 'false'
 
 jobs:
   save-instructions:
@@ -78,7 +78,7 @@ jobs:
             tone_notes: "${{ github.event.inputs.tone_notes }}".trim() || null,
             cta_text:   "${{ github.event.inputs.cta_text }}".trim() || null,
             cta_link:   "${{ github.event.inputs.cta_link }}".trim() || null,
-            draft:      "${{ github.event.inputs.draft }}" === "true",
+            draft:      "${{ github.event.inputs.draft }}" !== "false",
             queued_at:  new Date().toISOString(),
           };
           Object.keys(pending).forEach(k => { if (pending[k] === null || pending[k] === "") delete pending[k]; });
@@ -102,7 +102,7 @@ jobs:
           ANGLE="${{ github.event.inputs.angle }}"
           DRAFT="${{ github.event.inputs.draft }}"
           if [ -z "$TOPIC" ]; then TOPIC="(SEO auto-select)"; fi
-          if [ "$DRAFT" = "true" ]; then STATUS="as a draft"; else STATUS="and publish immediately"; fi
+          if [ "$DRAFT" = "false" ]; then STATUS="and publish immediately"; else STATUS="as a draft for your approval"; fi
           TEXT=$(printf "Got it. Queued for the next scheduled post.\n\nTopic: %s\nAngle: %s\nWill generate: %s\n\nI'll run this on the next scheduled post (Mon, Wed, or Fri at 8am UTC). You can override it anytime by sending new instructions." "$TOPIC" "${ANGLE:-not specified}" "$STATUS")
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \

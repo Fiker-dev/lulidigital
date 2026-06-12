@@ -29,7 +29,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Publish draft
         run: node scripts/publish-draft-post.mjs "${{ github.event.inputs.slug }}" "${{ github.event.inputs.publish_date }}"
@@ -42,9 +42,32 @@ jobs:
           git config user.name "LuliDigital Bot"
           git config user.email "bot@lulidigital.com"
           git add src/content/blog/ scripts/lana-memory.json
-          git diff --staged --quiet && echo "No draft changes" && exit 0
+          if git diff --staged --quiet; then
+            echo "false" > /tmp/published_changed.txt
+            echo "No draft changes"
+            exit 0
+          fi
           git commit -m "Publish draft blog post ${{ github.event.inputs.slug }}"
           git push
+          echo "true" > /tmp/published_changed.txt
+
+      - name: Publish Google Business Profile post
+        run: |
+          if [ "$(cat /tmp/published_changed.txt 2>/dev/null || echo false)" != "true" ]; then
+            echo "Draft was already published. Skipping Google Business Profile repost."
+            exit 0
+          fi
+          SLUG="${{ github.event.inputs.slug }}"
+          node -e "const fs=require('fs');const raw=fs.readFileSync('src/content/blog/'+process.argv[1]+'.md','utf8');const get=(k)=>raw.match(new RegExp('^'+k+':\\\\s*\"?([^\"\\\\n]+)\"?','m'))?.[1]||'';fs.writeFileSync('/tmp/published_title.txt',get('title'));fs.writeFileSync('/tmp/published_description.txt',get('description'));" "$SLUG"
+          TITLE=$(cat /tmp/published_title.txt)
+          DESCRIPTION=$(cat /tmp/published_description.txt)
+          node scripts/publish-google-business-post.mjs "$TITLE" "$DESCRIPTION" "$SLUG"
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+          GOOGLE_ACCOUNT_ID: ${{ secrets.GOOGLE_ACCOUNT_ID }}
+          GOOGLE_LOCATION_ID: ${{ secrets.GOOGLE_LOCATION_ID }}
 
       - name: Send Telegram notification
         env:
