@@ -10,7 +10,7 @@ const seoTarget = getWeeklyPageSeoTarget("/founder");
 Astro.response.headers.set("Cache-Control", "s-maxage=21600, stale-while-revalidate=86400");
 
 const title = "Fiker Abate — Founder & Studio Lead | LuliDigital";
-const description = "Former healthcare professional, now LuliDigital founder. Fiker Abate uses creativity and AI to help people turn ideas into useful systems.";
+const description = "Former healthcare worker and LuliDigital founder. Fiker Abate brings curiosity, imagination, creativity, and AI together to build useful systems.";
 
 const personSchema = {
   "@type": "Person",
@@ -20,7 +20,7 @@ const personSchema = {
   "worksFor": { "@id": "https://lulidigital.com/#organization" },
   "url": "https://lulidigital.com/founder",
   "image": "https://lulidigital.com/images/founder/fiker-portrait.jpg",
-  "description": "Fiker Abate is the founder of LuliDigital, a creative studio using AI, marketing, and virtual assistant systems to help business owners save time and bring useful ideas to life.",
+  "description": "Fiker Abate is the founder of LuliDigital, a creative studio using AI, marketing, and virtual assistant systems to help business owners recover time and bring useful ideas to life.",
 };
 ---
 
@@ -41,8 +41,8 @@ const personSchema = {
         <span class="f-badge">Founder & Studio Lead</span>
         <h1 class="f-hero__name">Fiker<br/><em>Abate.</em></h1>
         <p class="f-hero__line">
-          Former healthcare professional.<br/>
-          <strong>Now LuliDigital founder.</strong>
+          Former healthcare worker.<br/>
+          <strong>LuliDigital founder.</strong>
         </p>
       </div>
       <div class="f-hero__portrait">
@@ -60,24 +60,16 @@ const personSchema = {
     </div>
   </section>
 
-  <!-- ── THE ARC ───────────────────────────────────────────────── -->
+  <!-- ── FOUNDER NOTE ──────────────────────────────────────────── -->
   <section class="f-arc" data-atmosphere="hero" data-hive-section>
     <div class="f-arc__inner">
-      <div class="f-arc__panel f-arc__panel--before" data-reveal="up">
-        <span class="f-arc__label">Then</span>
+      <div class="f-arc__panel" data-reveal="up">
+        <span class="f-arc__label">Founder Note</span>
         <p class="f-arc__copy">
-          Curious mind.<br/>Creative hands.<br/>A life in service.
+          I have always been curious, imaginative, and creative.
         </p>
-      </div>
-      <div class="f-arc__divider" aria-hidden="true">
-        <span class="f-arc__arrow">↓</span>
-        <span class="f-arc__since">LuliDigital</span>
-        <span class="f-arc__arrow">↓</span>
-      </div>
-      <div class="f-arc__panel f-arc__panel--after" data-reveal="up" data-reveal-delay="80">
-        <span class="f-arc__label">Now</span>
-        <p class="f-arc__copy">
-          Imagination made useful.<br/>Built with AI.<br/><strong>For good.</strong>
+        <p class="f-arc__body">
+          LuliDigital is where I bring that imagination to life with AI: creative systems, useful automations, and practical support for people doing real work. I believe AI should be used for good, especially when it helps business owners recover time from tedious tasks and spend more of life with family, adventure, and the things that make them human.
         </p>
       </div>
     </div>
@@ -86,12 +78,12 @@ const personSchema = {
   <!-- ── WHO THIS IS FOR ───────────────────────────────────────── -->
   <section class="f-who" data-atmosphere="marketing" data-hive-section>
     <div class="f-who__inner">
-      <span class="f-eyebrow">Why I build</span>
+      <span class="f-eyebrow">What I care about</span>
       <ul class="f-who__list" role="list">
-        <li data-reveal="up" data-reveal-delay="0">AI should help people. <em>Not replace their humanity.</em></li>
-        <li data-reveal="up" data-reveal-delay="60">Business owners carry too much. <em>Some of it can be lifted.</em></li>
-        <li data-reveal="up" data-reveal-delay="120">Tedious work steals time. <em>Systems can give it back.</em></li>
-        <li data-reveal="up" data-reveal-delay="180">More time means more family, more adventure, <em>more life.</em></li>
+        <li data-reveal="up" data-reveal-delay="0">Creativity should become useful. <em>Not stay trapped in someone’s head.</em></li>
+        <li data-reveal="up" data-reveal-delay="60">AI should carry the tedious work. <em>People should keep the judgment.</em></li>
+        <li data-reveal="up" data-reveal-delay="120">Business owners need systems. <em>Not another thing to babysit.</em></li>
+        <li data-reveal="up" data-reveal-delay="180">Recovered time is the point. <em>Family, adventure, and being human.</em></li>
       </ul>
     </div>
   </section>
@@ -244,28 +236,22 @@ const personSchema = {
     pointer-events: none;
   }
 
-  /* ─── ARC ───────────────────────────────────────────── */
+  /* ─── FOUNDER NOTE ─────────────────────────────────── */
   .f-arc {
     padding: clamp(56px, 7vw, 96px) 0;
     border-top: 1px solid rgba(30,24,22,.08);
     border-bottom: 1px solid rgba(30,24,22,.08);
   }
   .f-arc__inner {
-    max-width: 640px;
+    max-width: 820px;
     margin: 0 auto;
     padding: 0 clamp(20px, 5vw, 56px);
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 32px;
-    align-items: center;
   }
   .f-arc__panel {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-  }
-  .f-arc__panel--after {
-    text-align: right;
+    gap: 18px;
+    max-width: 720px;
   }
   .f-arc__label {
     font-size: 10px;
@@ -273,38 +259,24 @@ const personSchema = {
     letter-spacing: .22em;
     text-transform: uppercase;
     font-family: var(--font-body, "DM Sans", sans-serif);
+    color: var(--brand, #7b2d2d);
   }
-  .f-arc__panel--before .f-arc__label { color: rgba(20,19,18,.35); }
-  .f-arc__panel--after  .f-arc__label { color: var(--brand, #7b2d2d); }
   .f-arc__copy {
     font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
-    font-size: clamp(18px, 2.2vw, 26px);
-    line-height: 1.35;
-    margin: 0;
-  }
-  .f-arc__panel--before .f-arc__copy { color: rgba(20,19,18,.38); }
-  .f-arc__panel--after  .f-arc__copy { color: var(--ink, #141312); }
-  .f-arc__panel--after  .f-arc__copy strong { color: var(--brand, #7b2d2d); }
-  .f-arc__divider {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    color: var(--honey-mid, #f5a41f);
-  }
-  .f-arc__arrow {
-    font-size: 18px;
-    opacity: .5;
-  }
-  .f-arc__since {
-    font-size: 8px;
+    font-size: clamp(28px, 4.2vw, 56px);
     font-weight: 700;
-    letter-spacing: .24em;
-    text-transform: uppercase;
+    letter-spacing: -.03em;
+    line-height: 1.08;
+    margin: 0;
+    color: var(--ink, #141312);
+  }
+  .f-arc__body {
+    max-width: 670px;
+    margin: 0;
     font-family: var(--font-body, "DM Sans", sans-serif);
-    color: var(--honey-mid, #f5a41f);
-    writing-mode: vertical-rl;
-    padding: 8px 0;
+    font-size: clamp(15px, 1.7vw, 18px);
+    line-height: 1.78;
+    color: rgba(20,19,18,.68);
   }
 
   /* ─── WHO ───────────────────────────────────────────── */
@@ -545,10 +517,6 @@ const personSchema = {
   @media (max-width: 860px) {
     .f-hero__inner { grid-template-columns: 1fr; }
     .f-hero__portrait { order: -1; max-width: 280px; margin: 0 auto; }
-    .f-arc__inner { grid-template-columns: 1fr; text-align: center; }
-    .f-arc__panel--after { text-align: center; }
-    .f-arc__divider { flex-direction: row; writing-mode: horizontal-tb; }
-    .f-arc__since { writing-mode: horizontal-tb; padding: 0 8px; }
     .f-lift__row { grid-template-columns: 1fr 32px 1fr; }
     .f-desk-item { grid-template-columns: 32px 1fr auto; }
     .f-desk-arrow { display: none; }
