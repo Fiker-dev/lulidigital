@@ -2,6 +2,7 @@
 import "../styles/theme.css";
 import "../styles/motion.css";
 import "../styles/hive.css";
+import "../styles/hiveResonance.css";
 import SiteHeader from "../components/SiteHeader.astro";
 import LanaChat from "../components/LanaChat.astro";
 import SiteFooter from "../components/SiteFooter.astro";
@@ -335,10 +336,11 @@ const jsonLd = {
   }
 
   async function initEnhancements() {
-    const [{ initMotion }, { initInkHighlights }, { initHive }] = await Promise.all([
+    const [{ initMotion }, { initInkHighlights }, { initHive }, { initHiveResonance }] = await Promise.all([
       import("../scripts/motion.js"),
       import("../scripts/inkHighlight.js"),
       import("../scripts/hive.js"),
+      import("../scripts/hiveResonance.js"),
     ]);
 
     initMotion();
@@ -347,6 +349,7 @@ const jsonLd = {
     initScrollProgress();
     initBee();
     initHive();
+    initHiveResonance(); // after initHive — the ambient hex grid must exist
   }
 
   function initBee() {

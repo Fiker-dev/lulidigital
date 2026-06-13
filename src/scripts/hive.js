@@ -17,7 +17,9 @@ export function initHive() {
     return;
   }
 
-  initCursorField();
+  // Cursor proximity / surface tension is now owned by the
+  // Hive Resonance layer (scripts/hiveResonance.js), which is spatially
+  // indexed and far cheaper than scanning every cell each frame.
   initParticleZones();
   initSectionAtmospheres();
   initConnectionPaths();
@@ -98,37 +100,6 @@ function initHexGrid(reduced) {
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(build, 260);
-  }, { passive: true });
-}
-
-// ── 3. Cursor Proximity Field ────────────────────────────────────
-// Hex cells near the cursor glow and pulse — subtle, never distracting.
-function initCursorField() {
-  let rafId = 0;
-  let mx = -999, my = -999;
-
-  window.addEventListener('pointermove', (e) => {
-    mx = e.clientX;
-    my = e.clientY;
-    cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(() => {
-      const cells = document.querySelectorAll('.hcell');
-      cells.forEach((cell) => {
-        const r   = cell.getBoundingClientRect();
-        const cx  = r.left + r.width  / 2;
-        const cy  = r.top  + r.height / 2;
-        const d   = Math.hypot(mx - cx, my - cy);
-        const prx = Math.max(0, 1 - d / 130);
-
-        if (prx > 0.02) {
-          cell.style.setProperty('--cell-prox', prx.toFixed(3));
-          cell.classList.add('is-prox');
-        } else if (cell.classList.contains('is-prox')) {
-          cell.style.removeProperty('--cell-prox');
-          cell.classList.remove('is-prox');
-        }
-      });
-    });
   }, { passive: true });
 }
 
