@@ -201,8 +201,12 @@
   /* Hero background: handled by existing orbs + signal field */
 }
 
+/* The ambient atmosphere wash is a tint for otherwise-transparent
+   sections. It must never replace a designed block's own background
+   (e.g. the opaque .selling-point--ai dark gradient), so those opt out. */
+
 /* Problem → Tension: slight cool tinge */
-[data-atmosphere="problem"].is-atmosphere-active {
+[data-atmosphere="problem"].is-atmosphere-active:not(.selling-point) {
   background: linear-gradient(
     180deg,
     transparent 0%,
@@ -211,7 +215,7 @@
 }
 
 /* Services/Bento → Momentum: energized amber warmth */
-[data-atmosphere="services"].is-atmosphere-active {
+[data-atmosphere="services"].is-atmosphere-active:not(.selling-point) {
   background: linear-gradient(
     135deg,
     rgba(245, 164, 31, 0.025) 0%,
@@ -221,7 +225,7 @@
 }
 
 /* VA → Relief: calm, cool-tinted clarity */
-[data-atmosphere="va"].is-atmosphere-active {
+[data-atmosphere="va"].is-atmosphere-active:not(.selling-point) {
   background: linear-gradient(
     135deg,
     rgba(40, 76, 99, 0.03) 0%,
@@ -230,7 +234,7 @@
 }
 
 /* AI → Intelligence: deep warm golden intelligence */
-[data-atmosphere="ai"].is-atmosphere-active {
+[data-atmosphere="ai"].is-atmosphere-active:not(.selling-point) {
   background: linear-gradient(
     135deg,
     rgba(43, 26, 5, 0.04) 0%,
@@ -240,7 +244,7 @@
 }
 
 /* CTA → Confidence: full activation glow */
-[data-atmosphere="cta"].is-atmosphere-active {
+[data-atmosphere="cta"].is-atmosphere-active:not(.selling-point) {
   background: linear-gradient(
     180deg,
     rgba(245, 164, 31, 0.03) 0%,
