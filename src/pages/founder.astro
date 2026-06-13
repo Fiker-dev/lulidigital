@@ -10,7 +10,7 @@ const seoTarget = getWeeklyPageSeoTarget("/founder");
 Astro.response.headers.set("Cache-Control", "s-maxage=21600, stale-while-revalidate=86400");
 
 const title = "Fiker Abate — Founder & Studio Lead | LuliDigital";
-const description = "Former healthcare worker and LuliDigital founder. Fiker Abate brings curiosity, imagination, creativity, and AI together to build useful systems.";
+const description = "Former healthcare worker and LuliDigital founder. Fiker Abate brings curiosity, imagination, creativity, and AI together to build practical systems for better work.";
 
 const personSchema = {
   "@type": "Person",
@@ -20,7 +20,7 @@ const personSchema = {
   "worksFor": { "@id": "https://lulidigital.com/#organization" },
   "url": "https://lulidigital.com/founder",
   "image": "https://lulidigital.com/images/founder/fiker-portrait.jpg",
-  "description": "Fiker Abate is the founder of LuliDigital, a creative studio using AI, marketing, and virtual assistant systems to help business owners recover time and bring useful ideas to life.",
+  "description": "Fiker Abate is the founder of LuliDigital, a creative studio using AI, marketing, and virtual assistant systems to help business owners recover time and turn useful ideas into practical systems.",
 };
 ---
 
@@ -64,12 +64,12 @@ const personSchema = {
   <section class="f-arc" data-atmosphere="hero" data-hive-section>
     <div class="f-arc__inner">
       <div class="f-arc__panel" data-reveal="up">
-        <span class="f-arc__label">Founder Note</span>
+        <span class="f-arc__label">Get to know the founder</span>
         <p class="f-arc__copy">
-          I have always been curious, imaginative, and creative.
+          Curious by nature. Imaginative by instinct. Creative with AI.
         </p>
         <p class="f-arc__body">
-          LuliDigital is where I bring that imagination to life with AI: creative systems and practical support for people doing real work. I believe AI should be used for good, especially when it helps business owners recover time from tedious tasks and spend more of life with family, adventure, and the things that make them human.
+          Fiker Abate is a former healthcare worker and the founder behind LuliDigital. The studio turns imagination into creative systems with AI, helping business owners recover time from tedious work and spend more of life with family, adventure, and the things that make them human.
         </p>
       </div>
     </div>
@@ -78,12 +78,12 @@ const personSchema = {
   <!-- ── WHO THIS IS FOR ───────────────────────────────────────── -->
   <section class="f-who" data-atmosphere="marketing" data-hive-section>
     <div class="f-who__inner">
-      <span class="f-eyebrow">What I care about</span>
+      <span class="f-eyebrow">What LuliDigital stands for</span>
       <ul class="f-who__list" role="list">
-        <li data-reveal="up" data-reveal-delay="0">Creativity should become useful. <em>Not stay trapped in someone’s head.</em></li>
+        <li data-reveal="up" data-reveal-delay="0">Creativity should become systems. <em>Not stay trapped in someone's head.</em></li>
         <li data-reveal="up" data-reveal-delay="60">AI should carry the tedious work. <em>People should keep the judgment.</em></li>
-        <li data-reveal="up" data-reveal-delay="120">Business owners need systems. <em>Not another thing to babysit.</em></li>
-        <li data-reveal="up" data-reveal-delay="180">Recovered time is the point. <em>Family, adventure, and being human.</em></li>
+        <li data-reveal="up" data-reveal-delay="120">Business owners deserve systems. <em>Not another tool to babysit.</em></li>
+        <li data-reveal="up" data-reveal-delay="180">The point is time back. <em>For family, adventure, and being human.</em></li>
       </ul>
     </div>
   </section>
@@ -94,19 +94,19 @@ const personSchema = {
       <span class="f-eyebrow">What changes</span>
       <div class="f-lift__rows">
         <div class="f-lift__row" data-reveal="up" data-reveal-delay="0">
-          <span class="f-lift__before">Tedious</span>
+          <span class="f-lift__before">Tedious work</span>
           <span class="f-lift__bridge" aria-hidden="true">→</span>
-          <span class="f-lift__after">Handled</span>
+          <span class="f-lift__after">Time back</span>
         </div>
         <div class="f-lift__row" data-reveal="up" data-reveal-delay="60">
-          <span class="f-lift__before">Ideas</span>
+          <span class="f-lift__before">Raw ideas</span>
           <span class="f-lift__bridge" aria-hidden="true">→</span>
-          <span class="f-lift__after">Built</span>
+          <span class="f-lift__after">Creative systems</span>
         </div>
         <div class="f-lift__row" data-reveal="up" data-reveal-delay="120">
-          <span class="f-lift__before">Overwhelmed</span>
+          <span class="f-lift__before">AI confusion</span>
           <span class="f-lift__bridge" aria-hidden="true">→</span>
-          <span class="f-lift__after">Free to think</span>
+          <span class="f-lift__after">Clear next steps</span>
         </div>
         <div class="f-lift__row" data-reveal="up" data-reveal-delay="180">
           <span class="f-lift__before">Busy days</span>
@@ -117,44 +117,11 @@ const personSchema = {
     </div>
   </section>
 
-  <!-- ── THE DESKS ─────────────────────────────────────────────── -->
-  <section class="f-desks" data-atmosphere="services" data-hive-section>
-    <div class="f-desks__inner">
-      <span class="f-eyebrow">The tools I built</span>
-      <div class="f-desks__list">
-        <a class="f-desk-item" href="/marketing-desk" data-reveal="up" data-reveal-delay="0">
-          <span class="f-desk-num">01</span>
-          <span class="f-desk-name">Marketing Desk</span>
-          <span class="f-desk-word">Reach</span>
-          <span class="f-desk-arrow" aria-hidden="true">→</span>
-        </a>
-        <a class="f-desk-item" href="/ai-desk" data-reveal="up" data-reveal-delay="60">
-          <span class="f-desk-num">02</span>
-          <span class="f-desk-name">AI Desk</span>
-          <span class="f-desk-word">Leverage</span>
-          <span class="f-desk-arrow" aria-hidden="true">→</span>
-        </a>
-        <a class="f-desk-item" href="/va-desk" data-reveal="up" data-reveal-delay="120">
-          <span class="f-desk-num">03</span>
-          <span class="f-desk-name">VA Desk</span>
-          <span class="f-desk-word">Capacity</span>
-          <span class="f-desk-arrow" aria-hidden="true">→</span>
-        </a>
-        <a class="f-desk-item" href="/web-design-desk" data-reveal="up" data-reveal-delay="180">
-          <span class="f-desk-num">04</span>
-          <span class="f-desk-name">Web Design Desk</span>
-          <span class="f-desk-word">Presence</span>
-          <span class="f-desk-arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
   <!-- ── CTA ───────────────────────────────────────────────────── -->
   <section class="f-final" data-atmosphere="cta" data-hive-section data-bee-final>
     <div class="f-final__inner">
       <p class="f-final__pre">AI for useful work</p>
-      <h2 class="f-final__title">Build the thing.<br/><em>Get time back.</em></h2>
+      <h2 class="f-final__title">Build the system.<br/><em>Get time back.</em></h2>
       <div class="f-final__actions">
         <a class="f-cta-pill f-cta-pill--light" href="/contact">Start the conversation <span aria-hidden="true">→</span></a>
         <a class="f-cta-pill f-cta-pill--ghost" href="https://wa.me/27602551513" target="_blank" rel="noopener noreferrer">WhatsApp Fiker</a>
@@ -367,65 +334,6 @@ const personSchema = {
     color: rgba(245,240,232,.88);
   }
 
-  /* ─── DESKS ─────────────────────────────────────────── */
-  .f-desks {
-    padding: clamp(72px, 9vw, 120px) 0;
-    border-bottom: 1px solid rgba(30,24,22,.08);
-  }
-  .f-desks__inner {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 clamp(20px, 5vw, 56px);
-  }
-  .f-desks__list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    margin-top: 8px;
-  }
-  .f-desk-item {
-    display: grid;
-    grid-template-columns: 40px 1fr auto 28px;
-    align-items: center;
-    gap: 20px;
-    padding: clamp(18px, 2.2vw, 26px) 0;
-    border-bottom: 1px solid rgba(30,24,22,.08);
-    text-decoration: none;
-    transition: background 240ms ease;
-    border-radius: 4px;
-  }
-  .f-desk-item:hover { background: rgba(123,45,45,.04); }
-  .f-desk-item:hover .f-desk-arrow { opacity: 1; transform: translateX(4px); }
-  .f-desk-item:hover .f-desk-name { color: var(--brand, #7b2d2d); }
-  .f-desk-num {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: .14em;
-    color: rgba(20,19,18,.25);
-    font-family: var(--font-body, "DM Sans", sans-serif);
-  }
-  .f-desk-name {
-    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
-    font-size: clamp(18px, 2.2vw, 28px);
-    font-weight: 600;
-    color: var(--ink, #141312);
-    transition: color 240ms ease;
-  }
-  .f-desk-word {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: var(--honey-mid, #f5a41f);
-    font-family: var(--font-body, "DM Sans", sans-serif);
-  }
-  .f-desk-arrow {
-    color: var(--brand, #7b2d2d);
-    font-size: 16px;
-    opacity: 0.3;
-    transition: opacity 240ms ease, transform 240ms ease;
-  }
-
   /* ─── CTA ───────────────────────────────────────────── */
   .f-final {
     padding: clamp(96px, 12vw, 160px) 0;
@@ -518,8 +426,6 @@ const personSchema = {
     .f-hero__inner { grid-template-columns: 1fr; }
     .f-hero__portrait { order: -1; max-width: 280px; margin: 0 auto; }
     .f-lift__row { grid-template-columns: 1fr 32px 1fr; }
-    .f-desk-item { grid-template-columns: 32px 1fr auto; }
-    .f-desk-arrow { display: none; }
   }
   @media (max-width: 500px) {
     .f-who__list li { font-size: clamp(18px, 5vw, 24px); }
