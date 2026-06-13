@@ -192,66 +192,13 @@
 /* Each section has a subtle environmental mood that
    activates when it enters the viewport. */
 
-[data-atmosphere] {
-  transition: background 800ms ease;
-}
-
-/* Hero → Curiosity: soft warm glow at rest */
-[data-atmosphere="hero"].is-atmosphere-active {
-  /* Hero background: handled by existing orbs + signal field */
-}
-
-/* The ambient atmosphere wash is a tint for otherwise-transparent
-   sections. It must never replace a designed block's own background
-   (e.g. the opaque .selling-point--ai dark gradient), so those opt out. */
-
-/* Problem → Tension: slight cool tinge */
-[data-atmosphere="problem"].is-atmosphere-active:not(.selling-point) {
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(30, 14, 14, 0.03) 100%
-  );
-}
-
-/* Services/Bento → Momentum: energized amber warmth */
-[data-atmosphere="services"].is-atmosphere-active:not(.selling-point) {
-  background: linear-gradient(
-    135deg,
-    rgba(245, 164, 31, 0.025) 0%,
-    transparent 50%,
-    rgba(123, 45, 45, 0.02) 100%
-  );
-}
-
-/* VA → Relief: calm, cool-tinted clarity */
-[data-atmosphere="va"].is-atmosphere-active:not(.selling-point) {
-  background: linear-gradient(
-    135deg,
-    rgba(40, 76, 99, 0.03) 0%,
-    transparent 70%
-  );
-}
-
-/* AI → Intelligence: deep warm golden intelligence */
-[data-atmosphere="ai"].is-atmosphere-active:not(.selling-point) {
-  background: linear-gradient(
-    135deg,
-    rgba(43, 26, 5, 0.04) 0%,
-    rgba(245, 164, 31, 0.02) 60%,
-    transparent 100%
-  );
-}
-
-/* CTA → Confidence: full activation glow */
-[data-atmosphere="cta"].is-atmosphere-active:not(.selling-point) {
-  background: linear-gradient(
-    180deg,
-    rgba(245, 164, 31, 0.03) 0%,
-    rgba(123, 45, 45, 0.04) 50%,
-    rgba(245, 164, 31, 0.02) 100%
-  );
-}
+/* Atmosphere background tints removed. They washed amber/honey over
+   sections and reduced text contrast (notably against yellow), so the
+   per-section background wash is gone entirely. The [data-atmosphere]
+   attribute and the .is-atmosphere-active class are still applied by
+   hive.js and remain in use for non-background effects (desk-state
+   reveals, bento card glow, hero signal nodes). Sections now keep
+   whatever background their own page/components define. */
 
 /* ── Emotional State Background Pulse ────────────────────────── */
 [data-emotion="momentum"] #hive-ambient-grid .hcell {
