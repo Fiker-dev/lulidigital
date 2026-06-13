@@ -1,0 +1,115 @@
+/* ============================================================
+   HIVE RESONANCE — LuliDigital
+   Premium tactile interaction layer. Layers on top of hive.css.
+   Restrained by design: micro-scale, soft glow, signal-like ripples.
+   Cells are driven by --cell-prox (steady anticipation) and
+   --cell-ripple (transient water-like disturbance), set by
+   scripts/hiveResonance.js. Reduced-motion + touch safe.
+   ============================================================ */
+
+/* ── Resonant cell (anticipation + surface tension + ripple) ─────
+   Overrides hive.css's older .is-prox with a luxury-restrained
+   response: ~3% core scale, +~5% transient on a ripple crest.
+   Never large. The visitor should feel it, not see it. */
+.hcell.is-prox {
+  opacity: calc(
+    0.16
+    + var(--cell-prox, 0) * 0.5
+    + var(--cell-ripple, 0) * 0.42
+  ) !important;
+  color: var(--honey-bright);
+  text-shadow: 0 0 calc(5px + var(--cell-prox, 0) * 13px)
+    rgba(245, 164, 31, calc(var(--cell-prox, 0) * 0.6 + var(--cell-ripple, 0) * 0.5));
+  transform: scale(calc(
+    1
+    + var(--cell-prox, 0) * 0.03      /* steady: ≤ 3% */
+    + var(--cell-ripple, 0) * 0.05    /* ripple crest: ≤ 5% */
+  ));
+  transition:
+    opacity     130ms ease,
+    text-shadow 150ms ease,
+    transform   200ms cubic-bezier(.34, 1.4, .64, 1);
+}
+
+/* ── Hive breathing: continuous, never static ───────────────────
+   A whisper of glow variation on top of hive.css's hcellBreathe,
+   so the field feels alive even when the cursor is far away.
+   Energy-aware: deepens slightly as the visitor descends. */
+@keyframes hiveResonanceBreath {
+  0%, 100% { opacity: calc(0.04 + var(--hive-energy, 0) * 0.16); }
+  50%      { opacity: calc(0.06 + var(--hive-energy, 0) * 0.20); }
+}
+.hcell:not(.is-prox) {
+  animation-name: hcellBreathe, hiveResonanceBreath;
+  animation-timing-function: ease-in-out, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+  animation-duration:
+    calc((3.8s - var(--hive-energy, 0) * 1.6s)),
+    calc((6.5s - var(--hive-energy, 0) * 1.5s));
+  animation-delay: var(--cd, 0s), calc(var(--cd, 0s) * 1.3);
+}
+
+/* ── Connection lines & signal nodes: soft activation ───────────
+   When the cursor drifts near a data path or a hero signal node,
+   the structure quietly responds — "information appears aware." */
+.hive-path-line.is-resonant {
+  stroke: rgba(245, 164, 31, 0.5);
+  transition: stroke 280ms ease;
+}
+.signal-node.is-resonant {
+  transition: transform 400ms cubic-bezier(.16, 1, .3, 1);
+}
+.signal-node.is-resonant .signal-node__core {
+  box-shadow: 0 0 calc(26px + var(--hive-energy, 0) * 16px) rgba(127, 26, 26, 0.6);
+  transition: box-shadow 300ms ease;
+}
+.signal-node.is-resonant::before {
+  border-color: rgba(245, 164, 31, 0.28);
+}
+
+/* ── Lana sparks ─────────────────────────────────────────────────
+   Tiny golden motes that bloom when the cursor crosses Lana's path.
+   Dropped into #lana-trail (fixed, viewport coords). Self-cleaning. */
+.lana-spark {
+  position: absolute;
+  left: var(--sx, 0);
+  top: var(--sy, 0);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--honey-bright, #ffd45a) 0%, rgba(245, 164, 31, 0.2) 70%, transparent 100%);
+  box-shadow: 0 0 8px rgba(245, 164, 31, 0.7);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.3);
+  will-change: transform, opacity;
+  animation: lanaSparkRise 900ms cubic-bezier(.16, 1, .3, 1) forwards;
+}
+@keyframes lanaSparkRise {
+  0%   { opacity: 0;    transform: translate(-50%, -50%) scale(0.3); }
+  28%  { opacity: 0.9;  transform: translate(-50%, -50%) scale(1); }
+  100% {
+    opacity: 0;
+    transform:
+      translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, -12px)))
+      scale(0.35);
+  }
+}
+
+/* ── Reduced motion / touch fallbacks ───────────────────────────
+   The field never initialises under these conditions, but keep the
+   CSS inert too, in case classes were ever applied server-side. */
+@media (prefers-reduced-motion: reduce) {
+  .hcell:not(.is-prox) {
+    animation: none !important;
+  }
+  .hcell.is-prox {
+    transform: none !important;
+    transition: none !important;
+  }
+  .lana-spark { display: none !important; }
+  .hive-path-line.is-resonant,
+  .signal-node.is-resonant .signal-node__core {
+    transition: none !important;
+  }
+}
