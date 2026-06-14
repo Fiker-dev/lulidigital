@@ -9,14 +9,14 @@ const seoTarget = getWeeklyPageSeoTarget("/founder");
 
 Astro.response.headers.set("Cache-Control", "s-maxage=21600, stale-while-revalidate=86400");
 
-const title = "Fiker Abate — Founder & Studio Lead | LuliDigital";
+const title = "Fiker Abate — Founder & Creative Director | LuliDigital";
 const description = "Former healthcare worker and LuliDigital founder. Fiker Abate brings curiosity, imagination, creativity, and AI together to build practical systems for better work.";
 
 const personSchema = {
   "@type": "Person",
   "@id": "https://lulidigital.com/founder#person",
   "name": "Fiker Abate",
-  "jobTitle": "Founder & Studio Lead",
+  "jobTitle": "Founder & Creative Director",
   "worksFor": { "@id": "https://lulidigital.com/#organization" },
   "url": "https://lulidigital.com/founder",
   "image": "https://lulidigital.com/images/founder/fiker-portrait.jpg",
@@ -38,7 +38,7 @@ const personSchema = {
   <section class="f-hero" data-atmosphere="hero" data-hive-section>
     <div class="f-hero__inner">
       <div class="f-hero__text">
-        <span class="f-badge">Founder & Studio Lead</span>
+        <span class="f-badge">Founder & Creative Director</span>
         <h1 class="f-hero__name">Fiker<br/><em>Abate.</em></h1>
         <p class="f-hero__line">
           Former healthcare worker.<br/>
@@ -69,7 +69,10 @@ const personSchema = {
           Curious by nature. Imaginative by instinct. Creative with AI.
         </p>
         <p class="f-arc__body">
-          Fiker Abate is a former healthcare worker and the founder behind LuliDigital. The studio turns imagination into creative systems with AI, helping business owners recover time from tedious work and spend more of life with family, adventure, and the things that make them human.
+          Fiker Abate is a former healthcare worker and the founder behind LuliDigital. The studio turns scattered ideas into working creative systems — built with AI, run by people who still make the calls that matter.
+        </p>
+        <p class="f-arc__aside">
+          Coffee. Coastlines. Clothes that make the day feel like an occasion. The rest of the time, she's building systems.
         </p>
       </div>
     </div>
@@ -82,8 +85,7 @@ const personSchema = {
       <ul class="f-who__list" role="list">
         <li data-reveal="up" data-reveal-delay="0">Creativity should become systems. <em>Not stay trapped in someone's head.</em></li>
         <li data-reveal="up" data-reveal-delay="60">AI should carry the tedious work. <em>People should keep the judgment.</em></li>
-        <li data-reveal="up" data-reveal-delay="120">Business owners deserve systems. <em>Not another tool to babysit.</em></li>
-        <li data-reveal="up" data-reveal-delay="180">The point is time back. <em>For family, adventure, and being human.</em></li>
+        <li data-reveal="up" data-reveal-delay="120">Business owners deserve tools that disappear into the background. <em>Not another thing to babysit.</em></li>
       </ul>
     </div>
   </section>
@@ -245,6 +247,14 @@ const personSchema = {
     line-height: 1.78;
     color: rgba(20,19,18,.68);
   }
+  .f-arc__aside {
+    max-width: 670px;
+    margin: 8px 0 0;
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: clamp(13px, 1.4vw, 15px);
+    line-height: 1.7;
+    color: rgba(20,19,18,.45);
+  }
 
   /* ─── WHO ───────────────────────────────────────────── */
   .f-who {
@@ -279,7 +289,7 @@ const personSchema = {
     font-weight: 600;
     line-height: 1.2;
     color: rgba(20,19,18,.28);
-    padding: clamp(18px, 2.5vw, 28px) 0;
+    padding: clamp(30px, 4.5vw, 52px) 0;
     border-bottom: 1px solid rgba(30,24,22,.07);
     transition: color 400ms ease;
   }
