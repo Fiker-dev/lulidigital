@@ -6,7 +6,7 @@ export const prerender = false;
 const REPO_OWNER = "Fiker-dev";
 const REPO_NAME = "lulidigital";
 const REF = "main";
-const MODEL = "claude-haiku-4-5-20251001";
+const DEFAULT_MODEL = "claude-sonnet-4-6";
 
 type TelegramUpdate = {
   message?: {
@@ -32,8 +32,8 @@ type ReviewState = {
 
 type LanaMemory = {
   pending_post: unknown;
-  pending_drafts: string[];
-  review_state: ReviewState | null;
+  pending_drafts?: string[];
+  review_state?: ReviewState | null;
   latest_live_post?: {
     slug: string;
     title: string;
@@ -72,6 +72,96 @@ function normalizeSlug(value: string) {
     .replace(/\.md$/i, "")
     .replace(/[.,!?;:)\]]+$/g, "")
     .trim();
+}
+
+function extractSlug(text: string) {
+  const urlMatch = text.match(/https?:\/\/(?:www\.)?lulidigital\.com\/blog\/([a-z0-9-]+)/i);
+  if (urlMatch?.[1]) return normalizeSlug(urlMatch[1]);
+
+  const slugMatch = text.match(/\b([a-z0-9]+(?:-[a-z0-9]+){2,})\b/i);
+  return slugMatch?.[1] ? normalizeSlug(slugMatch[1]) : "";
+}
+
+function extractDate(text: string) {
+  const isoMatch = text.match(/\b(20\d{2}-\d{2}-\d{2})\b/);
+  if (isoMatch?.[1]) return isoMatch[1];
+
+  const slashMatch = text.match(/\b(\d{1,2})[/-](\d{1,2})[/-](20\d{2})\b/);
+  if (!slashMatch) return "";
+
+  const [, day, month, year] = slashMatch;
+  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+}
+
+function cleanDraftTopic(text: string) {
+  return text
+    .trim()
+    .replace(/^\/?(blog|draft|post)\s*/i, "")
+    .replace(/^(please\s+)?(write|draft|create|make|prepare|generate|do|redo|repost)\s+/i, "")
+    .replace(/^(a\s+)?(new\s+)?(blog\s+post|article|post)\s*/i, "")
+    .replace(/^(about|on|for)\s+/i, "")
+    .trim();
+}
+
+function parseLocalFallback(text: string, memory: LanaMemory | null): LanaDecision {
+  const compact = text.trim();
+  const lower = compact.toLowerCase();
+  const slug = extractSlug(compact);
+  const date = extractDate(compact);
+
+  const publishIntent = /\b(publish|post|ship|put\s+live|make\s+live|send\s+live)\b/i.test(compact);
+  if (publishIntent && slug && !/\b(write|draft|create|new|repost|redo)\b/i.test(compact)) {
+    if (date) {
+      return {
+        action: "schedule",
+        slug,
+        date,
+        reply: `Got it. Scheduling ${slug} for ${date}.`,
+      };
+    }
+
+    return {
+      action: "publish",
+      slug,
+      reply: `Got it. Publishing ${slug} now.`,
+    };
+  }
+
+  const draftIntent = /\b(blog|post|article|write|draft|create|generate|repost|redo|new\s+post|content)\b/i.test(compact);
+  if (draftIntent) {
+    const topic = cleanDraftTopic(compact) || compact;
+    return {
+      action: "draft",
+      topic,
+      keyword: "",
+      category: lower.includes("virtual assistant") || /\bva\b/i.test(compact)
+        ? "Virtual Assistant"
+        : lower.includes("marketing") || lower.includes("seo")
+          ? "Digital Marketing"
+          : lower.includes("ai") || lower.includes("automation")
+            ? "AI Automation"
+            : "General",
+      pain_point: "",
+      angle: "",
+      tone_notes: "Natural, human, specific, and useful. Avoid keyword stuffing and make the post sound like LuliDigital.",
+      cta_text: "",
+      cta_link: "",
+      reply: `I can still handle it. Drafting this for review: ${topic}`,
+    };
+  }
+
+  const latest = memory?.latest_live_post?.slug;
+  if (/\b(status|latest|last post|what draft|which post)\b/i.test(compact) && latest) {
+    return {
+      action: "chat",
+      reply: `The latest live post I have is ${latest}.`,
+    };
+  }
+
+  return {
+    action: "chat",
+    reply: "I can still approve, revise, draft, publish, or take down blog posts. Tell me what you want changed.",
+  };
 }
 
 function parseDirectControl(text: string, memory: LanaMemory | null): LanaDecision | null {
@@ -182,10 +272,14 @@ async function fetchMemory(): Promise<LanaMemory | null> {
   }
 }
 
-async function askLana(text: string, reviewState?: ReviewState | null): Promise<LanaDecision> {
+async function askLana(
+  text: string,
+  reviewState?: ReviewState | null,
+  memory?: LanaMemory | null,
+): Promise<LanaDecision> {
   const apiKey = getEnv("ANTHROPIC_API_KEY");
   if (!apiKey) {
-    return { action: "chat", reply: "I'm having trouble thinking right now — try again in a moment." };
+    return parseLocalFallback(text, memory ?? null);
   }
 
   const today = new Date().toISOString().split("T")[0];
@@ -259,6 +353,8 @@ Rules:
 - For "chat" replies, be helpful and direct. If he's asking about a draft status, tell him to check GitHub Actions.
 - Never mention JSON, commands, or internal workings in your reply.`;
 
+  const model = getEnv("LANA_TELEGRAM_MODEL") || getEnv("ANTHROPIC_MODEL") || DEFAULT_MODEL;
+
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -267,7 +363,7 @@ Rules:
       "anthropic-version": "2023-06-01",
     },
     body: JSON.stringify({
-      model: MODEL,
+      model,
       max_tokens: 600,
       system: systemPrompt,
       messages: [{ role: "user", content: text }],
@@ -275,7 +371,8 @@ Rules:
   });
 
   if (!response.ok) {
-    return { action: "chat", reply: "I ran into an issue. Try again?" };
+    console.error("Lana Telegram Anthropic failed:", response.status, await response.text());
+    return parseLocalFallback(text, memory ?? null);
   }
 
   const data = await response.json();
@@ -361,7 +458,7 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response("OK");
     }
 
-    const decision = parseDirectControl(text, memory) ?? parseReviewReply(text, reviewState) ?? await askLana(text, reviewState);
+    const decision = parseDirectControl(text, memory) ?? parseReviewReply(text, reviewState) ?? await askLana(text, reviewState, memory);
 
     if (decision.action === "approve" && reviewState) {
       await dispatchWorkflow("publish-draft-blog.yml", {

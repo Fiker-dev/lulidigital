@@ -1,11 +1,20 @@
 ---
 // Reusable FAQ section. Pass an array of { q, a } plus an eyebrow + title.
 // Build a matching FAQPage schema on the page and pass it via extraSchemas.
+type FaqItem = {
+  q: string;
+  a: string;
+};
+
 const {
   faqs = [],
   eyebrow = "Questions, answered",
   title = "The things people ask before we start.",
-} = Astro.props;
+} = Astro.props as {
+  faqs?: FaqItem[];
+  eyebrow?: string;
+  title?: string;
+};
 ---
 
 <section class="faq-section" aria-label="Frequently asked questions" data-reveal="up" data-bee-stop>
