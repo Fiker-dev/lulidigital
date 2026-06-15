@@ -515,7 +515,7 @@ const querySearchConsole = async ({ dimensions = ["page", "query"], days = 28, r
   };
 };
 
-const chooseKeyword = (trends, now = new Date(), geo = "ZA") => {
+const chooseKeyword = (trends, now = new Date(), geo = "GB") => {
   const rankedTrends = trends
     .map((trend) => ({
       ...trend,
