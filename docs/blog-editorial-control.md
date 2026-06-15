@@ -32,6 +32,9 @@ When you want to steer Lana manually, run the `Auto Blog Post` workflow from Git
 - `pain_point`
 - `angle`
 - `tone_notes`
+- `source_notes`
+- `source_url`
+- `fiker_take`
 - `publish_status`
 - `use_seo_agent`
 
@@ -95,12 +98,36 @@ tone notes: Funny, relatable, pain relief, practical.
 /schedule how-to-hire-virtual-assistant-guide-founders-ceos 2026-06-10
 ```
 
+## Source-Led Posts
+
+Use source-led inputs when a TikTok creator, AI update, newsletter, or founder story gives you the direction for a post.
+
+Rules:
+
+- `source_notes` is the summary of the update or story. Use your own words.
+- `source_url` is optional context.
+- `fiker_take` is the LuliDigital point of view. This is where the post becomes yours.
+- Do not copy a creator's wording closely.
+- Do not invent client stories, fake quotes, fake metrics, or personal memories.
+- If no real story is supplied, the post should use operational observations and generic examples only.
+
+Example:
+
+```text
+topic: What the newest AI agent update means for small business owners
+source_notes: A creator explained that the new AI agent can now complete multi-step browser tasks, but people in the comments were worried about trusting it with real work.
+source_url: https://www.tiktok.com/...
+fiker_take: AI should carry the tedious work, but humans should keep judgment, approvals, and brand taste.
+angle: The opportunity is not replacing people. It is building a workflow where AI prepares the work and people make the decisions.
+tone_notes: Grounded, sharp, useful. No fake stories.
+```
+
 ## Recommended Tone Formula
 
 Use this style for LuliDigital posts:
 
 ```text
-Funny, relatable, solution-based, and pain-relief focused. Make it feel like the founder's inbox, calendar, team handoffs, and marketing dashboard are the real problem. Keep it practical and useful, not motivational.
+Grounded, sharp, solution-based, and pain-relief focused. Make it feel like the founder's inbox, calendar, team handoffs, and marketing dashboard are the real problem. Keep it practical and useful, not motivational. Do not fabricate relatability.
 ```
 
 ## Example Manual Brief
@@ -111,5 +138,5 @@ keyword: founder delegation mistakes
 category: Virtual Assistant
 pain_point: They hired someone, but still explain everything twice and chase every task.
 angle: The problem is not the assistant, it is the missing operating system around the assistant.
-tone_notes: Funny, relatable, a little sharp, but useful and calm.
+tone_notes: Grounded, a little sharp, useful, and calm. No fake client stories.
 ```

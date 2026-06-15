@@ -50,6 +50,9 @@ type LanaDecision = {
   pain_point?: string;
   angle?: string;
   tone_notes?: string;
+  source_notes?: string;
+  source_url?: string;
+  fiker_take?: string;
   cta_text?: string;
   cta_link?: string;
   slug?: string;
@@ -143,7 +146,10 @@ function parseLocalFallback(text: string, memory: LanaMemory | null): LanaDecisi
             : "General",
       pain_point: "",
       angle: "",
-      tone_notes: "Natural, human, specific, and useful. Avoid keyword stuffing and make the post sound like LuliDigital.",
+      tone_notes: "Grounded, human, specific, and useful. Avoid keyword stuffing and fabricated relatability.",
+      source_notes: "",
+      source_url: "",
+      fiker_take: "",
       cta_text: "",
       cta_link: "",
       reply: `I can still handle it. Drafting this for review: ${topic}`,
@@ -324,6 +330,9 @@ Analyze Fiker's message and reply with a JSON object ONLY (no extra text, no mar
   "pain_point": "problem the post addresses or empty string",
   "angle": "unique take or empty string",
   "tone_notes": "tone guidance",
+  "source_notes": "creator update, AI news, story direction, or source summary to respond to without copying",
+  "source_url": "source URL if Fiker sent one, else empty string",
+  "fiker_take": "Fiker or LuliDigital's point of view in Fiker's own words when supplied",
   "cta_text": "end-of-article CTA text if Fiker specified one, else empty string",
   "cta_link": "CTA link path — /ai, /marketing, /virtual-assistant, or other page Fiker mentioned, else empty string",
 
@@ -343,6 +352,8 @@ Analyze Fiker's message and reply with a JSON object ONLY (no extra text, no mar
 
 Rules:
 - Use "draft" when Fiker gives any blog idea, topic, or content request — including "write something else instead".
+- When Fiker shares a TikTok/creator/AI update/story, use "draft" if he wants it turned into a post. Put the update or story summary in source_notes, the URL in source_url, and his personal opinion in fiker_take if he gives one.
+- Do not invent personal stories, fake client anecdotes, fake quotes, or fabricated relatability. If he asks for relatability, make it grounded in the supplied source notes or operational patterns.
 - Use "draft" (NOT "schedule") when Fiker says "schedule it for the blog" or "next blog post" WITHOUT giving a specific date AND without giving an existing slug. The post must exist before it can be scheduled.
 - Use "publish" when he says to post/publish a specific existing draft now.
 - Use "schedule" ONLY when he gives BOTH an existing slug AND a specific date (convert "next Tuesday" to YYYY-MM-DD).
@@ -480,7 +491,10 @@ export const POST: APIRoute = async ({ request }) => {
         category: decision.category || "Digital Marketing",
         pain_point: decision.pain_point || "",
         angle: decision.angle || "",
-        tone_notes: decision.tone_notes || "Practical, relatable, and solution-focused.",
+        tone_notes: decision.tone_notes || "Practical, grounded, and solution-focused. Avoid fabricated relatability.",
+        source_notes: decision.source_notes || "",
+        source_url: decision.source_url || "",
+        fiker_take: decision.fiker_take || "",
         cta_text: decision.cta_text || "",
         cta_link: decision.cta_link || "",
         publish_status: "draft",

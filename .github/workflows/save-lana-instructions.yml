@@ -29,7 +29,19 @@ on:
         required: false
         type: string
       tone_notes:
-        description: 'Tone notes (e.g. funny, relatable, practical, pain relief)'
+        description: 'Tone notes (e.g. grounded, sharp, practical, pain relief)'
+        required: false
+        type: string
+      source_notes:
+        description: 'Source notes, creator update, or story direction to respond to without copying'
+        required: false
+        type: string
+      source_url:
+        description: 'Optional source URL for context'
+        required: false
+        type: string
+      fiker_take:
+        description: 'Fiker/LuliDigital point of view to add'
         required: false
         type: string
       cta_text:
@@ -76,6 +88,9 @@ jobs:
             pain_point: "${{ github.event.inputs.pain_point }}".trim() || null,
             angle:      "${{ github.event.inputs.angle }}".trim() || null,
             tone_notes: "${{ github.event.inputs.tone_notes }}".trim() || null,
+            source_notes: "${{ github.event.inputs.source_notes }}".trim() || null,
+            source_url: "${{ github.event.inputs.source_url }}".trim() || null,
+            fiker_take: "${{ github.event.inputs.fiker_take }}".trim() || null,
             cta_text:   "${{ github.event.inputs.cta_text }}".trim() || null,
             cta_link:   "${{ github.event.inputs.cta_link }}".trim() || null,
             draft:      "${{ github.event.inputs.draft }}" !== "false",
@@ -100,10 +115,11 @@ jobs:
         run: |
           TOPIC="${{ github.event.inputs.topic }}"
           ANGLE="${{ github.event.inputs.angle }}"
+          SOURCE="${{ github.event.inputs.source_notes }}"
           DRAFT="${{ github.event.inputs.draft }}"
           if [ -z "$TOPIC" ]; then TOPIC="(SEO auto-select)"; fi
           if [ "$DRAFT" = "false" ]; then STATUS="and publish immediately"; else STATUS="as a draft for your approval"; fi
-          TEXT=$(printf "Got it. Queued for the next scheduled post.\n\nTopic: %s\nAngle: %s\nWill generate: %s\n\nI'll run this on the next scheduled post (Mon, Wed, or Fri at 8am UTC). You can override it anytime by sending new instructions." "$TOPIC" "${ANGLE:-not specified}" "$STATUS")
+          TEXT=$(printf "Got it. Queued for the next scheduled post.\n\nTopic: %s\nAngle: %s\nSource notes: %s\nWill generate: %s\n\nI'll run this on the next scheduled post (Mon, Wed, or Fri at 08:17 UTC / 10:17 South Africa). You can override it anytime by sending new instructions." "$TOPIC" "${ANGLE:-not specified}" "${SOURCE:-not specified}" "$STATUS")
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
             --data-urlencode "text=${TEXT}"
