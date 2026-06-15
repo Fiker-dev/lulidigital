@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FaqSection from "../components/FaqSection.astro";
 import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
 
 export const prerender = false;
@@ -36,6 +37,38 @@ const mktMarquee = [
   "Content Calendar", "Paid Media", "SEO", "Campaign Launch",
   "Creative Direction", "Performance Marketing", "Brand Voice", "Audience Strategy",
 ];
+
+const faqs = [
+  {
+    q: "Which channels do you actually run?",
+    a: "Brand strategy plus paid media across Meta, Google, and TikTok, with SEO and content to match. We start where your audience already is, not where it is trendy.",
+  },
+  {
+    q: "Do I need a big budget to start?",
+    a: "No. We scope to your stage and put spend where it earns its keep, then scale what works. Clarity first, volume second.",
+  },
+  {
+    q: "How do you measure success?",
+    a: "Against your goals — leads, sales, qualified traffic — not vanity metrics. You get plain-language reporting on what moved and what is next.",
+  },
+  {
+    q: "Do you write the content too?",
+    a: "Yes. Copy, creative direction, and content systems are part of the work, kept on-brand and consistent across every channel.",
+  },
+  {
+    q: "What if I already have an in-house team?",
+    a: "We slot in — strategy, overflow, or the specialist pieces — and hand back clean systems your team can keep running without us.",
+  },
+];
+
+const faqSchema = {
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    "name": q,
+    "acceptedAnswer": { "@type": "Answer", "text": a },
+  })),
+};
 ---
 
 <BaseLayout
@@ -44,6 +77,7 @@ const mktMarquee = [
   active="marketing"
   seoTarget={seoTarget}
   serviceSchema={serviceSchema}
+  extraSchemas={[faqSchema]}
 >
 
   <!-- ═══════════════════════════════════════════════════════ HERO -->
@@ -352,6 +386,9 @@ const mktMarquee = [
     </div>
   </div>
 
+  <!-- ════════════════════════════════════ FAQ -->
+  <FaqSection faqs={faqs} eyebrow="Questions, answered" title="What founders ask before we run a campaign." />
+
   <!-- ═══════════════════════════════════════════════════════ CTA -->
   <section class="mkt-cta-section" aria-label="Get started with marketing" data-reveal="fade" data-bee-final data-atmosphere="cta" data-hive-section>
     <div class="hive-glow-ring" style="width:600px;height:600px;left:50%;top:50%;transform:translate(-50%,-50%)" aria-hidden="true"></div>
@@ -360,6 +397,7 @@ const mktMarquee = [
     <div data-stagger data-stagger-gap="80" class="cta-links">
       <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">WhatsApp us →</a>
       <a class="pill pill--outline magnetic" href="mailto:info@lulidigital.com">Email the desk →</a>
+      <a class="pill pill--outline magnetic" href="/work">See recent work →</a>
     </div>
   </section>
 
