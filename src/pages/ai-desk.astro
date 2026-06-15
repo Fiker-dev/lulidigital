@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FaqSection from "../components/FaqSection.astro";
 import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
 
 export const prerender = false;
@@ -32,6 +33,38 @@ const aiMarquee = [
   "Query Answered", "Agent Deployed", "Process Optimised", "Task Routed",
   "Follow-up Sent", "Data Processed", "Knowledge Queried", "Always On",
 ];
+
+const faqs = [
+  {
+    q: "What can an AI assistant actually do?",
+    a: "Answer questions around the clock, qualify leads, route tasks, draft replies, and pull reports — trained on your business, not a generic bot.",
+  },
+  {
+    q: "Is my data safe?",
+    a: "Yes. We build around your tools with access scoped to what is needed, and nothing trained on your data leaves your control without permission.",
+  },
+  {
+    q: "Will this replace my team?",
+    a: "No. AI carries the repetitive load so your people keep the judgment and the relationships. That is the whole point — humans on the work that needs them.",
+  },
+  {
+    q: "Do I need any technical knowledge?",
+    a: "None. We handle the build, integration, and training, then hand you something simple to use and a clear way to manage it.",
+  },
+  {
+    q: "What does it integrate with?",
+    a: "The tools you already use — inbox, calendar, CRM, documents, and chat. We map your stack before we build, so it fits how you already work.",
+  },
+];
+
+const faqSchema = {
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(({ q, a }) => ({
+    "@type": "Question",
+    "name": q,
+    "acceptedAnswer": { "@type": "Answer", "text": a },
+  })),
+};
 ---
 
 <BaseLayout
@@ -40,6 +73,7 @@ const aiMarquee = [
   active="ai"
   seoTarget={seoTarget}
   serviceSchema={serviceSchema}
+  extraSchemas={[faqSchema]}
 >
 
   <!-- ═══════════════════════════════════════════════════════ HERO -->
@@ -345,6 +379,9 @@ const aiMarquee = [
     </div>
   </div>
 
+  <!-- ════════════════════════════════════ FAQ -->
+  <FaqSection faqs={faqs} eyebrow="Questions, answered" title="What people ask before automating." />
+
   <!-- ═══════════════════════════════════════════════════════ CTA -->
   <section class="ai-cta" aria-label="Get started with AI" data-reveal="fade" data-bee-final data-atmosphere="cta" data-hive-section>
     <div class="hive-glow-ring" style="width:600px;height:600px;left:50%;top:50%;transform:translate(-50%,-50%)" aria-hidden="true"></div>
@@ -353,6 +390,7 @@ const aiMarquee = [
     <div data-stagger data-stagger-gap="80" class="cta-links">
       <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">Talk to the desk →</a>
       <a class="pill pill--outline magnetic" href="/va-desk">Visit Virtual Assistant Desk →</a>
+      <a class="pill pill--outline magnetic" href="/work">See recent work →</a>
     </div>
   </section>
 

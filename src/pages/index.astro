@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ShowreelSection from "../components/ShowreelSection.astro";
 import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
 
 export const prerender = false;
@@ -516,6 +517,13 @@ const marqueeItems2 = [
       </article>
     </div>
   </section>
+
+  <!-- ══════════════════════════════ RECENT SELECTED WORK -->
+  <ShowreelSection
+    eyebrow="Recent Selected Work"
+    title="See the studio in motion."
+    sub="Recent work across marketing, AI, web design, and operations — built for founders who move fast."
+  />
 
   <!-- ══════════════════════════════ DROP GUIDE 2 -->
   <div class="drop-guide" aria-hidden="true">

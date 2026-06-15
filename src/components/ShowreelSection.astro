@@ -1,0 +1,131 @@
+---
+// "Recent Selected Work" showreel showcase. Real proof, cinematic frame,
+// autoplays (muted) when scrolled into view, links to /work.
+const {
+  eyebrow = "Recent Selected Work",
+  title = "See the studio in motion.",
+  sub = "Recent work across marketing, AI, web design, and operations — built for founders who move fast.",
+  href = "/work",
+  cta = "View all work",
+} = Astro.props;
+---
+
+<section class="showreel-section" aria-label="Recent selected work" data-reveal="up" data-bee-stop data-atmosphere="services" data-hive-section>
+  <div class="showreel-inner">
+    <span class="eyebrow showreel-eyebrow" data-blur-in>{eyebrow}</span>
+    <h2 class="showreel-title" data-blur-in data-blur-delay="120">{title}</h2>
+    <p class="showreel-sub" data-blur-in data-blur-delay="240">{sub}</p>
+
+    <div class="showreel-frame" data-reveal="up" data-reveal-delay="120">
+      <div class="showreel-glow" aria-hidden="true"></div>
+      <video
+        class="showreel-video"
+        src="/assets/lulidigital-showreel.mp4"
+        muted loop playsinline preload="metadata"
+        aria-label="LuliDigital recent selected work showreel"
+      ></video>
+      <a class="showreel-tag" href={href}>
+        <span class="showreel-tag-dot" aria-hidden="true"></span>Recent Selected Work
+      </a>
+    </div>
+
+    <a class="showreel-cta pill pill--outline magnetic" href={href}>{cta} <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<style>
+  .showreel-section {
+    padding: clamp(72px, 9vw, 120px) 0;
+    border-top: 1px solid rgba(30,24,22,.1);
+    text-align: center;
+  }
+  .showreel-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 56px);
+  }
+  .showreel-eyebrow { color: var(--brand, #7b2d2d); }
+  .showreel-title {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: clamp(30px, 4.6vw, 56px);
+    font-weight: 700; letter-spacing: -.035em; line-height: 1.04;
+    color: var(--ink, #141312); margin: 14px 0 14px;
+  }
+  .showreel-sub {
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: clamp(15px, 1.7vw, 18px); line-height: 1.6;
+    color: var(--muted, rgba(20,19,18,.62));
+    max-width: 560px; margin: 0 auto clamp(32px, 5vw, 52px);
+  }
+  .showreel-frame {
+    position: relative;
+    border-radius: 22px;
+    isolation: isolate;
+  }
+  .showreel-glow {
+    position: absolute; inset: -8% -4% -14%;
+    z-index: -1; border-radius: 40px;
+    background:
+      radial-gradient(60% 60% at 50% 30%, rgba(245,164,31,.30), transparent 70%),
+      radial-gradient(70% 70% at 50% 90%, rgba(123,45,45,.22), transparent 72%);
+    filter: blur(18px);
+    animation: showreelGlow 6s ease-in-out infinite;
+  }
+  @keyframes showreelGlow {
+    0%,100% { opacity: .7; transform: scale(1); }
+    50%     { opacity: 1;  transform: scale(1.04); }
+  }
+  .showreel-video {
+    display: block; width: 100%; height: auto;
+    aspect-ratio: 16 / 9; object-fit: cover;
+    border-radius: 22px;
+    background: #0f0a09;
+    border: 1px solid rgba(30,24,22,.14);
+    box-shadow:
+      0 2px 0 rgba(255,255,255,.5) inset,
+      0 40px 90px rgba(20,13,8,.30),
+      0 4px 14px rgba(123,45,45,.12);
+  }
+  .showreel-tag {
+    position: absolute; left: 16px; bottom: 16px;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 999px;
+    background: rgba(15,10,9,.62);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    color: rgba(245,240,232,.95);
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    text-decoration: none; border: 1px solid rgba(245,240,232,.18);
+    transition: background 200ms ease;
+  }
+  .showreel-tag:hover { background: rgba(15,10,9,.8); }
+  .showreel-tag-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--honey-mid, #f5a41f);
+    box-shadow: 0 0 0 0 rgba(245,164,31,.6);
+    animation: showreelPulse 2s ease-in-out infinite;
+  }
+  @keyframes showreelPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(245,164,31,.55); }
+    50%     { box-shadow: 0 0 0 6px rgba(245,164,31,0); }
+  }
+  .showreel-cta { margin-top: clamp(28px, 4vw, 40px); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .showreel-glow, .showreel-tag-dot { animation: none !important; }
+  }
+</style>
+
+<script>
+  const reels = document.querySelectorAll<HTMLVideoElement>(".showreel-video");
+  reels.forEach((video) => {
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(video);
+  });
+</script>
