@@ -2,7 +2,9 @@ name: Auto Blog Post
 
 on:
   schedule:
-    - cron: '0 8 * * 1,3,5'  # Mon, Wed, Fri at 8am UTC
+    # Mon, Wed, Fri at 08:17 UTC / 10:17 South Africa.
+    # Avoid :00 because GitHub scheduled workflows are more likely to be delayed or dropped at the top of the hour.
+    - cron: '17 8 * * 1,3,5'
   workflow_dispatch:           # Allow manual trigger from GitHub UI
     inputs:
       topic:
@@ -84,7 +86,7 @@ jobs:
           BLOG_PAIN_POINT: ${{ github.event.inputs.pain_point }}
           BLOG_ANGLE: ${{ github.event.inputs.angle }}
           BLOG_TONE_NOTES: ${{ github.event.inputs.tone_notes }}
-          BLOG_DRAFT: ${{ github.event_name == 'schedule' || github.event.inputs.publish_status != 'publish' }}
+          BLOG_DRAFT: ${{ github.event_name == 'schedule' && 'true' || (github.event.inputs.publish_status != 'publish' && 'true' || 'false') }}
           BLOG_CTA_TEXT: ${{ github.event.inputs.cta_text }}
           BLOG_CTA_LINK: ${{ github.event.inputs.cta_link }}
           BLOG_USE_SEO_AGENT: ${{ github.event_name == 'schedule' || github.event.inputs.use_seo_agent == 'true' }}
