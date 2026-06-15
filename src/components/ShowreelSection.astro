@@ -5,8 +5,6 @@ const {
   eyebrow = "Recent Selected Work",
   title = "See the studio in motion.",
   sub = "Recent work across marketing, AI, web design, and operations — built for founders who move fast.",
-  href = "/work",
-  cta = "View all work",
 } = Astro.props;
 ---
 
@@ -24,12 +22,7 @@ const {
         muted loop playsinline preload="metadata"
         aria-label="LuliDigital recent selected work showreel"
       ></video>
-      <a class="showreel-tag" href={href}>
-        <span class="showreel-tag-dot" aria-hidden="true"></span>Recent Selected Work
-      </a>
     </div>
-
-    <a class="showreel-cta pill pill--outline magnetic" href={href}>{cta} <span aria-hidden="true">→</span></a>
   </div>
 </section>
 
@@ -77,7 +70,7 @@ const {
   }
   .showreel-video {
     display: block; width: 100%; height: auto;
-    aspect-ratio: 16 / 9; object-fit: cover;
+    aspect-ratio: 16 / 9; object-fit: contain;
     border-radius: 22px;
     background: #0f0a09;
     border: 1px solid rgba(30,24,22,.14);
@@ -86,33 +79,8 @@ const {
       0 40px 90px rgba(20,13,8,.30),
       0 4px 14px rgba(123,45,45,.12);
   }
-  .showreel-tag {
-    position: absolute; left: 16px; bottom: 16px;
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 8px 14px; border-radius: 999px;
-    background: rgba(15,10,9,.62);
-    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-    color: rgba(245,240,232,.95);
-    font-family: var(--font-body, "DM Sans", sans-serif);
-    font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
-    text-decoration: none; border: 1px solid rgba(245,240,232,.18);
-    transition: background 200ms ease;
-  }
-  .showreel-tag:hover { background: rgba(15,10,9,.8); }
-  .showreel-tag-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--honey-mid, #f5a41f);
-    box-shadow: 0 0 0 0 rgba(245,164,31,.6);
-    animation: showreelPulse 2s ease-in-out infinite;
-  }
-  @keyframes showreelPulse {
-    0%,100% { box-shadow: 0 0 0 0 rgba(245,164,31,.55); }
-    50%     { box-shadow: 0 0 0 6px rgba(245,164,31,0); }
-  }
-  .showreel-cta { margin-top: clamp(28px, 4vw, 40px); }
-
   @media (prefers-reduced-motion: reduce) {
-    .showreel-glow, .showreel-tag-dot { animation: none !important; }
+    .showreel-glow { animation: none !important; }
   }
 </style>
 
