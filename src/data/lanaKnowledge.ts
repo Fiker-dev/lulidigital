@@ -8,7 +8,7 @@ const chunks: LanaKnowledgeChunk[] = [
   {
     id: "about",
     title: "About LuliDigital",
-    text: "LuliDigital is a studio that works like an editorial floor — clarifying the story, pressure-testing it in market, and building systems teams can rely on. The business covers three desks: Marketing, AI, and Virtual Assistant. The tone is human, calm, clear, practical, and supportive. The studio was founded by Fikerte Zabate (Fiker), who leads the team and takes discovery calls with potential clients personally.",
+    text: "LuliDigital is a studio that works like an editorial floor — clarifying the story, pressure-testing it in market, and building systems teams can rely on. The business covers three desks: Marketing, AI, and Virtual Assistant. The tone is human, calm, clear, practical, and supportive. The studio was founded by Fikerte Abate (Fiker), who leads the studio and takes discovery calls with potential clients personally.",
   },
   {
     id: "marketing",
