@@ -211,24 +211,9 @@ const currentMarketPath = `/${market.variant}`;
 
   <section class:list={["local-proof", isStockholm && "local-proof--dark"]} data-atmosphere="marketing" data-hive-section>
     <div class="proof-copy reveal-block">
-      <p class="local-eyebrow">{isAmsterdam ? "Case Study" : isMunich ? "Global Collaboration" : "Client Signal"}</p>
+      <p class="local-eyebrow">Why It Works</p>
       <h2>{market.proofTitle}</h2>
       <p>{market.proofCopy}</p>
-    </div>
-
-    <div class="review-carousel reveal-block" data-review-carousel>
-      <div class="review-track">
-        {market.reviews.map((review: any, index: number) => (
-          <article class:list={["review-card", index === 0 && "is-active"]}>
-            <p>{review}</p>
-            <span>LuliDigital client review</span>
-          </article>
-        ))}
-      </div>
-      <div class="review-controls" aria-label="Review controls">
-        <button type="button" data-review-prev aria-label="Previous review">‹</button>
-        <button type="button" data-review-next aria-label="Next review">›</button>
-      </div>
     </div>
   </section>
 
@@ -292,23 +277,6 @@ const currentMarketPath = `/${market.variant}`;
   } else {
     revealBlocks.forEach((block) => block.classList.add("is-visible"));
   }
-
-  document.querySelectorAll("[data-review-carousel]").forEach((carousel) => {
-    const cards = Array.from(carousel.querySelectorAll(".review-card"));
-    const previous = carousel.querySelector("[data-review-prev]");
-    const next = carousel.querySelector("[data-review-next]");
-    let active = 0;
-
-    const show = (index: number) => {
-      active = (index + cards.length) % cards.length;
-      cards.forEach((card, cardIndex) => {
-        card.classList.toggle("is-active", cardIndex === active);
-      });
-    };
-
-    previous?.addEventListener("click", () => show(active - 1));
-    next?.addEventListener("click", () => show(active + 1));
-  });
 
   document.querySelectorAll("[data-tilt-card]").forEach((card) => {
     const el = card as HTMLElement;

@@ -129,11 +129,6 @@ export const markets = {
     proofTitle: "Africa-based does not mean local-only",
     proofCopy:
       "Many African companies are already serving international customers, pitching global partners, or working with remote teams. The problem is often not ambition. It is that the website, follow-up system, campaign engine, and operations layer do not yet match the market they want to win.",
-    reviews: [
-      "They understood the gap between local execution and international expectations immediately.",
-      "The systems helped us respond faster to overseas leads without hiring a bigger admin team.",
-      "Our brand finally looked like it belonged in the same room as the clients we wanted.",
-    ],
     formTitle: "Start your Africa growth project",
     formCopy: "Send the market, service, or operations bottleneck. We will map the most direct route to a cleaner international-facing system.",
   },
@@ -215,11 +210,6 @@ export const markets = {
     proofTitle: "Why Amsterdam's fastest-growing teams go English-first",
     proofCopy:
       "Amsterdam teams operate across borders by default — selling into the UK, US, and Middle East while managing multilingual markets. English-first production removes translation lag, keeps campaign strategy aligned, and lets your team move at global speed without local-agency friction.",
-    reviews: [
-      "The studio moved faster than our internal campaign calendar and kept every asset on brand.",
-      "English-first production made our European launch cleaner than any local-agency handoff.",
-      "Their automation thinking changed how our team briefs, produces, and tests campaign assets.",
-    ],
     formTitle: "Start your Amsterdam project",
     formCopy: "Send your campaign target, AI challenge, or operations bottleneck. We will map the right system.",
   },
@@ -301,11 +291,6 @@ export const markets = {
     proofTitle: "Why English-first execution wins for Munich enterprises",
     proofCopy:
       "Munich teams sell into Europe, North America, and the Middle East. English-first production removes translation drag, reduces regional design friction, and keeps executive, product, and campaign teams aligned around one global standard — without rebuilding your internal process.",
-    reviews: [
-      "A disciplined partner for enterprise campaign execution, not another vendor waiting for instructions.",
-      "They translated complex industrial value into a premium digital campaign system our board understood.",
-      "The English-first workflow helped our German and international teams move with one source of truth.",
-    ],
     formTitle: "Start your Munich project",
     formCopy: "Share your campaign priority, AI challenge, or operations need. We will respond with a production path.",
   },
@@ -387,11 +372,6 @@ export const markets = {
     proofTitle: "The Nordic design standard — at production velocity",
     proofCopy:
       "Stockholm brands set a high visual bar. We match it with campaign systems built for taste and speed — sharp brand assets, automated workflows, and AI systems that let your team produce at a level that looks like you have a team twice the size.",
-    reviews: [
-      "Their creative automation gave our launch the visual depth of a much larger brand team.",
-      "Minimal, premium, fast. The studio understood the Nordic standard immediately.",
-      "The asset generation workflow helped us produce cinematic campaign material without losing taste.",
-    ],
     formTitle: "Start your Stockholm project",
     formCopy: "Send your brand, campaign, or AI challenge. We will respond with a focused recommendation.",
   },
@@ -467,11 +447,6 @@ export const markets = {
     proofTitle: "Remote-first, US-standard execution",
     proofCopy:
       "US founders operate in one of the most competitive digital markets in the world. We build the paid media engine, automation layer, and operational support that helps remote-first teams move at the speed the US market demands without the overhead of a full in-house team.",
-    reviews: [
-      "They matched the pace and expectations of our US growth team immediately.",
-      "The SEO and paid media work drove pipeline we could actually track and close.",
-      "Remote executive support that finally felt as reliable as having someone in the office.",
-    ],
     formTitle: "Start your US project",
     formCopy: "Send the market, campaign target, or operations bottleneck. We will map the fastest route to a cleaner system.",
   },
@@ -547,11 +522,6 @@ export const markets = {
     proofTitle: "Built for the pace of UK agency and founder markets",
     proofCopy:
       "UK teams face competitive digital markets and increasingly sophisticated buyers. We build the marketing infrastructure, automation layer, and executive support that lets UK founders and scale-ups compete without building a large in-house team.",
-    reviews: [
-      "They understood the UK market and moved at agency pace without agency friction.",
-      "The automation setup genuinely changed how our small team handles inbound.",
-      "Executive support that was reliable from day one, no onboarding lag.",
-    ],
     formTitle: "Start your UK project",
     formCopy: "Send your campaign priority, AI bottleneck, or operations challenge. We will map a direct route.",
   },
@@ -629,11 +599,6 @@ export const markets = {
     proofTitle: "The Nordic standard — at global execution speed",
     proofCopy:
       "Danish companies compete internationally by default. We build the marketing systems, automation layer, and executive support infrastructure that lets Danish founders run at the speed of their product without building a large internal operations team.",
-    reviews: [
-      "They matched the Nordic design and execution standard from the first deliverable.",
-      "Clean, fast, and no agency theatre. That is exactly what we needed.",
-      "The automation layer gave our team space to focus on product without losing operational control.",
-    ],
     formTitle: "Start your Denmark project",
     formCopy: "Send the campaign target, AI challenge, or operations bottleneck. We will map a direct, practical route.",
   },
@@ -712,11 +677,6 @@ export const markets = {
     proofTitle: "European precision. Global execution.",
     proofCopy:
       "Swiss enterprises operate to a high standard of quality, trust, and detail. We build the marketing infrastructure, automation layer, and executive support that matches that standard — without the overhead of a large internal team.",
-    reviews: [
-      "Precision, reliability, and no noise. Exactly what a Swiss business expects from a partner.",
-      "The automation systems were built with the kind of accuracy our internal teams demanded.",
-      "They understood our international market requirements and delivered without compromise.",
-    ],
     formTitle: "Start your Switzerland project",
     formCopy: "Send the market priority, AI challenge, or operations need. We will respond with a focused, practical plan.",
   },
@@ -794,11 +754,6 @@ export const markets = {
     proofTitle: "Built for the pace of Ireland's tech ecosystem",
     proofCopy:
       "Ireland's tech scene operates at global speed, with EU market obligations and an English-first commercial culture. We build the marketing, automation, and operations infrastructure that helps Irish founders and teams move fast without losing control.",
-    reviews: [
-      "They understood the EU market requirements and delivered without friction.",
-      "Fast, precise, and genuinely useful AI automation. No bloat.",
-      "Executive support that matched the pace of our startup without slowing us down.",
-    ],
     formTitle: "Start your Ireland project",
     formCopy: "Send the campaign target, AI challenge, or operations bottleneck. We will map the most direct route.",
   },
@@ -876,11 +831,6 @@ export const markets = {
     proofTitle: "EU-standard execution for Belgian businesses",
     proofCopy:
       "Belgian businesses operate at the centre of the EU market, with complex buyer expectations and multilingual commercial requirements. We build the marketing, automation, and operational infrastructure that helps Belgian companies compete without building a large internal team.",
-    reviews: [
-      "They understood the complexity of EU market positioning and delivered cleanly.",
-      "The automation setup was precise and integrated without disrupting our existing workflow.",
-      "Reliable, fast executive support that matched our team's pace from day one.",
-    ],
     formTitle: "Start your Belgium project",
     formCopy: "Send the market priority, AI challenge, or operations bottleneck. We will map a direct, practical route.",
   },
@@ -958,11 +908,6 @@ export const markets = {
     proofTitle: "Nordic precision — with global reach",
     proofCopy:
       "Norwegian companies operate to a high standard of quality and efficiency. We build the marketing systems, automation layer, and executive support that matches that standard and helps Norwegian businesses expand beyond the Nordic region.",
-    reviews: [
-      "They matched the Norwegian execution standard and delivered without unnecessary back-and-forth.",
-      "The AI automation genuinely simplified operations that had been manual for too long.",
-      "A reliable partner that understood our market and moved with the right level of precision.",
-    ],
     formTitle: "Start your Norway project",
     formCopy: "Send the campaign priority, AI challenge, or operations need. We will respond with a focused, practical plan.",
   },

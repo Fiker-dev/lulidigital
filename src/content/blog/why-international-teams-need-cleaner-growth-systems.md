@@ -9,7 +9,7 @@ draft: false
 
 Growth gets messy long before it looks broken from the outside.
 
-One team is selling into the UK. Another is testing demand in the Netherlands. A founder is speaking to prospects in Germany, Sweden, Belgium, Denmark, Norway, Switzerland, Ireland, the US, and South Africa in the same month. The website says one thing, the sales deck says another, the follow-up process lives in someone's inbox, and the content calendar is mostly a list of ideas everyone agrees are important but nobody owns.
+One team is selling into the UK. Another is testing demand in the Netherlands. A founder is speaking to prospects in Germany, Sweden, Belgium, Denmark, Norway, Switzerland, Ireland, and the US in the same month. The website says one thing, the sales deck says another, the follow-up process lives in someone's inbox, and the content calendar is mostly a list of ideas everyone agrees are important but nobody owns.
 
 That is not a marketing problem by itself. It is an operating system problem.
 
@@ -23,7 +23,7 @@ The founder is still answering too many operational questions. The marketing per
 
 This is how international growth starts to feel heavier than it should.
 
-In Amsterdam, a team might need English-first messaging that still respects the local market. In Munich, buyers may expect more proof and process before they move. In Stockholm or Copenhagen, the tone needs to feel clear, useful, and low on noise. In London, Dublin, Zurich, Brussels, Oslo, New York, Johannesburg, or Cape Town, the same offer may need different examples, different objections handled, and different follow-up timing.
+In Amsterdam, a team might need English-first messaging that still respects the local market. In Munich, buyers may expect more proof and process before they move. In Stockholm or Copenhagen, the tone needs to feel clear, useful, and low on noise. In London, Dublin, Zurich, Brussels, Oslo, or New York, the same offer may need different examples, different objections handled, and different follow-up timing.
 
 If your system cannot adapt without everyone rewriting everything from scratch, every new market becomes expensive.
 
