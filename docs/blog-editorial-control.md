@@ -81,6 +81,30 @@ Telegram commands:
 /blog Why founders keep hiring help and still feel overwhelmed
 ```
 
+Lana should behave like a blog agent, not a command bot. Talk to her naturally. She should propose, plan, act when intent is clear, and ask one short question only when she is blocked.
+
+```text
+Let's plan the next 3 blogs around AI updates. One should explain AI agents for small business owners, one should cover human approval, and one should connect AI with marketing systems.
+```
+
+```text
+I saw an AI update about browser agents. Draft this as a blog now, outside the normal schedule. My take: AI should prepare the work, but humans should still approve judgment and brand taste.
+```
+
+```text
+This one is urgent. Draft it today for approval, don't wait for Wednesday.
+```
+
+Lana will treat outside-schedule requests as immediate drafts for approval unless you explicitly say to publish live without approval.
+
+Good agent behavior:
+
+- If the direction is clear, Lana queues the plan or starts the draft.
+- If the source link is missing but the topic is clear, Lana still plans the post and asks for the link as optional refinement.
+- If you ask for three blogs, Lana proposes three hook-led, solution-based posts.
+- If you say "outside the schedule", Lana starts an immediate draft for approval.
+- Lana should not ask you to use commands or fill a form.
+
 ```text
 topic: Why founders keep hiring help and still feel overwhelmed
 keyword: founder delegation mistakes

@@ -32,6 +32,7 @@ type ReviewState = {
 
 type LanaMemory = {
   pending_post: unknown;
+  blog_plan_queue?: BlogPlanItem[];
   pending_drafts?: string[];
   review_state?: ReviewState | null;
   latest_live_post?: {
@@ -41,9 +42,26 @@ type LanaMemory = {
   };
 };
 
+type BlogPlanItem = {
+  topic: string;
+  keyword?: string;
+  category?: string;
+  pain_point?: string;
+  angle?: string;
+  tone_notes?: string;
+  source_notes?: string;
+  source_url?: string;
+  fiker_take?: string;
+  cta_text?: string;
+  cta_link?: string;
+};
+
 type LanaDecision = {
-  action: "draft" | "publish" | "schedule" | "unpublish" | "approve" | "revise" | "reject" | "chat";
+  action: "draft" | "plan" | "publish" | "schedule" | "unpublish" | "approve" | "revise" | "reject" | "chat";
   reply: string;
+  plan?: BlogPlanItem[];
+  replace_existing_plan?: boolean;
+  publish_status?: "draft" | "publish";
   topic?: string;
   keyword?: string;
   category?: string;
@@ -130,6 +148,14 @@ function parseLocalFallback(text: string, memory: LanaMemory | null): LanaDecisi
     };
   }
 
+  const planIntent = /\b(plan|queue|map\s+out|content\s+calendar)\b/i.test(compact) && /\b(3|three|blogs?|posts?|articles?)\b/i.test(compact);
+  if (planIntent) {
+    return {
+      action: "chat",
+      reply: "I can plan the three posts. I would anchor them around: one AI update, one human-approval angle, and one solution-led LuliDigital systems post. Send any creator links you want included and I will use them as source direction, not copy.",
+    };
+  }
+
   const draftIntent = /\b(blog|post|article|write|draft|create|generate|repost|redo|new\s+post|content)\b/i.test(compact);
   if (draftIntent) {
     const topic = cleanDraftTopic(compact) || compact;
@@ -152,7 +178,10 @@ function parseLocalFallback(text: string, memory: LanaMemory | null): LanaDecisi
       fiker_take: "",
       cta_text: "",
       cta_link: "",
-      reply: `I can still handle it. Drafting this for review: ${topic}`,
+      publish_status: /\b(publish\s+live|publish\s+now|post\s+live|without approval)\b/i.test(compact) ? "publish" : "draft",
+      reply: /\b(outside\s+the\s+schedule|now|today|asap|right\s+away)\b/i.test(compact)
+        ? `I can handle it outside the schedule. Drafting this for review now: ${topic}`
+        : `I can still handle it. Drafting this for review: ${topic}`,
     };
   }
 
@@ -311,17 +340,44 @@ In this mode, interpret Fiker's message as a response to the draft:
 Do NOT use "draft", "publish", or "schedule" while a review is active.`;
   }
 
-  const systemPrompt = `You are Lana, the LuliDigital blog assistant. You talk with Fiker (the business owner) on Telegram.
+  const systemPrompt = `You are Lana, the LuliDigital blog agent. You talk with Fiker (the business owner) on Telegram.
 
 Today's date: ${today}
 
-Personality: direct, warm, like a smart colleague. Keep replies short — this is Telegram.
+Personality: direct, warm, like a smart editorial operator. Keep replies short because this is Telegram.
+
+AGENT BEHAVIOR
+- Do not behave like a command bot. Do not wait for perfect commands when intent is clear.
+- Think with Fiker: propose a plan, make sensible assumptions, and move the work forward.
+- Ask one concise clarifying question only when the missing detail blocks action.
+- When action is clear, take it and explain what will happen next.
+- When planning, give Fiker a useful draft direction, not a form to fill.
+- Never say "use this command", "send a slash command", "check GitHub", or mention internal workflows.
+- Never over-explain. Sound like a capable teammate, not support software.
 ${reviewContext}
 Analyze Fiker's message and reply with a JSON object ONLY (no extra text, no markdown):
 
 {
-  "action": "draft" | "publish" | "schedule" | "unpublish" | "approve" | "revise" | "reject" | "chat",
+  "action": "draft" | "plan" | "publish" | "schedule" | "unpublish" | "approve" | "revise" | "reject" | "chat",
   "reply": "your short conversational reply",
+
+  // include for action "plan":
+  "plan": [
+    {
+      "topic": "blog post topic",
+      "keyword": "main SEO keyword or empty string",
+      "category": "AI Automation | Virtual Assistant | Digital Marketing | General",
+      "pain_point": "reader pain point",
+      "angle": "hook-led solution angle",
+      "tone_notes": "tone guidance",
+      "source_notes": "AI update or creator story direction to respond to without copying",
+      "source_url": "source URL if supplied, else empty string",
+      "fiker_take": "Fiker/LuliDigital point of view if supplied",
+      "cta_text": "CTA text if relevant, else empty string",
+      "cta_link": "CTA link path if relevant, else empty string"
+    }
+  ],
+  "replace_existing_plan": true,
 
   // include these only for action "draft":
   "topic": "blog post topic",
@@ -335,6 +391,7 @@ Analyze Fiker's message and reply with a JSON object ONLY (no extra text, no mar
   "fiker_take": "Fiker or LuliDigital's point of view in Fiker's own words when supplied",
   "cta_text": "end-of-article CTA text if Fiker specified one, else empty string",
   "cta_link": "CTA link path — /ai, /marketing, /virtual-assistant, or other page Fiker mentioned, else empty string",
+  "publish_status": "draft | publish",
 
   // include for action "publish":
   "slug": "the post slug",
@@ -351,7 +408,13 @@ Analyze Fiker's message and reply with a JSON object ONLY (no extra text, no mar
 }
 
 Rules:
+- Conversate like a senior content partner. If Fiker asks to plan, reason briefly, make the plan, and queue it when there is enough direction. Do not force slash commands.
+- Use "plan" when Fiker asks to plan 3 blogs, map out the next three posts, build a content plan, or choose a weekly blog direction. Return exactly 3 plan items unless he asks for a different number.
+- Each plan item should have a strong hook-led topic, a source-led or update-led angle when available, and a solution-based offering path. Educate first, sell second.
+- If he gives a broad direction, create a useful 3-blog plan from it. In the reply, say he can still send creator links or AI updates to refine the plan.
 - Use "draft" when Fiker gives any blog idea, topic, or content request — including "write something else instead".
+- Use "draft" when Fiker wants a blog outside scheduled dates, today, now, or right away. This creates a draft immediately for approval unless he explicitly says to publish live without approval.
+- Use publish_status "publish" only when he explicitly says publish live now, post live now, or do it without approval. Otherwise publish_status must be "draft".
 - When Fiker shares a TikTok/creator/AI update/story, use "draft" if he wants it turned into a post. Put the update or story summary in source_notes, the URL in source_url, and his personal opinion in fiker_take if he gives one.
 - Do not invent personal stories, fake client anecdotes, fake quotes, or fabricated relatability. If he asks for relatability, make it grounded in the supplied source notes or operational patterns.
 - Use "draft" (NOT "schedule") when Fiker says "schedule it for the blog" or "next blog post" WITHOUT giving a specific date AND without giving an existing slug. The post must exist before it can be scheduled.
@@ -484,6 +547,11 @@ export const POST: APIRoute = async ({ request }) => {
       });
     } else if (decision.action === "reject" && reviewState) {
       await dispatchWorkflow("delete-draft.yml", { slug: reviewState.slug });
+    } else if (decision.action === "plan" && Array.isArray(decision.plan) && decision.plan.length > 0) {
+      await dispatchWorkflow("save-blog-plan.yml", {
+        plan_json: JSON.stringify(decision.plan.slice(0, 6)),
+        replace_existing: decision.replace_existing_plan === false ? "false" : "true",
+      });
     } else if (decision.action === "draft" && decision.topic) {
       await dispatchWorkflow("auto-blog.yml", {
         topic: decision.topic,
@@ -497,7 +565,7 @@ export const POST: APIRoute = async ({ request }) => {
         fiker_take: decision.fiker_take || "",
         cta_text: decision.cta_text || "",
         cta_link: decision.cta_link || "",
-        publish_status: "draft",
+        publish_status: decision.publish_status === "publish" ? "publish" : "draft",
       });
     } else if (decision.action === "publish" && decision.slug) {
       await dispatchWorkflow("publish-draft-blog.yml", { slug: decision.slug, publish_date: "" });

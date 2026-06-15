@@ -16,24 +16,31 @@ const memory = existsSync(memoryPath) ? JSON.parse(readFileSync(memoryPath, "utf
 const hasExplicitEnvVars = !!(process.env.BLOG_TOPIC || process.env.BLOG_DRAFT);
 const queued = hasExplicitEnvVars ? null : memory.pending_post;
 
+// Planned blog queue: populated by Lana when Fiker plans multiple posts.
+// Consumed one item per blog run when no higher-priority source is active.
+const planQueue = memory.blog_plan_queue ?? [];
+const queuedPlan = !hasExplicitEnvVars && !memory.pending_post && planQueue.length > 0
+  ? planQueue[0]
+  : null;
+
 // SEO opportunity queue: populated monthly by run-seo-audit.mjs.
 // Consumed one item per blog run when no higher-priority source is active.
 const seoQueue = memory.seo_opportunity_queue ?? [];
-const queuedSeo = !hasExplicitEnvVars && !memory.pending_post && seoQueue.length > 0
+const queuedSeo = !hasExplicitEnvVars && !memory.pending_post && !queuedPlan && seoQueue.length > 0
   ? seoQueue[0]
   : null;
 
 const index = topicsData.published_count % topicsData.topics.length;
-// Priority order: explicit env vars → pending_post (Telegram) → seo_opportunity_queue (audit) → live Trends → fallback rotation
-const customTitle = queued?.topic || queuedSeo?.topic || process.env.BLOG_TOPIC?.trim();
-const customKeyword = queued?.keyword || queuedSeo?.keyword || process.env.BLOG_KEYWORD?.trim();
-const customCategory = queued?.category || queuedSeo?.category || process.env.BLOG_CATEGORY?.trim();
-const customPainPoint = queued?.pain_point || queuedSeo?.pain_point || process.env.BLOG_PAIN_POINT?.trim();
-const customAngle = queued?.angle || queuedSeo?.angle || process.env.BLOG_ANGLE?.trim();
-const customToneNotes = queued?.tone_notes || queuedSeo?.tone_notes || process.env.BLOG_TONE_NOTES?.trim();
-const customSourceNotes = queued?.source_notes || process.env.BLOG_SOURCE_NOTES?.trim();
-const customSourceUrl = queued?.source_url || process.env.BLOG_SOURCE_URL?.trim();
-const customFikerTake = queued?.fiker_take || process.env.BLOG_FIKER_TAKE?.trim();
+// Priority order: explicit env vars → pending_post (Telegram) → blog_plan_queue → seo_opportunity_queue → live Trends → fallback rotation
+const customTitle = queued?.topic || queuedPlan?.topic || queuedSeo?.topic || process.env.BLOG_TOPIC?.trim();
+const customKeyword = queued?.keyword || queuedPlan?.keyword || queuedSeo?.keyword || process.env.BLOG_KEYWORD?.trim();
+const customCategory = queued?.category || queuedPlan?.category || queuedSeo?.category || process.env.BLOG_CATEGORY?.trim();
+const customPainPoint = queued?.pain_point || queuedPlan?.pain_point || queuedSeo?.pain_point || process.env.BLOG_PAIN_POINT?.trim();
+const customAngle = queued?.angle || queuedPlan?.angle || queuedSeo?.angle || process.env.BLOG_ANGLE?.trim();
+const customToneNotes = queued?.tone_notes || queuedPlan?.tone_notes || queuedSeo?.tone_notes || process.env.BLOG_TONE_NOTES?.trim();
+const customSourceNotes = queued?.source_notes || queuedPlan?.source_notes || process.env.BLOG_SOURCE_NOTES?.trim();
+const customSourceUrl = queued?.source_url || queuedPlan?.source_url || process.env.BLOG_SOURCE_URL?.trim();
+const customFikerTake = queued?.fiker_take || queuedPlan?.fiker_take || process.env.BLOG_FIKER_TAKE?.trim();
 const customCta = queued?.cta_text || process.env.BLOG_CTA_TEXT?.trim() || null;
 const customCtaLink = queued?.cta_link || process.env.BLOG_CTA_LINK?.trim() || null;
 const useSeoAgent = !queued && !queuedSeo && process.env.BLOG_USE_SEO_AGENT === "true";
@@ -45,6 +52,8 @@ const isDraft = process.env.BLOG_DRAFT !== undefined && process.env.BLOG_DRAFT !
 
 if (queued) {
   console.log(`Using queued instructions from LANa memory: "${queued.topic || "(SEO auto)"}"`);
+} else if (queuedPlan) {
+  console.log(`Using planned blog queue item from LANa memory: "${queuedPlan.topic || "(planned post)"}"`);
 }
 const seoRecommendation = !customTitle && useSeoAgent ? await getBestRegionalSeoRecommendation({ forceRefresh: true }) : null;
 const localTargets = {
@@ -297,13 +306,14 @@ if (!isCustomTopic) {
 
 // Clear consumed queue item and track new draft slug.
 // Spread ...memory first to preserve review_state and any other fields.
-if (queued || queuedSeo || existsSync(memoryPath) || !isDraft) {
+if (queued || queuedPlan || queuedSeo || existsSync(memoryPath) || !isDraft) {
   const updatedMemory = {
     ...memory,
     pending_post: null,
     pending_drafts: isDraft
       ? [...(memory.pending_drafts || []), post.slug]
       : (memory.pending_drafts || []),
+    blog_plan_queue: queuedPlan ? planQueue.slice(1) : planQueue,
     seo_opportunity_queue: queuedSeo ? seoQueue.slice(1) : seoQueue,
     latest_live_post: isDraft ? memory.latest_live_post : {
       slug: post.slug,
@@ -313,6 +323,7 @@ if (queued || queuedSeo || existsSync(memoryPath) || !isDraft) {
   };
   writeFileSync(memoryPath, JSON.stringify(updatedMemory, null, 2));
   if (queued) console.log("Queued instructions consumed and cleared from memory.");
+  if (queuedPlan) console.log(`Planned blog consumed: "${queuedPlan.topic}" (${planQueue.length - 1} remaining in queue)`);
   if (queuedSeo) console.log(`SEO opportunity consumed: "${queuedSeo.keyword}" (${seoQueue.length - 1} remaining in queue)`);
 }
 

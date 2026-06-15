@@ -1,0 +1,109 @@
+name: Save Blog Plan
+
+on:
+  workflow_dispatch:
+    inputs:
+      plan_json:
+        description: 'JSON array of planned blog posts'
+        required: true
+        type: string
+      replace_existing:
+        description: 'Replace existing planned queue'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+jobs:
+  save-plan:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      PLAN_JSON: ${{ github.event.inputs.plan_json }}
+      REPLACE_EXISTING: ${{ github.event.inputs.replace_existing }}
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save planned blog queue
+        run: |
+          node - <<'EOF'
+          import { readFileSync, writeFileSync, existsSync } from "fs";
+
+          const path = "scripts/lana-memory.json";
+          const existing = existsSync(path)
+            ? JSON.parse(readFileSync(path, "utf8"))
+            : { pending_post: null, pending_drafts: [] };
+
+          let plan;
+          try {
+            plan = JSON.parse(process.env.PLAN_JSON || "[]");
+          } catch (error) {
+            console.error("Invalid plan_json:", error.message);
+            process.exit(1);
+          }
+
+          if (!Array.isArray(plan) || plan.length === 0) {
+            console.error("plan_json must be a non-empty JSON array.");
+            process.exit(1);
+          }
+
+          const clean = plan.slice(0, 6).map((item) => ({
+            topic: String(item.topic || "").trim(),
+            keyword: String(item.keyword || "").trim(),
+            category: String(item.category || "AI Automation").trim(),
+            pain_point: String(item.pain_point || "").trim(),
+            angle: String(item.angle || "").trim(),
+            tone_notes: String(item.tone_notes || "Grounded, hook-led, educational, and solution-based. No fabricated relatability.").trim(),
+            source_notes: String(item.source_notes || "").trim(),
+            source_url: String(item.source_url || "").trim(),
+            fiker_take: String(item.fiker_take || "").trim(),
+            cta_text: String(item.cta_text || "").trim(),
+            cta_link: String(item.cta_link || "").trim(),
+            queued_at: new Date().toISOString(),
+          })).filter((item) => item.topic);
+
+          if (clean.length === 0) {
+            console.error("No planned posts had a topic.");
+            process.exit(1);
+          }
+
+          const existingQueue = Array.isArray(existing.blog_plan_queue) ? existing.blog_plan_queue : [];
+          const blog_plan_queue = process.env.REPLACE_EXISTING === "false"
+            ? [...existingQueue, ...clean]
+            : clean;
+
+          writeFileSync(path, JSON.stringify({ ...existing, blog_plan_queue }, null, 2));
+          console.log(`Saved ${clean.length} planned blog post(s).`);
+          EOF
+
+      - name: Commit and push blog plan
+        run: |
+          git config user.name "LuliDigital Bot"
+          git config user.email "bot@lulidigital.com"
+          git add scripts/lana-memory.json
+          git diff --staged --quiet && echo "Nothing changed" && exit 0
+          git commit -m "lana: save planned blog queue"
+          git push
+
+      - name: Confirm via Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "Telegram secrets not configured. Skipping confirmation."
+            exit 0
+          fi
+          COUNT=$(node -e "const p=JSON.parse(process.env.PLAN_JSON); process.stdout.write(String(Array.isArray(p) ? Math.min(p.length, 6) : 0));")
+          TEXT=$(printf "Blog plan saved.\n\n%s post(s) are queued for the next scheduled draft slots.\n\nIf you want one outside the schedule, tell Lana: draft this now for approval." "$COUNT")
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${TEXT}"
