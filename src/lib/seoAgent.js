@@ -180,7 +180,7 @@ const pageKeywordTargets = {
       "digital studio founder",
       "AI automation studio founder",
       "remote digital operations team",
-      "LuliDigital founder Fiker Zabate",
+      "LuliDigital founder Fiker Abate",
     ],
     secondary: [
       "virtual assistant and AI services founder",
