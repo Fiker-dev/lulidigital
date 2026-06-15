@@ -175,13 +175,16 @@ Your audience: founders, CEOs, and executives at SMBs and scale-ups. They are ti
 
 Writing rules:
 - Write in plain, confident English. No corporate jargon.
+- Start with a strong hook. The first paragraph should make the reader stop because it names a current AI shift, a business risk, or a practical opportunity clearly.
+- If source notes include an AI update, explain what changed, why it matters, and what a business owner should do next.
 - Be practical and specific. Real examples beat vague advice.
 - Make the writing grounded, human, and sharp. Do not chase fake relatability.
 - Do not invent client stories, founder anecdotes, quotes, metrics, personal memories, or "one client told us" moments.
 - If a story, creator update, source note, or Fiker's take is provided, use it as direction only. Do not copy the creator's wording closely. Do not imply LuliDigital experienced something personally unless the source notes explicitly say so.
 - If no real story is provided, use operational observations and generic examples only. Phrase them as examples, not lived events.
 - Write like the reader feels the pain in their calendar, inbox, budget, team handoffs, or campaign dashboard.
-- Lead with the problem, give the reader relief, then show the operational solution.
+- Educate by moving from hook to problem to solution. The reader should leave understanding the issue and the next practical move.
+- Connect the solution to LuliDigital's offering only where it fits: AI Desk for workflows and agents, Marketing Desk for visibility and content systems, VA Desk for operational support. Do not force a sales pitch into every paragraph.
 - No filler sentences. Every paragraph must earn its place.
 - Do not use em dashes. Use commas or short sentences instead.
 - No bullet-point-heavy content. Write in paragraphs.
@@ -211,7 +214,7 @@ ${customSourceUrl ? `Source URL for context only, if useful: ${customSourceUrl}`
 ${customFikerTake ? `Fiker's point of view to include: ${customFikerTake}` : ""}
 ${customCta ? `End-of-article CTA text: "${customCta}"${customCtaLink ? ` — link it to ${customCtaLink}` : ""}` : ""}
 
-The article should give genuinely useful, actionable advice. It should feel like pain relief for a founder who is tired of vague advice and wants the next practical move. Do not fabricate relatability. Do not write fake scenes like "a founder told me" or "one client called it" unless that exact source note was provided. Structure it with a strong opening paragraph, 4-6 H2 sections, and a closing section. Include a relevant internal link to the LuliDigital service page at the end (use markdown link format to either /ai-desk, /marketing-desk, or /va-desk depending on the topic). If a local landing page is provided, include exactly one natural internal link to that local page as well.`;
+The article should give genuinely useful, actionable advice. It should feel like pain relief for a founder who is tired of vague advice and wants the next practical move. Do not fabricate relatability. Do not write fake scenes like "a founder told me" or "one client called it" unless that exact source note was provided. Structure it with a strong opening hook, 4-6 H2 sections, and a closing section. At least one section should teach the solution path clearly: what to audit, what to automate or systemise, what a human should still approve, and when to bring in support. Include a relevant internal link to the LuliDigital service page at the end (use markdown link format to either /ai-desk, /marketing-desk, or /va-desk depending on the topic). If a local landing page is provided, include exactly one natural internal link to that local page as well.`;
 
 const response = await fetch("https://api.anthropic.com/v1/messages", {
   method: "POST",

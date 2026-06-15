@@ -100,7 +100,9 @@ tone notes: Funny, relatable, pain relief, practical.
 
 ## Source-Led Posts
 
-Use source-led inputs when a TikTok creator, AI update, newsletter, or founder story gives you the direction for a post.
+Use source-led inputs when a TikTok creator, AI update, newsletter, or founder story gives you the direction for a blog post.
+
+The blog should not just report the update. It should educate through a strong hook, explain what changed, then show the practical solution path for business owners.
 
 Rules:
 
@@ -110,6 +112,8 @@ Rules:
 - Do not copy a creator's wording closely.
 - Do not invent client stories, fake quotes, fake metrics, or personal memories.
 - If no real story is supplied, the post should use operational observations and generic examples only.
+- Every blog should include a clear solution-based section: what to audit, what to automate or systemise, what humans should still approve, and where LuliDigital can help.
+- Mention the relevant LuliDigital desk naturally, not as a forced pitch.
 
 Example:
 
@@ -120,6 +124,17 @@ source_url: https://www.tiktok.com/...
 fiker_take: AI should carry the tedious work, but humans should keep judgment, approvals, and brand taste.
 angle: The opportunity is not replacing people. It is building a workflow where AI prepares the work and people make the decisions.
 tone_notes: Grounded, sharp, useful. No fake stories.
+```
+
+Recommended blog shape:
+
+```text
+Hook: Name the AI update, business risk, or opportunity in one sharp opening.
+What changed: Explain the update in plain English.
+Why it matters: Translate it for founders and business owners.
+The solution path: Show what to audit, automate, delegate, or approve.
+LuliDigital fit: Mention the right desk only where it helps.
+Close: Give one practical next step.
 ```
 
 ## Recommended Tone Formula

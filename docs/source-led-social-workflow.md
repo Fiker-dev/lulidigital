@@ -1,6 +1,6 @@
-# Source-Led Social Workflow
+# Source-Led Blog And Social Workflow
 
-Use this for AI updates, TikTok creator stories, LinkedIn posts, newsletters, and tool launches that should become LuliDigital or Fiker-led content.
+Use this for AI updates, TikTok creator stories, newsletters, and tool launches that should become LuliDigital blog posts first. LinkedIn and Bluesky can be repurposed from the approved blog direction later.
 
 ## Principle
 
@@ -25,9 +25,24 @@ The source gives the direction. Fiker gives the point of view. LuliDigital gives
 - Keep the human angle in the interpretation, not in fake scenes.
 - If the source is a personal creator story, extract the lesson or direction only.
 
+## Blog Shape
+
+The blog is the primary use case for AI updates.
+
+Structure:
+
+1. Hook: name the AI update, business risk, or opportunity in one sharp opening.
+2. What changed: explain the update in plain English.
+3. Why it matters: translate it for founders and business owners.
+4. Solution path: show what to audit, automate, systemise, delegate, or approve.
+5. LuliDigital fit: connect naturally to AI Desk, Marketing Desk, or VA Desk where useful.
+6. Close: give one practical next step.
+
+The post should educate first and sell second. The offer should feel like the next practical move, not a hard pitch.
+
 ## LinkedIn Shape
 
-LinkedIn should sound credible, warm, and useful.
+LinkedIn should sound credible, warm, and useful. Use it after the blog direction is approved.
 
 Structure:
 
