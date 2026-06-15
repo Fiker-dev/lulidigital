@@ -31,6 +31,9 @@ const customCategory = queued?.category || queuedSeo?.category || process.env.BL
 const customPainPoint = queued?.pain_point || queuedSeo?.pain_point || process.env.BLOG_PAIN_POINT?.trim();
 const customAngle = queued?.angle || queuedSeo?.angle || process.env.BLOG_ANGLE?.trim();
 const customToneNotes = queued?.tone_notes || queuedSeo?.tone_notes || process.env.BLOG_TONE_NOTES?.trim();
+const customSourceNotes = queued?.source_notes || process.env.BLOG_SOURCE_NOTES?.trim();
+const customSourceUrl = queued?.source_url || process.env.BLOG_SOURCE_URL?.trim();
+const customFikerTake = queued?.fiker_take || process.env.BLOG_FIKER_TAKE?.trim();
 const customCta = queued?.cta_text || process.env.BLOG_CTA_TEXT?.trim() || null;
 const customCtaLink = queued?.cta_link || process.env.BLOG_CTA_LINK?.trim() || null;
 const useSeoAgent = !queued && !queuedSeo && process.env.BLOG_USE_SEO_AGENT === "true";
@@ -123,6 +126,20 @@ function slugLooksStuffed(slug) {
   );
 }
 
+function contentLooksFabricated(content) {
+  const patterns = [
+    /\bone client (called|told|said|asked|messaged)\b/i,
+    /\ba client (called|told|said|asked|messaged)\b/i,
+    /\ba founder (called|told|said|asked|messaged)\b/i,
+    /\bone founder (called|told|said|asked|messaged)\b/i,
+    /\bwe worked with (a|one) (client|founder|team)\b/i,
+    /\bI (once|remember|used to|worked with|had a client)\b/i,
+    /\btrue story\b/i,
+  ];
+
+  return patterns.find((pattern) => pattern.test(content))?.source ?? "";
+}
+
 const naturalSeo = seoRecommendation ? naturalSeoTopic(seoRecommendation) : null;
 const seoAgentTopic = seoRecommendation
   ? {
@@ -159,7 +176,10 @@ Your audience: founders, CEOs, and executives at SMBs and scale-ups. They are ti
 Writing rules:
 - Write in plain, confident English. No corporate jargon.
 - Be practical and specific. Real examples beat vague advice.
-- Make the writing funny, relatable, and human, but never silly. The humor should come from recognizable business pain, not from jokes.
+- Make the writing grounded, human, and sharp. Do not chase fake relatability.
+- Do not invent client stories, founder anecdotes, quotes, metrics, personal memories, or "one client told us" moments.
+- If a story, creator update, source note, or Fiker's take is provided, use it as direction only. Do not copy the creator's wording closely. Do not imply LuliDigital experienced something personally unless the source notes explicitly say so.
+- If no real story is provided, use operational observations and generic examples only. Phrase them as examples, not lived events.
 - Write like the reader feels the pain in their calendar, inbox, budget, team handoffs, or campaign dashboard.
 - Lead with the problem, give the reader relief, then show the operational solution.
 - No filler sentences. Every paragraph must earn its place.
@@ -186,9 +206,12 @@ ${seoAgentTopic?.localTarget ? `Local landing page to link naturally in the arti
 ${customPainPoint ? `Reader pain point to address: ${customPainPoint}` : ""}
 ${customAngle || seoAgentTopic?.angle ? `Specific angle to use: ${customAngle || seoAgentTopic.angle}` : ""}
 ${customToneNotes ? `Tone notes from the editor: ${customToneNotes}` : ""}
+${customSourceNotes ? `Source notes or AI update to respond to (use as direction, do not copy): ${customSourceNotes}` : ""}
+${customSourceUrl ? `Source URL for context only, if useful: ${customSourceUrl}` : ""}
+${customFikerTake ? `Fiker's point of view to include: ${customFikerTake}` : ""}
 ${customCta ? `End-of-article CTA text: "${customCta}"${customCtaLink ? ` — link it to ${customCtaLink}` : ""}` : ""}
 
-The article should give genuinely useful, actionable advice. It should feel like pain relief for a founder who is tired of vague advice and wants the next practical move. Structure it with a strong opening paragraph, 4-6 H2 sections, and a closing section. Include a relevant internal link to the LuliDigital service page at the end (use markdown link format to either /ai-desk, /marketing-desk, or /va-desk depending on the topic). If a local landing page is provided, include exactly one natural internal link to that local page as well.`;
+The article should give genuinely useful, actionable advice. It should feel like pain relief for a founder who is tired of vague advice and wants the next practical move. Do not fabricate relatability. Do not write fake scenes like "a founder told me" or "one client called it" unless that exact source note was provided. Structure it with a strong opening paragraph, 4-6 H2 sections, and a closing section. Include a relevant internal link to the LuliDigital service page at the end (use markdown link format to either /ai-desk, /marketing-desk, or /va-desk depending on the topic). If a local landing page is provided, include exactly one natural internal link to that local page as well.`;
 
 const response = await fetch("https://api.anthropic.com/v1/messages", {
   method: "POST",
@@ -225,6 +248,12 @@ try {
 
 if (titleLooksStuffed(post.title, topic.keyword)) {
   console.error(`Generated title looks keyword-stuffed: ${post.title}`);
+  process.exit(1);
+}
+
+const fabricatedPattern = contentLooksFabricated(post.content);
+if (fabricatedPattern) {
+  console.error(`Generated content appears to contain fabricated relatability: ${fabricatedPattern}`);
   process.exit(1);
 }
 

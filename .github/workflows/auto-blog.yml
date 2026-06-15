@@ -32,6 +32,18 @@ on:
         description: 'Tone notes, e.g. funny, relatable, pain relief, practical'
         required: false
         type: string
+      source_notes:
+        description: 'Source notes, creator update, or story direction to respond to without copying'
+        required: false
+        type: string
+      source_url:
+        description: 'Optional source URL for context'
+        required: false
+        type: string
+      fiker_take:
+        description: 'Fiker/LuliDigital point of view to add'
+        required: false
+        type: string
       publish_status:
         description: 'Publish immediately or save as hidden draft'
         required: false
@@ -86,6 +98,9 @@ jobs:
           BLOG_PAIN_POINT: ${{ github.event.inputs.pain_point }}
           BLOG_ANGLE: ${{ github.event.inputs.angle }}
           BLOG_TONE_NOTES: ${{ github.event.inputs.tone_notes }}
+          BLOG_SOURCE_NOTES: ${{ github.event.inputs.source_notes }}
+          BLOG_SOURCE_URL: ${{ github.event.inputs.source_url }}
+          BLOG_FIKER_TAKE: ${{ github.event.inputs.fiker_take }}
           BLOG_DRAFT: ${{ github.event_name == 'schedule' && 'true' || (github.event.inputs.publish_status != 'publish' && 'true' || 'false') }}
           BLOG_CTA_TEXT: ${{ github.event.inputs.cta_text }}
           BLOG_CTA_LINK: ${{ github.event.inputs.cta_link }}
