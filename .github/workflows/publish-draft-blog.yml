@@ -81,10 +81,14 @@ jobs:
           SLUG="${{ github.event.inputs.slug }}"
           DATE="${{ github.event.inputs.publish_date }}"
           URL="https://lulidigital.com/blog/${SLUG}"
+          # Pull title + description for a ready-to-paste Google Business Profile update.
+          node -e "const fs=require('fs');const raw=fs.readFileSync('src/content/blog/'+process.argv[1]+'.md','utf8');const get=(k)=>raw.match(new RegExp('^'+k+':\\\\s*\"?([^\"\\\\n]+)\"?','m'))?.[1]||'';fs.writeFileSync('/tmp/gt.txt',get('title'));fs.writeFileSync('/tmp/gd.txt',get('description'));" "$SLUG" || true
+          TITLE=$(cat /tmp/gt.txt 2>/dev/null)
+          DESCRIPTION=$(cat /tmp/gd.txt 2>/dev/null)
           if [ -z "$DATE" ]; then
-            TEXT=$(printf "Draft approved and published\n\n%s" "$URL")
+            TEXT=$(printf "✅ Approved & published\n%s\n\n📍 Post on Google Business Profile — paste this caption, set the button to \"Learn more\" → the link:\n———\nNew from LuliDigital: %s. %s\n———\nLink: %s" "$URL" "$TITLE" "$DESCRIPTION" "$URL")
           else
-            TEXT=$(printf "Draft scheduled for %s\n\n%s" "$DATE" "$URL")
+            TEXT=$(printf "🗓 Scheduled for %s\n%s\n\n(Post to Google Business Profile once it goes live that day.)" "$DATE" "$URL")
           fi
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
