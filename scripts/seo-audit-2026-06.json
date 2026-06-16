@@ -1,0 +1,195 @@
+{
+  "generatedAt": "2026-06-16T09:47:33.185Z",
+  "property": "https://lulidigital.com/\n",
+  "periods": {
+    "current": "2026-05-14 to 2026-06-13",
+    "previous": "2026-04-14 to 2026-05-14",
+    "wide90d": "2026-03-15 to 2026-06-13"
+  },
+  "summary": {
+    "totalClicks": 0,
+    "totalImpressions": 39,
+    "pagesWithData": 3,
+    "lowVisibilityCount": 16
+  },
+  "topQueries": [
+    {
+      "query": "luli ai",
+      "clicks": 0,
+      "impressions": 4,
+      "avgPosition": 8.8,
+      "avgCtr": 0
+    },
+    {
+      "query": "ai assistant for optimizing business workflows and scheduling",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 68,
+      "avgCtr": 0
+    },
+    {
+      "query": "ai business task",
+      "clicks": 0,
+      "impressions": 18,
+      "avgPosition": 27.2,
+      "avgCtr": 0
+    },
+    {
+      "query": "ai business tasks",
+      "clicks": 0,
+      "impressions": 4,
+      "avgPosition": 29.3,
+      "avgCtr": 0
+    },
+    {
+      "query": "ai task automation for business",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 22,
+      "avgCtr": 0
+    },
+    {
+      "query": "automate business tasks with ai",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 37,
+      "avgCtr": 0
+    },
+    {
+      "query": "digital assistant for business tasks",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 32.5,
+      "avgCtr": 0
+    },
+    {
+      "query": "which marketing tasks are best suited for ai automation in a b2b tech role?",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 8,
+      "avgCtr": 0
+    },
+    {
+      "query": "how to hire a virtual cmo",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 81.5,
+      "avgCtr": 0
+    },
+    {
+      "query": "virtual assistant for ceos",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 40.5,
+      "avgCtr": 0
+    }
+  ],
+  "opportunities": [],
+  "pageStats": [
+    {
+      "path": "/blog/business-tasks-to-automate-with-ai",
+      "clicks": 0,
+      "impressions": 28,
+      "avgPosition": 32,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    },
+    {
+      "path": "/blog/how-to-hire-virtual-assistant-guide-founders-ceos",
+      "clicks": 0,
+      "impressions": 7,
+      "avgPosition": 45.9,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    },
+    {
+      "path": "/",
+      "clicks": 0,
+      "impressions": 4,
+      "avgPosition": 8.8,
+      "avgCtr": 0,
+      "previousAvgPosition": 8,
+      "positionChange": -0.8
+    }
+  ],
+  "lowVisibilityPages": [
+    {
+      "path": "/marketing-desk",
+      "impressions": 0
+    },
+    {
+      "path": "/ai-desk",
+      "impressions": 0
+    },
+    {
+      "path": "/va-desk",
+      "impressions": 0
+    },
+    {
+      "path": "/founder",
+      "impressions": 0
+    },
+    {
+      "path": "/africa",
+      "impressions": 0
+    },
+    {
+      "path": "/amsterdam",
+      "impressions": 0
+    },
+    {
+      "path": "/munich",
+      "impressions": 0
+    },
+    {
+      "path": "/stockholm",
+      "impressions": 0
+    },
+    {
+      "path": "/united-states",
+      "impressions": 0
+    },
+    {
+      "path": "/united-kingdom",
+      "impressions": 0
+    },
+    {
+      "path": "/denmark",
+      "impressions": 0
+    },
+    {
+      "path": "/switzerland",
+      "impressions": 0
+    },
+    {
+      "path": "/ireland",
+      "impressions": 0
+    },
+    {
+      "path": "/belgium",
+      "impressions": 0
+    },
+    {
+      "path": "/norway",
+      "impressions": 0
+    },
+    {
+      "path": "/",
+      "impressions": 4
+    }
+  ],
+  "lowCtrPages": [
+    {
+      "path": "/blog/business-tasks-to-automate-with-ai",
+      "clicks": 0,
+      "impressions": 28,
+      "avgPosition": 32,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    }
+  ],
+  "improvedPages": []
+}
