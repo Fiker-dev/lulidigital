@@ -1,0 +1,53 @@
+name: Weekly SEO Refresh
+
+on:
+  schedule:
+    # Every Friday at 08:20 UTC (avoid :00 — GitHub drops top-of-hour runs).
+    - cron: '20 8 * * 5'
+  workflow_dispatch:
+
+jobs:
+  weekly-seo:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Refresh keyword targets from Search Console
+        run: node scripts/run-weekly-seo.mjs
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN }}
+          GOOGLE_SEARCH_CONSOLE_PROPERTY: ${{ secrets.GOOGLE_SEARCH_CONSOLE_PROPERTY }}
+
+      - name: Commit refreshed targets
+        run: |
+          git config user.name "LuliDigital Bot"
+          git config user.email "bot@lulidigital.com"
+          git add src/lib/seo-keyword-overrides.json
+          git diff --staged --quiet && echo "No keyword changes this week." && exit 0
+          git commit -m "Weekly SEO: refresh keyword targets $(date +%Y-%m-%d)"
+          git push
+
+      - name: Telegram summary
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "No Telegram secrets — skipping notification."
+            exit 0
+          fi
+          MSG=$(cat /tmp/weekly-seo-summary.txt 2>/dev/null || echo "Weekly SEO refresh finished.")
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${MSG}" > /dev/null
