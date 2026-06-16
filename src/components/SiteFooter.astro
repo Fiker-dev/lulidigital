@@ -10,6 +10,20 @@ const links = [
   { href: "/blog", label: "Blog Desk" },
   { href: "/founder", label: "Founder" },
 ];
+
+const markets = [
+  { href: "/united-kingdom", label: "United Kingdom" },
+  { href: "/united-states", label: "United States" },
+  { href: "/amsterdam", label: "Amsterdam" },
+  { href: "/munich", label: "Munich" },
+  { href: "/stockholm", label: "Stockholm" },
+  { href: "/denmark", label: "Denmark" },
+  { href: "/switzerland", label: "Switzerland" },
+  { href: "/ireland", label: "Ireland" },
+  { href: "/belgium", label: "Belgium" },
+  { href: "/norway", label: "Norway" },
+  { href: "/africa", label: "Africa" },
+];
 ---
 
 <footer class="site-footer" aria-label="LuliDigital footer">
@@ -28,6 +42,15 @@ const links = [
       <nav class="site-footer__links" aria-label="Footer service links">
         {links.map((link) => (
           <a href={link.href}>{link.label}</a>
+        ))}
+      </nav>
+    </section>
+
+    <section class="site-footer__group" aria-label="Markets we serve">
+      <h2>Markets</h2>
+      <nav class="site-footer__links" aria-label="Footer market links">
+        {markets.map((market) => (
+          <a href={market.href}>{market.label}</a>
         ))}
       </nav>
     </section>
@@ -62,8 +85,8 @@ const links = [
     max-width: var(--max, 1120px);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(240px, 1.4fr) repeat(2, minmax(170px, .7fr));
-    gap: clamp(24px, 4vw, 54px);
+    grid-template-columns: minmax(220px, 1.3fr) repeat(3, minmax(140px, .7fr));
+    gap: clamp(22px, 3.4vw, 48px);
   }
 
   .site-footer__logo {
@@ -150,6 +173,13 @@ const links = [
     font-family: var(--font-body, "DM Sans", sans-serif);
     font-size: 12px;
     letter-spacing: .08em;
+  }
+
+  @media (max-width: 1024px) {
+    .site-footer__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: 28px 40px;
+    }
   }
 
   @media (max-width: 820px) {

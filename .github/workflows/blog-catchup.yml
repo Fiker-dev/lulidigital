@@ -1,0 +1,49 @@
+name: Blog Catch-up
+
+# Safety net for the Auto Blog Post schedule. GitHub silently drops scheduled
+# runs sometimes (and a run can fail). A few hours after each blog slot this
+# checks whether a post was actually created today; if not, it triggers a
+# DRAFT (never auto-publishes) so the post still lands in Telegram for approval.
+
+on:
+  schedule:
+    # Mon/Wed/Fri at 14:17 UTC — ~6h after the 08:17 main blog run.
+    - cron: '17 14 * * 1,3,5'
+  workflow_dispatch:
+
+jobs:
+  catchup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if a post was created today
+        id: check
+        run: |
+          if git log --since="00:00" --diff-filter=A --name-only --pretty=format: | grep -q '^src/content/blog/.*\.md$'; then
+            echo "missed=false" >> "$GITHUB_OUTPUT"
+            echo "A blog post was already created today — nothing to catch up."
+          else
+            echo "missed=true" >> "$GITHUB_OUTPUT"
+            echo "No blog post today — the scheduled run was dropped or failed. Triggering a draft."
+          fi
+
+      - name: Trigger a draft if the scheduled run was missed
+        if: steps.check.outputs.missed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_WORKFLOW_TOKEN }}
+        run: gh workflow run "Auto Blog Post" -f publish_status=draft -R "${{ github.repository }}"
+
+      - name: Notify Telegram if caught up
+        if: steps.check.outputs.missed == 'true'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then exit 0; fi
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=Heads up: today's scheduled blog run didn't happen, so I triggered a catch-up draft. It'll arrive shortly for your approval." > /dev/null
