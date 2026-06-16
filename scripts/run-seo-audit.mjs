@@ -15,6 +15,7 @@
 import { writeFileSync, readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { generateGeminiText, getGeminiApiKey } from "../src/lib/geminiFallback.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -319,29 +320,25 @@ const existingMemory = existsSync(memoryPath)
 writeFileSync(memoryPath, JSON.stringify({ ...existingMemory, seo_opportunity_queue: queueItems }, null, 2));
 console.log(`SEO queue updated: ${queueItems.length} opportunity drafts queued for next blog runs`);
 
-// ── Claude summary ────────────────────────────────────────────────────────────
-if (!process.env.ANTHROPIC_API_KEY) {
-  console.log("No ANTHROPIC_API_KEY — writing raw fallback message.");
-  const fallback = [
-    `Monthly SEO Report — ${monthKey}`,
-    ``,
-    `Total clicks this month: ${report.summary.totalClicks}`,
-    `Total impressions: ${report.summary.totalImpressions}`,
-    ``,
-    `Top query: ${topQueries[0]?.query ?? "none"} (${topQueries[0]?.clicks ?? 0} clicks)`,
-    `Top opportunity: ${opportunities[0]?.query ?? "none"} (${opportunities[0]?.impressions ?? 0} impressions, position ${opportunities[0]?.avgPosition ?? "-"})`,
-    ``,
-    `Pages with low visibility (< 5 impressions): ${lowVisibilityPages.length}`,
-    lowVisibilityPages.slice(0, 5).map((p) => `  ${p.path}`).join("\n"),
-    ``,
-    `Full data: scripts/seo-audit-${monthKey}.json`,
-  ].join("\n");
+// ── Monthly report summary ─────────────────────────────────────────────────────
+// Gemini Flash is the primary writer here (fast, cheap, internal analysis).
+// Claude Haiku is the fallback if Gemini is unavailable; a raw template is last.
+const rawSummary = () => [
+  `Monthly SEO — ${monthKey}`,
+  `Clicks: ${report.summary.totalClicks} | Impressions: ${report.summary.totalImpressions}`,
+  `Top query: "${topQueries[0]?.query ?? "none"}" — ${topQueries[0]?.clicks ?? 0} clicks`,
+  `Best opportunity: "${opportunities[0]?.query ?? "none"}" — ${opportunities[0]?.impressions ?? 0} impressions at position ${opportunities[0]?.avgPosition ?? "-"}`,
+  `${lowVisibilityPages.length} pages with near-zero visibility`,
+  `Full data: scripts/seo-audit-${monthKey}.json`,
+].join("\n");
 
-  writeFileSync("/tmp/seo-audit-message.txt", fallback);
+if (!getGeminiApiKey() && !process.env.ANTHROPIC_API_KEY) {
+  console.log("No GEMINI_API_KEY or ANTHROPIC_API_KEY — writing raw fallback message.");
+  writeFileSync("/tmp/seo-audit-message.txt", rawSummary());
   process.exit(0);
 }
 
-const dataForClaude = {
+const reportData = {
   month: monthKey,
   totalClicks: report.summary.totalClicks,
   totalImpressions: report.summary.totalImpressions,
@@ -357,17 +354,7 @@ const dataForClaude = {
   },
 };
 
-const claudeRes = await fetch("https://api.anthropic.com/v1/messages", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "x-api-key": process.env.ANTHROPIC_API_KEY,
-    "anthropic-version": "2023-06-01",
-  },
-  body: JSON.stringify({
-    model: "claude-haiku-4-5-20251001",
-    max_tokens: 700,
-    system: `You are Lana, the LuliDigital SEO analyst. Write a plain-English monthly SEO report for Fiker to read in Telegram.
+const summarySystem = `You are Lana, the LuliDigital SEO analyst. Write a plain-English monthly SEO report for Fiker to read in Telegram.
 
 Rules:
 - Max 1200 characters total
@@ -376,26 +363,56 @@ Rules:
 - 2-3 lines on top opportunities (be specific: page, keyword, what to fix)
 - 1 line on low-visibility pages (count + names)
 - End with what was auto-fixed: "I've updated keyword targets for X pages and queued Y draft posts for your approval — check Telegram over the next few blog runs."
-- Plain text only. No markdown, no asterisks, no bullet symbols. Short sentences.`,
-    messages: [{ role: "user", content: `SEO data for this month:\n${JSON.stringify(dataForClaude, null, 2)}` }],
-  }),
-});
+- Plain text only. No markdown, no asterisks, no bullet symbols. Short sentences.`;
+const summaryUser = `SEO data for this month:\n${JSON.stringify(reportData, null, 2)}`;
 
-let summaryText;
+let summaryText = "";
 
-if (!claudeRes.ok) {
-  console.error("Claude summary failed:", await claudeRes.text());
-  summaryText = [
-    `Monthly SEO — ${monthKey}`,
-    `Clicks: ${report.summary.totalClicks} | Impressions: ${report.summary.totalImpressions}`,
-    `Top query: "${topQueries[0]?.query ?? "none"}" — ${topQueries[0]?.clicks ?? 0} clicks`,
-    `Best opportunity: "${opportunities[0]?.query ?? "none"}" — ${opportunities[0]?.impressions ?? 0} impressions at position ${opportunities[0]?.avgPosition ?? "-"}`,
-    `${lowVisibilityPages.length} pages with near-zero visibility`,
-    `Full data: scripts/seo-audit-${monthKey}.json`,
-  ].join("\n");
-} else {
-  const claudeData = await claudeRes.json();
-  summaryText = claudeData.content[0].text.trim();
+// 1) Gemini Flash (primary)
+if (getGeminiApiKey()) {
+  try {
+    summaryText = await generateGeminiText({
+      system: summarySystem,
+      messages: [{ role: "user", content: summaryUser }],
+      maxTokens: 700,
+      temperature: 0.3,
+    });
+    if (summaryText) console.log("SEO summary written by Gemini.");
+  } catch (err) {
+    console.error("Gemini summary failed:", err);
+  }
+}
+
+// 2) Claude Haiku (fallback)
+if (!summaryText && process.env.ANTHROPIC_API_KEY) {
+  const claudeRes = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": process.env.ANTHROPIC_API_KEY,
+      "anthropic-version": "2023-06-01",
+    },
+    body: JSON.stringify({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 700,
+      system: summarySystem,
+      messages: [{ role: "user", content: summaryUser }],
+    }),
+  });
+
+  if (claudeRes.ok) {
+    const claudeData = await claudeRes.json();
+    summaryText = claudeData.content[0].text.trim();
+    console.log("SEO summary written by Claude Haiku (Gemini unavailable).");
+  } else {
+    console.error("Claude summary failed:", await claudeRes.text());
+  }
+}
+
+// 3) Raw template (last resort)
+if (!summaryText) {
+  summaryText = rawSummary();
+  console.log("Both models unavailable — using raw template summary.");
 }
 
 writeFileSync("/tmp/seo-audit-message.txt", summaryText);

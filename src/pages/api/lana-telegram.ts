@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { generateGeminiText } from "../../lib/geminiFallback.js";
 import { timingSafeEqual } from "../../lib/security";
 
 export const prerender = false;
@@ -312,11 +313,6 @@ async function askLana(
   reviewState?: ReviewState | null,
   memory?: LanaMemory | null,
 ): Promise<LanaDecision> {
-  const apiKey = getEnv("ANTHROPIC_API_KEY");
-  if (!apiKey) {
-    return parseLocalFallback(text, memory ?? null);
-  }
-
   const today = new Date().toISOString().split("T")[0];
 
   let reviewContext = "";
@@ -427,36 +423,68 @@ Rules:
 - For "chat" replies, be helpful and direct. If he's asking about a draft status, tell him to check GitHub Actions.
 - Never mention JSON, commands, or internal workings in your reply.`;
 
-  const model = getEnv("LANA_TELEGRAM_MODEL") || getEnv("ANTHROPIC_MODEL") || DEFAULT_MODEL;
+  // Gemini Flash is primary for this internal command-parsing tool — fast, cheap,
+  // and strong at structured JSON intent extraction. Claude is the fallback.
+  const geminiDecision = await askGeminiLana(text, memory ?? null, systemPrompt, false);
+  if (geminiDecision) return geminiDecision;
 
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: 600,
-      system: systemPrompt,
-      messages: [{ role: "user", content: text }],
-    }),
-  });
+  const apiKey = getEnv("ANTHROPIC_API_KEY");
+  if (apiKey) {
+    const model = getEnv("LANA_TELEGRAM_MODEL") || getEnv("ANTHROPIC_MODEL") || DEFAULT_MODEL;
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify({
+        model,
+        max_tokens: 600,
+        system: systemPrompt,
+        messages: [{ role: "user", content: text }],
+      }),
+    });
 
-  if (!response.ok) {
-    console.error("Lana Telegram Anthropic failed:", response.status, await response.text());
-    return parseLocalFallback(text, memory ?? null);
+    if (response.ok) {
+      const data = await response.json();
+      const raw = data.content?.[0]?.text?.trim() ?? "";
+      try {
+        const cleaned = raw.replace(/^```json\n?/, "").replace(/\n?```$/, "").trim();
+        return JSON.parse(cleaned) as LanaDecision;
+      } catch {
+        return { action: "chat", reply: raw || "Something went wrong on my end." };
+      }
+    }
+    console.error("Lana Telegram Anthropic fallback failed:", response.status, await response.text());
   }
 
-  const data = await response.json();
-  const raw = data.content?.[0]?.text?.trim() ?? "";
+  // Last resort: local heuristic parse.
+  return parseLocalFallback(text, memory ?? null);
+}
+
+async function askGeminiLana(
+  text: string,
+  memory: LanaMemory | null,
+  systemPrompt: string,
+  allowLocalFallback = true,
+): Promise<LanaDecision | null> {
+  const raw = await generateGeminiText({
+    system: systemPrompt || "You are Lana, the LuliDigital blog agent. Reply as JSON only.",
+    messages: [{ role: "user", content: text }],
+    maxTokens: 700,
+    temperature: 0.2,
+  });
+
+  // When used as the primary model, return null on failure so the caller can try Claude.
+  if (!raw) return allowLocalFallback ? parseLocalFallback(text, memory) : null;
 
   try {
     const cleaned = raw.replace(/^```json\n?/, "").replace(/\n?```$/, "").trim();
-    return JSON.parse(cleaned) as LanaDecision;
+    const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+    return JSON.parse(jsonMatch?.[0] || cleaned) as LanaDecision;
   } catch {
-    return { action: "chat", reply: raw || "Something went wrong on my end." };
+    return allowLocalFallback ? { action: "chat", reply: raw } : null;
   }
 }
 
