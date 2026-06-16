@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { getAllKnowledge, getFallbackReply } from "../../data/lanaKnowledge";
+import { generateGeminiText } from "../../lib/geminiFallback.js";
 import { assertSameOrigin, rateLimit, readJsonBody } from "../../lib/security";
 
 export const prerender = false;
@@ -124,11 +125,6 @@ export const POST: APIRoute = async (context) => {
   const limited = rateLimit(context, { key: "lana-chat", limit: 20, windowMs: 60_000 });
   if (limited) return limited;
 
-  const apiKey = import.meta.env.ANTHROPIC_API_KEY ?? process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    return fallbackStream("Something went wrong on my end. You can reach the team directly at info@lulidigital.com.");
-  }
-
   const parsed = await readJsonBody<RequestBody>(request, 32_768);
   if (!parsed.ok) return parsed.response;
   const body = parsed.data;
@@ -150,6 +146,16 @@ export const POST: APIRoute = async (context) => {
     MARKET_NAMES[requestedMarket] ??
     (MARKET_NAME_SET.has(requestedMarket) ? requestedMarket : null);
   const system = buildSystem(market);
+  const apiKey = import.meta.env.ANTHROPIC_API_KEY ?? process.env.ANTHROPIC_API_KEY;
+
+  if (!apiKey) {
+    const geminiText = await generateGeminiText({
+      system,
+      messages: sanitized,
+      maxTokens: 480,
+    });
+    return textStream(geminiText || getFallbackReply(latestUser));
+  }
 
   const anthropicRes = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -168,7 +174,12 @@ export const POST: APIRoute = async (context) => {
   });
 
   if (!anthropicRes.ok || !anthropicRes.body) {
-    return fallbackStream(getFallbackReply(latestUser));
+    const geminiText = await generateGeminiText({
+      system,
+      messages: sanitized,
+      maxTokens: 480,
+    });
+    return textStream(geminiText || getFallbackReply(latestUser));
   }
 
   // Transform Anthropic SSE → simple SSE text stream
@@ -243,11 +254,30 @@ export const POST: APIRoute = async (context) => {
 };
 
 function fallbackStream(text: string): Response {
+  return textStream(text);
+}
+
+function parseLead(fullText: string) {
+  const lm = fullText.match(
+    /\[LEAD:name=([^|]+)\|email=([^|]+)\|phone=([^|]+)\|whatsapp=([^|]+)\|pref=([^|]+)\|business=([^|]+)\|desk=([^|]+)\|urgency=([^|]+)\|challenge=([^|]+)\|quote=([^\]]+)\]/
+  );
+
+  return lm
+    ? {
+        name: lm[1].trim(), email: lm[2].trim(), phone: lm[3].trim(),
+        whatsapp: lm[4].trim(), pref: lm[5].trim(), business: lm[6].trim(),
+        desk: lm[7].trim(), urgency: lm[8].trim(), challenge: lm[9].trim(),
+        quote: lm[10].trim(),
+      }
+    : null;
+}
+
+function textStream(text: string): Response {
   const encoder = new TextEncoder();
   const body = new ReadableStream({
     start(ctrl) {
       ctrl.enqueue(encoder.encode(`data: ${JSON.stringify({ t: text })}\n\n`));
-      ctrl.enqueue(encoder.encode(`data: ${JSON.stringify({ done: true, lead: null })}\n\n`));
+      ctrl.enqueue(encoder.encode(`data: ${JSON.stringify({ done: true, lead: parseLead(text) })}\n\n`));
       ctrl.close();
     },
   });
