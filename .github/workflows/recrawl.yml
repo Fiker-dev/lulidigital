@@ -1,0 +1,39 @@
+name: Recrawl and Index Check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  recrawl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Resubmit sitemap and inspect URLs
+        run: node scripts/recrawl.mjs
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN }}
+          GOOGLE_SEARCH_CONSOLE_PROPERTY: ${{ secrets.GOOGLE_SEARCH_CONSOLE_PROPERTY }}
+
+      - name: Telegram summary
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "No Telegram secrets — skipping notification."
+            exit 0
+          fi
+          MSG=$(cat /tmp/recrawl-summary.txt 2>/dev/null || echo "Recrawl run finished (no summary file).")
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${MSG}" > /dev/null
