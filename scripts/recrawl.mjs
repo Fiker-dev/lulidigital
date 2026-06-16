@@ -64,11 +64,20 @@ async function resubmitSitemap(token) {
   return { ok: res.ok, status: res.status, body: res.ok ? "" : await res.text() };
 }
 
-async function inspect(token, url) {
+async function listSites(token) {
+  const res = await fetch("https://searchconsole.googleapis.com/webmasters/v3/sites", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await res.json();
+  if (!res.ok) return [];
+  return data.siteEntry || [];
+}
+
+async function inspect(token, url, property) {
   const res = await fetch("https://searchconsole.googleapis.com/v1/urlInspection/index:inspect", {
     method: "POST",
     headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ inspectionUrl: url, siteUrl: PROPERTY }),
+    body: JSON.stringify({ inspectionUrl: url, siteUrl: property }),
   });
   const data = await res.json();
   if (!res.ok) return { url, error: data.error?.message || `HTTP ${res.status}` };
@@ -84,6 +93,22 @@ async function inspect(token, url) {
 
 const token = await getAccessToken();
 
+// 0) Show which Search Console properties this account actually owns.
+const sites = await listSites(token);
+console.log("Verified Search Console properties on this account:");
+if (sites.length === 0) console.log("  (none returned)");
+for (const s of sites) console.log(`  - ${s.siteUrl}  [${s.permissionLevel}]`);
+
+// Pick the property that best covers the live site for URL inspection.
+const inspectProperty =
+  sites.find((s) => s.siteUrl === "sc-domain:lulidigital.com")?.siteUrl ||
+  sites.find((s) => s.siteUrl.includes("lulidigital.com") && !s.siteUrl.includes("www"))?.siteUrl ||
+  sites.find((s) => s.siteUrl.includes("lulidigital.com"))?.siteUrl ||
+  PROPERTY;
+console.log(`\nConfigured GOOGLE_SEARCH_CONSOLE_PROPERTY vs chosen inspection property:`);
+console.log(`  configured: ${PROPERTY}`);
+console.log(`  inspecting: ${inspectProperty}\n`);
+
 // 1) Recrawl nudge: resubmit the sitemap
 console.log(`Resubmitting sitemap: ${SITEMAP}`);
 const sm = await resubmitSitemap(token);
@@ -97,7 +122,7 @@ console.log(`\nInspecting ${urls.length} URL(s) from the sitemap...\n`);
 
 const notPassing = [];
 for (const url of urls) {
-  const r = await inspect(token, url);
+  const r = await inspect(token, url, inspectProperty);
   if (r.error) {
     console.log(`ERROR  ${r.error}  ${url}`);
     continue;
