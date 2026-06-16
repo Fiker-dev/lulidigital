@@ -200,14 +200,7 @@ Writing rules:
 - End with a natural, non-pushy mention of LuliDigital's relevant service.
 - Target length: 1100 to 1400 words.
 
-Return ONLY a JSON object with this exact structure:
-{
-  "title": "exact article title",
-  "description": "meta description under 155 chars, keyword-rich",
-  "slug": "url-slug-with-hyphens",
-  "readingTime": "X min read",
-  "content": "full markdown article body starting with the first paragraph, no frontmatter, use ## for H2 headings, --- for horizontal rules between sections"
-}`;
+Provide the finished post by calling the submit_blog_post tool with: title, description (meta description under 155 chars, keyword-rich), slug (url-slug-with-hyphens), readingTime (e.g. "6 min read"), and content (the full markdown article body starting with the first paragraph, no frontmatter, use ## for H2 headings, --- for horizontal rules between sections).`;
 
 const userPrompt = `Write a complete blog post about: "${topic.title}"
 
@@ -233,9 +226,27 @@ const response = await fetch("https://api.anthropic.com/v1/messages", {
     "anthropic-version": "2023-06-01",
   },
   body: JSON.stringify({
-    model: "claude-sonnet-4-20250514",
+    model: "claude-sonnet-4-6",
     max_tokens: 4000,
     system: systemPrompt,
+    tools: [
+      {
+        name: "submit_blog_post",
+        description: "Submit the finished blog post for publication.",
+        input_schema: {
+          type: "object",
+          properties: {
+            title: { type: "string", description: "exact article title" },
+            description: { type: "string", description: "meta description under 155 chars, keyword-rich" },
+            slug: { type: "string", description: "url-slug-with-hyphens" },
+            readingTime: { type: "string", description: "e.g. '6 min read'" },
+            content: { type: "string", description: "full markdown article body, no frontmatter, ## for H2 headings, --- for horizontal rules" },
+          },
+          required: ["title", "description", "slug", "readingTime", "content"],
+        },
+      },
+    ],
+    tool_choice: { type: "tool", name: "submit_blog_post" },
     messages: [{ role: "user", content: userPrompt }],
   }),
 });
@@ -247,15 +258,19 @@ if (!response.ok) {
 }
 
 const data = await response.json();
-const raw = data.content[0].text.trim();
+// Structured tool output returns a validated JSON object — no fragile text parsing.
+const toolUse = Array.isArray(data.content) ? data.content.find((block) => block.type === "tool_use") : null;
 
-let post;
-try {
-  const jsonMatch = raw.match(/\{[\s\S]*\}/);
-  post = JSON.parse(jsonMatch[0]);
-} catch (e) {
-  console.error("Failed to parse response as JSON:", raw.slice(0, 500));
-  process.exit(1);
+let post = toolUse?.input;
+if (!post) {
+  // Fallback for any text-only response.
+  const raw = (data.content?.find((b) => b.type === "text")?.text || "").trim();
+  try {
+    post = JSON.parse(raw.match(/\{[\s\S]*\}/)[0]);
+  } catch (e) {
+    console.error("Failed to get blog post from model response:", JSON.stringify(data).slice(0, 600));
+    process.exit(1);
+  }
 }
 
 if (titleLooksStuffed(post.title, topic.keyword)) {
