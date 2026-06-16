@@ -3,5 +3,11 @@
   "pending_drafts": [
     "when-to-hire-virtual-assistant"
   ],
-  "seo_opportunity_queue": []
+  "seo_opportunity_queue": [],
+  "blog_plan_queue": [],
+  "latest_live_post": {
+    "slug": "tasks-to-delegate-to-virtual-assistant",
+    "title": "10 Tasks Every Founder Should Delegate to a Virtual Assistant",
+    "published_at": "2026-06-16"
+  }
 }
