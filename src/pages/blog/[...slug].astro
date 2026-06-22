@@ -5,17 +5,22 @@ import { getCollection, render } from "astro:content";
 export const prerender = true;
 
 export async function getStaticPaths() {
+  // Number of animation themes the blog rotates through (see [data-anim] CSS).
+  const ANIM_THEMES = 3;
+
   const posts = (await getCollection("blog"))
     .filter((post) => !post.data.draft)
-    .filter((post) => post.data.pubDate.valueOf() <= Date.now());
+    .filter((post) => post.data.pubDate.valueOf() <= Date.now())
+    // Oldest → newest so each successive post cycles to the next animation.
+    .sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
 
-  return posts.map((post) => ({
+  return posts.map((post, i) => ({
     params: { slug: post.id.replace(/\.md$/, "") },
-    props: { post },
+    props: { post, animIndex: i % ANIM_THEMES },
   }));
 }
 
-const { post } = Astro.props;
+const { post, animIndex = 0 } = Astro.props;
 
 const { Content } = await render(post);
 const siteUrl = "https://lulidigital.com";
@@ -81,7 +86,7 @@ function formatDate(date: Date) {
 
     <hr class="rule" />
 
-    <article class="post-body prose" id="post-article">
+    <article class="post-body prose" id="post-article" data-anim={`t${animIndex}`}>
       <Content />
     </article>
 
@@ -294,6 +299,39 @@ function formatDate(date: Date) {
       opacity: 1;
       transform: scale(1);
     }
+
+    /* ════════ Animation themes — rotated per post via [data-anim] ════════
+       t0 (default above): pendulum sway · word lift · quote scale-in
+       t1: vertical drift  · word slide-up · quote rise
+       t2: tilt wobble     · word zoom     · quote 3D flip               */
+
+    /* ── t1 · Drift ─────────────────────────────────────────── */
+    @media (prefers-reduced-motion: no-preference) {
+      .prose[data-anim="t1"] .reveal-block.is-visible li { animation: cardDrift 5s ease-in-out infinite; }
+    }
+    @keyframes cardDrift {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+    .prose[data-anim="t1"] h2 .w { transform: translateY(22px); }
+    .prose[data-anim="t1"] .reveal-block.is-visible h2 .w { transform: none; }
+    .prose[data-anim="t1"] blockquote { transform: translateY(26px); }
+    .prose[data-anim="t1"] .reveal-block.is-visible blockquote { transform: translateY(0); }
+
+    /* ── t2 · Wobble ────────────────────────────────────────── */
+    .prose[data-anim="t2"] li { transform-origin: center; }
+    @media (prefers-reduced-motion: no-preference) {
+      .prose[data-anim="t2"] .reveal-block.is-visible li { animation: cardWobble 4.6s ease-in-out infinite; }
+    }
+    @keyframes cardWobble {
+      0%, 100% { transform: rotate(-1.9deg) scale(1); }
+      50%      { transform: rotate(1.9deg) scale(1.015); }
+    }
+    .prose[data-anim="t2"] h2 .w { transform: scale(.6); transform-origin: left bottom; }
+    .prose[data-anim="t2"] .reveal-block.is-visible h2 .w { transform: none; }
+    .prose[data-anim="t2"] blockquote { transform: perspective(700px) rotateX(14deg); transform-origin: top center; }
+    .prose[data-anim="t2"] .reveal-block.is-visible blockquote { transform: perspective(700px) rotateX(0); }
+
     .prose blockquote::before {
       content: '\201C';
       position: absolute;
