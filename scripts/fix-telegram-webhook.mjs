@@ -68,7 +68,10 @@ console.log("deleteWebhook:", del.ok ? "✓ done" : `✗ ${del.description}`);
 await new Promise(r => setTimeout(r, 1500));
 
 console.log("\n🔗  Re-registering webhook...");
-const setParams = { url: WEBHOOK_URL, allowed_updates: ["message"] };
+// Must include "callback_query" so inline button taps (e.g. "Approve and
+// publish") are delivered — without it Telegram only sends typed messages and
+// the approve button silently does nothing.
+const setParams = { url: WEBHOOK_URL, allowed_updates: ["message", "callback_query"] };
 if (SECRET) setParams.secret_token = SECRET;
 
 const set = await tg("setWebhook", setParams);
