@@ -14,9 +14,9 @@
  */
 
 import { setTimeout as sleep } from "node:timers/promises";
-import { getGoogleAccessToken, hasServiceAccount, hasOAuth } from "./google-auth.mjs";
+import { getGoogleAccessToken, hasServiceAccount, hasOAuth, normalizeSearchConsoleProperty } from "./google-auth.mjs";
 
-const PROPERTY = process.env.GOOGLE_SEARCH_CONSOLE_PROPERTY;
+const PROPERTY = normalizeSearchConsoleProperty(process.env.GOOGLE_SEARCH_CONSOLE_PROPERTY);
 const SITE = "https://lulidigital.com";
 const SITEMAP = `${SITE}/sitemap-index.xml`;
 

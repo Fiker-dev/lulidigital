@@ -35,6 +35,19 @@ export function hasServiceAccount() {
   return loadServiceAccount() !== null;
 }
 
+/**
+ * Normalize a Search Console property into a value the API accepts.
+ * Valid forms: "sc-domain:example.com" or "https://example.com/". A bare domain
+ * (e.g. "lulidigital.com"), or one with stray whitespace/quotes, is coerced to a
+ * Domain property so a slightly-off secret doesn't break the API call.
+ */
+export function normalizeSearchConsoleProperty(raw) {
+  const v = (raw || "").trim().replace(/^["']|["']$/g, "").trim();
+  if (!v) return v;
+  if (/^sc-domain:/i.test(v) || /^https?:\/\//i.test(v)) return v;
+  return `sc-domain:${v.replace(/^\/+|\/+$/g, "")}`;
+}
+
 /** True when usable OAuth refresh-token credentials are configured. */
 export function hasOAuth() {
   return Boolean(
