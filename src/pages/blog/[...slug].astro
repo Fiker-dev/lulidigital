@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
+import FikerAvatar, { type FikerAvatarPose } from "../../components/FikerAvatar";
 
 export const prerender = true;
 
@@ -21,6 +22,15 @@ export async function getStaticPaths() {
 }
 
 const { post, animIndex = 0 } = Astro.props;
+
+// Fiker host avatar — pick the intro pose by topic (expression by topic), and a
+// fixed approving pose at the CTA. Uses the canonical fiker-avatar-pack.
+const introPoseByCategory: Record<string, FikerAvatarPose> = {
+  "AI Automation": "laptop",
+  "Virtual Assistant": "notebook",
+  "Digital Marketing": "phone",
+};
+const introPose: FikerAvatarPose = introPoseByCategory[post.data.category] ?? "confidence";
 
 const { Content } = await render(post);
 const siteUrl = "https://lulidigital.com";
@@ -73,7 +83,7 @@ function formatDate(date: Date) {
     </nav>
 
     <figure class="post-host post-host--intro" aria-hidden="true">
-      <img src="/images/lana/pointing.webp" alt="" width="405" height="720" loading="lazy" decoding="async" />
+      <FikerAvatar pose={introPose} size="100%" alt="" />
     </figure>
 
     <header class="post-header reveal-header">
@@ -97,6 +107,9 @@ function formatDate(date: Date) {
     <hr class="rule rule--bottom" />
 
     <footer class="post-footer">
+      <figure class="post-host post-host--cta" aria-hidden="true">
+        <FikerAvatar pose="thumbsup" size="100%" alt="" />
+      </figure>
       <div class="post-footer__cta reveal-cta">
         <p class="footer-kicker">Ready to move?</p>
         <p class="footer-headline">Let's build something that doesn't need explaining.</p>
@@ -460,9 +473,16 @@ function formatDate(date: Date) {
       position: relative;
     }
 
-    /* Lana host avatar — sits in the right gutter, pointing at the content.
+    /* Fiker host avatar — sits in the right gutter beside the content.
        Only shows when there's room beside the 720px column. */
     .post-host { display: none; margin: 0; }
+    .post-host picture { display: block; width: 100%; }
+    .post-host img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 14px 30px rgba(20,19,18,.22));
+    }
     @media (min-width: 1200px) {
       .post-host--intro {
         display: block;
@@ -475,11 +495,13 @@ function formatDate(date: Date) {
         transform: translateY(28px) scale(.96);
         animation: hostIn 900ms cubic-bezier(.16,1,.3,1) 480ms forwards;
       }
-      .post-host--intro img {
-        width: 100%;
-        height: auto;
+      .post-host--cta {
         display: block;
-        filter: drop-shadow(0 14px 30px rgba(20,19,18,.22));
+        position: absolute;
+        right: -250px;
+        bottom: 0;
+        width: 210px;
+        pointer-events: none;
       }
     }
     @keyframes hostIn {
@@ -550,7 +572,7 @@ function formatDate(date: Date) {
     }
 
     /* Footer CTA — warm dark honey panel */
-    .post-footer { display: flex; flex-direction: column; gap: 24px; }
+    .post-footer { display: flex; flex-direction: column; gap: 24px; position: relative; }
     .post-footer__cta {
       background: linear-gradient(160deg, #2a1c05, #160f02);
       border-radius: 22px;
