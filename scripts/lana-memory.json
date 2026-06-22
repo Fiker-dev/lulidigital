@@ -12,13 +12,5 @@
     "title": "10 Tasks Every Founder Should Delegate to a Virtual Assistant",
     "published_at": "2026-06-16"
   },
-  "review_state": {
-    "slug": "cleaner-growth-system-busy-teams",
-    "title": "The Cleaner Growth System Most Busy Teams Are Missing",
-    "description": "Busy founders are losing time to broken growth systems. Learn the cleaner, automated approach that scales without adding headcount or chaos.",
-    "preview_text": "Most growing businesses do not have a growth problem. They have a systems problem dressed up as a growth problem. Revenue is coming in, the team is working hard, and somehow the pipeline still feels patchy, the content calendar still falls apart mid-month, and the founder is still approving things that should have been automated six months ago. Tha",
-    "scheduled_for": "2026-06-22",
-    "revision_count": 0,
-    "status": "awaiting_approval"
-  }
+  "review_state": null
 }
