@@ -89,8 +89,14 @@ async function publish(token, url) {
 const token = await getAccessToken();
 console.log("Authenticated to the Indexing API as", SA.client_email);
 
-const urls = await getSitemapUrls();
-console.log(`Requesting indexing for ${urls.length} URL(s)...\n`);
+// Optional single-URL argument: index just that page (used by the publish flow
+// so a freshly published post is requested for crawl immediately). With no arg,
+// fall back to indexing every URL in the sitemap.
+const urlArg = process.argv[2]?.trim();
+const urls = urlArg ? [urlArg] : await getSitemapUrls();
+console.log(urlArg
+  ? `Requesting indexing for a single URL: ${urlArg}\n`
+  : `Requesting indexing for ${urls.length} URL(s) from the sitemap...\n`);
 
 let ok = 0;
 const failures = [];

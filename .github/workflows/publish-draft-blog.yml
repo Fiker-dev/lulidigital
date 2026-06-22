@@ -51,6 +51,16 @@ jobs:
           git push
           echo "true" > /tmp/published_changed.txt
 
+      - name: Request indexing for the published post
+        run: |
+          if [ "$(cat /tmp/published_changed.txt 2>/dev/null || echo false)" != "true" ]; then
+            echo "Draft was already published. Skipping indexing request."
+            exit 0
+          fi
+          node scripts/request-indexing.mjs "https://lulidigital.com/blog/${{ github.event.inputs.slug }}"
+        env:
+          GOOGLE_INDEXING_SA_KEY: ${{ secrets.GOOGLE_INDEXING_SA_KEY }}
+
       - name: Publish Google Business Profile post
         run: |
           if [ "$(cat /tmp/published_changed.txt 2>/dev/null || echo false)" != "true" ]; then
