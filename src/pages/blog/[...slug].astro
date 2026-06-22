@@ -103,103 +103,188 @@ function formatDate(date: Date) {
   </main>
 
   <style is:global>
-    /* Reading progress bar */
+    /* ── Reading progress bar (honey) ───────────────────────── */
     #read-progress {
       position: fixed;
       top: 0; left: 0;
       height: 3px;
       width: 0%;
-      background: #b01616;
+      background: linear-gradient(90deg, var(--honey), var(--wine));
       z-index: 9999;
       transition: width 80ms linear;
       pointer-events: none;
       border-radius: 0 2px 2px 0;
     }
 
-    /* Entrance keyframe */
+    /* ── Header entrance ────────────────────────────────────── */
     @keyframes hdReveal {
       from { opacity: 0; transform: translateY(14px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+    .reveal-header .post-header__meta { animation: hdReveal 600ms cubic-bezier(.16,1,.3,1) 80ms both; }
+    .reveal-header .post-title        { animation: hdReveal 720ms cubic-bezier(.16,1,.3,1) 200ms both; }
+    .reveal-header .post-description  { animation: hdReveal 680ms cubic-bezier(.16,1,.3,1) 360ms both; }
 
-    /* Header entrance stagger */
-    .reveal-header .post-header__meta {
-      animation: hdReveal 600ms cubic-bezier(.16,1,.3,1) 80ms both;
-    }
-    .reveal-header .post-title {
-      animation: hdReveal 720ms cubic-bezier(.16,1,.3,1) 200ms both;
-    }
-    .reveal-header .post-description {
-      animation: hdReveal 680ms cubic-bezier(.16,1,.3,1) 360ms both;
-    }
-
-    /* Scroll reveal — headings, pull quotes, and lists fade up into view
-       so the page feels alive as the reader scrolls instead of being a
-       static wall of text. */
-    .prose h2,
-    .prose blockquote,
-    .prose ul,
-    .prose ol {
+    /* ── Block scroll-reveal ────────────────────────────────── */
+    /* JS wraps each H2 + its content into a .post-section and tags
+       intro elements as .reveal-block. Each fades up as it enters view;
+       list items stagger in once their section is visible. */
+    .prose .reveal-block {
       opacity: 0;
-      transform: translateY(14px);
+      transform: translateY(20px);
       transition:
-        opacity 560ms ease,
-        transform 560ms cubic-bezier(.16,1,.3,1);
+        opacity 640ms ease,
+        transform 640ms cubic-bezier(.16,1,.3,1);
     }
-    .prose h2.is-visible,
-    .prose blockquote.is-visible,
-    .prose ul.is-visible,
-    .prose ol.is-visible {
+    .prose .reveal-block.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* Respect reduced-motion and protect against no-JS: always show content. */
-    @media (prefers-reduced-motion: reduce) {
-      .prose h2,
-      .prose blockquote,
-      .prose ul,
-      .prose ol {
-        opacity: 1 !important;
-        transform: none !important;
-        transition: none !important;
-      }
+    /* ── Section blocks ─────────────────────────────────────── */
+    .prose .post-section {
+      margin: 30px 0;
+    }
+    .prose .post-section + .post-section {
+      margin-top: 14px;
     }
 
-    /* Pull quote blockquotes */
-    .prose blockquote {
-      margin: 40px -12px !important;
-      padding: 26px 30px 26px 28px !important;
-      border-left: none !important;
-      border-radius: 14px;
-      background: rgba(176,22,22,.06);
-      font-size: clamp(17px, 2.1vw, 20px) !important;
-      font-style: normal !important;
-      font-weight: 600;
-      line-height: 1.52 !important;
-      letter-spacing: -.015em;
-      color: rgba(18,18,18,.9) !important;
+    /* Numbered honey badge above each H2 */
+    .prose .post-section > h2 {
       position: relative;
+      margin: 0 0 16px;
+      padding-top: 30px;
+    }
+    .prose .post-section > h2::before {
+      content: attr(data-num);
+      position: absolute;
+      top: 0; left: 0;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: .24em;
+      font-weight: 600;
+      color: var(--brand);
+    }
+    .prose .post-section > h2::after {
+      content: "";
+      position: absolute;
+      top: 6px; left: 34px;
+      width: 28px; height: 1px;
+      background: var(--paper-line);
+    }
+
+    /* ── Headings (Fraunces display, on-brand) ──────────────── */
+    .prose h2 {
+      font-family: var(--font-display);
+      font-size: clamp(23px, 3vw, 30px);
+      font-weight: 600;
+      letter-spacing: -.02em;
+      line-height: 1.18;
+      color: var(--ink);
+    }
+    .prose h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -.01em;
+      margin: 26px 0 10px;
+      color: var(--ink);
+    }
+
+    /* ── Card lists — the "blocks" that break up the text ───── */
+    .prose ul,
+    .prose ol {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0;
+      display: grid;
+      gap: 10px;
+    }
+    .prose li {
+      position: relative;
+      background: var(--paper-card);
+      border: 1px solid var(--paper-line);
+      border-radius: 14px;
+      padding: 15px 20px 15px 52px;
+      line-height: 1.58;
+      color: var(--ink);
+      opacity: 0;
+      transform: translateX(-12px);
+      transition:
+        opacity 520ms ease,
+        transform 520ms cubic-bezier(.16,1,.3,1),
+        box-shadow 240ms ease,
+        border-color 240ms ease;
+    }
+    .prose .reveal-block.is-visible li { opacity: 1; transform: translateX(0); }
+    .prose li:hover {
+      box-shadow: var(--shadow);
+      border-color: var(--brand);
+      transform: translateY(-2px);
+    }
+
+    /* Unordered → honey arrow marker */
+    .prose ul li::before {
+      content: "→";
+      position: absolute;
+      left: 20px; top: 14px;
+      color: var(--wine);
+      font-weight: 800;
+    }
+    /* Ordered → numbered honey chip */
+    .prose ol { counter-reset: step; }
+    .prose ol li { counter-increment: step; padding-left: 56px; }
+    .prose ol li::before {
+      content: counter(step);
+      position: absolute;
+      left: 13px; top: 12px;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--honey);
+      color: var(--honey-dark);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+    }
+
+    /* ── Pull quote — big honey panel ───────────────────────── */
+    .prose blockquote {
+      margin: 32px 0 !important;
+      padding: 30px 32px 30px 36px !important;
+      border: none !important;
+      border-left: 4px solid var(--honey) !important;
+      border-radius: 18px;
+      background: linear-gradient(180deg, var(--paper-card), rgba(255,242,200,.35));
+      font-family: var(--font-display) !important;
+      font-size: clamp(20px, 2.6vw, 25px) !important;
+      font-style: normal !important;
+      font-weight: 500;
+      line-height: 1.4 !important;
+      letter-spacing: -.012em;
+      color: var(--ink) !important;
+      position: relative;
+      box-shadow: var(--shadow);
     }
     .prose blockquote::before {
       content: '\201C';
       position: absolute;
-      top: 8px; left: 16px;
-      font-size: 64px;
+      top: 10px; right: 22px;
+      font-family: var(--font-display);
+      font-size: 72px;
       line-height: 1;
-      color: rgba(176,22,22,.2);
-      font-weight: 900;
+      color: rgba(245,164,31,.28);
+      font-weight: 700;
       pointer-events: none;
     }
-    .prose blockquote > :global(p) {
-      margin: 0 !important;
-    }
+    .prose blockquote > :global(p) { margin: 0 !important; position: relative; z-index: 1; }
 
-    /* Section ornament (HR inside prose) */
+    /* ── Section ornament (--- between sections) ────────────── */
     .prose hr {
       border: none !important;
-      margin: 52px auto !important;
-      height: 20px !important;
+      margin: 30px auto !important;
+      height: 16px !important;
       position: relative;
       overflow: visible;
       width: auto;
@@ -209,20 +294,41 @@ function formatDate(date: Date) {
       position: absolute;
       left: 50%; top: 50%;
       transform: translate(-50%, -50%);
-      font-size: 20px;
-      letter-spacing: 4px;
-      color: rgba(176,22,22,.38);
-      white-space: nowrap;
+      font-size: 18px;
+      letter-spacing: 5px;
+      color: rgba(154,90,0,.4);
     }
 
-    /* Lead paragraph — first p in article gets a larger open */
+    /* ── Body text ──────────────────────────────────────────── */
+    .prose p { margin: 0 0 18px; }
     .prose > :global(p:first-child) {
-      font-size: 19px;
-      line-height: 1.78;
-      color: rgba(18,18,18,.88);
+      font-family: var(--font-display);
+      font-size: clamp(20px, 2.5vw, 23px);
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+    .prose strong { font-weight: 700; color: var(--wine-strong); }
+    .prose a {
+      color: var(--wine);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1.5px;
+      transition: color 180ms ease;
+    }
+    .prose a:hover { color: var(--brand); }
+
+    /* ── Reduced motion / no-JS: show everything ────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .prose .reveal-block,
+      .prose li {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
     }
 
-    /* Blog bee reading companion */
+    /* ── Blog bee reading companion ─────────────────────────── */
     #blog-bee {
       display: none;
       position: fixed;
@@ -231,8 +337,8 @@ function formatDate(date: Date) {
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: rgba(252,244,226,.92);
-      border: 1px solid rgba(176,22,22,.14);
+      background: rgba(255,242,200,.92);
+      border: 1px solid var(--paper-line);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       cursor: pointer;
@@ -240,27 +346,20 @@ function formatDate(date: Date) {
       align-items: center;
       justify-content: center;
       padding: 0;
-      /* JS controls translateY; smooth it */
       transition: top 260ms cubic-bezier(.16,1,.3,1),
                   background 200ms ease,
                   border-color 200ms ease,
                   transform 200ms ease;
       will-change: top;
     }
-    /* Only show when there's room beside the 720px column */
-    @media (min-width: 1020px) {
-      #blog-bee { display: flex; }
-    }
+    @media (min-width: 1020px) { #blog-bee { display: flex; } }
     #blog-bee:hover {
-      background: rgba(245,164,31,.18);
-      border-color: rgba(176,22,22,.3);
+      background: rgba(245,164,31,.2);
+      border-color: var(--brand);
       transform: scale(1.08);
     }
     #blog-bee:active { transform: scale(0.96); }
-    #blog-bee svg {
-      width: 24px;
-      height: auto;
-    }
+    #blog-bee svg { width: 24px; height: auto; }
     #blog-bee .lw {
       animation: lanaWing 0.44s ease-in-out infinite alternate;
       transform-origin: 56px 20px;
@@ -270,20 +369,13 @@ function formatDate(date: Date) {
     .reveal-cta {
       opacity: 0;
       transform: translateY(20px);
-      transition:
-        opacity 700ms ease,
-        transform 700ms cubic-bezier(.16,1,.3,1);
+      transition: opacity 700ms ease, transform 700ms cubic-bezier(.16,1,.3,1);
     }
-    .reveal-cta.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal-cta.is-visible { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 600px) {
-      .prose blockquote {
-        margin: 32px -4px !important;
-        padding: 20px 20px 20px 20px !important;
-      }
+      .prose blockquote { padding: 24px 22px 24px 26px !important; }
+      .prose li { padding: 13px 16px 13px 46px; }
     }
   </style>
 
@@ -292,22 +384,20 @@ function formatDate(date: Date) {
       max-width: 720px;
       margin: 0 auto;
       padding: 56px 24px 80px;
-      color: rgba(18,18,18,.9);
+      color: var(--ink);
     }
 
     .post-back a {
       font-size: 12px;
       letter-spacing: .12em;
       text-transform: uppercase;
-      color: rgba(18,18,18,.5);
+      color: var(--muted);
       text-decoration: none;
       transition: color 180ms ease;
     }
-
-    .post-back a:hover { color: rgba(18,18,18,.85); }
+    .post-back a:hover { color: var(--ink); }
 
     .post-header { margin-top: 32px; }
-
     .post-header__meta {
       display: flex;
       align-items: center;
@@ -315,156 +405,95 @@ function formatDate(date: Date) {
       margin-bottom: 18px;
       flex-wrap: wrap;
     }
-
     .post-category {
       font-size: 10px;
       letter-spacing: .18em;
       text-transform: uppercase;
-      color: #b01616;
-      font-weight: 600;
+      color: var(--brand);
+      font-weight: 700;
     }
-
     .post-time, .post-date {
       font-size: 11px;
       letter-spacing: .08em;
-      color: rgba(18,18,18,.45);
+      color: var(--muted);
     }
 
     .post-title {
-      font-size: clamp(30px, 4vw, 48px);
-      font-weight: 700;
-      line-height: 1.08;
-      letter-spacing: -.03em;
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4.4vw, 52px);
+      font-weight: 600;
+      line-height: 1.06;
+      letter-spacing: -.025em;
       margin: 0 0 16px;
+      color: var(--ink);
     }
-
     .post-description {
       font-size: 17px;
-      line-height: 1.72;
-      color: rgba(18,18,18,.65);
+      line-height: 1.7;
+      color: var(--muted);
       margin: 0;
-      font-style: italic;
     }
 
     .rule {
       border: none;
-      border-top: 1px solid rgba(18,18,18,.12);
-      margin: 32px 0;
+      border-top: 1px solid var(--paper-line);
+      margin: 30px 0;
     }
+    .rule--bottom { margin: 50px 0 36px; }
 
-    .rule--bottom { margin: 56px 0 36px; }
-
-    /* Prose typography */
-    .prose {
+    .post-body {
       font-size: 17px;
-      line-height: 1.84;
-      color: rgba(18,18,18,.86);
+      line-height: 1.78;
+      color: var(--ink);
     }
 
-    .prose :global(h2) {
-      font-size: clamp(21px, 2.7vw, 27px);
-      font-weight: 700;
-      letter-spacing: -.022em;
-      line-height: 1.2;
-      margin: 52px 0 14px;
-      color: rgba(18,18,18,.95);
-    }
-
-    .prose :global(h3) {
-      font-size: 19px;
-      font-weight: 700;
-      letter-spacing: -.012em;
-      margin: 30px 0 10px;
-      color: rgba(18,18,18,.92);
-    }
-
-    .prose :global(p) { margin: 0 0 20px; }
-
-    .prose :global(ul),
-    .prose :global(ol) {
-      padding-left: 22px;
-      margin: 0 0 20px;
-    }
-
-    .prose :global(li) {
-      margin-bottom: 8px;
-      line-height: 1.72;
-    }
-
-    .prose :global(a) {
-      color: #b01616;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    .prose :global(a:hover) { opacity: .75; }
-
-    .prose :global(strong) {
-      font-weight: 700;
-      color: rgba(18,18,18,.95);
-    }
-
-    /* Footer CTA — dark */
-    .post-footer {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
+    /* Footer CTA — warm dark honey panel */
+    .post-footer { display: flex; flex-direction: column; gap: 24px; }
     .post-footer__cta {
-      background: rgb(13,13,13);
-      border-radius: 20px;
+      background: linear-gradient(160deg, #2a1c05, #160f02);
+      border-radius: 22px;
       padding: 44px 40px 40px;
-      color: rgba(255,255,255,.9);
+      color: rgba(255,247,223,.92);
     }
-
     .footer-kicker {
       font-size: 10px;
       letter-spacing: .22em;
       text-transform: uppercase;
-      color: rgba(255,255,255,.38);
+      color: var(--honey-bright);
       margin: 0 0 10px;
     }
-
     .footer-headline {
-      font-size: clamp(22px, 3vw, 32px);
-      font-weight: 700;
-      letter-spacing: -.026em;
-      line-height: 1.14;
+      font-family: var(--font-display);
+      font-size: clamp(23px, 3vw, 33px);
+      font-weight: 600;
+      letter-spacing: -.022em;
+      line-height: 1.12;
       color: #fff;
       margin: 0 0 12px;
     }
-
     .footer-line {
       font-size: 15px;
-      line-height: 1.68;
-      color: rgba(255,255,255,.52);
+      line-height: 1.66;
+      color: rgba(255,247,223,.6);
       margin: 0 0 26px;
     }
-
-    .footer-links {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
+    .footer-links { display: flex; gap: 10px; flex-wrap: wrap; }
     .footer-pill {
       display: inline-block;
       padding: 9px 20px;
-      border: 1px solid rgba(255,255,255,.16);
+      border: 1px solid rgba(245,164,31,.32);
       border-radius: 100px;
       font-size: 11px;
-      letter-spacing: .12em;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      color: rgba(255,255,255,.78);
+      color: var(--honey-bright);
       text-decoration: none;
       font-weight: 600;
       transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
     }
-
     .footer-pill:hover {
-      background: rgba(255,255,255,.1);
-      border-color: rgba(255,255,255,.32);
+      background: rgba(245,164,31,.16);
+      border-color: var(--honey);
       color: #fff;
     }
 
@@ -472,17 +501,15 @@ function formatDate(date: Date) {
       font-size: 12px;
       letter-spacing: .12em;
       text-transform: uppercase;
-      color: rgba(18,18,18,.5);
+      color: var(--muted);
       text-decoration: none;
       transition: color 180ms ease;
     }
-
-    .back-link:hover { color: rgba(18,18,18,.85); }
+    .back-link:hover { color: var(--ink); }
 
     @media (max-width: 600px) {
       .post-page { padding: 40px 18px 60px; }
       .post-footer__cta { padding: 32px 24px 28px; }
-      .post-title { font-size: clamp(26px, 7vw, 36px); }
     }
   </style>
 
@@ -498,18 +525,53 @@ function formatDate(date: Date) {
       update();
     }
 
-    // Scroll-reveal headings, pull quotes, and lists as they enter view.
+    // Turn flat markdown into animated blocks:
+    //   - group each H2 + its following content into a numbered .post-section
+    //   - tag intro elements (before the first H2) as reveal blocks
+    //   - reveal blocks on scroll; stagger list items within a section
     const article = document.getElementById("post-article");
     if (article) {
-      const revealEls = article.querySelectorAll("h2, blockquote, ul, ol");
-      if (revealEls.length) {
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      const kids = Array.from(article.children);
+      const frag = document.createDocumentFragment();
+      let current: HTMLElement | null = null;
+      let n = 0;
+      for (const node of kids) {
+        if (node.tagName === "H2") {
+          n += 1;
+          node.setAttribute("data-num", String(n).padStart(2, "0"));
+          current = document.createElement("section");
+          current.className = "post-section reveal-block";
+          frag.appendChild(current);
+          current.appendChild(node);
+        } else if (current) {
+          current.appendChild(node);
+        } else {
+          (node as HTMLElement).classList.add("reveal-block");
+          frag.appendChild(node);
+        }
+      }
+      article.appendChild(frag);
+
+      // Stagger list items inside each section
+      article.querySelectorAll("ul, ol").forEach((list) => {
+        Array.from(list.children).forEach((li, i) => {
+          (li as HTMLElement).style.transitionDelay = `${i * 70}ms`;
+        });
+      });
+
+      const blocks = article.querySelectorAll(".reveal-block");
+      if (reduced) {
+        blocks.forEach((b) => b.classList.add("is-visible"));
+      } else {
         const io = new IntersectionObserver(
           (entries) => entries.forEach((e) => {
             if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
           }),
-          { threshold: 0.12, rootMargin: "0px 0px -48px 0px" }
+          { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
         );
-        revealEls.forEach((el) => io.observe(el));
+        blocks.forEach((b) => io.observe(b));
       }
     }
 
@@ -536,10 +598,8 @@ function formatDate(date: Date) {
         const rect = postArticle.getBoundingClientRect();
         const articleTop    = rect.top  + window.scrollY;
         const articleBottom = articleTop + rect.height;
-        // Where the reader's eye is (viewport center-ish)
         const eyeY    = window.scrollY + window.innerHeight * 0.42;
         const progress = Math.max(0, Math.min(1, (eyeY - articleTop) / (articleBottom - articleTop)));
-        // Map to a comfortable fixed-position range (stay inside viewport)
         const minY = Math.max(88, rect.top + 8);
         const maxY = window.innerHeight - 96;
         const targetTop = minY + progress * Math.max(0, maxY - minY);
@@ -547,8 +607,6 @@ function formatDate(date: Date) {
       };
       window.addEventListener("scroll", moveBee, { passive: true });
       moveBee();
-
-      // Clicking the bee opens Lana chat
       blogBee.addEventListener("click", () => {
         window.dispatchEvent(new CustomEvent("luli:lana-open"));
       });
