@@ -133,17 +133,37 @@ function formatDate(date: Date) {
       animation: hdReveal 680ms cubic-bezier(.16,1,.3,1) 360ms both;
     }
 
-    /* Prose h2 scroll reveal */
-    .prose h2 {
+    /* Scroll reveal — headings, pull quotes, and lists fade up into view
+       so the page feels alive as the reader scrolls instead of being a
+       static wall of text. */
+    .prose h2,
+    .prose blockquote,
+    .prose ul,
+    .prose ol {
       opacity: 0;
       transform: translateY(14px);
       transition:
         opacity 560ms ease,
         transform 560ms cubic-bezier(.16,1,.3,1);
     }
-    .prose h2.is-visible {
+    .prose h2.is-visible,
+    .prose blockquote.is-visible,
+    .prose ul.is-visible,
+    .prose ol.is-visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* Respect reduced-motion and protect against no-JS: always show content. */
+    @media (prefers-reduced-motion: reduce) {
+      .prose h2,
+      .prose blockquote,
+      .prose ul,
+      .prose ol {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
     }
 
     /* Pull quote blockquotes */
@@ -478,18 +498,18 @@ function formatDate(date: Date) {
       update();
     }
 
-    // Scroll-reveal h2 headings
+    // Scroll-reveal headings, pull quotes, and lists as they enter view.
     const article = document.getElementById("post-article");
     if (article) {
-      const headings = article.querySelectorAll("h2");
-      if (headings.length) {
+      const revealEls = article.querySelectorAll("h2, blockquote, ul, ol");
+      if (revealEls.length) {
         const io = new IntersectionObserver(
           (entries) => entries.forEach((e) => {
             if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
           }),
           { threshold: 0.12, rootMargin: "0px 0px -48px 0px" }
         );
-        headings.forEach((h) => io.observe(h));
+        revealEls.forEach((el) => io.observe(el));
       }
     }
 

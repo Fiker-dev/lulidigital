@@ -194,11 +194,16 @@ Writing rules:
 - Write like the reader feels the pain in their calendar, inbox, budget, team handoffs, or campaign dashboard.
 - Educate by moving from hook to problem to solution. The reader should leave understanding the issue and the next practical move.
 - Connect the solution to LuliDigital's offering only where it fits: AI Desk for workflows and agents, Marketing Desk for visibility and content systems, VA Desk for operational support. Do not force a sales pitch into every paragraph.
-- No filler sentences. Every paragraph must earn its place.
+- No filler sentences. Every sentence must earn its place.
 - Do not use em dashes. Use commas or short sentences instead.
-- No bullet-point-heavy content. Write in paragraphs.
+- Make it SCANNABLE, not a wall of text. Readers skim before they read. Keep paragraphs short: 2 to 3 sentences max, often 1 to 2. Let white space do work.
+- Break the article into short sections. Use a clear H2 roughly every 120 to 180 words, and H3 sub-points where a section has parts. The reader should always see the next heading nearby.
+- Use bullet or numbered lists wherever you would otherwise pack things, steps, signs, or options into a dense paragraph. Prefer a tight list over a long sentence. Aim for at least two lists in the post.
+- Include one short pull quote as a Markdown blockquote (> one punchy standalone line) for the single most important idea. One, occasionally two. Never more.
+- Separate major sections with a --- horizontal rule so the page has visual rhythm.
+- Bold the key phrase in important sentences so a skimmer still gets the point.
 - End with a natural, non-pushy mention of LuliDigital's relevant service.
-- Target length: 1100 to 1400 words.
+- Target length: 800 to 1100 words. Shorter and sharper beats long and dense. No one wants to read forever.
 
 Provide the finished post by calling the submit_blog_post tool with: title, description (meta description under 155 chars, keyword-rich), slug (url-slug-with-hyphens), readingTime (e.g. "6 min read"), and content (the full markdown article body starting with the first paragraph, no frontmatter, use ## for H2 headings, --- for horizontal rules between sections).`;
 
@@ -216,7 +221,9 @@ ${customSourceUrl ? `Source URL for context only, if useful: ${customSourceUrl}`
 ${customFikerTake ? `Fiker's point of view to include: ${customFikerTake}` : ""}
 ${customCta ? `End-of-article CTA text: "${customCta}"${customCtaLink ? ` — link it to ${customCtaLink}` : ""}` : ""}
 
-The article should give genuinely useful, actionable advice. It should feel like pain relief for a founder who is tired of vague advice and wants the next practical move. Do not fabricate relatability. Do not write fake scenes like "a founder told me" or "one client called it" unless that exact source note was provided. Structure it with a strong opening hook, 4-6 H2 sections, and a closing section. At least one section should teach the solution path clearly: what to audit, what to automate or systemise, what a human should still approve, and when to bring in support. Include a relevant internal link to the LuliDigital service page at the end (use markdown link format to either /ai-desk, /marketing-desk, or /va-desk depending on the topic). If a local landing page is provided, include exactly one natural internal link to that local page as well.`;
+The article should give genuinely useful, actionable advice. It should feel like pain relief for a founder who is tired of vague advice and wants the next practical move. Do not fabricate relatability. Do not write fake scenes like "a founder told me" or "one client called it" unless that exact source note was provided.
+
+Make it easy and quick to read. Structure it with a strong opening hook (two short paragraphs, no heading), then 5 to 7 short H2 sections, and a brief closing section. Each section should be only a few short paragraphs or a list — never a long block. Use at least two bulleted or numbered lists across the article (for example: the signs, the steps, what to audit, what to automate, what a human still approves). Include exactly one short pull-quote blockquote for the single most important idea. Separate major sections with a --- rule. At least one section should teach the solution path clearly: what to audit, what to automate or systemise, what a human should still approve, and when to bring in support. Include a relevant internal link to the LuliDigital service page at the end (use markdown link format to either /ai-desk, /marketing-desk, or /va-desk depending on the topic). If a local landing page is provided, include exactly one natural internal link to that local page as well.`;
 
 const response = await fetch("https://api.anthropic.com/v1/messages", {
   method: "POST",
