@@ -14,10 +14,10 @@
 import { writeFileSync, readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { getGoogleAccessToken, hasServiceAccount, hasOAuth } from "./google-auth.mjs";
+import { getGoogleAccessToken, hasServiceAccount, hasOAuth, normalizeSearchConsoleProperty } from "./google-auth.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const PROPERTY = process.env.GOOGLE_SEARCH_CONSOLE_PROPERTY;
+const PROPERTY = normalizeSearchConsoleProperty(process.env.GOOGLE_SEARCH_CONSOLE_PROPERTY);
 
 if (!PROPERTY || (!hasServiceAccount() && !hasOAuth())) {
   console.error("Missing credentials: need GOOGLE_SEARCH_CONSOLE_PROPERTY plus either a service-account key (GOOGLE_SA_KEY / GOOGLE_INDEXING_SA_KEY) or OAuth (GOOGLE_CLIENT_ID/SECRET/REFRESH_TOKEN).");

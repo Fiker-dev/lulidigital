@@ -16,7 +16,7 @@ import { writeFileSync, readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { generateGeminiText, getGeminiApiKey } from "../src/lib/geminiFallback.js";
-import { getGoogleAccessToken, hasServiceAccount, hasOAuth } from "./google-auth.mjs";
+import { getGoogleAccessToken, hasServiceAccount, hasOAuth, normalizeSearchConsoleProperty } from "./google-auth.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -25,7 +25,7 @@ if (!process.env.GOOGLE_SEARCH_CONSOLE_PROPERTY || (!hasServiceAccount() && !has
   process.exit(0);
 }
 
-const PROPERTY = process.env.GOOGLE_SEARCH_CONSOLE_PROPERTY;
+const PROPERTY = normalizeSearchConsoleProperty(process.env.GOOGLE_SEARCH_CONSOLE_PROPERTY);
 
 const KNOWN_PAGES = [
   "/", "/marketing-desk", "/ai-desk", "/va-desk", "/founder",
