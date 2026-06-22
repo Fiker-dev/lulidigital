@@ -92,6 +92,7 @@ jobs:
         run: node scripts/generate-post.mjs
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           BLOG_TOPIC: ${{ github.event.inputs.topic }}
           BLOG_KEYWORD: ${{ github.event.inputs.keyword }}
           BLOG_CATEGORY: ${{ github.event.inputs.category }}
