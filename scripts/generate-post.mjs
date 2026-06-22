@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { getBestRegionalSeoRecommendation, inferSeoCategory } from "../src/lib/seoAgent.js";
+import { researchBlogTopic } from "./research-topic.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -55,7 +56,9 @@ if (queued) {
 } else if (queuedPlan) {
   console.log(`Using planned blog queue item from LANa memory: "${queuedPlan.topic || "(planned post)"}"`);
 }
-const seoRecommendation = !customTitle && useSeoAgent ? await getBestRegionalSeoRecommendation({ forceRefresh: true }) : null;
+const seoRecommendation = !customTitle && useSeoAgent
+  ? await getBestRegionalSeoRecommendation({ forceRefresh: true })
+  : null;
 const localTargets = {
   AFRICA: { label: "Africa Growth Desk", path: "/africa" },
   NL: { label: "Amsterdam Studio", path: "/amsterdam" },
@@ -70,6 +73,19 @@ const localTargets = {
   NO: { label: "Norway Studio", path: "/norway" },
 };
 const localTarget = seoRecommendation ? localTargets[seoRecommendation.geo] : null;
+
+// Default topic source: Gemini researches a fresh, trend-aware topic. When the
+// regional SEO agent has a recommendation, Gemini BLENDS it — framing a sharp
+// topic around that real keyword + local market — so we keep the search signal
+// and the local internal link while gaining trend-aware angles. Falls through to
+// the SEO agent's own topic, then the static rotation, if Gemini returns null.
+const geminiTopic = !customTitle
+  ? await researchBlogTopic({
+      seoKeyword: seoRecommendation?.keyword,
+      localTarget,
+      region: seoRecommendation?.geo,
+    })
+  : null;
 
 function slugify(value) {
   return value
@@ -160,14 +176,16 @@ const seoAgentTopic = seoRecommendation
       localTarget,
     }
   : null;
-const isCustomTopic = Boolean(customTitle || seoAgentTopic);
+
+// Priority: explicit/queued title → Gemini research (blended) → SEO agent → rotation.
+const isCustomTopic = Boolean(customTitle || geminiTopic || seoAgentTopic);
 const topic = customTitle
   ? {
       title: customTitle,
       category: customCategory || "AI Automation",
       keyword: customKeyword || customTitle,
     }
-  : seoAgentTopic ?? topicsData.topics[index];
+  : geminiTopic ?? seoAgentTopic ?? topicsData.topics[index];
 
 console.log(`Generating ${isCustomTopic ? "custom" : `post ${topicsData.published_count + 1}`}: "${topic.title}"`);
 
@@ -196,6 +214,7 @@ Writing rules:
 - Connect the solution to LuliDigital's offering only where it fits: AI Desk for workflows and agents, Marketing Desk for visibility and content systems, VA Desk for operational support. Do not force a sales pitch into every paragraph.
 - No filler sentences. Every sentence must earn its place.
 - Do not use em dashes. Use commas or short sentences instead.
+- DESIGN-AWARE: this post renders in an animated, card-block layout (numbered sections, list cards that swing in, a styled pull-quote panel) on a warm honey/cream theme. Write so it SHINES in that format: clear section headers, real lists, and one standout quote give the design something to animate. A wall of paragraphs breaks the design.
 - Make it SCANNABLE, not a wall of text. Readers skim before they read. Keep paragraphs short: 2 to 3 sentences max, often 1 to 2. Let white space do work.
 - Break the article into short sections. Use a clear H2 roughly every 120 to 180 words, and H3 sub-points where a section has parts. The reader should always see the next heading nearby.
 - Use bullet or numbered lists wherever you would otherwise pack things, steps, signs, or options into a dense paragraph. Prefer a tight list over a long sentence. Aim for at least two lists in the post.
@@ -211,10 +230,10 @@ const userPrompt = `Write a complete blog post about: "${topic.title}"
 
 Primary keyword to target naturally: "${topic.keyword}"
 Category: ${topic.category}
-${seoAgentTopic ? `Keyword research source: ${seoAgentTopic.source}` : ""}
-${seoAgentTopic?.localTarget ? `Local landing page to link naturally in the article: [${seoAgentTopic.localTarget.label}](${seoAgentTopic.localTarget.path})` : ""}
-${customPainPoint ? `Reader pain point to address: ${customPainPoint}` : ""}
-${customAngle || seoAgentTopic?.angle ? `Specific angle to use: ${customAngle || seoAgentTopic.angle}` : ""}
+${topic.source ? `Keyword research source: ${topic.source}` : ""}
+${topic.localTarget ? `Local landing page to link naturally in the article: [${topic.localTarget.label}](${topic.localTarget.path})` : ""}
+${customPainPoint || topic.pain_point ? `Reader pain point to address: ${customPainPoint || topic.pain_point}` : ""}
+${customAngle || seoAgentTopic?.angle || topic.angle ? `Specific angle to use: ${customAngle || seoAgentTopic?.angle || topic.angle}` : ""}
 ${customToneNotes ? `Tone notes from the editor: ${customToneNotes}` : ""}
 ${customSourceNotes ? `Source notes or AI update to respond to (use as direction, do not copy): ${customSourceNotes}` : ""}
 ${customSourceUrl ? `Source URL for context only, if useful: ${customSourceUrl}` : ""}
@@ -318,7 +337,7 @@ writeFileSync("/tmp/post_title.txt", post.title);
 writeFileSync("/tmp/post_slug.txt", post.slug);
 writeFileSync("/tmp/post_category.txt", topic.category);
 writeFileSync("/tmp/post_description.txt", post.description);
-writeFileSync("/tmp/post_local_target.txt", seoAgentTopic?.localTarget?.path ?? "");
+writeFileSync("/tmp/post_local_target.txt", topic.localTarget?.path ?? "");
 
 // Update published count only for scheduled topic rotation.
 if (!isCustomTopic) {
