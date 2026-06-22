@@ -7,38 +7,22 @@
  *    Google's crawl/index verdict, so you can see exactly which pages are
  *    "Discovered – not indexed", "Crawled – not indexed", etc.
  *
- * Uses the same Search Console OAuth credentials as the monthly audit.
+ * Uses the shared Search Console credentials (service account preferred, OAuth
+ * fallback) — same as the monthly audit and weekly refresh.
  * Note: this does NOT force-index. Google has no public force-recrawl API for
  * general pages; sitemap resubmission + a healthy page is the supported lever.
  */
 
 import { setTimeout as sleep } from "node:timers/promises";
+import { getGoogleAccessToken, hasServiceAccount, hasOAuth } from "./google-auth.mjs";
 
 const PROPERTY = process.env.GOOGLE_SEARCH_CONSOLE_PROPERTY;
 const SITE = "https://lulidigital.com";
 const SITEMAP = `${SITE}/sitemap-index.xml`;
 
-const required = ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN", "GOOGLE_SEARCH_CONSOLE_PROPERTY"];
-const missing = required.filter((k) => !process.env[k]);
-if (missing.length) {
-  console.error(`Missing secrets: ${missing.join(", ")}`);
+if (!PROPERTY || (!hasServiceAccount() && !hasOAuth())) {
+  console.error("Missing credentials: need GOOGLE_SEARCH_CONSOLE_PROPERTY plus either a service-account key (GOOGLE_SA_KEY / GOOGLE_INDEXING_SA_KEY) or OAuth (GOOGLE_CLIENT_ID/SECRET/REFRESH_TOKEN).");
   process.exit(1);
-}
-
-async function getAccessToken() {
-  const res = await fetch("https://oauth2.googleapis.com/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      refresh_token: process.env.GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN,
-      grant_type: "refresh_token",
-    }),
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error_description || `OAuth failed: ${res.status}`);
-  return data.access_token;
 }
 
 async function fetchLocs(url) {
@@ -91,7 +75,7 @@ async function inspect(token, url, property) {
   };
 }
 
-const token = await getAccessToken();
+const token = await getGoogleAccessToken();
 
 // 0) Show which Search Console properties this account actually owns.
 const sites = await listSites(token);
