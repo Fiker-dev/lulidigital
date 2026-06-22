@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
+import react from '@astrojs/react';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -36,6 +37,7 @@ export default defineConfig({
   output: 'server',
   adapter: vercel(),
   integrations: [
+    react(),
     sitemap({
       customPages: ssrPages.map((path) => `${site}${path}`),
       filter: (page) =>
