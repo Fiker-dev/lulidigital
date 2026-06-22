@@ -328,6 +328,20 @@ draft: ${isDraft}
 `;
 
 const filePath = join(ROOT, "src", "content", "blog", `${post.slug}.md`);
+
+// Safety guard: NEVER overwrite an existing post. If the slug already exists,
+// this topic was already produced — abort rather than clobber a published post
+// or spawn a near-duplicate draft. (Revisions go through revise-draft.mjs.)
+if (existsSync(filePath)) {
+  const existing = readFileSync(filePath, "utf8");
+  const isPublished = /^draft:\s*false\s*$/m.test(existing);
+  console.error(
+    `Refusing to overwrite existing ${isPublished ? "PUBLISHED" : "draft"} post at ` +
+    `src/content/blog/${post.slug}.md — this topic already exists. Aborting to protect content.`
+  );
+  process.exit(1);
+}
+
 writeFileSync(filePath, frontmatter + post.content);
 
 console.log(`Post written to: src/content/blog/${post.slug}.md`);

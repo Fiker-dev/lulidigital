@@ -1,11 +1,7 @@
 {
   "pending_post": null,
   "pending_drafts": [
-    "when-to-hire-virtual-assistant",
-    "cleaner-growth-system-busy-teams",
-    "cleaner-growth-system-busy-teams",
-    "cleaner-growth-system-busy-teams-missing",
-    "cleaner-growth-system-busy-teams"
+    "when-to-hire-virtual-assistant"
   ],
   "seo_opportunity_queue": [],
   "blog_plan_queue": [],
@@ -14,13 +10,5 @@
     "title": "10 Tasks Every Founder Should Delegate to a Virtual Assistant",
     "published_at": "2026-06-16"
   },
-  "review_state": {
-    "slug": "cleaner-growth-system-busy-teams",
-    "title": "The Cleaner Growth System Most Busy Teams Are Missing",
-    "description": "Most busy teams are losing time and momentum to broken growth systems. Here's the practical fix founders and executives actually need.",
-    "preview_text": "When a yellow heat warning hits Ireland, people don't ignore it. They adjust. They change how they move, what they prioritise, and what they stop doing entirely. That's a sensible system response to a clear signal.",
-    "scheduled_for": "2026-06-24",
-    "revision_count": 0,
-    "status": "awaiting_approval"
-  }
+  "review_state": null
 }
