@@ -14,14 +14,13 @@
 import { writeFileSync, readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { getGoogleAccessToken, hasServiceAccount, hasOAuth } from "./google-auth.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROPERTY = process.env.GOOGLE_SEARCH_CONSOLE_PROPERTY;
 
-const required = ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN", "GOOGLE_SEARCH_CONSOLE_PROPERTY"];
-const missing = required.filter((k) => !process.env[k]);
-if (missing.length) {
-  console.error(`Missing secrets: ${missing.join(", ")}`);
+if (!PROPERTY || (!hasServiceAccount() && !hasOAuth())) {
+  console.error("Missing credentials: need GOOGLE_SEARCH_CONSOLE_PROPERTY plus either a service-account key (GOOGLE_SA_KEY / GOOGLE_INDEXING_SA_KEY) or OAuth (GOOGLE_CLIENT_ID/SECRET/REFRESH_TOKEN).");
   process.exit(1);
 }
 
@@ -35,22 +34,6 @@ function toPath(u) {
   } catch {
     return u;
   }
-}
-
-async function getAccessToken() {
-  const res = await fetch("https://oauth2.googleapis.com/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      refresh_token: process.env.GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN,
-      grant_type: "refresh_token",
-    }),
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error_description || `OAuth failed: ${res.status}`);
-  return data.access_token;
 }
 
 async function query(token, startDate, endDate) {
@@ -69,7 +52,7 @@ const fmt = (d) => d.toISOString().split("T")[0];
 const end = new Date();
 const start = new Date(end.getTime() - 14 * 86400000);
 
-const token = await getAccessToken();
+const token = await getGoogleAccessToken();
 const rows = await query(token, fmt(start), fmt(end));
 
 // Group queries per service page.

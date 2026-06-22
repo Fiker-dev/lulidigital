@@ -16,19 +16,12 @@ import { writeFileSync, readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { generateGeminiText, getGeminiApiKey } from "../src/lib/geminiFallback.js";
+import { getGoogleAccessToken, hasServiceAccount, hasOAuth } from "./google-auth.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const required = [
-  "GOOGLE_CLIENT_ID",
-  "GOOGLE_CLIENT_SECRET",
-  "GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN",
-  "GOOGLE_SEARCH_CONSOLE_PROPERTY",
-];
-
-const missing = required.filter((k) => !process.env[k]);
-if (missing.length > 0) {
-  console.log(`Search Console not configured. Missing: ${missing.join(", ")}. Skipping audit.`);
+if (!process.env.GOOGLE_SEARCH_CONSOLE_PROPERTY || (!hasServiceAccount() && !hasOAuth())) {
+  console.log("Search Console not configured. Need GOOGLE_SEARCH_CONSOLE_PROPERTY plus a service-account key (GOOGLE_SA_KEY / GOOGLE_INDEXING_SA_KEY) or OAuth. Skipping audit.");
   process.exit(0);
 }
 
@@ -66,24 +59,6 @@ function avg(arr) {
 
 function round1(n) {
   return Math.round(n * 10) / 10;
-}
-
-// ── OAuth ─────────────────────────────────────────────────────────────────────
-
-async function getAccessToken() {
-  const res = await fetch("https://oauth2.googleapis.com/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      refresh_token: process.env.GOOGLE_SEARCH_CONSOLE_REFRESH_TOKEN,
-      grant_type: "refresh_token",
-    }),
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error_description || `OAuth failed: ${res.status}`);
-  return data.access_token;
 }
 
 // ── Search Console query ──────────────────────────────────────────────────────
@@ -160,7 +135,7 @@ function aggregateByPage(rows) {
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 console.log("Authenticating with Google...");
-const token = await getAccessToken();
+const token = await getGoogleAccessToken();
 
 // Three windows:
 //   Current:  last 30 days (with 3-day recency buffer Search Console uses)
