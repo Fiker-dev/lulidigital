@@ -100,10 +100,41 @@ const faqSchema = {
         </div>
       </div>
 
-      <!-- Fiker host avatar — executive VA at her laptop -->
-      <figure class="va-hero-avatar" data-reveal="fade" data-reveal-delay="200">
-        <FikerAvatar pose="laptop" size="100%" alt="Fiker, your executive virtual assistant, working on a laptop" />
-      </figure>
+      <!-- Animated task board character -->
+      <div class="va-board" aria-hidden="true">
+        <div class="vb-header">
+          <span class="vb-dot vb-dot--r"></span>
+          <span class="vb-dot vb-dot--y"></span>
+          <span class="vb-dot vb-dot--g"></span>
+          <span class="vb-title-bar">Today's Desk</span>
+        </div>
+        <div class="vb-tasks">
+          <div class="vb-task vb-task--done" style="--ti:0">
+            <span class="vb-check">✓</span>
+            <span>Inbox cleared — 47 emails</span>
+          </div>
+          <div class="vb-task vb-task--done" style="--ti:1">
+            <span class="vb-check">✓</span>
+            <span>3 exec calls scheduled</span>
+          </div>
+          <div class="vb-task vb-task--done" style="--ti:2">
+            <span class="vb-check">✓</span>
+            <span>Q3 brief sent to team</span>
+          </div>
+          <div class="vb-task vb-task--active" style="--ti:3">
+            <span class="vb-spinner"></span>
+            <span>Weekly report — in progress</span>
+          </div>
+          <div class="vb-task vb-task--pending" style="--ti:4">
+            <span class="vb-ring"></span>
+            <span>Review invoice batch</span>
+          </div>
+        </div>
+        <div class="vb-footer">
+          <span class="vb-status-dot"></span>
+          <span class="vb-status-text">VA active now</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -150,65 +181,7 @@ const faqSchema = {
       <div class="handoff-scene" aria-label="Bee moving between a human assistant and an AI assistant">
         <article class="handoff-cell handoff-cell--human">
           <div class="cartoon-assistant" aria-hidden="true">
-            <svg class="assistant-anime" viewBox="0 0 220 220" role="img" aria-label="Premium anime style virtual assistant seated with a laptop">
-              <defs>
-                <linearGradient id="skinGlow" x1="0" x2="1" y1="0" y2="1">
-                  <stop offset="0" stop-color="#ffd9bd"/>
-                  <stop offset=".58" stop-color="#f4b28a"/>
-                  <stop offset="1" stop-color="#d88861"/>
-                </linearGradient>
-                <linearGradient id="hairGlow" x1="0" x2="1" y1="0" y2="1">
-                  <stop offset="0" stop-color="#120904"/>
-                  <stop offset=".5" stop-color="#3a1d05"/>
-                  <stop offset="1" stop-color="#7a4300"/>
-                </linearGradient>
-                <linearGradient id="jacketGlow" x1="0" x2="1" y1="0" y2="1">
-                  <stop offset="0" stop-color="#211300"/>
-                  <stop offset=".66" stop-color="#7a4300"/>
-                  <stop offset="1" stop-color="#c98205"/>
-                </linearGradient>
-                <linearGradient id="chairGlow" x1="0" x2="1" y1="0" y2="1">
-                  <stop offset="0" stop-color="#2c1a05"/>
-                  <stop offset="1" stop-color="#8a5000"/>
-                </linearGradient>
-                <linearGradient id="laptopGlow" x1="0" x2="1" y1="0" y2="1">
-                  <stop offset="0" stop-color="#fffdf4"/>
-                  <stop offset=".7" stop-color="#f3efe7"/>
-                  <stop offset="1" stop-color="#d8cfc0"/>
-                </linearGradient>
-              </defs>
-              <ellipse cx="110" cy="198" rx="82" ry="13" fill="rgba(107,59,0,.16)"/>
-              <path d="M61 96c0-39 21-67 55-67 32 0 53 26 53 67v60H61V96Z" fill="url(#chairGlow)" opacity=".26"/>
-              <rect x="56" y="87" width="108" height="98" rx="30" fill="url(#chairGlow)"/>
-              <path d="M54 124c-9-50 17-95 66-95 47 0 72 43 64 95l-15 47H69L54 124Z" fill="url(#chairGlow)" opacity=".34"/>
-              <path d="M45 159c13-18 28-18 44-7" fill="none" stroke="#3f2300" stroke-width="11" stroke-linecap="round" opacity=".9"/>
-              <path d="M175 159c-13-18-28-18-44-7" fill="none" stroke="#3f2300" stroke-width="11" stroke-linecap="round" opacity=".9"/>
-              <path d="M88 183h45v17H88z" fill="#3f2300"/>
-              <path d="M71 205h78" stroke="#3f2300" stroke-width="8" stroke-linecap="round"/>
-              <path d="M62 94c0-43 23-76 58-76 34 0 57 30 57 76 0 32-13 65-31 80H94C75 157 62 126 62 94Z" fill="url(#hairGlow)"/>
-              <path d="M76 88c0-34 17-56 43-56 27 0 44 22 44 56 0 32-19 57-44 57S76 120 76 88Z" fill="url(#skinGlow)"/>
-              <path d="M76 84c15-4 31-16 44-34 12 17 28 26 42 31-3-31-20-49-43-49-25 0-41 20-43 52Z" fill="url(#hairGlow)"/>
-              <path d="M72 95c-9 2-13 13-8 23 4 8 12 10 18 6" fill="url(#skinGlow)"/>
-              <path d="M166 95c9 2 13 13 8 23-4 8-12 10-18 6" fill="url(#skinGlow)"/>
-              <circle cx="76" cy="112" r="3.5" fill="#f5a41f"/>
-              <circle cx="164" cy="112" r="3.5" fill="#f5a41f"/>
-              <ellipse cx="103" cy="95" rx="7" ry="11" fill="#170c02"/>
-              <ellipse cx="135" cy="95" rx="7" ry="11" fill="#170c02"/>
-              <circle cx="106" cy="91" r="2.8" fill="#fff8df"/>
-              <circle cx="138" cy="91" r="2.8" fill="#fff8df"/>
-              <path d="M111 122c7 6 15 6 22 0" fill="none" stroke="#7a4300" stroke-width="4" stroke-linecap="round"/>
-              <circle cx="91" cy="109" r="7" fill="rgba(245,164,31,.2)"/>
-              <circle cx="149" cy="109" r="7" fill="rgba(245,164,31,.2)"/>
-              <path d="M74 184c7-32 24-50 45-50s39 18 47 50H74Z" fill="url(#jacketGlow)"/>
-              <path d="M108 138h24l-8 26h-8z" fill="#fff8df"/>
-              <path d="M88 158c12 8 51 8 64 0" stroke="rgba(255,248,223,.5)" stroke-width="4" stroke-linecap="round"/>
-              <path d="M74 160c-18 5-29 16-34 31" stroke="url(#skinGlow)" stroke-width="13" stroke-linecap="round"/>
-              <path d="M164 160c18 5 29 16 34 31" stroke="url(#skinGlow)" stroke-width="13" stroke-linecap="round"/>
-              <rect x="46" y="154" width="130" height="43" rx="9" fill="url(#laptopGlow)" stroke="rgba(107,59,0,.25)" stroke-width="2"/>
-              <path d="M37 196h148" stroke="#d8cfc0" stroke-width="6" stroke-linecap="round"/>
-              <circle cx="111" cy="175" r="7" fill="#f5a41f"/>
-              <path d="M54 150c14-6 94-7 114 0" stroke="rgba(255,255,255,.55)" stroke-width="3" stroke-linecap="round"/>
-            </svg>
+            <FikerAvatar pose="laptop" size="100%" alt="" />
           </div>
           <span class="handoff-kicker">Human VA</span>
           <h3>Care, context, and follow-through.</h3>
@@ -503,25 +476,6 @@ const faqSchema = {
   .pill--outline:hover { background: rgba(123,45,45,.07); }
   .va-hero .pill--outline:hover { background: rgba(245,164,31,.12); }
 
-  /* ── Fiker hero avatar (executive VA at her laptop) ─────────── */
-  .va-hero-avatar {
-    margin: 0 auto;
-    width: 100%;
-    max-width: 350px;
-  }
-  .va-hero-avatar picture { display: block; width: 100%; }
-  .va-hero-avatar img {
-    display: block;
-    width: 100%;
-    height: auto;
-    filter: drop-shadow(0 22px 44px rgba(107,59,0,.24));
-    animation: boardFloat 5s ease-in-out infinite;
-    will-change: transform;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .va-hero-avatar img { animation: none; }
-  }
-
   /* ── Task Board Character ───────────────────────────────────── */
   .va-board {
     position: relative;
@@ -711,7 +665,7 @@ const faqSchema = {
     min-width: 126px;
     margin: 0 auto 4px;
   }
-  .assistant-anime {
+  .cartoon-assistant :where(img, picture) {
     display: block;
     width: 100%;
     height: auto;
