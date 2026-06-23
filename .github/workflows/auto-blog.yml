@@ -1,14 +1,10 @@
 name: Auto Blog Post
 
 on:
-  # PAUSED 2026-06-22: auto-posting is disabled until Gemini topic research is
-  # fixed. Without it, scheduled runs fall back to the SEO agent's junk Google
-  # Trends keywords and produce off-topic posts. Re-enable by uncommenting the
-  # schedule below once Gemini research is confirmed working. Manual dispatch
-  # still works for on-demand posts.
-  # schedule:
-  #   # Mon, Wed, Fri at 08:17 UTC / 10:17 South Africa.
-  #   - cron: '17 8 * * 1,3,5'
+  schedule:
+    # Mon, Wed, Fri at 08:17 UTC / 10:17 South Africa.
+    # Avoid :00 — top-of-hour scheduled runs are more likely to be dropped.
+    - cron: '17 8 * * 1,3,5'
   workflow_dispatch:           # Allow manual trigger from GitHub UI
     inputs:
       topic:

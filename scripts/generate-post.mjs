@@ -244,7 +244,7 @@ The article should give genuinely useful, actionable advice. It should feel like
 
 Make it easy and quick to read. Structure it with a strong opening hook (two short paragraphs, no heading), then 5 to 7 short H2 sections, and a brief closing section. Each section should be only a few short paragraphs or a list — never a long block. Use at least two bulleted or numbered lists across the article (for example: the signs, the steps, what to audit, what to automate, what a human still approves). Include exactly one short pull-quote blockquote for the single most important idea. Separate major sections with a --- rule. At least one section should teach the solution path clearly: what to audit, what to automate or systemise, what a human should still approve, and when to bring in support. Include a relevant internal link to the LuliDigital service page at the end (use markdown link format to either /ai-desk, /marketing-desk, or /va-desk depending on the topic). If a local landing page is provided, include exactly one natural internal link to that local page as well.`;
 
-const response = await fetch("https://api.anthropic.com/v1/messages", {
+const anthropicInit = {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -275,10 +275,22 @@ const response = await fetch("https://api.anthropic.com/v1/messages", {
     tool_choice: { type: "tool", name: "submit_blog_post" },
     messages: [{ role: "user", content: userPrompt }],
   }),
-});
+};
 
-if (!response.ok) {
+// Retry on transient Anthropic overload / rate-limit / 5xx so a temporary blip
+// doesn't kill a scheduled blog run.
+let response;
+for (let attempt = 1; attempt <= 4; attempt++) {
+  response = await fetch("https://api.anthropic.com/v1/messages", anthropicInit);
+  if (response.ok) break;
   const err = await response.text();
+  const retryable = response.status === 429 || response.status >= 500 || /overloaded/i.test(err);
+  if (retryable && attempt < 4) {
+    const waitMs = attempt * 8000;
+    console.log(`Anthropic ${response.status} (attempt ${attempt}/4) — retrying in ${waitMs / 1000}s`);
+    await new Promise((r) => setTimeout(r, waitMs));
+    continue;
+  }
   console.error("Anthropic API error:", err);
   process.exit(1);
 }

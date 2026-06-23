@@ -6,12 +6,9 @@ name: Blog Catch-up
 # DRAFT (never auto-publishes) so the post still lands in Telegram for approval.
 
 on:
-  # PAUSED 2026-06-22: the catch-up triggers a draft auto-blog run, which would
-  # also fall back to junk Trends topics while Gemini research is parked.
-  # Re-enable alongside auto-blog.yml's schedule once Gemini is fixed.
-  # schedule:
-  #   # Mon/Wed/Fri at 14:17 UTC — ~6h after the 08:17 main blog run.
-  #   - cron: '17 14 * * 1,3,5'
+  schedule:
+    # Mon/Wed/Fri at 14:17 UTC — ~6h after the 08:17 main blog run.
+    - cron: '17 14 * * 1,3,5'
   workflow_dispatch:
 
 jobs:
