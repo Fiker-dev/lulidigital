@@ -82,9 +82,11 @@ function formatDate(date: Date) {
       <a href="/blog">← The Desk Report</a>
     </nav>
 
-    <div class="post-host post-host--scroll" aria-hidden="true" data-intro-pose={introPose}>
-      <img id="host-avatar" src={`/assets/fiker-avatar-pack/${introPose}.webp`} alt="" decoding="async" />
-    </div>
+    {post.data.avatar !== false && (
+      <div class="post-host post-host--scroll" aria-hidden="true" data-intro-pose={introPose}>
+        <img id="host-avatar" src={`/assets/fiker-avatar-pack/${introPose}.webp`} alt="" decoding="async" />
+      </div>
+    )}
 
     <header class="post-header reveal-header">
       <div class="post-header__meta">
@@ -706,14 +708,30 @@ function formatDate(date: Date) {
       const introPose = hostWrap.dataset.introPose || "confidence";
       const pool = ["explaining", "lightbulb", "thinking", "notebook", "pointing-left", "confidence"];
 
+      // React to what the section is actually about (topic + sentiment), so the
+      // pose is a meaningful reaction, not just a rotation.
+      const reactionFor = (sec: Element): string | null => {
+        const heading = (sec.querySelector("h2")?.textContent ?? "").toLowerCase();
+        const body = (sec.textContent ?? "").slice(0, 260).toLowerCase();
+        const t = `${heading} ${body}`;
+        const has = (...w: string[]) => w.some((x) => t.includes(x));
+        if (has("problem", "challenge", "struggle", "pain", "broken", "stuck", "mistake", "risk", "fail", "wrong", "waste", "bottleneck", "friction", "messy")) return "thinking";
+        if (has("idea", "tip", "insight", "secret", "realize", "clever", "lesson", "trick")) return "lightbulb";
+        if (has("win", "success", "result", "growth", "scale", "boost", "payoff", "compound", "momentum", "thrive")) return "excited";
+        if (has("step", "process", "how to", "action", "start", "audit", "map", "next move", "do this", "checklist")) return "pointing-left";
+        if (has("automat", "workflow", "tool", "software", "system", "tech", " ai", "ai ", "agent")) return "laptop";
+        if (has("plan", "organize", "manage", "schedule", "prioritise", "prioritize")) return "notebook";
+        if (has("explain", "understand", "what is", "why ", "means", "clarify", "matters")) return "explaining";
+        return null;
+      };
+
       const targets: { el: Element; pose: string }[] = [];
       const header = document.querySelector(".post-header");
       if (header) targets.push({ el: header, pose: introPose });
       Array.from(document.querySelectorAll(".post-section")).forEach((sec, i) => {
         let pose: string;
         if (sec.querySelector("blockquote")) pose = "explaining";
-        else if (sec.querySelector("ol")) pose = "pointing-left";
-        else pose = pool[i % pool.length];
+        else pose = reactionFor(sec) ?? pool[i % pool.length];
         targets.push({ el: sec, pose });
       });
       const footer = document.querySelector(".post-footer");
