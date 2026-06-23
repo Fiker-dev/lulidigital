@@ -108,6 +108,8 @@ Hard rules:
 - The topic must NOT duplicate or closely overlap an already-published title.
 - Prefer a sharp operational angle a founder can act on, not a generic listicle.
 - The title must read like a human wrote it, not be keyword-stuffed.
+- Keep the title CONCISE: under 65 characters (about 8 to 11 words). Short, sharp titles win.
+- Do not put a city or country name in the title unless it genuinely belongs there.
 
 Reply with a JSON object ONLY, no markdown:
 {
