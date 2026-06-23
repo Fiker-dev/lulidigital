@@ -139,8 +139,9 @@ Propose one fresh topic now as JSON.`;
     const raw = await generateGeminiText({
       system,
       messages: [{ role: "user", content: user }],
-      maxTokens: 500,
+      maxTokens: 1024,
       temperature: 0.7,
+      thinkingBudget: 0, // disable thinking so the budget goes to the JSON answer
     });
     const topic = parseTopic(raw);
     if (topic) {
@@ -148,6 +149,7 @@ Propose one fresh topic now as JSON.`;
       console.log(`Gemini researched topic: "${topic.title}" (keyword: ${topic.keyword})${seoKeyword ? ` [blended with SEO: ${seoKeyword}]` : ""}`);
     } else {
       console.log("Gemini topic research returned no usable topic — falling back.");
+      console.log("Raw Gemini output:", JSON.stringify(raw ?? "").slice(0, 500));
     }
     return topic;
   } catch (err) {
