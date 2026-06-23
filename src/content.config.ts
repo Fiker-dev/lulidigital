@@ -10,6 +10,8 @@ const blog = defineCollection({
     category: z.string(),
     readingTime: z.string().optional(),
     draft: z.boolean().optional(),
+    // Set false to hide the Fiker host avatar on this post (default: shown).
+    avatar: z.boolean().optional(),
   }),
 });
 
