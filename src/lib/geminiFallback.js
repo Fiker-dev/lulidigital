@@ -13,6 +13,7 @@ export async function generateGeminiText({
   messages = [],
   maxTokens = 800,
   temperature = 0.4,
+  thinkingBudget,
 } = {}) {
   const apiKey = getGeminiApiKey();
   if (!apiKey) return "";
@@ -37,6 +38,10 @@ export async function generateGeminiText({
       generationConfig: {
         maxOutputTokens: maxTokens,
         temperature,
+        // gemini-2.5 models spend output tokens on internal "thinking" by
+        // default. Pass thinkingBudget: 0 to disable it for structured/JSON
+        // tasks so the token budget goes to the actual answer.
+        ...(thinkingBudget !== undefined ? { thinkingConfig: { thinkingBudget } } : {}),
       },
     }),
   });
