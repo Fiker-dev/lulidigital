@@ -1,8 +1,16 @@
 ---
+import { getCollection } from "astro:content";
 import { localContextByVariant } from "../data/marketLocalContext";
 
 const { market } = Astro.props;
 const localContext = localContextByVariant[market.variant];
+
+// Latest published posts — cross-links the geo page to fresh blog content so
+// new posts get internal links (helps them get crawled and indexed).
+const recentPosts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft && post.data.pubDate.valueOf() <= Date.now())
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
 const isAmsterdam = market.variant === "amsterdam";
 const isMunich = market.variant === "munich";
 const isStockholm = market.variant === "stockholm";
@@ -236,6 +244,25 @@ const currentMarketPath = `/${market.variant}`;
       <p>{market.proofCopy}</p>
     </div>
   </section>
+
+  {recentPosts.length > 0 && (
+    <section class="local-insights reveal-block" data-atmosphere="services" data-hive-section>
+      <div class="section-head">
+        <p class="local-eyebrow">From the Desk Report</p>
+        <h2>Insights for {market.city} founders and teams.</h2>
+      </div>
+      <div class="insights-grid">
+        {recentPosts.map((post) => (
+          <a class="insight-card" href={`/blog/${post.id.replace(/\.md$/, "")}`}>
+            <span>{post.data.category}</span>
+            <h3>{post.data.title}</h3>
+            <p>{post.data.description}</p>
+            <span class="insight-link">Read the article →</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
 
   <section id="local-contact" class="local-contact reveal-block" data-atmosphere="cta" data-hive-section>
     <div>
@@ -584,9 +611,62 @@ const currentMarketPath = `/${market.variant}`;
   .market-links,
   .local-proof,
   .local-contact,
-  .local-context{
+  .local-context,
+  .local-insights{
     padding: 86px 0;
     border-top: 1px solid var(--local-line);
+  }
+
+  /* ── Related blog insights (geo → blog internal links) ──────── */
+  .insights-grid{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .insight-card{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 220px;
+    padding: 24px 22px;
+    border: 1px solid var(--local-line);
+    background: rgba(255,255,255,.32);
+    color: var(--local-ink);
+    text-decoration: none;
+    transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+  }
+  .insight-card:hover{
+    transform: translateY(-4px);
+    border-color: var(--local-accent);
+    background: rgba(255,255,255,.52);
+  }
+  .insight-card > span:first-child{
+    color: var(--local-accent);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+  .insight-card h3{
+    margin: 0;
+    font-size: clamp(18px, 1.8vw, 22px);
+    line-height: 1.15;
+    letter-spacing: -.01em;
+  }
+  .insight-card p{
+    margin: 0;
+    flex: 1;
+    color: var(--local-muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .insight-link{
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--local-ink);
+  }
+  @media (max-width: 900px){
+    .insights-grid{ grid-template-columns: 1fr; }
   }
 
   /* ── Unique per-market local context ────────────────────────── */
