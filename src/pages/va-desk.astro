@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import FaqSection from "../components/FaqSection.astro";
+import FikerAvatar from "../components/FikerAvatar";
 import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
 
 export const prerender = false;
@@ -99,41 +100,10 @@ const faqSchema = {
         </div>
       </div>
 
-      <!-- Animated task board character -->
-      <div class="va-board" aria-hidden="true">
-        <div class="vb-header">
-          <span class="vb-dot vb-dot--r"></span>
-          <span class="vb-dot vb-dot--y"></span>
-          <span class="vb-dot vb-dot--g"></span>
-          <span class="vb-title-bar">Today's Desk</span>
-        </div>
-        <div class="vb-tasks">
-          <div class="vb-task vb-task--done" style="--ti:0">
-            <span class="vb-check">✓</span>
-            <span>Inbox cleared — 47 emails</span>
-          </div>
-          <div class="vb-task vb-task--done" style="--ti:1">
-            <span class="vb-check">✓</span>
-            <span>3 exec calls scheduled</span>
-          </div>
-          <div class="vb-task vb-task--done" style="--ti:2">
-            <span class="vb-check">✓</span>
-            <span>Q3 brief sent to team</span>
-          </div>
-          <div class="vb-task vb-task--active" style="--ti:3">
-            <span class="vb-spinner"></span>
-            <span>Weekly report — in progress</span>
-          </div>
-          <div class="vb-task vb-task--pending" style="--ti:4">
-            <span class="vb-ring"></span>
-            <span>Review invoice batch</span>
-          </div>
-        </div>
-        <div class="vb-footer">
-          <span class="vb-status-dot"></span>
-          <span class="vb-status-text">VA active now</span>
-        </div>
-      </div>
+      <!-- Fiker host avatar — executive VA at her laptop -->
+      <figure class="va-hero-avatar" data-reveal="fade" data-reveal-delay="200">
+        <FikerAvatar pose="laptop" size="100%" alt="Fiker, your executive virtual assistant, working on a laptop" />
+      </figure>
     </div>
   </section>
 
@@ -532,6 +502,25 @@ const faqSchema = {
   .va-hero .pill--outline { border-color: var(--va-blue); color: var(--va-blue); }
   .pill--outline:hover { background: rgba(123,45,45,.07); }
   .va-hero .pill--outline:hover { background: rgba(245,164,31,.12); }
+
+  /* ── Fiker hero avatar (executive VA at her laptop) ─────────── */
+  .va-hero-avatar {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 350px;
+  }
+  .va-hero-avatar picture { display: block; width: 100%; }
+  .va-hero-avatar img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 22px 44px rgba(107,59,0,.24));
+    animation: boardFloat 5s ease-in-out infinite;
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .va-hero-avatar img { animation: none; }
+  }
 
   /* ── Task Board Character ───────────────────────────────────── */
   .va-board {
