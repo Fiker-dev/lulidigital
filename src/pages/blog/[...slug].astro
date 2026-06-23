@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
-import FikerAvatar, { type FikerAvatarPose } from "../../components/FikerAvatar";
+import { type FikerAvatarPose } from "../../components/FikerAvatar";
 
 export const prerender = true;
 
@@ -82,9 +82,9 @@ function formatDate(date: Date) {
       <a href="/blog">← The Desk Report</a>
     </nav>
 
-    <figure class="post-host post-host--intro" aria-hidden="true">
-      <FikerAvatar pose={introPose} size="100%" alt="" />
-    </figure>
+    <div class="post-host post-host--scroll" aria-hidden="true" data-intro-pose={introPose}>
+      <img id="host-avatar" src={`/assets/fiker-avatar-pack/${introPose}.webp`} alt="" decoding="async" />
+    </div>
 
     <header class="post-header reveal-header">
       <div class="post-header__meta">
@@ -107,9 +107,6 @@ function formatDate(date: Date) {
     <hr class="rule rule--bottom" />
 
     <footer class="post-footer">
-      <figure class="post-host post-host--cta" aria-hidden="true">
-        <FikerAvatar pose="thumbsup" size="100%" alt="" />
-      </figure>
       <div class="post-footer__cta reveal-cta">
         <p class="footer-kicker">Ready to move?</p>
         <p class="footer-headline">Let's build something that doesn't need explaining.</p>
@@ -476,39 +473,32 @@ function formatDate(date: Date) {
     /* Fiker host avatar — sits in the right gutter beside the content.
        Only shows when there's room beside the 720px column. */
     .post-host { display: none; margin: 0; }
-    .post-host picture { display: block; width: 100%; }
-    .post-host img {
-      width: 100%;
-      height: auto;
-      display: block;
-      filter: drop-shadow(0 14px 30px rgba(20,19,18,.22));
-    }
     @media (min-width: 1200px) {
-      .post-host--intro {
+      /* Follows scroll in the right gutter; JS swaps the pose per block. */
+      .post-host--scroll {
         display: block;
-        position: absolute;
-        top: 0;
-        right: -262px;
-        width: 220px;
+        position: fixed;
+        top: 50%;
+        left: calc(50% + 372px);
+        width: 208px;
+        transform: translateY(-50%);
         pointer-events: none;
+        z-index: 40;
         opacity: 0;
-        transform: translateY(28px) scale(.96);
-        animation: hostIn 900ms cubic-bezier(.16,1,.3,1) 480ms forwards;
+        animation: hostIn 800ms cubic-bezier(.16,1,.3,1) 400ms forwards;
       }
-      .post-host--cta {
+      .post-host--scroll img {
+        width: 100%;
+        height: auto;
         display: block;
-        position: absolute;
-        right: -250px;
-        bottom: 0;
-        width: 210px;
-        pointer-events: none;
+        filter: drop-shadow(0 16px 32px rgba(20,19,18,.24));
+        transition: opacity 280ms ease;
       }
     }
-    @keyframes hostIn {
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
+    @keyframes hostIn { to { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) {
-      .post-host--intro { animation: none; opacity: 1; transform: none; }
+      .post-host--scroll { animation: none; opacity: 1; }
+      .post-host--scroll img { transition: none; }
     }
 
     .post-back a {
@@ -707,6 +697,51 @@ function formatDate(date: Date) {
         );
         blocks.forEach((b) => io.observe(b));
       }
+    }
+
+    // Scroll-following host: swap the avatar's pose to match the block in view.
+    const hostWrap = document.querySelector<HTMLElement>(".post-host--scroll");
+    const hostImg = document.getElementById("host-avatar") as HTMLImageElement | null;
+    if (hostWrap && hostImg) {
+      const introPose = hostWrap.dataset.introPose || "confidence";
+      const pool = ["explaining", "lightbulb", "thinking", "notebook", "pointing-left", "confidence"];
+
+      const targets: { el: Element; pose: string }[] = [];
+      const header = document.querySelector(".post-header");
+      if (header) targets.push({ el: header, pose: introPose });
+      Array.from(document.querySelectorAll(".post-section")).forEach((sec, i) => {
+        let pose: string;
+        if (sec.querySelector("blockquote")) pose = "explaining";
+        else if (sec.querySelector("ol")) pose = "pointing-left";
+        else pose = pool[i % pool.length];
+        targets.push({ el: sec, pose });
+      });
+      const footer = document.querySelector(".post-footer");
+      if (footer) targets.push({ el: footer, pose: "thumbsup" });
+
+      const poseOf = new Map(targets.map((t) => [t.el, t.pose]));
+      let currentPose = introPose;
+      const swap = (pose?: string) => {
+        if (!pose || pose === currentPose) return;
+        currentPose = pose;
+        hostImg.style.opacity = "0";
+        const next = new Image();
+        next.onload = () => { hostImg.src = next.src; hostImg.style.opacity = "1"; };
+        next.src = `/assets/fiker-avatar-pack/${pose}.webp`;
+      };
+
+      const ratios = new Map<Element, number>();
+      const hostIo = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => ratios.set(e.target, e.isIntersecting ? e.intersectionRatio : 0));
+          let best: Element | null = null;
+          let bestRatio = 0;
+          ratios.forEach((r, el) => { if (r > bestRatio) { bestRatio = r; best = el; } });
+          if (best) swap(poseOf.get(best));
+        },
+        { threshold: [0.1, 0.35, 0.6, 0.85], rootMargin: "-22% 0px -22% 0px" }
+      );
+      targets.forEach((t) => hostIo.observe(t.el));
     }
 
     // Footer CTA reveal
