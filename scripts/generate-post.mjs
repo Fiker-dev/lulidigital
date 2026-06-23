@@ -139,7 +139,7 @@ function titleLooksStuffed(title, keyword) {
     normalizedTitle.includes(`how to use ${normalizedKeyword}`) ||
     normalizedTitle.includes("build a cleaner business system") ||
     repeatedKeywordWords.length >= 2 ||
-    title.length > 88
+    title.length > 100
   );
 }
 
