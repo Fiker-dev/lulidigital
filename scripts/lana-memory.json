@@ -1,7 +1,8 @@
 {
   "pending_post": null,
   "pending_drafts": [
-    "when-to-hire-virtual-assistant"
+    "when-to-hire-virtual-assistant",
+    "automate-uk-social-media-founders-guide-ai-driven-growth"
   ],
   "seo_opportunity_queue": [],
   "blog_plan_queue": [],
@@ -10,5 +11,13 @@
     "title": "10 Tasks Every Founder Should Delegate to a Virtual Assistant",
     "published_at": "2026-06-16"
   },
-  "review_state": null
+  "review_state": {
+    "slug": "automate-uk-social-media-founders-guide-ai-driven-growth",
+    "title": "Automate UK Social Media: The Founder's Guide to AI-Driven Growth",
+    "description": "UK founders: stop wasting hours on social media. Learn how to audit, automate, and scale with AI, and when a digital marketing agency UK actually helps.",
+    "preview_text": "Most founders do not have a content problem. They have a consistency problem. The ideas are there. The audience is there. What is missing is a reliable system that shows up every week without the founder personally driving every post, caption, and reply.",
+    "scheduled_for": "2026-06-26",
+    "revision_count": 0,
+    "status": "awaiting_approval"
+  }
 }
