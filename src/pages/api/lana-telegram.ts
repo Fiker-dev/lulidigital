@@ -551,8 +551,14 @@ export const POST: APIRoute = async ({ request }) => {
     const memory = await fetchMemory();
     const reviewState = memory?.review_state ?? null;
 
-    if (callbackData.startsWith("blog_approve:")) {
-      const slug = normalizeSlug(callbackData.replace(/^blog_approve:/, ""));
+    if (callbackData === "blog_approve" || callbackData.startsWith("blog_approve:")) {
+      const callbackSlug = normalizeSlug(callbackData.replace(/^blog_approve:?/, ""));
+      const slug = callbackSlug || reviewState?.slug || "";
+      if (!slug) {
+        await answerCallbackQuery(update.callback_query?.id, "No draft is waiting for approval.");
+        await sendTelegram(chatId, "I do not have an active draft waiting for approval.");
+        return new Response("OK");
+      }
       const publishDate = reviewState?.slug === slug ? reviewState.scheduled_for : "";
       await dispatchWorkflow("publish-draft-blog.yml", { slug, publish_date: publishDate });
       await answerCallbackQuery(update.callback_query?.id, "Approved. Publishing now.");

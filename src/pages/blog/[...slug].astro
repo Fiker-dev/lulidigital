@@ -472,9 +472,28 @@ function formatDate(date: Date) {
       position: relative;
     }
 
-    /* Fiker host avatar — sits in the right gutter beside the content.
-       Only shows when there's room beside the 720px column. */
-    .post-host { display: none; margin: 0; }
+    /* Fiker host avatar — present on every article by default, then follows
+       the reader in the right gutter once there is enough room. */
+    .post-host {
+      display: block;
+      width: min(152px, 42vw);
+      margin: 18px 0 -4px auto;
+      pointer-events: none;
+    }
+    .post-host img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 14px 28px rgba(20,19,18,.18));
+      transition: opacity 280ms ease;
+    }
+    @media (min-width: 720px) and (max-width: 1199px) {
+      .post-host {
+        width: 176px;
+        margin-top: 8px;
+        margin-bottom: -18px;
+      }
+    }
     @media (min-width: 1200px) {
       /* Follows scroll in the right gutter; JS swaps the pose per block. */
       .post-host--scroll {

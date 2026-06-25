@@ -177,7 +177,7 @@ jobs:
           SCHEDULED_FOR=$(cat /tmp/review_scheduled_for.txt)
           SLUG=$(cat /tmp/post_slug.txt)
           TEXT=$(printf "Draft ready for approval\n\n%s\n\n%s\n\n%s\n\nPlanned slot: %s\nSlug: %s\n\nUse the button below to approve, reply YES, or tell me what to change." "$TITLE" "$DESCRIPTION" "$PREVIEW" "$SCHEDULED_FOR" "$SLUG")
-          REPLY_MARKUP=$(printf '{"inline_keyboard":[[{"text":"Approve and publish","callback_data":"blog_approve:%s"}]]}' "$SLUG")
+          REPLY_MARKUP='{"inline_keyboard":[[{"text":"Approve and publish","callback_data":"blog_approve"}]]}'
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "text=${TEXT}" \
