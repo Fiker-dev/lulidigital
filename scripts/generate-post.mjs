@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { getBestRegionalSeoRecommendation, inferSeoCategory } from "../src/lib/seoAgent.js";
+import { generateGeminiText } from "../src/lib/geminiFallback.js";
 import { researchBlogTopic } from "./research-topic.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -277,11 +278,33 @@ const anthropicInit = {
   }),
 };
 
+const parseJsonObject = (raw) => {
+  const cleaned = String(raw || "")
+    .replace(/^```json\n?/, "")
+    .replace(/\n?```$/, "")
+    .trim();
+  const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+  return JSON.parse(jsonMatch?.[0] || cleaned);
+};
+
 // Retry on transient Anthropic overload / rate-limit / 5xx so a temporary blip
 // doesn't kill a scheduled blog run.
 let response;
+let finalAnthropicError = "";
 for (let attempt = 1; attempt <= 4; attempt++) {
-  response = await fetch("https://api.anthropic.com/v1/messages", anthropicInit);
+  try {
+    response = await fetch("https://api.anthropic.com/v1/messages", anthropicInit);
+  } catch (error) {
+    finalAnthropicError = `Anthropic request failed: ${error instanceof Error ? error.message : String(error)}`;
+    if (attempt < 4) {
+      const waitMs = attempt * 8000;
+      console.log(`Anthropic request failed (attempt ${attempt}/4) — retrying in ${waitMs / 1000}s`);
+      await new Promise((r) => setTimeout(r, waitMs));
+      continue;
+    }
+    response = null;
+    break;
+  }
   if (response.ok) break;
   const err = await response.text();
   const retryable = response.status === 429 || response.status >= 500 || /overloaded/i.test(err);
@@ -291,22 +314,57 @@ for (let attempt = 1; attempt <= 4; attempt++) {
     await new Promise((r) => setTimeout(r, waitMs));
     continue;
   }
-  console.error("Anthropic API error:", err);
-  process.exit(1);
+  finalAnthropicError = `Anthropic API error (${response.status}): ${err}`;
+  response = null;
+  break;
 }
 
-const data = await response.json();
-// Structured tool output returns a validated JSON object — no fragile text parsing.
-const toolUse = Array.isArray(data.content) ? data.content.find((block) => block.type === "tool_use") : null;
+let post;
+if (response?.ok) {
+  const data = await response.json();
+  // Structured tool output returns a validated JSON object — no fragile text parsing.
+  const toolUse = Array.isArray(data.content) ? data.content.find((block) => block.type === "tool_use") : null;
 
-let post = toolUse?.input;
-if (!post) {
-  // Fallback for any text-only response.
-  const raw = (data.content?.find((b) => b.type === "text")?.text || "").trim();
+  post = toolUse?.input;
+  if (!post) {
+    // Fallback for any text-only response.
+    const raw = (data.content?.find((b) => b.type === "text")?.text || "").trim();
+    try {
+      post = parseJsonObject(raw);
+    } catch (e) {
+      console.error("Failed to get blog post from model response:", JSON.stringify(data).slice(0, 600));
+      process.exit(1);
+    }
+  }
+} else {
+  console.error(finalAnthropicError || "Anthropic request failed before a response was available.");
+  console.log("Trying Gemini fallback for blog generation.");
+  const raw = await generateGeminiText({
+    system: `${systemPrompt}
+
+Return only a valid JSON object with these exact fields: title, description, slug, readingTime, content. Do not wrap it in markdown. Do not include frontmatter.`,
+    messages: [{
+      role: "user",
+      content: `${userPrompt}
+
+Return the complete blog post as JSON only:
+{
+  "title": "exact article title",
+  "description": "meta description under 155 chars",
+  "slug": "url-slug-with-hyphens",
+  "readingTime": "6 min read",
+  "content": "full markdown article body, no frontmatter"
+}`,
+    }],
+    maxTokens: 4000,
+    temperature: 0.35,
+    thinkingBudget: 0,
+  });
+
   try {
-    post = JSON.parse(raw.match(/\{[\s\S]*\}/)[0]);
-  } catch (e) {
-    console.error("Failed to get blog post from model response:", JSON.stringify(data).slice(0, 600));
+    post = parseJsonObject(raw);
+  } catch {
+    console.error("Gemini fallback failed to return valid blog JSON:", raw.slice(0, 600));
     process.exit(1);
   }
 }
