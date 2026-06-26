@@ -26,6 +26,20 @@ jobs:
       - name: Check if a post was created today
         id: check
         run: |
+          export TODAY=$(date -u +%F)
+          if node -e "
+            const fs = require('fs');
+            const p = 'scripts/lana-memory.json';
+            if (!fs.existsSync(p)) process.exit(1);
+            const memory = JSON.parse(fs.readFileSync(p, 'utf8'));
+            const review = memory.review_state;
+            process.exit(review?.status === 'awaiting_approval' && review?.scheduled_for === process.env.TODAY ? 0 : 1);
+          "; then
+            echo "missed=false" >> "$GITHUB_OUTPUT"
+            echo "A draft is already awaiting approval for today — nothing to catch up."
+            exit 0
+          fi
+
           if git log --since="00:00" --diff-filter=A --name-only --pretty=format: | grep -q '^src/content/blog/.*\.md$'; then
             echo "missed=false" >> "$GITHUB_OUTPUT"
             echo "A blog post was already created today — nothing to catch up."
