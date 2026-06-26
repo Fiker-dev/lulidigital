@@ -5,7 +5,8 @@ name: Monthly SEO Audit
 
 on:
   schedule:
-    - cron: '0 8 1 * *'
+    # Avoid :00 — top-of-hour scheduled runs are more likely to be dropped.
+    - cron: '23 8 1 * *'
   workflow_dispatch:
 
 jobs:
@@ -25,7 +26,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Run SEO audit
         run: node scripts/run-seo-audit.mjs
