@@ -32,6 +32,11 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
       - name: Save planned blog queue
         run: |
           node - <<'EOF'

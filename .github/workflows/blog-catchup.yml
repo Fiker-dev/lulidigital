@@ -14,6 +14,9 @@ on:
 jobs:
   catchup:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
     steps:
       - name: Checkout repo (full history)
         uses: actions/checkout@v4
@@ -34,7 +37,7 @@ jobs:
       - name: Trigger a draft if the scheduled run was missed
         if: steps.check.outputs.missed == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_WORKFLOW_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: gh workflow run "Auto Blog Post" -f publish_status=draft -R "${{ github.repository }}"
 
       - name: Notify Telegram if caught up
