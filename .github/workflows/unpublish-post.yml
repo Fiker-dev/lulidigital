@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      UNPUBLISH_SLUG: ${{ github.event.inputs.slug }}
     permissions:
       contents: write
 
@@ -28,7 +29,7 @@ jobs:
           node-version: '24'
 
       - name: Unpublish post
-        run: node scripts/unpublish-post.mjs "${{ github.event.inputs.slug }}"
+        run: node scripts/unpublish-post.mjs "$UNPUBLISH_SLUG"
 
       - name: Commit and push
         run: |
@@ -36,12 +37,12 @@ jobs:
           git config user.email "bot@lulidigital.com"
           git add src/content/blog/
           git diff --staged --quiet && echo "No changes" && exit 0
-          git commit -m "Unpublish blog post ${{ github.event.inputs.slug }}"
+          git commit -m "Unpublish blog post ${UNPUBLISH_SLUG}"
           git push
 
       - name: Send Telegram confirmation
         run: |
-          SLUG="${{ github.event.inputs.slug }}"
+          SLUG="$UNPUBLISH_SLUG"
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
             --data-urlencode "text=Taken down: ${SLUG}. It's hidden from the site. Let me know if you want a replacement."

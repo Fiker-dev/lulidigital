@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
-import { join } from "path";
+import { blogFilePath, normalizeBlogSlug } from "./blog-paths.mjs";
 
 const [slug] = process.argv.slice(2);
 
@@ -8,8 +8,15 @@ if (!slug) {
   process.exit(1);
 }
 
-const safeSlug = slug.replace(/^\/?blog\//, "").replace(/\.md$/, "").trim();
-const filePath = join(process.cwd(), "src", "content", "blog", `${safeSlug}.md`);
+let safeSlug;
+try {
+  safeSlug = normalizeBlogSlug(slug);
+} catch (error) {
+  console.error(error.message);
+  process.exit(1);
+}
+
+const filePath = blogFilePath(process.cwd(), safeSlug);
 
 if (!existsSync(filePath)) {
   console.error(`Post not found: ${filePath}`);

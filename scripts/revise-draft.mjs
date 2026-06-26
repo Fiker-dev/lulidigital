@@ -9,19 +9,28 @@
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { blogFilePath, normalizeBlogSlug } from "./blog-paths.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
 
-const slug                 = process.env.REVISION_SLUG;
+const rawSlug              = process.env.REVISION_SLUG;
 const revisionInstructions = process.env.REVISION_INSTRUCTIONS;
 
-if (!slug || !revisionInstructions) {
+if (!rawSlug || !revisionInstructions) {
   console.error("REVISION_SLUG and REVISION_INSTRUCTIONS are required");
   process.exit(1);
 }
 
-const filePath = join(ROOT, "src", "content", "blog", `${slug}.md`);
+let slug;
+try {
+  slug = normalizeBlogSlug(rawSlug);
+} catch (error) {
+  console.error(error.message);
+  process.exit(1);
+}
+
+const filePath = blogFilePath(ROOT, slug);
 if (!existsSync(filePath)) {
   console.error(`Draft not found: ${filePath}`);
   process.exit(1);

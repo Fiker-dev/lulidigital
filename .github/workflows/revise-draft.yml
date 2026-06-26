@@ -24,6 +24,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      REVISION_SLUG: ${{ github.event.inputs.slug }}
+      REVIEW_SCHEDULED_FOR: ${{ github.event.inputs.scheduled_for }}
     permissions:
       contents: write
 
@@ -42,7 +44,6 @@ jobs:
         run: node scripts/revise-draft.mjs
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          REVISION_SLUG: ${{ github.event.inputs.slug }}
           REVISION_INSTRUCTIONS: ${{ github.event.inputs.revision_instructions }}
 
       - name: Commit revised draft
@@ -51,7 +52,7 @@ jobs:
           git config user.email "bot@lulidigital.com"
           git add src/content/blog/ scripts/lana-memory.json
           git diff --staged --quiet && echo "No changes" && exit 0
-          git commit -m "Revise draft: ${{ github.event.inputs.slug }}"
+          git commit -m "Revise draft: ${REVISION_SLUG}"
           git push
 
       - name: Send revised preview for approval
@@ -63,8 +64,8 @@ jobs:
             echo "ERROR: Telegram secrets not set."
             exit 1
           fi
-          SLUG="${{ github.event.inputs.slug }}"
-          SCHEDULED_FOR="${{ github.event.inputs.scheduled_for }}"
+          SLUG="$REVISION_SLUG"
+          SCHEDULED_FOR="$REVIEW_SCHEDULED_FOR"
           PREVIEW=$(cat /tmp/review_preview.txt)
           REVISION_COUNT=$(node -e "const fs=require('fs'); const m=JSON.parse(fs.readFileSync('scripts/lana-memory.json','utf8')); process.stdout.write(String(m.review_state?.revision_count||1));")
           TEXT=$(printf "Revised (edit %s):\n\n%s\n\nStill scheduled for %s — like this version? Reply YES to confirm, or tell me what else to change." "$REVISION_COUNT" "$PREVIEW" "$SCHEDULED_FOR")

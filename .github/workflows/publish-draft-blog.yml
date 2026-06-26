@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      PUBLISH_SLUG: ${{ github.event.inputs.slug }}
+      PUBLISH_DATE: ${{ github.event.inputs.publish_date }}
     permissions:
       contents: write
 
@@ -32,10 +34,10 @@ jobs:
           node-version: '24'
 
       - name: Publish draft
-        run: node scripts/publish-draft-post.mjs "${{ github.event.inputs.slug }}" "${{ github.event.inputs.publish_date }}"
+        run: node scripts/publish-draft-post.mjs "$PUBLISH_SLUG" "$PUBLISH_DATE"
 
       - name: Clear review state from memory
-        run: node scripts/clear-review-state.mjs "${{ github.event.inputs.slug }}"
+        run: node scripts/clear-review-state.mjs "$PUBLISH_SLUG"
 
       - name: Commit and push published draft
         run: |
@@ -47,7 +49,7 @@ jobs:
             echo "No draft changes"
             exit 0
           fi
-          git commit -m "Publish draft blog post ${{ github.event.inputs.slug }}"
+          git commit -m "Publish draft blog post ${PUBLISH_SLUG}"
           git push
           echo "true" > /tmp/published_changed.txt
 
@@ -57,7 +59,7 @@ jobs:
             echo "Draft was already published. Skipping indexing request."
             exit 0
           fi
-          node scripts/request-indexing.mjs "https://lulidigital.com/blog/${{ github.event.inputs.slug }}"
+          node scripts/request-indexing.mjs "https://lulidigital.com/blog/${PUBLISH_SLUG}"
         env:
           GOOGLE_INDEXING_SA_KEY: ${{ secrets.GOOGLE_INDEXING_SA_KEY }}
 
@@ -67,7 +69,7 @@ jobs:
             echo "Draft was already published. Skipping Google Business Profile repost."
             exit 0
           fi
-          SLUG="${{ github.event.inputs.slug }}"
+          SLUG="$PUBLISH_SLUG"
           node -e "const fs=require('fs');const raw=fs.readFileSync('src/content/blog/'+process.argv[1]+'.md','utf8');const get=(k)=>raw.match(new RegExp('^'+k+':\\\\s*\"?([^\"\\\\n]+)\"?','m'))?.[1]||'';fs.writeFileSync('/tmp/published_title.txt',get('title'));fs.writeFileSync('/tmp/published_description.txt',get('description'));" "$SLUG"
           TITLE=$(cat /tmp/published_title.txt)
           DESCRIPTION=$(cat /tmp/published_description.txt)
@@ -88,8 +90,8 @@ jobs:
             echo "ERROR: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set in GitHub secrets."
             exit 1
           fi
-          SLUG="${{ github.event.inputs.slug }}"
-          DATE="${{ github.event.inputs.publish_date }}"
+          SLUG="$PUBLISH_SLUG"
+          DATE="$PUBLISH_DATE"
           URL="https://lulidigital.com/blog/${SLUG}"
           # Pull title + description for a ready-to-paste Google Business Profile update.
           node -e "const fs=require('fs');const raw=fs.readFileSync('src/content/blog/'+process.argv[1]+'.md','utf8');const get=(k)=>raw.match(new RegExp('^'+k+':\\\\s*\"?([^\"\\\\n]+)\"?','m'))?.[1]||'';fs.writeFileSync('/tmp/gt.txt',get('title'));fs.writeFileSync('/tmp/gd.txt',get('description'));" "$SLUG" || true

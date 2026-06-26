@@ -128,14 +128,17 @@ jobs:
           git push
 
       - name: Confirm via Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          TOPIC="${{ github.event.inputs.topic }}"
-          ANGLE="${{ github.event.inputs.angle }}"
-          SOURCE="${{ github.event.inputs.source_notes }}"
-          DRAFT="${{ github.event.inputs.draft }}"
+          TOPIC="$LANA_TOPIC"
+          ANGLE="$LANA_ANGLE"
+          SOURCE="$LANA_SOURCE_NOTES"
+          DRAFT="$LANA_DRAFT"
           if [ -z "$TOPIC" ]; then TOPIC="(SEO auto-select)"; fi
           if [ "$DRAFT" = "false" ]; then STATUS="and publish immediately"; else STATUS="as a draft for your approval"; fi
           TEXT=$(printf "Got it. Queued for the next scheduled post.\n\nTopic: %s\nAngle: %s\nSource notes: %s\nWill generate: %s\n\nI'll run this on the next scheduled post (Mon, Wed, or Fri at 08:17 UTC / 10:17 South Africa). You can override it anytime by sending new instructions." "$TOPIC" "${ANGLE:-not specified}" "${SOURCE:-not specified}" "$STATUS")
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "text=${TEXT}"

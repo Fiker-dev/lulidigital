@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import { getBestRegionalSeoRecommendation, inferSeoCategory } from "../src/lib/seoAgent.js";
 import { generateGeminiText } from "../src/lib/geminiFallback.js";
 import { researchBlogTopic } from "./research-topic.mjs";
+import { normalizeBlogSlug } from "./blog-paths.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -381,6 +382,11 @@ if (fabricatedPattern) {
 }
 
 if (!post.slug || slugLooksStuffed(post.slug)) {
+  post.slug = slugify(post.title);
+}
+try {
+  post.slug = normalizeBlogSlug(post.slug);
+} catch {
   post.slug = slugify(post.title);
 }
 
