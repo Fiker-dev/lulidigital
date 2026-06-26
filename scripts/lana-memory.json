@@ -2,7 +2,8 @@
   "pending_post": null,
   "pending_drafts": [
     "when-to-hire-virtual-assistant",
-    "automate-uk-social-media-founders-guide-ai-driven-growth"
+    "automate-uk-social-media-founders-guide-ai-driven-growth",
+    "ai-niche-social-fan-engagement"
   ],
   "seo_opportunity_queue": [],
   "blog_plan_queue": [],
@@ -12,11 +13,11 @@
     "published_at": "2026-06-16"
   },
   "review_state": {
-    "slug": "automate-uk-social-media-founders-guide-ai-driven-growth",
-    "title": "Automate UK Social Media: The Founder's Guide to AI-Driven Growth",
-    "description": "UK founders: stop wasting hours on social media. Learn how to audit, automate, and scale with AI, and when a digital marketing agency UK actually helps.",
-    "preview_text": "Most founders do not have a content problem. They have a consistency problem. The ideas are there. The audience is there. What is missing is a reliable system that shows up every week without the founder personally driving every post, caption, and reply.",
-    "scheduled_for": "2026-06-26",
+    "slug": "ai-niche-social-fan-engagement",
+    "title": "How AI Can Power Fan Engagement for Niche Sports Communities",
+    "description": "Struggling to manage a passionate niche sports community without burning out? Here's how AI automation turns fan engagement into a scalable system.",
+    "preview_text": "Niche online communities are some of the most engaged audiences on the internet. They are also some of the hardest to serve consistently. A passionate community around, say, a Nigerian goalkeeper, does not want generic content. They want specific stats, timely reactions, and the feeling that whoever runs the page actually cares.",
+    "scheduled_for": "2026-06-29",
     "revision_count": 0,
     "status": "awaiting_approval"
   }
