@@ -8,6 +8,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "test": "npm run test:workflows",
+    "test:workflows": "node scripts/workflow-smoke-test.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
