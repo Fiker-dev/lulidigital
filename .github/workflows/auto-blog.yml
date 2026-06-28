@@ -178,7 +178,7 @@ jobs:
           SCHEDULED_FOR=$(cat /tmp/review_scheduled_for.txt)
           SLUG=$(cat /tmp/post_slug.txt)
           PREVIEW_URL="https://lulidigital.com/draft/${SLUG}?key=${BLOG_PREVIEW_TOKEN}"
-          TEXT=$(printf "Draft ready for approval\n\n%s\n\n%s\n\n%s\n\n📄 Read the full draft:\n%s\n\nPlanned slot: %s\nSlug: %s\n\nUse the button below to approve, reply YES, or tell me what to change." "$TITLE" "$DESCRIPTION" "$PREVIEW" "$PREVIEW_URL" "$SCHEDULED_FOR" "$SLUG")
+          TEXT=$(printf "Draft ready for approval\n\n%s\n\n%s\n\n%s\n\n📄 Read the full draft:\n%s\n\nSuggested date: %s\nSlug: %s\n\nTap Approve (or reply YES) to publish it live now and index it. Or tell me what to change, or say \"schedule it for YYYY-MM-DD\"." "$TITLE" "$DESCRIPTION" "$PREVIEW" "$PREVIEW_URL" "$SCHEDULED_FOR" "$SLUG")
           REPLY_MARKUP='{"inline_keyboard":[[{"text":"Approve and publish","callback_data":"blog_approve"}]]}'
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
