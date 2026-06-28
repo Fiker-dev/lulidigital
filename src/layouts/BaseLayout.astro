@@ -21,6 +21,7 @@ const {
   ogImage,
   hreflangLinks = [],
   showBee = true,
+  robots = "index,follow",
 } = Astro.props;
 
 const siteUrl = "https://lulidigital.com";
@@ -213,7 +214,7 @@ const jsonLd = {
     {seoTarget?.keywords?.length > 0 && (
       <meta name="keywords" content={seoTarget.keywords.join(", ")} />
     )}
-    <meta name="robots" content="index,follow" />
+    <meta name="robots" content={robots} />
     <link rel="canonical" href={canonicalUrl} />
     {hreflangLinks.map((link: { hreflang: string; href: string }) => (
       <link rel="alternate" hreflang={link.hreflang} href={link.href} />

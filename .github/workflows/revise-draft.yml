@@ -59,6 +59,7 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          BLOG_PREVIEW_TOKEN: ${{ secrets.BLOG_PREVIEW_TOKEN }}
         run: |
           if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
             echo "ERROR: Telegram secrets not set."
@@ -67,8 +68,9 @@ jobs:
           SLUG="$REVISION_SLUG"
           SCHEDULED_FOR="$REVIEW_SCHEDULED_FOR"
           PREVIEW=$(cat /tmp/review_preview.txt)
+          PREVIEW_URL="https://lulidigital.com/draft/${SLUG}?key=${BLOG_PREVIEW_TOKEN}"
           REVISION_COUNT=$(node -e "const fs=require('fs'); const m=JSON.parse(fs.readFileSync('scripts/lana-memory.json','utf8')); process.stdout.write(String(m.review_state?.revision_count||1));")
-          TEXT=$(printf "Revised (edit %s):\n\n%s\n\nStill scheduled for %s — like this version? Reply YES to confirm, or tell me what else to change." "$REVISION_COUNT" "$PREVIEW" "$SCHEDULED_FOR")
+          TEXT=$(printf "Revised (edit %s):\n\n%s\n\n📄 Read the full updated draft:\n%s\n\nStill scheduled for %s — like this version? Reply YES to confirm, or tell me what else to change." "$REVISION_COUNT" "$PREVIEW" "$PREVIEW_URL" "$SCHEDULED_FOR")
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "text=${TEXT}")
