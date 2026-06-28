@@ -74,12 +74,6 @@ function formatDate(date: Date) {
     <a href="/blog">← The Desk Report</a>
   </nav>
 
-  {showAvatar && (
-    <div class="post-host post-host--scroll" aria-hidden="true" data-intro-pose={introPose}>
-      <img id="host-avatar" src={`/assets/fiker-avatar-pack/${introPose}.webp`} alt="" decoding="async" />
-    </div>
-  )}
-
   <header class="post-header reveal-header">
     <div class="post-header__meta">
       <span class="post-category">{category}</span>
@@ -88,6 +82,11 @@ function formatDate(date: Date) {
         {formatDate(pubDate)}
       </time>
     </div>
+    {showAvatar && (
+      <div class="post-host post-host--scroll" aria-hidden="true" data-intro-pose={introPose}>
+        <img id="host-avatar" src={`/assets/fiker-avatar-pack/${introPose}.webp`} alt="" decoding="async" />
+      </div>
+    )}
     <h1 class="post-title">{title}</h1>
     <p class="post-description">{description}</p>
   </header>
@@ -494,36 +493,36 @@ function formatDate(date: Date) {
     100% { box-shadow: 0 0 0 0 rgba(245,164,31,0); }
   }
 
-  /* Fiker host avatar — present on every article by default, then follows
-     the reader in the right gutter once there is enough room. */
+  /* Fiker host avatar — small, tucked beside the title on phones/tablets so the
+     headline leads, then detaches into a scroll-following companion in the
+     right gutter once there's room (desktop). */
   .post-host {
-    display: block;
-    width: min(152px, 42vw);
-    margin: 18px 0 -4px auto;
+    float: left;
+    width: 84px;
+    margin: 2px 16px 6px 0;
     pointer-events: none;
+    shape-outside: margin-box;
   }
   .post-host img {
     width: 100%;
     height: auto;
     display: block;
-    filter: drop-shadow(0 14px 28px rgba(20,19,18,.18));
+    filter: drop-shadow(0 10px 20px rgba(20,19,18,.16));
     transition: opacity 280ms ease;
   }
-  @media (min-width: 720px) and (max-width: 1199px) {
-    .post-host {
-      width: 176px;
-      margin-top: 8px;
-      margin-bottom: -18px;
-    }
+  @media (min-width: 560px) {
+    .post-host { width: 104px; margin: 4px 20px 8px 0; }
   }
   @media (min-width: 1200px) {
     /* Follows scroll in the right gutter; JS swaps the pose per block. */
     .post-host--scroll {
+      float: none;
       display: block;
       position: fixed;
       top: 50%;
       left: calc(50% + 372px);
       width: 208px;
+      margin: 0;
       transform: translateY(-50%);
       pointer-events: none;
       z-index: 40;
@@ -555,6 +554,7 @@ function formatDate(date: Date) {
   .post-back a:hover { color: var(--ink); }
 
   .post-header { margin-top: 32px; }
+  .post-header::after { content: ""; display: block; clear: both; }
   .post-header__meta {
     display: flex;
     align-items: center;
