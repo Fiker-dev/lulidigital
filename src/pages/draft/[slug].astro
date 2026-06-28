@@ -1,0 +1,96 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogArticle from "../../components/BlogArticle.astro";
+import { timingSafeEqual } from "../../lib/security";
+import { marked } from "marked";
+
+// Secured draft preview. Renders the LATEST committed markdown for a draft
+// straight from GitHub (so every revision shows instantly, with no wait for a
+// redeploy), styled exactly like a live post. Access requires the secret
+// BLOG_PREVIEW_TOKEN as ?key=… and the page is always noindex.
+
+export const prerender = false;
+
+const REPO_OWNER = "Fiker-dev";
+const REPO_NAME = "lulidigital";
+const REF = "main";
+
+function getEnv(name: string) {
+  return import.meta.env[name] ?? process.env[name];
+}
+
+const notFound = () => new Response("Not found", { status: 404 });
+
+const { slug = "" } = Astro.params;
+const key = Astro.url.searchParams.get("key") ?? "";
+const expectedKey = getEnv("BLOG_PREVIEW_TOKEN");
+
+// Guard: valid slug, configured + matching token. Any failure → 404 (never
+// reveal whether a draft exists).
+if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return notFound();
+if (!expectedKey || !key || !timingSafeEqual(key, String(expectedKey))) return notFound();
+
+// Pull the markdown from the repo (works for private repos via the same token
+// the Telegram handler already uses).
+const ghToken = getEnv("GITHUB_WORKFLOW_TOKEN");
+let raw = "";
+try {
+  const res = await fetch(
+    `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/src/content/blog/${slug}.md?ref=${REF}`,
+    {
+      headers: {
+        ...(ghToken ? { Authorization: `Bearer ${ghToken}` } : {}),
+        Accept: "application/vnd.github.raw+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    },
+  );
+  if (!res.ok) return notFound();
+  raw = await res.text();
+} catch {
+  return notFound();
+}
+
+// Split frontmatter from body and pull the fields BlogArticle needs.
+const fmMatch = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+if (!fmMatch) return notFound();
+const [, frontmatter, body] = fmMatch;
+
+function field(name: string) {
+  const m = frontmatter.match(new RegExp(`^${name}:\\s*"?([^"\\n]+?)"?\\s*$`, "m"));
+  return m?.[1]?.trim() ?? "";
+}
+
+const title = field("title") || slug;
+const description = field("description");
+const category = field("category") || "General";
+const readingTime = field("readingTime");
+const pubRaw = field("pubDate");
+const pubDate = pubRaw ? new Date(pubRaw) : new Date();
+
+const bodyHtml = await marked.parse(body.trim(), { gfm: true });
+
+// Deterministic anim theme so the preview is stable across reloads.
+const animIndex = [...slug].reduce((a, c) => a + c.charCodeAt(0), 0) % 3;
+---
+
+<BaseLayout
+  title={`Draft preview — ${title} | LuliDigital`}
+  description={description}
+  active="blog"
+  canonicalPath={`/draft/${slug}`}
+  ogType="article"
+  robots="noindex,nofollow"
+  showBee={false}
+>
+  <BlogArticle
+    title={title}
+    description={description}
+    category={category}
+    readingTime={readingTime}
+    pubDate={pubDate}
+    animIndex={animIndex}
+    preview={true}
+    bodyHtml={bodyHtml}
+  />
+</BaseLayout>
