@@ -346,12 +346,20 @@ export const POST: APIRoute = async ({ request }) => {
         await sendTelegram(chatId, "I do not have an active draft waiting for approval.");
         return new Response("OK");
       }
-      // Approve = publish now (empty date → today), so it goes live immediately
-      // and the publish workflow pings Google to index the live URL. Scheduling
-      // only happens when a specific future date is given as a command.
-      await dispatchWorkflow("publish-draft-blog.yml", { slug, publish_date: "" });
-      await answerCallbackQuery(update.callback_query?.id, "Approved. Publishing now.");
-      await sendTelegram(chatId, `Approved. Publishing ${slug} now.`);
+      // Approve = schedule for the planned slot, so posts drip out on a steady
+      // cadence and the daily Publish Scheduled Posts job takes them live + indexes
+      // them that morning. If we don't know a date (button on a stale draft), fall
+      // back to publishing now.
+      const scheduleDate = reviewState?.slug === slug ? reviewState.scheduled_for : "";
+      if (scheduleDate) {
+        await dispatchWorkflow("schedule-draft.yml", { slug, date: scheduleDate });
+        await answerCallbackQuery(update.callback_query?.id, "Approved. Scheduled.");
+        await sendTelegram(chatId, `Approved. Scheduled ${slug} for ${scheduleDate}. It'll go live and get indexed that morning. Say "publish ${slug} now" to go live sooner.`);
+      } else {
+        await dispatchWorkflow("publish-draft-blog.yml", { slug, publish_date: "" });
+        await answerCallbackQuery(update.callback_query?.id, "Approved. Publishing now.");
+        await sendTelegram(chatId, `Approved. Publishing ${slug} now.`);
+      }
       return new Response("OK");
     }
 
@@ -361,12 +369,16 @@ export const POST: APIRoute = async ({ request }) => {
     const decision = parseHeuristicDecision(text, memory, reviewState) ?? await askLana(text, reviewState, memory);
 
     if (decision.action === "approve" && reviewState) {
-      // Publish now (today) and index immediately. Explicit scheduling is the
-      // separate "schedule" action that carries a specific date.
-      await dispatchWorkflow("publish-draft-blog.yml", {
-        slug: reviewState.slug,
-        publish_date: "",
-      });
+      // Default: schedule for the planned slot. Only go live immediately when he
+      // explicitly says so ("publish now", "today", "go live now").
+      const wantsNow = /\b(now|today|immediately|right\s*away|asap|go\s*live|straight\s*away)\b/i.test(text);
+      if (wantsNow) {
+        await dispatchWorkflow("publish-draft-blog.yml", { slug: reviewState.slug, publish_date: "" });
+        decision.reply = `Approved. Publishing ${reviewState.slug} live now.`;
+      } else {
+        await dispatchWorkflow("schedule-draft.yml", { slug: reviewState.slug, date: reviewState.scheduled_for });
+        decision.reply = `Approved. Scheduled ${reviewState.slug} for ${reviewState.scheduled_for}. It'll go live and get indexed that morning. Say "publish it now" to go live sooner.`;
+      }
     } else if (decision.action === "revise" && reviewState && decision.revision_instructions) {
       await dispatchWorkflow("revise-draft.yml", {
         slug: reviewState.slug,
@@ -398,7 +410,7 @@ export const POST: APIRoute = async ({ request }) => {
     } else if (decision.action === "publish" && decision.slug) {
       await dispatchWorkflow("publish-draft-blog.yml", { slug: decision.slug, publish_date: "" });
     } else if (decision.action === "schedule" && decision.slug && decision.date) {
-      await dispatchWorkflow("publish-draft-blog.yml", { slug: decision.slug, publish_date: decision.date });
+      await dispatchWorkflow("schedule-draft.yml", { slug: decision.slug, date: decision.date });
     } else if (decision.action === "unpublish" && decision.slug) {
       await dispatchWorkflow("unpublish-post.yml", { slug: decision.slug });
     }

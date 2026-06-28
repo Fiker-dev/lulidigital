@@ -10,6 +10,9 @@ const blog = defineCollection({
     category: z.string(),
     readingTime: z.string().optional(),
     draft: z.boolean().optional(),
+    // Approved-but-queued date (YYYY-MM-DD). The post stays draft:true until the
+    // daily Publish Scheduled Posts workflow flips it live on this date.
+    scheduledFor: z.string().optional(),
     // Set false to hide the Fiker host avatar on this post (default: shown).
     avatar: z.boolean().optional(),
   }),
