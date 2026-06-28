@@ -1,10 +1,10 @@
 ---
 title: "How AI Agents Help Small Business Owners Reclaim Their Week"
 description: "Discover how AI agents help small business owners reclaim their week by automating the right tasks, freeing founders to focus on growth."
-pubDate: 2026-06-28
+pubDate: 2026-06-29
 category: "AI Automation"
 readingTime: "5 min read"
-draft: true
+draft: false
 ---
 
 You didn't start a business to spend your Tuesday afternoon chasing invoice approvals, copy-pasting data between tools, and responding to the same five enquiry types for the hundredth time. But that's where most founders land: buried in operational noise that never ends.

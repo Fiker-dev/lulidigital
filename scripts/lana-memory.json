@@ -13,13 +13,5 @@
     "title": "10 Tasks Every Founder Should Delegate to a Virtual Assistant",
     "published_at": "2026-06-16"
   },
-  "review_state": {
-    "slug": "how-ai-agents-help-small-business-owners-reclaim-their-week",
-    "title": "How AI Agents Help Small Business Owners Reclaim Their Week",
-    "description": "Discover how AI agents help small business owners reclaim their week by automating the right tasks, freeing founders to focus on growth.",
-    "preview_text": "You didn't start a business to spend your Tuesday afternoon chasing invoice approvals, copy-pasting data between tools, and responding to the same five enquiry types for the hundredth time. But that's where most founders land: buried in operational noise that never ends.",
-    "scheduled_for": "2026-06-29",
-    "revision_count": 0,
-    "status": "awaiting_approval"
-  }
+  "review_state": null
 }
