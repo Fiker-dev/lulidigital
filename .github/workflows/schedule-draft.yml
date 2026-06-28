@@ -1,0 +1,63 @@
+name: Schedule Draft Blog Post
+
+# Triggered by lana-telegram.ts when Fiker approves a draft. The post is queued
+# for its date (stays hidden) and goes live via Publish Scheduled Posts.
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'Draft blog slug to schedule'
+        required: true
+        type: string
+      date:
+        description: 'Go-live date, YYYY-MM-DD'
+        required: true
+        type: string
+
+jobs:
+  schedule-draft:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      SCHEDULE_SLUG: ${{ github.event.inputs.slug }}
+      SCHEDULE_DATE: ${{ github.event.inputs.date }}
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Mark draft as scheduled
+        run: node scripts/schedule-draft-post.mjs "$SCHEDULE_SLUG" "$SCHEDULE_DATE"
+
+      - name: Clear review state from memory
+        run: node scripts/clear-review-state.mjs "$SCHEDULE_SLUG"
+
+      - name: Commit and push
+        run: |
+          git config user.name "LuliDigital Bot"
+          git config user.email "bot@lulidigital.com"
+          git add src/content/blog/ scripts/lana-memory.json
+          git diff --staged --quiet && echo "No changes" && exit 0
+          git commit -m "Schedule draft ${SCHEDULE_SLUG} for ${SCHEDULE_DATE}"
+          git push
+
+      - name: Telegram confirmation
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then exit 0; fi
+          TEXT=$(printf "🗓 Scheduled: %s\n\nIt'll go live and get submitted to Google automatically on %s (around 06:00 UTC). Say \"publish %s now\" if you want it live sooner." "$SCHEDULE_SLUG" "$SCHEDULE_DATE" "$SCHEDULE_SLUG")
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${TEXT}" > /dev/null

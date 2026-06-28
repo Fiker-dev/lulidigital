@@ -1,0 +1,74 @@
+name: Publish Scheduled Posts
+
+# Runs every morning. Any draft whose scheduledFor date has arrived is flipped
+# live, deployed (via the commit), and submitted to Google for indexing — so
+# scheduled posts go live AND get crawled on their planned day.
+
+on:
+  schedule:
+    # Daily at 06:07 UTC (off :00 to avoid dropped runs), before Auto Blog Post.
+    - cron: '7 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  publish-scheduled:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Publish any due scheduled posts
+        run: node scripts/publish-scheduled.mjs
+
+      - name: Commit and push
+        run: |
+          git config user.name "LuliDigital Bot"
+          git config user.email "bot@lulidigital.com"
+          git add src/content/blog/
+          if git diff --staged --quiet; then
+            echo "false" > /tmp/scheduled_changed.txt
+            echo "Nothing due today."
+            exit 0
+          fi
+          COUNT=$(node -e "console.log((JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8'))).length)")
+          git commit -m "Publish ${COUNT} scheduled blog post(s)"
+          git push
+          echo "true" > /tmp/scheduled_changed.txt
+
+      - name: Request indexing for each published post
+        if: ${{ always() }}
+        env:
+          GOOGLE_INDEXING_SA_KEY: ${{ secrets.GOOGLE_INDEXING_SA_KEY }}
+        run: |
+          if [ "$(cat /tmp/scheduled_changed.txt 2>/dev/null || echo false)" != "true" ]; then
+            echo "No newly published posts; skipping indexing."
+            exit 0
+          fi
+          for url in $(node -e "JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8')).forEach(p=>console.log(p.url))"); do
+            node scripts/request-indexing.mjs "$url" || true
+          done
+
+      - name: Telegram notification
+        if: ${{ always() }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ "$(cat /tmp/scheduled_changed.txt 2>/dev/null || echo false)" != "true" ]; then exit 0; fi
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then exit 0; fi
+          MSG=$(node -e "const p=JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8'));console.log('✅ Scheduled posts now live + submitted to Google:\n\n'+p.map(x=>x.title+'\n'+x.url).join('\n\n'))")
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${MSG}" > /dev/null

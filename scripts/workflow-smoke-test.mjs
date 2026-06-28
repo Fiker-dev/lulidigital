@@ -13,6 +13,8 @@ const scriptNames = [
   "unpublish-post.mjs",
   "delete-draft-post.mjs",
   "clear-review-state.mjs",
+  "schedule-draft-post.mjs",
+  "publish-scheduled.mjs",
 ];
 
 function assert(condition, message) {
@@ -101,6 +103,44 @@ try {
   runFailure("publish-draft-post.mjs", ["../secrets", "2026-06-26"], 1);
   runFailure("unpublish-post.mjs", ["../secrets"], 1);
   runFailure("delete-draft-post.mjs", ["definitely-not-real"], 2);
+
+  // ── Scheduling: schedule-draft-post marks a draft without publishing it ──────
+  const schedSlug = "smoke-scheduled-post";
+  writePost(schedSlug, true);
+  run("schedule-draft-post.mjs", [schedSlug, "2030-01-01"]);
+  let schedRaw = readFileSync(postPath(schedSlug), "utf8");
+  assert(/^draft:\s*true\s*$/m.test(schedRaw), "schedule keeps the post a draft");
+  assert(/^scheduledFor:\s*2030-01-01\s*$/m.test(schedRaw), "schedule sets scheduledFor");
+
+  runFailure("schedule-draft-post.mjs", [schedSlug, "2026-99-99"], 1);
+  runFailure("schedule-draft-post.mjs", ["../secrets", "2026-06-26"], 1);
+
+  // ── publish-scheduled: publishes due posts, leaves future + plain drafts ─────
+  // Due (past date) → should publish.
+  writePost("smoke-due", true);
+  run("schedule-draft-post.mjs", ["smoke-due", "2020-01-01"]);
+  // Future date → should stay hidden.
+  writePost("smoke-future", true);
+  run("schedule-draft-post.mjs", ["smoke-future", "2099-12-31"]);
+  // Plain draft without scheduledFor → must never be auto-published.
+  writePost("smoke-plain-draft", true);
+
+  run("publish-scheduled.mjs");
+
+  const dueRaw = readFileSync(postPath("smoke-due"), "utf8");
+  assert(/^draft:\s*false\s*$/m.test(dueRaw), "publish-scheduled publishes a due post");
+  assert(/^pubDate:\s*2020-01-01\s*$/m.test(dueRaw), "publish-scheduled sets pubDate to the scheduled date");
+  assert(!/^scheduledFor:/m.test(dueRaw), "publish-scheduled removes scheduledFor once live");
+
+  const futureRaw = readFileSync(postPath("smoke-future"), "utf8");
+  assert(/^draft:\s*true\s*$/m.test(futureRaw), "publish-scheduled leaves a not-yet-due post hidden");
+
+  const plainRaw = readFileSync(postPath("smoke-plain-draft"), "utf8");
+  assert(/^draft:\s*true\s*$/m.test(plainRaw), "publish-scheduled never touches a plain draft (no scheduledFor)");
+
+  const publishedList = JSON.parse(readFileSync("/tmp/published-scheduled.json", "utf8"));
+  assert(publishedList.some((p) => p.slug === "smoke-due"), "published list includes the due post");
+  assert(!publishedList.some((p) => p.slug === "smoke-future"), "published list excludes the future post");
 
   console.log("Workflow smoke tests passed.");
 } finally {
