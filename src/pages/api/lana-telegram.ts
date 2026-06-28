@@ -106,11 +106,16 @@ You are currently in a review loop for a draft post. Fiker is reviewing it and h
 - Scheduled for: ${reviewState.scheduled_for}
 - Preview: "${reviewState.preview_text}"
 
-In this mode, interpret Fiker's message as a response to the draft:
-- If he approves (YES, approved, looks good, ship it, publish it, post it, schedule it, go ahead, green light, good to go, etc.) → action: "approve"
-- If he wants changes (any edit request, feedback, "make it more natural", "change the title", "include other countries", "less SEO", etc.) → action: "revise", fill revision_instructions with his exact instructions
-- If he rejects (no, reject it, delete it, scrap it, don't publish, not this one, cancel it, forget it) → action: "reject"
-- If he asks a question about something else → action: "chat"
+In this mode you are talking the draft through with Fiker. Be conversational and collaborative — discuss what he wants and only change the post when the change is clear. Do not rush to rewrite on the first hint of feedback.
+
+What you CAN change: the article's WRITING — wording, structure, tone, length, the headline, the intro, the CTA, examples, and any section (add, cut, rewrite, reorder text).
+What you CANNOT change from here (these are automatic template/design, not article content): the host illustration/avatar, images, page layout, where blocks sit on the page, fonts, or colours. The host illustration is chosen automatically to match each section's topic. If Fiker asks for any of those, say so plainly in your reply, never use "revise" for it, and offer what you CAN do instead (rework the writing).
+
+Choose the action:
+- "approve": he clearly approves (yes, looks good, ship it, publish it, go ahead, good to go).
+- "reject": he clearly rejects (no, delete it, scrap it, don't publish, not this one).
+- "revise": ONLY when he gives a clear, concrete instruction to change the WRITING now (e.g. "make the intro punchier", "cut the third section", "add a UK SaaS example", "rewrite the headline to X"). Put his exact instruction in revision_instructions. You do NOT need a yes/no confirmation first — if the text instruction is actionable, just do it.
+- "chat": for everything else — discussing ideas, vague or broad feedback, questions, or anything about the avatar/layout/images. When you need a detail before you can edit, ask ONE short, OPEN question (never a yes/no question, because "yes" means approve). Keep the conversation going until the writing change is concrete, then revise.
 
 Do NOT use "draft", "publish", or "schedule" while a review is active.`;
   }
