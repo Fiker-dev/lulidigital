@@ -1,7 +1,9 @@
 {
   "pending_post": null,
   "pending_drafts": [
-    "when-to-hire-virtual-assistant"
+    "when-to-hire-virtual-assistant",
+    "automate-uk-social-media-founders-guide-ai-driven-growth",
+    "ai-niche-social-fan-engagement"
   ],
   "seo_opportunity_queue": [],
   "blog_plan_queue": [],
@@ -10,5 +12,13 @@
     "title": "10 Tasks Every Founder Should Delegate to a Virtual Assistant",
     "published_at": "2026-06-16"
   },
-  "review_state": null
+  "review_state": {
+    "slug": "ai-niche-social-fan-engagement",
+    "title": "How AI Can Power Fan Engagement for Niche Sports Communities",
+    "description": "Struggling to manage a passionate niche sports community without burning out? Here's how AI automation turns fan engagement into a scalable system.",
+    "preview_text": "Niche online communities are some of the most engaged audiences on the internet. They are also some of the hardest to serve consistently. A passionate community around, say, a Nigerian goalkeeper, does not want generic content. They want specific stats, timely reactions, and the feeling that whoever runs the page actually cares.",
+    "scheduled_for": "2026-06-29",
+    "revision_count": 0,
+    "status": "awaiting_approval"
+  }
 }
