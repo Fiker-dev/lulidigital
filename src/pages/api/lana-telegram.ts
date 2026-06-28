@@ -341,8 +341,10 @@ export const POST: APIRoute = async ({ request }) => {
         await sendTelegram(chatId, "I do not have an active draft waiting for approval.");
         return new Response("OK");
       }
-      const publishDate = reviewState?.slug === slug ? reviewState.scheduled_for : "";
-      await dispatchWorkflow("publish-draft-blog.yml", { slug, publish_date: publishDate });
+      // Approve = publish now (empty date → today), so it goes live immediately
+      // and the publish workflow pings Google to index the live URL. Scheduling
+      // only happens when a specific future date is given as a command.
+      await dispatchWorkflow("publish-draft-blog.yml", { slug, publish_date: "" });
       await answerCallbackQuery(update.callback_query?.id, "Approved. Publishing now.");
       await sendTelegram(chatId, `Approved. Publishing ${slug} now.`);
       return new Response("OK");
@@ -354,9 +356,11 @@ export const POST: APIRoute = async ({ request }) => {
     const decision = parseHeuristicDecision(text, memory, reviewState) ?? await askLana(text, reviewState, memory);
 
     if (decision.action === "approve" && reviewState) {
+      // Publish now (today) and index immediately. Explicit scheduling is the
+      // separate "schedule" action that carries a specific date.
       await dispatchWorkflow("publish-draft-blog.yml", {
         slug: reviewState.slug,
-        publish_date: reviewState.scheduled_for,
+        publish_date: "",
       });
     } else if (decision.action === "revise" && reviewState && decision.revision_instructions) {
       await dispatchWorkflow("revise-draft.yml", {
