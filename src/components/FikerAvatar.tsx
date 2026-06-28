@@ -15,6 +15,10 @@ export const fikerAvatarPoses = [
   'listening',
   'waving',
   'confidence',
+  'sitting-perch',
+  'sitting-crosslegged',
+  'sitting-laptop',
+  'sitting-side',
 ] as const;
 
 export type FikerAvatarPose = (typeof fikerAvatarPoses)[number];

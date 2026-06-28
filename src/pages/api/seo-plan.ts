@@ -4,6 +4,28 @@ import { jsonResponse, rateLimit } from "../../lib/security";
 
 export const prerender = false;
 
+type PublicSeoTarget = {
+  path?: string;
+  page?: string;
+  primaryKeyword?: string;
+  secondaryKeywords?: string[];
+  keywords?: string[];
+  source?: string;
+  week?: number;
+  updatedAt?: string;
+};
+
+const toPublicSeoTarget = (target: PublicSeoTarget) => ({
+  path: target.path,
+  page: target.page,
+  primaryKeyword: target.primaryKeyword,
+  secondaryKeywords: target.secondaryKeywords,
+  keywords: target.keywords,
+  source: target.source,
+  week: target.week,
+  updatedAt: target.updatedAt,
+});
+
 export const GET: APIRoute = async (context) => {
   const { url } = context;
   const limited = rateLimit(context, { key: "seo-plan", limit: 30, windowMs: 60_000 });
@@ -17,12 +39,10 @@ export const GET: APIRoute = async (context) => {
     ? (seoPlan?.plan.find((target: { path: string }) => target.path === path) ?? getWeeklyPageSeoTarget(path))
     : (seoPlan?.plan ?? fallbackPlan);
 
-  return jsonResponse(path ? plan : {
+  return jsonResponse(path ? toPublicSeoTarget(plan) : {
     source: seoPlan?.source ?? "LuliDigital weekly page keyword rotation",
     searchConsoleConfigured: seoPlan?.configured ?? false,
-    searchConsoleProperty: seoPlan?.property,
-    searchConsoleError: seoPlan?.error,
-    plan,
+    plan: Array.isArray(plan) ? plan.map(toPublicSeoTarget) : plan,
   }, {
     status: 200,
     headers: {

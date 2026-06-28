@@ -11,6 +11,8 @@ The canonical Anime Fiker expression library is located at:
 
 Before generating or requesting a new Fiker avatar, read `public/assets/fiker-avatar-pack/README.md` and select the closest existing semantic pose. Use the shared `src/components/FikerAvatar.tsx` component in React/Astro UI:
 
+For avatars placed on blog cards, quote blocks, or section edges, prefer `sitting-perch`, `sitting-crosslegged`, `sitting-laptop`, or `sitting-side` before creating a new sitting illustration.
+
 ```tsx
 <FikerAvatar pose="thinking" />
 ```
