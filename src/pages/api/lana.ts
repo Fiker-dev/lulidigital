@@ -119,7 +119,7 @@ type RequestBody = {
 
 export const POST: APIRoute = async (context) => {
   const { request, url } = context;
-  const originError = assertSameOrigin(request, url);
+  const originError = assertSameOrigin(request, url, { requireOrigin: true });
   if (originError) return originError;
 
   const limited = rateLimit(context, { key: "lana-chat", limit: 20, windowMs: 60_000 });

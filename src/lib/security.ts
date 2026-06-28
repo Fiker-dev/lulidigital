@@ -71,9 +71,15 @@ export async function readJsonBody<T>(request: Request, maxBytes = 16_384): Prom
   }
 }
 
-export function assertSameOrigin(request: Request, url: URL): Response | null {
+export function assertSameOrigin(
+  request: Request,
+  url: URL,
+  options: { requireOrigin?: boolean } = {},
+): Response | null {
   const origin = request.headers.get("origin");
-  if (!origin) return null;
+  if (!origin) {
+    return options.requireOrigin ? jsonResponse({ error: "Forbidden." }, { status: 403 }) : null;
+  }
 
   let originUrl: URL;
   try {

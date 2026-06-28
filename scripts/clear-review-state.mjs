@@ -8,12 +8,21 @@
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { normalizeBlogSlug } from "./blog-paths.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const slug = process.argv[2];
+const rawSlug = process.argv[2];
 
-if (!slug) {
+if (!rawSlug) {
   console.error("Usage: node scripts/clear-review-state.mjs <slug>");
+  process.exit(1);
+}
+
+let slug;
+try {
+  slug = normalizeBlogSlug(rawSlug);
+} catch (error) {
+  console.error(error.message);
   process.exit(1);
 }
 

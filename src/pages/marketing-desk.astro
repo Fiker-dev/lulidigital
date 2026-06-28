@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import FaqSection from "../components/FaqSection.astro";
+import FikerAvatar from "../components/FikerAvatar";
 import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
 
 export const prerender = false;
@@ -173,6 +174,10 @@ const faqSchema = {
     <p class="selling-copy selling-copy--direct">
       Want to know how this would work for your business? Talk to the desk and we will walk you through it.
     </p>
+    <div class="fiker-note fiker-note--marketing">
+      <FikerAvatar pose="pointing-left" size="120px" alt="" />
+      <p>Fiker keeps the strategy human: AI can surface signals, but the final call is always about what your audience will actually trust.</p>
+    </div>
     <div class="selling-links">
       <a class="pill pill--filled magnetic" href="https://wa.me/27602551513">WhatsApp the desk</a>
       <a class="pill pill--outline magnetic" href="mailto:info@lulidigital.com">Email the desk</a>

@@ -16,38 +16,44 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      DELETE_SLUG: ${{ github.event.inputs.slug }}
     permissions:
       contents: write
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
       - name: Delete draft file
         run: |
-          SLUG="${{ github.event.inputs.slug }}"
-          FILE="src/content/blog/${SLUG}.md"
-          if [ ! -f "$FILE" ]; then
-            echo "File not found: $FILE"
+          set +e
+          node scripts/delete-draft-post.mjs "$DELETE_SLUG"
+          STATUS=$?
+          set -e
+          if [ "$STATUS" != "0" ]; then
+            if [ "$STATUS" != "2" ]; then exit "$STATUS"; fi
             curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
               --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-              --data-urlencode "text=Could not find a draft with slug: ${SLUG}. Check the slug and try again."
+              --data-urlencode "text=Could not find a draft with slug: ${DELETE_SLUG}. Check the slug and try again."
             exit 0
           fi
-          rm "$FILE"
-          echo "Deleted $FILE"
 
       - name: Clear review state and pending_drafts from memory
         run: |
-          node scripts/clear-review-state.mjs "${{ github.event.inputs.slug }}"
+          node scripts/clear-review-state.mjs "$DELETE_SLUG"
           node -e "
             const fs=require('fs');
             const p='scripts/lana-memory.json';
             if(!fs.existsSync(p)) process.exit(0);
             const m=JSON.parse(fs.readFileSync(p,'utf8'));
-            m.pending_drafts=(m.pending_drafts||[]).filter(s=>s!=='${{ github.event.inputs.slug }}');
+            m.pending_drafts=(m.pending_drafts||[]).filter(s=>s!==process.env.DELETE_SLUG);
             fs.writeFileSync(p,JSON.stringify(m,null,2));
           "
 
@@ -57,12 +63,12 @@ jobs:
           git config user.email "bot@lulidigital.com"
           git add src/content/blog/ scripts/lana-memory.json
           git diff --staged --quiet && echo "No changes" && exit 0
-          git commit -m "Delete draft blog post ${{ github.event.inputs.slug }}"
+          git commit -m "Delete draft blog post ${DELETE_SLUG}"
           git push
 
       - name: Send Telegram confirmation
         run: |
-          SLUG="${{ github.event.inputs.slug }}"
+          SLUG="$DELETE_SLUG"
           TEXT=$(printf "Draft deleted: %s\n\nIt's gone from the repo. Want me to write a new one? Just tell me the topic." "$SLUG")
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
             --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \

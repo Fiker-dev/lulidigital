@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
-import { join } from "path";
+import { blogFilePath, normalizeBlogSlug, normalizePublishDate } from "./blog-paths.mjs";
 
 const [slug, publishDate] = process.argv.slice(2);
 
@@ -8,15 +8,23 @@ if (!slug) {
   process.exit(1);
 }
 
-const safeSlug = slug.replace(/^\/?blog\//, "").replace(/\.md$/, "").trim();
-const filePath = join(process.cwd(), "src", "content", "blog", `${safeSlug}.md`);
+let safeSlug;
+let date;
+try {
+  safeSlug = normalizeBlogSlug(slug);
+  date = normalizePublishDate(publishDate);
+} catch (error) {
+  console.error(error.message);
+  process.exit(1);
+}
+
+const filePath = blogFilePath(process.cwd(), safeSlug);
 
 if (!existsSync(filePath)) {
   console.error(`Draft not found: ${filePath}`);
   process.exit(1);
 }
 
-const date = publishDate?.trim() || new Date().toISOString().split("T")[0];
 const original = readFileSync(filePath, "utf8");
 
 let updated = original;

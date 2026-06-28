@@ -14,15 +14,32 @@ on:
 jobs:
   catchup:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
     steps:
       - name: Checkout repo (full history)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Check if a post was created today
         id: check
         run: |
+          export TODAY=$(date -u +%F)
+          if node -e "
+            const fs = require('fs');
+            const p = 'scripts/lana-memory.json';
+            if (!fs.existsSync(p)) process.exit(1);
+            const memory = JSON.parse(fs.readFileSync(p, 'utf8'));
+            const review = memory.review_state;
+            process.exit(review?.status === 'awaiting_approval' && review?.scheduled_for === process.env.TODAY ? 0 : 1);
+          "; then
+            echo "missed=false" >> "$GITHUB_OUTPUT"
+            echo "A draft is already awaiting approval for today — nothing to catch up."
+            exit 0
+          fi
+
           if git log --since="00:00" --diff-filter=A --name-only --pretty=format: | grep -q '^src/content/blog/.*\.md$'; then
             echo "missed=false" >> "$GITHUB_OUTPUT"
             echo "A blog post was already created today — nothing to catch up."
@@ -34,7 +51,7 @@ jobs:
       - name: Trigger a draft if the scheduled run was missed
         if: steps.check.outputs.missed == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_WORKFLOW_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: gh workflow run "Auto Blog Post" -f publish_status=draft -R "${{ github.repository }}"
 
       - name: Notify Telegram if caught up
