@@ -4,7 +4,8 @@
     "when-to-hire-virtual-assistant",
     "automate-uk-social-media-founders-guide-ai-driven-growth",
     "ai-niche-social-fan-engagement",
-    "how-ai-agents-help-small-business-owners-reclaim-their-week"
+    "how-ai-agents-help-small-business-owners-reclaim-their-week",
+    "why-founders-should-let-ai-handle-follow-ups-but-keep-the-final-say"
   ],
   "seo_opportunity_queue": [],
   "blog_plan_queue": [],
@@ -13,5 +14,13 @@
     "title": "10 Tasks Every Founder Should Delegate to a Virtual Assistant",
     "published_at": "2026-06-16"
   },
-  "review_state": null
+  "review_state": {
+    "slug": "why-founders-should-let-ai-handle-follow-ups-but-keep-the-final-say",
+    "title": "Why Founders Should Let AI Handle Follow-Ups But Keep the Final Say",
+    "description": "Founders are losing deals in their inbox. Learn why AI follow-ups work, where humans must stay in control, and how to build a system that does both.",
+    "preview_text": "Most deals don't die because of a bad pitch. They die in the silence after it. The follow-up that never went out, the check-in that was three days too late, the proposal that sat in drafts while you handled everything else that felt more urgent.",
+    "scheduled_for": "2026-06-29",
+    "revision_count": 0,
+    "status": "awaiting_approval"
+  }
 }
