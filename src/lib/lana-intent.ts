@@ -248,15 +248,11 @@ export function parseReviewReply(text: string, reviewState: ReviewState | null):
     };
   }
 
-  const asksForChanges = /\b(change|revise|rewrite|edit|adjust|fix|make it|make this|can you|could you|please|shorter|longer|more|less|natural|human|premium|specific|different|title|headline|intro|opening|cta|tone|angle|countries|keyword|seo|remove|add|include|mention|avoid|sounds|doesn't sound|does not sound)\b/i.test(compact);
-  if (asksForChanges) {
-    return {
-      action: "revise",
-      reply: `I'll revise ${reviewState.slug} with that feedback.`,
-      revision_instructions: compact,
-    };
-  }
-
+  // Everything else during a review — feedback, questions, edit requests — is
+  // handled conversationally by the LLM (see askLana's review prompt). We no
+  // longer auto-fire a full rewrite on any change-like keyword: Lana talks it
+  // through and only revises on a clear, concrete instruction to change the
+  // writing.
   return null;
 }
 
@@ -271,5 +267,11 @@ export function parseHeuristicDecision(
   memory: LanaMemory | null,
   reviewState: ReviewState | null,
 ): LanaDecision | null {
-  return parseReviewReply(text, reviewState) ?? parseDirectControl(text, memory);
+  // During an active review only approve/reject are decided deterministically;
+  // all other messages (edits, feedback, questions) fall through to the
+  // conversational LLM. We deliberately skip parseDirectControl here so that
+  // wording like "remove the second paragraph" is discussed/revised rather than
+  // mis-read as an unpublish command.
+  if (reviewState) return parseReviewReply(text, reviewState);
+  return parseDirectControl(text, memory);
 }

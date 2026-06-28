@@ -68,7 +68,9 @@ for (const text of ["no", "nope", "reject it", "delete it", "scrap it", "don't p
   eq(`reject reply "${text}"`, d?.action, "reject");
 }
 
-// ── Revision requests during a review ─────────────────────────────────────────
+// ── Change requests during a review are NOT auto-revised ──────────────────────
+// They return null from the deterministic parser so the conversational LLM can
+// talk them through and only rewrite the text on a clear instruction.
 for (const text of [
   "make it shorter",
   "change the title",
@@ -76,10 +78,10 @@ for (const text of [
   "include other countries",
   "make it sound more human",
   "can you adjust the intro",
+  "I want you to change the hero avatar and move it to another block",
 ]) {
   const d = parseReviewReply(text, review);
-  eq(`revise reply "${text}"`, d?.action, "revise");
-  check(`revise reply "${text}" keeps instructions`, d?.revision_instructions === text);
+  check(`change reply "${text}" defers to LLM (null)`, d === null);
 }
 
 // review parsing only applies when a review is active
@@ -101,10 +103,15 @@ check("no review -> parseReviewReply null", parseReviewReply("yes", null) === nu
   eq('heuristic "ship it" during review -> approve', d?.action, "approve");
 }
 {
-  // Taking down a *different, named* post still routes to unpublish even mid-review.
-  const d = parseHeuristicDecision("take down some-other-live-post", memory, review);
-  eq('heuristic "take down some-other-live-post" -> unpublish', d?.action, "unpublish");
-  eq("  ...with the right slug", d?.slug, "some-other-live-post");
+  // During a review, anything that isn't a clear approve/reject defers to the
+  // conversational LLM (so "remove the second paragraph" is discussed, not
+  // mis-read as an unpublish command).
+  const d = parseHeuristicDecision("remove the second paragraph", memory, review);
+  check('heuristic "remove the second paragraph" during review -> defers to LLM (null)', d === null);
+}
+{
+  const d = parseHeuristicDecision("can you make the intro punchier?", memory, review);
+  check('heuristic edit talk during review -> defers to LLM (null)', d === null);
 }
 
 // ── Direct control (no active review) ─────────────────────────────────────────

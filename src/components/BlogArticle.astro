@@ -66,7 +66,7 @@ function formatDate(date: Date) {
   {preview && (
     <div class="draft-banner" role="status">
       <span class="draft-banner__dot" aria-hidden="true"></span>
-      <span><strong>Draft preview</strong> — not published. Reply in Telegram to approve or request edits.</span>
+      <span>Draft preview</span>
     </div>
   )}
 
@@ -464,24 +464,25 @@ function formatDate(date: Date) {
     position: relative;
   }
 
-  /* Draft preview banner — only on the secured preview route */
+  /* Draft preview marker — small, unobtrusive pill on the secured preview route */
   .draft-banner {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
-    margin: 0 0 24px;
-    padding: 12px 18px;
-    border: 1px solid var(--honey);
-    border-radius: 12px;
-    background: linear-gradient(180deg, rgba(255,242,200,.6), var(--paper-card));
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--ink);
+    gap: 7px;
+    margin: 0 0 18px;
+    padding: 5px 12px;
+    border: 1px solid var(--paper-line);
+    border-radius: 100px;
+    background: var(--paper-card);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--muted);
   }
-  .draft-banner strong { color: var(--wine-strong); }
   .draft-banner__dot {
     flex: none;
-    width: 9px; height: 9px;
+    width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--brand);
     box-shadow: 0 0 0 0 rgba(245,164,31,.55);
