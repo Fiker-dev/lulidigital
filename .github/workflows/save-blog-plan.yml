@@ -16,6 +16,10 @@ on:
           - 'true'
           - 'false'
 
+concurrency:
+  group: lulidigital-content-writes
+  cancel-in-progress: false
+
 jobs:
   save-plan:
     runs-on: ubuntu-latest

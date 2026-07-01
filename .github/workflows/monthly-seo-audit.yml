@@ -9,6 +9,10 @@ on:
     - cron: '23 8 1 * *'
   workflow_dispatch:
 
+concurrency:
+  group: lulidigital-content-writes
+  cancel-in-progress: false
+
 jobs:
   seo-audit:
     runs-on: ubuntu-latest
