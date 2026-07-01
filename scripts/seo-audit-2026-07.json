@@ -1,0 +1,162 @@
+{
+  "generatedAt": "2026-07-01T11:33:39.358Z",
+  "property": "sc-domain:lulidigital.com",
+  "periods": {
+    "current": "2026-05-29 to 2026-06-28",
+    "previous": "2026-04-29 to 2026-05-29",
+    "wide90d": "2026-03-30 to 2026-06-28"
+  },
+  "summary": {
+    "totalClicks": 0,
+    "totalImpressions": 11,
+    "pagesWithData": 4,
+    "lowVisibilityCount": 15
+  },
+  "topQueries": [
+    {
+      "query": "luli ai",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 10,
+      "avgCtr": 0
+    },
+    {
+      "query": "ai business tasks",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 18.5,
+      "avgCtr": 0
+    },
+    {
+      "query": "lilla digital",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 67,
+      "avgCtr": 0
+    },
+    {
+      "query": "luli",
+      "clicks": 0,
+      "impressions": 3,
+      "avgPosition": 7.3,
+      "avgCtr": 0
+    },
+    {
+      "query": "luli agenta",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 11,
+      "avgCtr": 0
+    },
+    {
+      "query": "lulisocial",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 6.5,
+      "avgCtr": 0
+    }
+  ],
+  "opportunities": [],
+  "pageStats": [
+    {
+      "path": "/",
+      "clicks": 0,
+      "impressions": 7,
+      "avgPosition": 8.7,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    },
+    {
+      "path": "/blog/business-tasks-to-automate-with-ai",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 18.5,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    },
+    {
+      "path": "/blog",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 10,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    },
+    {
+      "path": "/contact",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 67,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    }
+  ],
+  "lowVisibilityPages": [
+    {
+      "path": "/marketing-desk",
+      "impressions": 0
+    },
+    {
+      "path": "/ai-desk",
+      "impressions": 0
+    },
+    {
+      "path": "/va-desk",
+      "impressions": 0
+    },
+    {
+      "path": "/founder",
+      "impressions": 0
+    },
+    {
+      "path": "/africa",
+      "impressions": 0
+    },
+    {
+      "path": "/amsterdam",
+      "impressions": 0
+    },
+    {
+      "path": "/munich",
+      "impressions": 0
+    },
+    {
+      "path": "/stockholm",
+      "impressions": 0
+    },
+    {
+      "path": "/united-states",
+      "impressions": 0
+    },
+    {
+      "path": "/united-kingdom",
+      "impressions": 0
+    },
+    {
+      "path": "/denmark",
+      "impressions": 0
+    },
+    {
+      "path": "/switzerland",
+      "impressions": 0
+    },
+    {
+      "path": "/ireland",
+      "impressions": 0
+    },
+    {
+      "path": "/belgium",
+      "impressions": 0
+    },
+    {
+      "path": "/norway",
+      "impressions": 0
+    }
+  ],
+  "lowCtrPages": [],
+  "improvedPages": []
+}
