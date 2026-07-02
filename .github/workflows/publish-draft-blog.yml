@@ -12,6 +12,10 @@ on:
         required: false
         type: string
 
+concurrency:
+  group: lulidigital-content-writes
+  cancel-in-progress: false
+
 jobs:
   publish-draft:
     runs-on: ubuntu-latest

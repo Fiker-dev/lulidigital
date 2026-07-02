@@ -8,6 +8,10 @@ on:
         required: true
         type: string
 
+concurrency:
+  group: lulidigital-content-writes
+  cancel-in-progress: false
+
 jobs:
   unpublish:
     runs-on: ubuntu-latest

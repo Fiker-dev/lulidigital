@@ -69,6 +69,10 @@ on:
           - 'false'
           - 'true'
 
+concurrency:
+  group: lulidigital-content-writes
+  cancel-in-progress: false
+
 jobs:
   generate-and-publish:
     runs-on: ubuntu-latest

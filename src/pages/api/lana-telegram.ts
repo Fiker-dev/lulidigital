@@ -346,20 +346,12 @@ export const POST: APIRoute = async ({ request }) => {
         await sendTelegram(chatId, "I do not have an active draft waiting for approval.");
         return new Response("OK");
       }
-      // Approve = schedule for the planned slot, so posts drip out on a steady
-      // cadence and the daily Publish Scheduled Posts job takes them live + indexes
-      // them that morning. If we don't know a date (button on a stale draft), fall
-      // back to publishing now.
-      const scheduleDate = reviewState?.slug === slug ? reviewState.scheduled_for : "";
-      if (scheduleDate) {
-        await dispatchWorkflow("schedule-draft.yml", { slug, date: scheduleDate });
-        await answerCallbackQuery(update.callback_query?.id, "Approved. Scheduled.");
-        await sendTelegram(chatId, `Approved. Scheduled ${slug} for ${scheduleDate}. It'll go live and get indexed that morning. Say "publish ${slug} now" to go live sooner.`);
-      } else {
-        await dispatchWorkflow("publish-draft-blog.yml", { slug, publish_date: "" });
-        await answerCallbackQuery(update.callback_query?.id, "Approved. Publishing now.");
-        await sendTelegram(chatId, `Approved. Publishing ${slug} now.`);
-      }
+      // Approve = publish immediately. The publish-draft-blog workflow flips the
+      // post live, pushes (Vercel deploys), requests Google indexing, and sends
+      // the "it's live" notification — fully hands-free after this tap.
+      await dispatchWorkflow("publish-draft-blog.yml", { slug, publish_date: "" });
+      await answerCallbackQuery(update.callback_query?.id, "Approved. Publishing now.");
+      await sendTelegram(chatId, `Approved. Publishing ${slug} now — it'll be live and submitted to Google in a few minutes.`);
       return new Response("OK");
     }
 

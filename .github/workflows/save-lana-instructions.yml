@@ -61,6 +61,10 @@ on:
           - 'true'
           - 'false'
 
+concurrency:
+  group: lulidigital-content-writes
+  cancel-in-progress: false
+
 jobs:
   save-instructions:
     runs-on: ubuntu-latest
