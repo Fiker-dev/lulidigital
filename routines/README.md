@@ -1,130 +1,112 @@
-# LuliDigital — Migrating `auto-blog` to a Claude Cowork routine
+# LuliDigital marketing automation — Cowork routine + Claude Code
 
-This folder holds everything to move the **blog draft generator** from GitHub
-Actions to a **Claude Cowork routine** (an always-on, cron-scheduled cloud
-agent). It is a **hybrid** migration: only the judgment-heavy front of the
-pipeline moves; the rest of the automation stays on GitHub Actions.
+Everything marketing runs as **two Claude brains on your subscription** (no
+metered Anthropic API), with the git repo as the shared folder between them.
 
----
+```
+┌─ COWORK ROUTINE — the strategist ──────────────────┐
+│  scheduled · your Claude subscription               │
+│  • Gemini API  → trend research                     │
+│  • open-source scraper → competitor/industry signals│
+│  • decides topic, angle, keyword, CTA, AVATAR pose  │
+│  • writes a BRIEF → routines/briefs/<id>.json       │
+│  • git commit + push                                │
+└───────────────┬─────────────────────────────────────┘
+                │  (shared folder = the git repo)
+                ▼  push to routines/briefs/*.json triggers ↓
+┌─ CLAUDE CODE — the executor (GitHub Action) ────────┐
+│  triggered on brief push · subscription OAuth token │
+│  • reads the brief                                  │
+│  • writes the draft .md + wires the Fiker avatar    │
+│  • sets review_state (awaiting_approval)            │
+│  • moves brief → routines/briefs/done/  (notifies   │
+│    Cowork) and Telegrams Fiker (notifies you)       │
+│  • git commit + push → Vercel deploys hidden draft  │
+└───────────────┬─────────────────────────────────────┘
+                ▼  Fiker approves in Telegram → existing GitHub Actions
+                   (schedule-draft → publish-scheduled → request-indexing)
+```
 
-## Why we're doing this
+**Why this shape:** research is Gemini + scraper (paid where you want it),
+intelligence is the Cowork routine + Claude Code (both subscription, no
+per-token API), and the human-approval loop you already have is untouched.
 
-The old `auto-blog.yml` called `generate-post.mjs`, which depended on Gemini
-topic research (`research-topic.mjs`). Gemini kept returning "no usable topic",
-so scheduled runs fell back to junk keywords and once clobbered a published
-post — which is why the schedule was paused.
+## Files in this folder
+| File | What it is |
+|---|---|
+| `auto-blog-routine.md` | Paste-into-Cowork prompt for the **strategist** routine |
+| `briefs/SCHEMA.md` | The brief contract both brains agree on (incl. avatar + research) |
+| `briefs/` | Pending briefs the routine drops here |
+| `briefs/done/` | Completed briefs the executor moves here (Cowork reads these) |
+| `executor-instructions.md` | The prompt **Claude Code** follows to build the page |
+| `../.github/workflows/claude-code-executor.yml` | The GitHub Action that runs Claude Code on OAuth |
 
-A Cowork routine **is Claude**, so it researches and writes the topic natively.
-That **removes the Gemini dependency entirely** and removes the need for the
-`blog-catchup` safety net (cloud routines don't silently drop like GitHub cron).
+## Secrets — where each lives
 
----
-
-## What moves vs. what stays
-
-| Job | Trigger | Action |
-|---|---|---|
-| **auto-blog** (generate → draft → Telegram preview) | Mon/Wed/Fri cron | ➡️ **Move to Cowork routine** |
-| **blog-catchup** | cron safety net | 🗑️ **Retire** (not needed with cloud reliability) |
-| publish-draft-blog, revise-draft, schedule-draft, delete-draft, unpublish-post, save-blog-plan, save-lana-instructions, request-indexing | on-demand (LANa/Telegram calls them) | ✅ **Stay on GitHub Actions** — they're a callable API, not a schedule |
-| publish-scheduled, weekly-seo, monthly-seo-audit, recrawl | cron, deterministic scripts | ✅ **Stay on GitHub Actions** — pure Google-API scripts, gain nothing as an agent |
-
-**Integration guarantee:** the routine writes the *exact same output contract*
-the old workflow did (draft `.md` + `review_state` in `lana-memory.json` +
-Telegram approval message with the `blog_approve` button). So the entire
-downstream approval loop keeps working unchanged.
-
----
-
-## Secrets the routine needs (only 3)
-
-As a native agent it needs far fewer secrets than the workflow. Add these in the
-Cowork routine settings:
-
+**In the Cowork routine settings:**
 | Secret | Purpose |
 |---|---|
-| `TELEGRAM_BOT_TOKEN` | Send the approval preview |
-| `TELEGRAM_CHAT_ID` | Where to send it |
-| `BLOG_PREVIEW_TOKEN` | Build the `/draft/{slug}?key=…` preview URL |
+| `GEMINI_API_KEY` | Trend research |
+| (scraper creds, if any) | Whatever your open-source scraper needs |
+| GitHub write access | Connect the repo so the routine can push briefs |
 
-**Not needed:** `ANTHROPIC_API_KEY` (the routine *is* Claude), `GEMINI_API_KEY`
-(Claude researches natively — the whole point), and all Google OAuth /
-service-account keys (indexing happens downstream on GitHub).
+*The routine does NOT need an Anthropic API key — it is Claude.*
 
-GitHub write access comes from **connecting the repo** to the routine in Cowork,
-not from a secret you paste.
+**In GitHub → Settings → Secrets and variables → Actions:**
+| Secret | Purpose |
+|---|---|
+| `CLAUDE_CODE_OAUTH_TOKEN` | Runs Claude Code on your subscription (see below) |
+| `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | Notify Fiker |
+| `BLOG_PREVIEW_TOKEN` | Build the `/draft/<slug>?key=…` preview URL |
 
-Copy the current values from your GitHub repo secrets:
-`Settings → Secrets and variables → Actions`.
-
----
-
-## Setup checklist (do this in Claude Cowork — ~5 minutes)
-
-1. **Create a new routine / scheduled agent** in Claude Cowork.
-2. **Connect the GitHub repo** `Fiker-dev/lulidigital` with **write access**
-   (so it can commit drafts and push to `main`).
-3. **Paste the prompt** from [`auto-blog-routine.md`](./auto-blog-routine.md)
-   (everything below the `---` line) as the routine's instructions.
-4. **Set the schedule** to Mon/Wed/Fri morning. The old cron was `17 8 * * 1,3,5`
-   in **UTC**; set the equivalent in your Cowork timezone (08:17 UTC ≈ 10:17
-   South Africa). Keep the minute off :00.
-5. **Add the 3 secrets** from the table above.
-6. **Run it once manually** and verify:
-   - a new `src/content/blog/{slug}.md` (with `draft: true`) is committed to `main`,
-   - `scripts/lana-memory.json` → `review_state.status` is `awaiting_approval`,
-   - a Telegram message with the **Approve & schedule** button arrived,
-   - the draft preview URL opens.
-
----
-
-## Cutover (only AFTER the routine is verified working)
-
-Once you've confirmed a good draft came through Telegram from the routine,
-disable the two GitHub jobs it replaces. Both are reversible — nothing is deleted.
-
-**`.github/workflows/auto-blog.yml`** — comment out the schedule so only manual
-runs remain (keep the file as a manual fallback):
-
-```yaml
-on:
-  # Moved to Claude Cowork routine (see routines/). Manual dispatch kept as fallback.
-  # schedule:
-  #   - cron: '17 8 * * 1,3,5'
-  workflow_dispatch:
-    inputs:
-      # …unchanged…
+Generate the OAuth token (Pro/Max) locally, once:
 ```
-
-**`.github/workflows/blog-catchup.yml`** — comment out the schedule (the routine
-doesn't need a catch-up net):
-
-```yaml
-on:
-  # Retired: Cowork routine replaces the auto-blog schedule and doesn't drop runs.
-  # schedule:
-  #   - cron: '17 14 * * 1,3,5'
-  workflow_dispatch:
+claude setup-token
 ```
+Copy the value into the GitHub secret `CLAUDE_CODE_OAUTH_TOKEN`. This is what lets
+the Action use your subscription instead of the metered API.
+
+## Setup checklist
+
+**Cowork (once):**
+1. Create the strategist routine; connect repo `Fiker-dev/lulidigital` (write access).
+2. Paste the prompt from `auto-blog-routine.md`.
+3. Add `GEMINI_API_KEY` + scraper creds; install/point to the open-source scraper.
+4. Schedule it (old cadence was Mon/Wed/Fri 08:17 UTC — set the local equivalent, minute off :00).
+
+**GitHub (once):**
+5. `claude setup-token` → add `CLAUDE_CODE_OAUTH_TOKEN` secret.
+6. Confirm `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `BLOG_PREVIEW_TOKEN` exist (they already do for the current workflows).
+
+**Verify end-to-end:**
+7. Run the routine once → a brief appears in `routines/briefs/`.
+8. The **Claude Code Executor** action fires → a draft `.md` (with the avatar) is
+   committed, `review_state` is `awaiting_approval`, the brief moved to `done/`,
+   and a Telegram approval message arrives.
+9. Approve in Telegram → the existing pipeline schedules, publishes, and indexes.
+
+## Loop-safety
+The executor commits with `[skip-executor]`, and the workflow's `if:` guard skips
+those commits — so its own push never re-triggers it. Completed briefs live in
+`briefs/done/`, which is outside the `routines/briefs/*.json` trigger path.
+
+## Cutover (only AFTER the new flow is verified)
+Disable the old generator so nothing double-posts. Reversible — nothing deleted.
+- `.github/workflows/auto-blog.yml` → comment out the `schedule:` cron (keep `workflow_dispatch` as fallback).
+- `.github/workflows/blog-catchup.yml` → comment out the `schedule:` cron (retired).
 
 > Ask Claude Code to "apply the auto-blog cutover" and it will make both edits.
 
----
+## What stays on GitHub Actions (unchanged)
+The 8 on-demand LANa APIs (publish-draft-blog, revise-draft, schedule-draft,
+delete-draft, unpublish-post, save-blog-plan, save-lana-instructions,
+request-indexing) and the Google-auth scripts (publish-scheduled, weekly-seo,
+monthly-seo-audit, recrawl). Cowork can trigger these too, so it stays the single
+brain — but they keep their secrets and run where they already work.
 
-## Rollback
-
-If the routine misbehaves:
-1. Pause / disable the routine in Cowork.
-2. Uncomment the two `schedule:` blocks above.
-
-You're back to the exact previous GitHub Actions behaviour. No data migration,
-no deleted files.
-
----
-
-## What did NOT change
-
-Your Telegram approval loop, editing, scheduling, publishing, SEO refresh,
-audits, recrawl, and indexing all still run on GitHub Actions exactly as before.
-LANa still dispatches those workflows the same way. This migration only swaps how
-the *first* draft gets written.
+## Two things to verify on first run
+1. **claude-code-action commit behavior** — the executor prompt tells Claude Code
+   to `git commit && git push` itself (Bash is in `--allowedTools`). If the action
+   is configured to open a PR instead in your setup, adjust the prompt accordingly.
+2. **Model availability** — `--model claude-sonnet-4-6` must be enabled on your
+   subscription/token; change it in the workflow if needed.

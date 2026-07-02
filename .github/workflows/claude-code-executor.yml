@@ -1,0 +1,61 @@
+name: Claude Code Executor
+
+# Triggered when the Cowork strategist pushes a new brief into routines/briefs/.
+# Claude Code reads the brief and builds the draft post (with the Fiker avatar
+# the routine chose), sets review_state, notifies Fiker on Telegram, and commits.
+# Auth is a Claude subscription OAuth token — NOT the metered Anthropic API.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'routines/briefs/*.json'   # top-level only; done/ is excluded
+  workflow_dispatch:               # allow manual re-run
+
+concurrency:
+  group: lulidigital-content-writes
+  cancel-in-progress: false
+
+jobs:
+  execute-brief:
+    # Skip the executor's own commits so it never re-triggers itself.
+    if: ${{ !contains(github.event.head_commit.message, '[skip-executor]') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Configure git identity
+        run: |
+          git config user.name "LuliDigital Bot"
+          git config user.email "bot@lulidigital.com"
+
+      - name: Run Claude Code on the brief
+        uses: anthropics/claude-code-action@v1
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          BLOG_PREVIEW_TOKEN: ${{ secrets.BLOG_PREVIEW_TOKEN }}
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Follow the instructions in routines/executor-instructions.md to
+            process the newest pending brief in routines/briefs/. Write the draft,
+            wire the Fiker avatar exactly as the brief specifies, update
+            scripts/lana-memory.json, send the Telegram notification, move the
+            brief to routines/briefs/done/, then commit and push to main with
+            "[skip-executor]" in the commit message. If there is no pending brief,
+            do nothing.
+          claude_args: |
+            --allowedTools Edit,Read,Write,Bash
+            --model claude-sonnet-4-6
