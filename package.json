@@ -8,9 +8,10 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "test": "npm run test:telegram && npm run test:workflows",
+    "test": "npm run test:telegram && npm run test:workflows && npm run test:blog-quality",
     "test:telegram": "node scripts/telegram-intent-test.mjs",
     "test:workflows": "node scripts/workflow-smoke-test.mjs",
+    "test:blog-quality": "node scripts/blog-quality-test.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

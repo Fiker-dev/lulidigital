@@ -3,7 +3,14 @@
   "pending_drafts": [
     "when-to-hire-virtual-assistant",
     "automate-uk-social-media-founders-guide-ai-driven-growth",
-    "ai-niche-social-fan-engagement"
+    "ai-niche-social-fan-engagement",
+    "how-ai-agents-help-small-business-owners-reclaim-their-week",
+    "why-founders-should-let-ai-handle-follow-ups-but-keep-the-final-say",
+    "belgium-founders-automate-social-performance-marketing",
+    "switzerland-vs-algeria-founders-guide-automation-roi",
+    "automate-us-digital-marketing-founders-blueprint",
+    "ai-driven-marketing-for-founders",
+    "delegate-or-automate-amsterdam-founders-workflow-playbook"
   ],
   "seo_opportunity_queue": [],
   "blog_plan_queue": [],
@@ -13,11 +20,11 @@
     "published_at": "2026-06-16"
   },
   "review_state": {
-    "slug": "ai-niche-social-fan-engagement",
-    "title": "How AI Can Power Fan Engagement for Niche Sports Communities",
-    "description": "Struggling to manage a passionate niche sports community without burning out? Here's how AI automation turns fan engagement into a scalable system.",
-    "preview_text": "Niche online communities are some of the most engaged audiences on the internet. They are also some of the hardest to serve consistently. A passionate community around, say, a Nigerian goalkeeper, does not want generic content. They want specific stats, timely reactions, and the feeling that whoever runs the page actually cares.",
-    "scheduled_for": "2026-06-29",
+    "slug": "delegate-or-automate-amsterdam-founders-workflow-playbook",
+    "title": "What to Delegate, What to Automate",
+    "description": "A practical way to remove repeatable work from your desk without losing human judgment, control, or client trust.",
+    "preview_text": "Most founders in high-growth cities are not short on tools. They are short on clarity about which tasks a human should own and which a machine should handle. That single confusion quietly bleeds hours every week.",
+    "scheduled_for": "2026-07-15",
     "revision_count": 0,
     "status": "awaiting_approval"
   }

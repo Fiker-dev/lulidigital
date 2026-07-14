@@ -1,0 +1,27 @@
+name: Telegram Webhook Health
+
+on:
+  schedule:
+    # Keep LANa approval buttons wired even if another client clears the webhook.
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  ensure-telegram-webhook:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Ensure Telegram approval webhook
+        run: node scripts/ensure-telegram-webhook.mjs
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_WEBHOOK_SECRET: ${{ secrets.TELEGRAM_WEBHOOK_SECRET }}

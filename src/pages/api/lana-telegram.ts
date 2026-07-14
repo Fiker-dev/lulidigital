@@ -346,12 +346,15 @@ export const POST: APIRoute = async ({ request }) => {
         await sendTelegram(chatId, "I do not have an active draft waiting for approval.");
         return new Response("OK");
       }
-      // Approve = publish immediately. The publish-draft-blog workflow flips the
-      // post live, pushes (Vercel deploys), requests Google indexing, and sends
-      // the "it's live" notification — fully hands-free after this tap.
-      await dispatchWorkflow("publish-draft-blog.yml", { slug, publish_date: "" });
-      await answerCallbackQuery(update.callback_query?.id, "Approved. Publishing now.");
-      await sendTelegram(chatId, `Approved. Publishing ${slug} now — it'll be live and submitted to Google in a few minutes.`);
+      if (reviewState?.slug === slug && reviewState.scheduled_for) {
+        await dispatchWorkflow("schedule-draft.yml", { slug, date: reviewState.scheduled_for });
+        await answerCallbackQuery(update.callback_query?.id, "Approved. Scheduled.");
+        await sendTelegram(chatId, `Approved. Scheduled ${slug} for ${reviewState.scheduled_for}. It'll go live and get indexed that morning.`);
+      } else {
+        await dispatchWorkflow("publish-draft-blog.yml", { slug, publish_date: "" });
+        await answerCallbackQuery(update.callback_query?.id, "Approved. Publishing now.");
+        await sendTelegram(chatId, `Approved. Publishing ${slug} now — it'll be live and submitted to Google in a few minutes.`);
+      }
       return new Response("OK");
     }
 

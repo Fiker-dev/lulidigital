@@ -5,6 +5,7 @@ import { getBestRegionalSeoRecommendation, inferSeoCategory } from "../src/lib/s
 import { generateGeminiText } from "../src/lib/geminiFallback.js";
 import { researchBlogTopic } from "./research-topic.mjs";
 import { normalizeBlogSlug } from "./blog-paths.mjs";
+import { findKeywordStuffing, findSeoPackagingIssue, findLocationStuffing } from "./blog-quality.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -224,13 +225,21 @@ Writing rules:
 - Separate major sections with a --- horizontal rule so the page has visual rhythm.
 - Bold the key phrase in important sentences so a skimmer still gets the point.
 - End with a natural, non-pushy mention of LuliDigital's relevant service.
+- Treat the primary keyword as search intent, not mandatory copy. Answer the underlying question in natural language.
+- Never force an exact keyword phrase into a sentence, heading, title, or description when a fluent person would phrase it differently.
+- Use an exact multi-word keyword no more than twice in the article body. Once is usually enough. Use natural synonyms and related language elsewhere.
+- Do not repeat a city or country name for SEO. Mention a market only where it adds real context for the reader.
+- Read every heading as editorial copy. Avoid headings that look like search queries or lists of keyword variants.
+- The title, meta description, and slug must read like editorial packaging, not SEO fields. Do not put the same city, country, or search phrase across all three.
+- Slugs should be short and human. Avoid city-name + founder + workflow/playbook combinations unless the user explicitly asked for that wording.
 - Target length: 800 to 1100 words. Shorter and sharper beats long and dense. No one wants to read forever.
 
-Provide the finished post by calling the submit_blog_post tool with: title, description (meta description under 155 chars, keyword-rich), slug (url-slug-with-hyphens), readingTime (e.g. "6 min read"), and content (the full markdown article body starting with the first paragraph, no frontmatter, use ## for H2 headings, --- for horizontal rules between sections).`;
+Provide the finished post by calling the submit_blog_post tool with: title, description (clear meta description under 155 chars, written for a person), slug (url-slug-with-hyphens), readingTime (e.g. "6 min read"), and content (the full markdown article body starting with the first paragraph, no frontmatter, use ## for H2 headings, --- for horizontal rules between sections).`;
 
 const userPrompt = `Write a complete blog post about: "${topic.title}"
 
-Primary keyword to target naturally: "${topic.keyword}"
+Primary search intent: "${topic.keyword}"
+Use this to understand what the reader needs. It is not a phrase you must repeat verbatim. If the exact wording sounds unnatural, do not use it.
 Category: ${topic.category}
 ${topic.source ? `Keyword research source: ${topic.source}` : ""}
 ${topic.localTarget ? `Local landing page to link naturally in the article: [${topic.localTarget.label}](${topic.localTarget.path})` : ""}
@@ -265,7 +274,7 @@ const anthropicInit = {
           type: "object",
           properties: {
             title: { type: "string", description: "exact article title" },
-            description: { type: "string", description: "meta description under 155 chars, keyword-rich" },
+            description: { type: "string", description: "clear, human meta description under 155 chars" },
             slug: { type: "string", description: "url-slug-with-hyphens" },
             readingTime: { type: "string", description: "e.g. '6 min read'" },
             content: { type: "string", description: "full markdown article body, no frontmatter, ## for H2 headings, --- for horizontal rules" },
@@ -372,6 +381,33 @@ Return the complete blog post as JSON only:
 
 if (titleLooksStuffed(post.title, topic.keyword)) {
   console.error(`Generated title looks keyword-stuffed: ${post.title}`);
+  process.exit(1);
+}
+
+const seoPackagingReason = findSeoPackagingIssue({
+  title: post.title,
+  description: post.description,
+  slug: post.slug,
+  keyword: topic.keyword,
+  localLabel: topic.localTarget?.label,
+});
+if (seoPackagingReason) {
+  console.error(`Generated metadata looks keyword-stuffed: ${seoPackagingReason}`);
+  process.exit(1);
+}
+
+const keywordStuffingReason = findKeywordStuffing(post.content, topic.keyword);
+if (keywordStuffingReason) {
+  console.error(`Generated content looks keyword-stuffed: ${keywordStuffingReason}`);
+  process.exit(1);
+}
+
+// The target label is like "Amsterdam Studio" / "Africa Growth Desk"; pass the
+// bare place name so the guard matches how it actually reads in the body.
+const targetCity = (topic.localTarget?.label || "").replace(/\s+(Studio|Desk|Growth Desk)$/i, "").trim();
+const locationStuffingReason = findLocationStuffing(post.content, 6, [targetCity]);
+if (locationStuffingReason) {
+  console.error(`Generated content over-repeats a market: ${locationStuffingReason}`);
   process.exit(1);
 }
 
