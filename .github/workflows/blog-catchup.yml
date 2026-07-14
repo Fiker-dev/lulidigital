@@ -6,9 +6,10 @@ name: Blog Catch-up
 # DRAFT (never auto-publishes) so the post still lands in Telegram for approval.
 
 on:
-  schedule:
-    # Mon/Wed/Fri at 14:17 UTC — ~6h after the 08:17 main blog run.
-    - cron: '17 14 * * 1,3,5'
+  # RETIRED 2026-07-14 with the auto-blog cron it backstopped — the Cowork
+  # routine replaces both. See routines/README.md.
+  # schedule:
+  #   - cron: '17 14 * * 1,3,5'   # Mon/Wed/Fri at 14:17 UTC, ~6h after the main run.
   workflow_dispatch:
 
 jobs:

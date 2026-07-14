@@ -1,0 +1,31 @@
+name: Index On Publish
+
+# When a push to main flips a blog post from draft to live (e.g. "publish it
+# now" approved in the Cowork routine session), request Google indexing for
+# that post. publish-scheduled.yml indexes its own publishes and is skipped
+# by the script.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/content/blog/**"
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Request indexing for newly live posts
+        run: node scripts/index-published-changes.mjs
+        env:
+          GOOGLE_INDEXING_SA_KEY: ${{ secrets.GOOGLE_INDEXING_SA_KEY }}
