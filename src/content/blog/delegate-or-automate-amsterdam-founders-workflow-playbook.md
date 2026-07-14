@@ -1,6 +1,6 @@
 ---
-title: "Delegate or Automate? Amsterdam Founders' Workflow Playbook"
-description: "Amsterdam founders: stop guessing what to delegate vs. automate. This practical playbook shows you exactly how to build a workflow that saves time and scales."
+title: "What to Delegate, What to Automate"
+description: "A practical way to remove repeatable work from your desk without losing human judgment, control, or client trust."
 pubDate: 2026-07-13
 category: "Virtual Assistant"
 readingTime: "6 min read"
@@ -9,7 +9,7 @@ draft: true
 
 Most founders in high-growth cities are not short on tools. They are short on clarity about which tasks a human should own and which a machine should handle. That single confusion quietly bleeds hours every week.
 
-Amsterdam's startup and scale-up scene moves fast. Investors expect efficiency. Teams are lean. If you are still making delegation decisions by instinct, you are already behind the curve. This playbook is the thinking framework you should have had six months ago.
+Fast-moving teams cannot afford to make delegation decisions by instinct. When every week brings another tool, another hire, and another operational fire, the question is not simply what can be automated. It is what should still have a person paying attention.
 
 ---
 
