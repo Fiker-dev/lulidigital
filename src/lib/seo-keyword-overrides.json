@@ -1,5 +1,12 @@
 {
-  "generatedAt": "2026-07-10T11:19:56.816Z",
-  "week": "2026-07-10",
-  "pages": {}
+  "generatedAt": "2026-07-17T10:11:46.020Z",
+  "week": "2026-07-17",
+  "pages": {
+    "/va-desk": {
+      "primary": [
+        "digital secretary"
+      ],
+      "source": "weekly Search Console refresh 2026-07-17"
+    }
+  }
 }
