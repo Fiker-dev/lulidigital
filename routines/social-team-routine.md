@@ -39,10 +39,15 @@ verified by a primary or reputable source via web search.
 ## Step 3 — Write the pack
 Create `social/queue/<slug-or-pillar-slug>/` with these files:
 
-**`linkedin.md`** — per brand system + today's weekly theme. Structure:
-hook line (statement, not question) → 2–4 short paragraphs → earned CTA.
-Include at the top as HTML comment: `<!-- post the blog link as the FIRST
-COMMENT, not in the body: <url> -->`.
+**`linkedin-personal.md`** — Fiker's personal page: first-person, warm,
+friend-to-friend (see the brand system's two-track LinkedIn rules). For news
+topics, always include the "here's how you can actually use this" leverage
+angle. Include at the top as HTML comment: `<!-- post the blog link as the
+FIRST COMMENT, not in the body: <url> -->`.
+
+**`linkedin-company.md`** — LuliDigital company page: the operator's-take
+version of the same idea. Authority with warmth; never the same text as the
+personal post. Same first-comment link rule.
 
 **`bluesky.md`** — the sharpest version of the same idea, ≤300 chars (or a
 2–3 post thread, each ≤300 chars). Blog link allowed in the final post.
@@ -120,12 +125,14 @@ Credentials are provided in the run prompt.
    thread, the second post carries `reply.root`/`reply.parent` refs to the
    first. Confirm the post URI in your reply.
 2. **LinkedIn text** (attempt, fall back gracefully): execute the Composio
-   LinkedIn create-post action with the Composio API key, connected account
-   id, and person URN (consult Composio's API docs via WebFetch if the
-   endpoint shape is unclear). If it succeeds, confirm. If it fails for ANY
-   reason, do not retry more than twice — deliver the final paste-ready text
-   in your reply, remind Fiker the blog link goes in the first comment, and
-   note the failure so the integration can be fixed locally.
+   LinkedIn create-post action with the Composio API key and connected
+   account id — `linkedin-personal.md` with the PERSON urn, and
+   `linkedin-company.md` with the ORGANIZATION urn (consult Composio's API
+   docs via WebFetch if the endpoint shape is unclear). If a call succeeds,
+   confirm. If it fails for ANY reason, do not retry more than twice —
+   deliver that post's paste-ready text in your reply, remind Fiker the blog
+   link goes in the first comment, and note the failure so the integration
+   can be fixed locally.
 3. Never post anything that wasn't in the approved pack. Never post to
    Reddit (always manual). Never upload video (LinkedIn video is manual).
 

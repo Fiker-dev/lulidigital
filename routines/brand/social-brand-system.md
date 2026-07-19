@@ -104,8 +104,20 @@ Every video script must declare one:
 Never: "Check out our website!", "Link in bio", or any banner-ad imperative.
 
 ## Platform rules
-- **LinkedIn:** hook-led text; native video beats links — blog link goes in
-  the FIRST COMMENT, never the post body. Video is uploaded manually by Fiker.
+- **LinkedIn — TWO tracks, two different voices:**
+  - **Personal page (Fiker):** the friendly one. First-person, warm,
+    episodic — Anime Fiker energy in text form. New Season episodes, AI
+    news told friend-to-friend with "here's how you can actually use this,"
+    behind-the-build moments, founder life. This page is allowed to start
+    with "I". It's Fiker talking, not a brand.
+  - **Company page (LuliDigital):** the authority. News and updates with an
+    operator's take, service education, anonymised proof, blog
+    announcements. Professional warmth — credible, never stiff, never "We
+    are thrilled to announce."
+  - Same idea can appear on both, but NEVER the same text — personal tells
+    the story, company states the insight.
+  - Hook-led text on both; native video beats links — blog link goes in the
+    FIRST COMMENT, never the post body. Video upload is manual.
 - **Bluesky:** shorter, sharper version of the same idea. ≤300 chars per
   post; a 2–3 post thread is fine. Link allowed.
 - **Reddit:** draft only, community-native, manual posting by Fiker.
