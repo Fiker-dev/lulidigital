@@ -1,10 +1,10 @@
 ---
 title: "What to Delegate, What to Automate"
 description: "A practical way to remove repeatable work from your desk without losing human judgment, control, or client trust."
-pubDate: 2026-07-13
+pubDate: 2026-07-19
 category: "Virtual Assistant"
 readingTime: "6 min read"
-draft: true
+draft: false
 ---
 
 Most founders in high-growth cities are not short on tools. They are short on clarity about which tasks a human should own and which a machine should handle. That single confusion quietly bleeds hours every week.

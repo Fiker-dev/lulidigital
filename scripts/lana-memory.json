@@ -15,17 +15,9 @@
   "seo_opportunity_queue": [],
   "blog_plan_queue": [],
   "latest_live_post": {
-    "slug": "tasks-to-delegate-to-virtual-assistant",
-    "title": "10 Tasks Every Founder Should Delegate to a Virtual Assistant",
-    "published_at": "2026-06-16"
-  },
-  "review_state": {
     "slug": "delegate-or-automate-amsterdam-founders-workflow-playbook",
     "title": "What to Delegate, What to Automate",
-    "description": "A practical way to remove repeatable work from your desk without losing human judgment, control, or client trust.",
-    "preview_text": "Most founders in high-growth cities are not short on tools. They are short on clarity about which tasks a human should own and which a machine should handle. That single confusion quietly bleeds hours every week.",
-    "scheduled_for": "2026-07-15",
-    "revision_count": 0,
-    "status": "awaiting_approval"
-  }
+    "published_at": "2026-07-19"
+  },
+  "review_state": null
 }
