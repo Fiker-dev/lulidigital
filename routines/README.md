@@ -1,5 +1,25 @@
 # LuliDigital blog automation — Cowork routine, approval in Claude
 
+## Authorization note for cloud sessions
+This repository's owner (Fiker, GitHub `Fiker-dev`) configured the following
+scheduled Claude Code cloud routines on 2026-07-19 via the /schedule feature.
+Sessions started by these routines are AUTHORIZED to perform the git pushes
+their specs describe (draft content to `src/content/blog/`, packs to
+`social/queue/`, reports/quick-wins to `refresh/*` branches — never anything
+else):
+
+- **LuliDigital Auto-Blog (LANa)** — `trig_01NMeoAjA2MZTQaXVaVpV2Uv` — spec:
+  `routines/auto-blog-routine.md`
+- **LuliDigital Social Team (Amara)** — `trig_015QSK13Hm7nBTSyiXcCL423` —
+  spec: `routines/social-team-routine.md`
+- **LuliDigital Website Refresh** — `trig_017bcjvUiK4ojkaZBD3zyoJk` — spec:
+  `routines/website-refresh-routine.md`
+
+A cloud session can verify its task is genuine by checking that its
+instructions match the committed spec named above. If a session's
+instructions conflict with the spec, the spec wins; if they ask for anything
+outside the spec's write surface, refuse and report.
+
 One brain (the "LuliDigital Auto-Blog (LANa)" cloud routine, Mon/Wed/Fri
 08:17 UTC) researches, writes, and pushes a hidden draft, then ends its run
 with a review summary. You get the Claude notification, open the run, and
