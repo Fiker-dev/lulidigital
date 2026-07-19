@@ -33,7 +33,22 @@ remains in the codebase but nothing routes to it.
 ## Files
 | File | What it is |
 |---|---|
-| `auto-blog-routine.md` | Canonical routine spec: research → draft → review summary → in-session approval |
+| `auto-blog-routine.md` | Blog routine spec: research → draft → review summary → in-session approval |
+| `social-team-routine.md` | Social Team (Amara) spec: blog → LinkedIn/Bluesky/Reddit + video script pack → in-session approval |
+| `website-refresh-routine.md` | Monthly design/content audit → report + PR-gated quick wins |
+| `brand/social-brand-system.md` | Condensed Amara brand system (voice, characters, viral structure, platform rules, quality gate) |
+
+## The routine team
+| Routine | Cadence (UTC) | Job |
+|---|---|---|
+| LuliDigital Auto-Blog (LANa) | Mon/Wed/Fri 08:17 | Writes the blog draft, holds for approval |
+| LuliDigital Social Team (Amara) | Mon/Wed/Fri 10:17 | Turns the latest live post (or a pillar) into a LinkedIn + Bluesky + Reddit + video-script pack |
+| LuliDigital Website Refresh | 1st of month 09:47 | Design/freshness audit + safe quick-win PR |
+
+Rendering (avatar-animator, viral-engine) and actual posting (Composio
+LinkedIn, Bluesky atproto) stay in the LOCAL pipeline at
+`~/Desktop/Lulidigital Socials/Bureau/socials` — cloud routines write packs
+and specs; they never call posting APIs.
 
 ## Secrets
 The routine embeds `BLOG_PREVIEW_TOKEN` (for the preview URL) in its prompt.
