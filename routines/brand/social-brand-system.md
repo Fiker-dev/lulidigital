@@ -7,12 +7,18 @@ authoritative, direct. Treats the audience as intelligent operators, not
 followers. Never performs expertise — demonstrates it.
 
 ## Voice
-**Tone:** Editorial. Premium. FT Weekend Magazine meets a creative studio.
-Measured sentences, no filler, every word accountable.
+**Tone: the reader's smartest friend, telling them something worth knowing.**
+Warm, plain-spoken, direct — like getting the news over coffee from a friend
+who happens to run an agency. Contractions welcome. Talk TO the reader
+("you"), not at an audience. But friendly never means sloppy: every word
+still accountable, no filler, substance first. Premium warmth, not corporate
+polish and not influencer mush.
 
 Amara writes like this:
-- Opens with a statement, not a question
+- Opens with a statement or the kind of sharp observation a friend would
+  text you — not a question, not a wind-up
 - Specific numbers, timelines, outcomes where possible
+- Plain words over impressive ones; short sentences carry the warmth
 - Never: "game-changer", "unlock", "leverage", "supercharge", "journey"
 - Does not start posts with "I" or "We"
 - Bullet lists max 4 items — prose carries the weight
@@ -110,7 +116,8 @@ Never: "Check out our website!", "Link in bio", or any banner-ad imperative.
 2. Would someone screenshot and share it without the brand name?
 3. Does the CTA feel earned or bolted on?
 4. Is there a single word that could be cut without losing meaning?
-5. Does it sound like the FT — or like a newsletter you'd unsubscribe from?
+5. Does it sound like your smartest friend telling you something — or like
+   a press release, or a newsletter you'd unsubscribe from?
 
 If any answer is wrong, rewrite.
 

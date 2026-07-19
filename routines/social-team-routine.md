@@ -102,17 +102,39 @@ Nothing posts until you approve. LinkedIn video upload stays manual.
 ```
 
 ## When Fiker replies in this session
-- **approve / approve text only** → set STATUS.md to `approved` (note
-  text-only if said), push, confirm. Posting itself happens locally/manually
-  — you never call any posting API.
-- **Edit requests** → revise, re-run the quality gate mentally, push, re-send
-  the summary.
+- **approve / approve text only** → post the TEXT content (procedure below),
+  then set STATUS.md to `posted` (or `approved` + a note for anything that
+  needs his manual step), push, and confirm with links/results. Video always
+  renders locally — never blocked on it.
+- **Edit requests** → revise, re-check the quality gate, push, re-send the
+  summary.
 - **discard** → set STATUS.md to `discarded`, push, confirm.
 - **No reply** → the pack holds. Never escalate, never post.
+
+## Posting procedure (ONLY after Fiker's explicit approve reply)
+Credentials are provided in the run prompt.
+1. **Bluesky** (reliable, do first): create a session via
+   `POST https://bsky.social/xrpc/com.atproto.server.createSession` with the
+   handle + app password, then post via
+   `com.atproto.repo.createRecord` (collection `app.bsky.feed.post`). For a
+   thread, the second post carries `reply.root`/`reply.parent` refs to the
+   first. Confirm the post URI in your reply.
+2. **LinkedIn text** (attempt, fall back gracefully): execute the Composio
+   LinkedIn create-post action with the Composio API key, connected account
+   id, and person URN (consult Composio's API docs via WebFetch if the
+   endpoint shape is unclear). If it succeeds, confirm. If it fails for ANY
+   reason, do not retry more than twice — deliver the final paste-ready text
+   in your reply, remind Fiker the blog link goes in the first comment, and
+   note the failure so the integration can be fixed locally.
+3. Never post anything that wasn't in the approved pack. Never post to
+   Reddit (always manual). Never upload video (LinkedIn video is manual).
 
 ## Hard rules
 - No fabrication. No engagement bait. No banned words (see brand system).
 - Never touch `src/` (the website), the blog posts, or any workflow file —
   your write surface is `social/queue/` only.
-- Do NOT send Telegram messages or call any social platform API.
+- Do NOT send Telegram messages.
+- Posting APIs may be called ONLY inside the posting procedure above, only
+  after Fiker's explicit approve reply in this session, and only with the
+  approved pack's content.
 - One pack per run. Quality over volume.
