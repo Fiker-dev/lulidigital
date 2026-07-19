@@ -25,10 +25,16 @@ quality gate. Every output must pass its quality gate.
    idea per platform — it never summarises the whole post.
 
 ## Step 2 — Research the angle
-Use web search briefly: what's the live conversation around this topic this
-week (UK/EU/US founder audience)? Find one current, verifiable hook — a
-discussion, a report, a shift. No fabricated stats. If nothing genuinely
-current exists, lead with the post's own counter-intuitive idea.
+Two research tools — use both, then reconcile:
+1. **Gemini API** (key provided in the run prompt): ask for this week's
+   developments and live conversation on the topic for UK/EU/US founders.
+   Call it with Bash:
+   `curl -s "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=$GEMINI_API_KEY" -H "Content-Type: application/json" -d '{"contents":[{"parts":[{"text":"<research prompt>"}]}]}'`
+2. **Web search** to VERIFY anything Gemini surfaces before using it.
+Ground only — a claim that can't be verified doesn't get used. No fabricated
+stats. If nothing genuinely current exists, lead with the post's own
+counter-intuitive idea. For the AI Update series, the news item MUST be
+verified by a primary or reputable source via web search.
 
 ## Step 3 — Write the pack
 Create `social/queue/<slug-or-pillar-slug>/` with these files:
@@ -45,6 +51,10 @@ COMMENT, not in the body: <url> -->`.
 guidance in the brand system. Note the target subreddit at the top.
 
 **`video-script.md`** — 30–45s vertical short per the viral structure:
+- Format: `full-size` (talking avatar, lip-sync + gestures) or `mini-irl`
+  (small Fiker composited over real footage) — per the brand system's
+  video formats section. For `mini-irl`, list the real-footage shots needed
+  (Pexels search terms or own-recording notes).
 - Character: Mini Fiker (business topics) or Anime Fiker (relatable/story)
   — per the brand system's character rules
 - Script: timestamped beats (0-3s hook / build / payoff / CTA), spoken

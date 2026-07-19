@@ -57,6 +57,36 @@ Hook in 0–3 seconds → curiosity gap → story/escalation → payoff/lesson/r
 4. Entrepreneur Stories — lessons, mistakes, money lessons
 5. Day In The Life — creative founder life, building, shipping
 
+## Standalone content series (rotate when no fresh blog anchor)
+Rotate in this order, tracking the last one used in `social/queue/` history:
+
+**A. AI Update (news reaction)** — one current, verifiable AI development
+this week and what it means operationally for founders/small teams. Take a
+position; never just summarise the news. Use Gemini research + web search to
+verify before writing; cite the source. Mini Fiker. Never react to rumors.
+
+**B. Who It's For (service education)** — one specific person/role and the
+before/after of one LuliDigital service (AI Desk, Marketing Desk, VA Desk).
+Problem-led, anonymised, concrete ("a founder doing invoices at 11pm").
+Educational first; the service is the answer, not the headline. Mini Fiker.
+
+**C. New Season (founder story)** — Fiker's healthcare→AI transition told
+with dignity: nurse-anaesthetist discipline, patient-first calm, and
+precision carried into building digital systems. Never frame healthcare as
+the thing escaped; frame it as the training ground. Anime Fiker.
+**The first episode of this series is the signature transition video — it
+has not been made yet and is the highest-priority video in the pipeline.**
+
+## Video formats
+Every video script must declare one:
+- **`full-size`** — Fiker avatar talking direct-to-camera with lip-sync and
+  gestures (local avatar-animator: MuseTalk/LivePortrait). For authority:
+  AI Updates, education, buyer-facing.
+- **`mini-irl`** — Mini/Anime Fiker at small scale composited over REAL
+  footage (city walking, café, desk b-roll from Pexels or own recordings) —
+  walking, talking, reacting inside the real world. For relatability, humor,
+  New Season storytelling. Script must list the real-footage shots needed.
+
 ## Weekly themes
 - **Monday — Educational:** counter-intuitive framework, 200–400 words,
   no pitch. CTA: `More at lulidigital.com`
