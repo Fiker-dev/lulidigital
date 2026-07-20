@@ -5,7 +5,7 @@ pubDate: 2026-07-20
 category: "Digital Marketing"
 readingTime: "6 min read"
 draft: true
-scheduledFor: 2026-07-22
+scheduledFor: "2026-07-22"
 ---
 
 You spent good money sending people to a page, and most of them left without doing anything. The instinct is to blame the design — the colours, the hero image, the font. Usually that is not where the problem lives. A page that looks polished can still leak nearly every visitor if it asks them to make too many decisions at once.
