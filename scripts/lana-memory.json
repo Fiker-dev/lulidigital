@@ -19,5 +19,13 @@
     "title": "What to Delegate, What to Automate",
     "published_at": "2026-07-19"
   },
-  "review_state": null
+  "review_state": {
+    "slug": "landing-page-conversion-founders-single-goal",
+    "title": "Your Landing Page Isn't Underperforming. It's Asking People to Do Too Much.",
+    "description": "Most landing pages don't fail on looks. They fail by asking visitors to make too many decisions. Here's the structure that actually converts.",
+    "preview_text": "You spent good money sending people to a page, and most of them left without doing anything. The instinct is to blame the design — the colours, the hero image, the font. Usually that is not where the problem lives. A page that looks polished can still leak nearly every visitor if it asks them to make too many decisions at once.",
+    "scheduled_for": "2026-07-22",
+    "revision_count": 0,
+    "status": "awaiting_approval"
+  }
 }
