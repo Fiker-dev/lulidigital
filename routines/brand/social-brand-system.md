@@ -83,6 +83,16 @@ the thing escaped; frame it as the training ground. Anime Fiker.
 **The first episode of this series is the signature transition video — it
 has not been made yet and is the highest-priority video in the pipeline.**
 
+## Company-page visuals (LuliDigital)
+The company page is the verification layer, so its visuals prove competence:
+- **Build receipts** — screen recordings of real systems (workflows, agents,
+  dashboards) with a one-line insight; no character needed
+- **Premium story cards** — Remotion honey-branded cards (per DESIGN.md in
+  the local pipeline): one stat, one quote, or one before/after per card
+- **Blog announcement cards** — title + one sharp pull-line, honey identity
+- Mini Fiker may appear as a presenter accent, but the company page leads
+  with the WORK; the personal page leads with the CHARACTER and story.
+
 ## Video formats
 Every video script must declare one:
 - **`full-size`** — Fiker avatar talking direct-to-camera with lip-sync and

@@ -75,7 +75,7 @@ jobs:
         run: |
           if [ "$(cat /tmp/scheduled_changed.txt 2>/dev/null || echo false)" != "true" ]; then exit 0; fi
           if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then exit 0; fi
-          MSG=$(node -e "const p=JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8'));console.log('✅ Scheduled posts now live + submitted to Google:\n\n'+p.map(x=>x.title+'\n'+x.url).join('\n\n'))")
+          MSG=$(node -e "const p=JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8'));console.log('✅ Blog live + submitted to Google:\n\n'+p.map(x=>x.title+'\n'+x.url).join('\n\n')+'\n\n📍 Google Business Profile — paste as a new post, button Learn more → the link above:\n———\n'+p.map(x=>'New from LuliDigital: '+x.title+'.').join('\n')+'\n———')")
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "text=${MSG}" > /dev/null

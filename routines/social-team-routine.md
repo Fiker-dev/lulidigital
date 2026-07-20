@@ -49,8 +49,11 @@ FIRST COMMENT, not in the body: <url> -->`.
 version of the same idea. Authority with warmth; never the same text as the
 personal post. Same first-comment link rule.
 
-**`bluesky.md`** — the sharpest version of the same idea, ≤300 chars (or a
-2–3 post thread, each ≤300 chars). Blog link allowed in the final post.
+**`bluesky.md`** — mirrors the PERSONAL track, not the company one: same
+first-person smart-friend voice and the same idea as `linkedin-personal.md`,
+condensed to ≤300 chars (or a 2–3 post thread, each ≤300 chars). Bluesky is
+a people-follow-people network — corporate voice dies there. Blog link
+allowed in the final post.
 
 **`reddit.md`** — community-native draft per the weekly theme's subreddit
 guidance in the brand system. Note the target subreddit at the top.

@@ -10,7 +10,7 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 
 const SITE = "https://lulidigital.com";
 
@@ -50,7 +50,8 @@ for (const file of changed) {
   if (!wasDraft) continue; // was already live — an edit, not a publish
 
   const slug = file.split("/").pop().replace(/\.md$/, "");
-  newlyLive.push(`${SITE}/blog/${slug}`);
+  const title = current.match(/^title:\s*"?([^"\n]+)"?\s*$/m)?.[1]?.trim() ?? slug;
+  newlyLive.push({ url: `${SITE}/blog/${slug}`, title });
 }
 
 if (newlyLive.length === 0) {
@@ -58,8 +59,8 @@ if (newlyLive.length === 0) {
   process.exit(0);
 }
 
-console.log(`Posts flipped live in this push:\n${newlyLive.map((u) => `  ${u}`).join("\n")}`);
-for (const url of newlyLive) {
+console.log(`Posts flipped live in this push:\n${newlyLive.map((p) => `  ${p.url}`).join("\n")}`);
+for (const { url } of newlyLive) {
   try {
     execFileSync(process.execPath, ["scripts/request-indexing.mjs", url], {
       encoding: "utf8",
@@ -70,3 +71,6 @@ for (const url of newlyLive) {
     console.error(`Indexing request failed for ${url} (non-fatal).`);
   }
 }
+
+// Hand the list to the workflow's notification step.
+writeFileSync("/tmp/newly-live.json", JSON.stringify(newlyLive));
