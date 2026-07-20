@@ -93,6 +93,15 @@ The company page is the verification layer, so its visuals prove competence:
 - Mini Fiker may appear as a presenter accent, but the company page leads
   with the WORK; the personal page leads with the CHARACTER and story.
 
+## B-roll rule: NO HUMAN FACES
+Real footage (Pexels or own recordings) must never show a recognisable human
+face. Use backs, over-shoulder shots, hands, feet, silhouettes, crowds from
+behind, desks, screens, streets. **Mini Fiker is the only face in every
+video** — she is the brand's sole character and the viewer's only point of
+identification. When selecting Pexels clips, search with terms like "walking
+away", "hands typing", "over shoulder", "feet walking street", and reject
+any clip where a face reads clearly at feed size.
+
 ## Video formats
 Every video script must declare one:
 - **`full-size`** — Fiker avatar talking direct-to-camera with lip-sync and
