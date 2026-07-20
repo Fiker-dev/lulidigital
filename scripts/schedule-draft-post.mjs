@@ -43,11 +43,13 @@ if (/^draft:\s*false\s*$/m.test(updated)) {
   updated = updated.replace(/^---\n/, "---\ndraft: true\n");
 }
 
-// Set (or update) the scheduled date.
+// Set (or update) the scheduled date. Quoted so YAML parses it as a string —
+// unquoted dates become Date objects and fail the Astro content schema
+// (broke the Vercel build on 2026-07-20).
 if (/^scheduledFor:\s*.*$/m.test(updated)) {
-  updated = updated.replace(/^scheduledFor:\s*.*$/m, `scheduledFor: ${safeDate}`);
+  updated = updated.replace(/^scheduledFor:\s*.*$/m, `scheduledFor: "${safeDate}"`);
 } else {
-  updated = updated.replace(/^---\n/, `---\nscheduledFor: ${safeDate}\n`);
+  updated = updated.replace(/^---\n/, `---\nscheduledFor: "${safeDate}"\n`);
 }
 
 if (updated === original) {

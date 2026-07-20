@@ -90,10 +90,24 @@ Nothing publishes until you reply.
 ```
 
 ## When Fiker replies in this session
-- **"approve" / yes / ship it** → add `scheduledFor: <scheduled_for>` to the post frontmatter (keep `draft: true`), set `review_state.status` to `"scheduled"`, commit ("Schedule: <slug> for <date>"), push. The existing `publish-scheduled.yml` cron publishes + indexes it that morning. Confirm to Fiker.
+- **"approve" / yes / ship it** → add `scheduledFor: "<scheduled_for>"` to the post frontmatter — ALWAYS QUOTED (unquoted YAML dates become Date objects and fail the Astro schema, breaking the Vercel build). Keep `draft: true`, set `review_state.status` to `"scheduled"`, commit ("Schedule: <slug> for <date>"), push, then run the deploy verification below. The existing `publish-scheduled.yml` cron publishes + indexes it that morning. Confirm to Fiker.
 - **"publish it now"** → set `draft: false`, set `pubDate` to today, remove any `scheduledFor`, clear `review_state` (set to null), commit ("Publish: <slug>"), push. Vercel deploys; `index-on-publish.yml` requests Google indexing automatically. Confirm with the live URL.
 - **Edit requests** → revise the article writing (wording, structure, tone, headline, CTA, sections). Re-run `npm run test:blog-quality`, bump `review_state.revision_count`, commit ("Revise: <slug>"), push, and re-send the review summary. You cannot change layout/avatar/fonts from here — say so and offer writing changes instead.
 - **"reject" / scrap it** → delete the draft file, clear `review_state`, commit ("Remove draft: <slug>"), push, confirm.
+
+## Deploy verification (after EVERY push to main)
+Each push triggers a Vercel production deploy of lulidigital.com. Verify it:
+1. Wait ~30s, then poll (every ~20s, up to 5 minutes):
+   `curl -s "https://api.vercel.com/v6/deployments?projectId=prj_ckSdCrcszxwQzYXykqd2c6K74KxD&teamId=team_VN8h7iJkoDMcPz7zb96rtZb8&limit=1" -H "Authorization: Bearer $VERCEL_TOKEN"`
+   → check `deployments[0].state`.
+2. `READY` → done, note "deploy verified" in your summary.
+3. `ERROR` → fetch the build log:
+   `curl -s "https://api.vercel.com/v3/deployments/<deployment uid>/events?teamId=team_VN8h7iJkoDMcPz7zb96rtZb8" -H "Authorization: Bearer $VERCEL_TOKEN"`
+   Diagnose. If YOUR commit caused it (frontmatter/schema/content), fix it,
+   push, and re-verify (one retry). If it still fails or the cause is outside
+   your change, report the exact build error in your final message — never
+   leave the site broken silently.
+(The VERCEL_TOKEN value is provided in the run prompt.)
 
 ## What you must NOT do
 - Do NOT publish or set `draft: false` unless Fiker explicitly said "publish it now" in this session. Silence = the draft holds. Approval is human-only.

@@ -110,7 +110,7 @@ try {
   run("schedule-draft-post.mjs", [schedSlug, "2030-01-01"]);
   let schedRaw = readFileSync(postPath(schedSlug), "utf8");
   assert(/^draft:\s*true\s*$/m.test(schedRaw), "schedule keeps the post a draft");
-  assert(/^scheduledFor:\s*2030-01-01\s*$/m.test(schedRaw), "schedule sets scheduledFor");
+  assert(/^scheduledFor:\s*"2030-01-01"\s*$/m.test(schedRaw), "schedule sets scheduledFor (quoted string)");
 
   runFailure("schedule-draft-post.mjs", [schedSlug, "2026-99-99"], 1);
   runFailure("schedule-draft-post.mjs", ["../secrets", "2026-06-26"], 1);

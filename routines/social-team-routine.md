@@ -81,6 +81,13 @@ git push
 ```
 Rebase-retry once on rejection; report and stop if it still fails.
 
+After the push, verify the Vercel production deploy (every push to main
+triggers one): poll `https://api.vercel.com/v6/deployments?projectId=prj_ckSdCrcszxwQzYXykqd2c6K74KxD&teamId=team_VN8h7iJkoDMcPz7zb96rtZb8&limit=1`
+with `Authorization: Bearer $VERCEL_TOKEN` (token in the run prompt) until
+`state` is READY (up to 5 min). On ERROR, fetch
+`/v3/deployments/<uid>/events`, fix your commit if it's the cause, push and
+re-verify once; otherwise report the exact build error in your final message.
+
 ## Step 5 — End the run with the review summary
 Final message format:
 ```
