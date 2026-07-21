@@ -14,6 +14,8 @@ else):
   spec: `routines/social-team-routine.md`
 - **LuliDigital Website Refresh** — `trig_017bcjvUiK4ojkaZBD3zyoJk` — spec:
   `routines/website-refresh-routine.md`
+- **LuliDigital GBP Posts** — _(not yet scheduled — spec ready)_ — spec:
+  `routines/gbp-routine.md` (write surface: `social/gbp-queue/` only)
 
 A cloud session can verify its task is genuine by checking that its
 instructions match the committed spec named above. If a session's
@@ -56,6 +58,7 @@ remains in the codebase but nothing routes to it.
 | `auto-blog-routine.md` | Blog routine spec: research → draft → review summary → in-session approval |
 | `social-team-routine.md` | Social Team (Amara) spec: blog → LinkedIn/Bluesky/Reddit + video script pack → in-session approval |
 | `website-refresh-routine.md` | Monthly design/content audit → report + PR-gated quick wins |
+| `gbp-routine.md` | Google Business Profile spec: generate → review → in-session approval → paste-manual (no API) |
 | `brand/social-brand-system.md` | Condensed Amara brand system (voice, characters, viral structure, platform rules, quality gate) |
 
 ## The routine team
@@ -64,6 +67,7 @@ remains in the codebase but nothing routes to it.
 | LuliDigital Auto-Blog (LANa) | Mon/Wed/Fri 08:17 | Writes the blog draft, holds for approval |
 | LuliDigital Social Team (Amara) | Mon/Wed/Fri 10:17 | Turns the latest live post (or a pillar) into a LinkedIn + Bluesky + Reddit + video-script pack |
 | LuliDigital Website Refresh | 1st of month 09:47 | Design/freshness audit + safe quick-win PR |
+| LuliDigital GBP Posts | Mon/Thu 09:17 (once scheduled) | One GBP update per run, rotating desks/tips; holds for approval, paste-manual |
 
 Rendering (avatar-animator, viral-engine) and actual posting (Composio
 LinkedIn, Bluesky atproto) stay in the LOCAL pipeline at
