@@ -1,9 +1,13 @@
 name: Recrawl and Index Check
 
 on:
+  # MIGRATION PENDING → Cowork "LuliDigital Recrawl" routine
+  # (routines/seo-suite-routine.md § B). Cron stays ACTIVE until that routine is
+  # created via /schedule and verified with one manual run — THEN comment out
+  # the schedule block below (dispatch kept) to complete the cutover.
   schedule:
     # Weekly on Wednesday at 07:33 UTC — resubmits the sitemap and reports each
-    # URL's Google index status to Telegram. Off-peak, off-:00 to avoid drops.
+    # URL's Google index status. Off-peak, off-:00 to avoid drops.
     - cron: '33 7 * * 3'
   workflow_dispatch:
 

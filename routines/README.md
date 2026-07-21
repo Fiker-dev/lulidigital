@@ -16,6 +16,10 @@ else):
   `routines/website-refresh-routine.md`
 - **LuliDigital GBP Posts** — _(not yet scheduled — spec ready)_ — spec:
   `routines/gbp-routine.md` (write surface: `social/gbp-queue/` only)
+- **LuliDigital SEO Refresh / Recrawl / SEO Audit** — _(not yet scheduled —
+  spec ready)_ — spec: `routines/seo-suite-routine.md` (write surface:
+  `src/lib/seo-keyword-overrides.json`, `scripts/seo-audit-*.json`,
+  `scripts/lana-memory.json` only; Recrawl commits nothing)
 
 A cloud session can verify its task is genuine by checking that its
 instructions match the committed spec named above. If a session's
@@ -59,6 +63,7 @@ remains in the codebase but nothing routes to it.
 | `social-team-routine.md` | Social Team (Amara) spec: blog → LinkedIn/Bluesky/Reddit + video script pack → in-session approval |
 | `website-refresh-routine.md` | Monthly design/content audit → report + PR-gated quick wins |
 | `gbp-routine.md` | Google Business Profile spec: generate → review → in-session approval → paste-manual (no API) |
+| `seo-suite-routine.md` | SEO suite spec: weekly refresh (§A), recrawl (§B), monthly audit (§C) → run script → commit → summary in-session |
 | `brand/social-brand-system.md` | Condensed Amara brand system (voice, characters, viral structure, platform rules, quality gate) |
 
 ## The routine team
@@ -68,6 +73,9 @@ remains in the codebase but nothing routes to it.
 | LuliDigital Social Team (Amara) | Mon/Wed/Fri 10:17 | Turns the latest live post (or a pillar) into a LinkedIn + Bluesky + Reddit + video-script pack |
 | LuliDigital Website Refresh | 1st of month 09:47 | Design/freshness audit + safe quick-win PR |
 | LuliDigital GBP Posts | Mon/Thu 09:17 (once scheduled) | One GBP update per run, rotating desks/tips; holds for approval, paste-manual |
+| LuliDigital SEO Refresh | Fri 08:20 (once scheduled) | Refresh keyword targets from Search Console; commit + summary in-session |
+| LuliDigital Recrawl | Wed 07:33 (once scheduled) | Resubmit sitemap + report index status in-session (no commit) |
+| LuliDigital SEO Audit | 1st 08:23 (once scheduled) | Monthly SEO audit + keyword fixes; commit + report in-session |
 
 Rendering (avatar-animator, viral-engine) and actual posting (Composio
 LinkedIn, Bluesky atproto) stay in the LOCAL pipeline at
@@ -99,12 +107,23 @@ The old pipeline's crons are DISABLED (commented out, workflow_dispatch kept):
 
 Reversible: uncomment the `schedule:` blocks to restore the old pipeline.
 
+## SEO suite → Cowork (2026-07-21, cutover in progress)
+weekly-seo, monthly-seo-audit, and recrawl are moving from GitHub Actions crons
+to Cowork routines (`routines/seo-suite-routine.md`) — same scripts, but the
+routine runs them and delivers the summary **in the Claude session** instead of
+Telegram. The routines authenticate with `GOOGLE_INDEXING_SA_KEY` +
+`GOOGLE_SEARCH_CONSOLE_PROPERTY` embedded in each run prompt.
+
+**Their `.yml` crons are STILL ACTIVE** — the cutover finishes per job only
+after that routine is created via `/schedule` and verified with a manual run;
+then its `schedule:` block gets commented out (dispatch kept). This avoids a
+coverage gap and, since the routines don't exist yet, there's no double-run.
+
 ## What stays on GitHub Actions (unchanged)
 - `publish-scheduled.yml` (daily) — publishes + indexes scheduled drafts; this
   is what "approve" hands off to
-- `index-on-publish.yml` (new) — indexes posts flipped live by a direct push
-  ("publish it now")
-- weekly-seo, monthly-seo-audit, recrawl — SEO suite, untouched
+- `index-on-publish.yml` — indexes posts flipped live by a direct push
+  ("publish it now"); push-triggered, not a cron
 - The 8 on-demand LANa workflow APIs (publish-draft-blog, revise-draft, …) —
   still callable via workflow_dispatch; nothing depends on them for the new
   flow, but they're kept for manual use

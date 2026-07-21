@@ -329,7 +329,7 @@ const reportData = {
   },
 };
 
-const summarySystem = `You are Lana, the LuliDigital SEO analyst. Write a plain-English monthly SEO report for Fiker to read in Telegram.
+const summarySystem = `You are Lana, the LuliDigital SEO analyst. Write a plain-English monthly SEO report for Fiker to read.
 
 Rules:
 - Max 1200 characters total
@@ -337,7 +337,7 @@ Rules:
 - 2-3 lines on what is working (specific numbers)
 - 2-3 lines on top opportunities (be specific: page, keyword, what to fix)
 - 1 line on low-visibility pages (count + names)
-- End with what was auto-fixed: "I've updated keyword targets for X pages and queued Y draft posts for your approval — check Telegram over the next few blog runs."
+- End with what was auto-fixed: "I've updated keyword targets for X pages and queued Y draft posts for your approval — review them over the next few blog runs."
 - Plain text only. No markdown, no asterisks, no bullet symbols. Short sentences.`;
 const summaryUser = `SEO data for this month:\n${JSON.stringify(reportData, null, 2)}`;
 
