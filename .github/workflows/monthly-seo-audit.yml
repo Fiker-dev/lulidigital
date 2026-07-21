@@ -4,6 +4,10 @@ name: Monthly SEO Audit
 # Also triggerable manually from GitHub Actions UI.
 
 on:
+  # MIGRATION PENDING → Cowork "LuliDigital SEO Audit" routine
+  # (routines/seo-suite-routine.md § C). Cron stays ACTIVE until that routine is
+  # created via /schedule and verified with one manual run — THEN comment out
+  # the schedule block below (dispatch kept) to complete the cutover.
   schedule:
     # Avoid :00 — top-of-hour scheduled runs are more likely to be dropped.
     - cron: '23 8 1 * *'

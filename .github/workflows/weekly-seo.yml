@@ -1,6 +1,10 @@
 name: Weekly SEO Refresh
 
 on:
+  # MIGRATION PENDING → Cowork "LuliDigital SEO Refresh" routine
+  # (routines/seo-suite-routine.md § A). Cron stays ACTIVE until that routine is
+  # created via /schedule and verified with one manual run — THEN comment out
+  # the schedule block below (dispatch kept) to complete the cutover.
   schedule:
     # Every Friday at 08:20 UTC (avoid :00 — GitHub drops top-of-hour runs).
     - cron: '20 8 * * 5'
