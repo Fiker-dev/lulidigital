@@ -27,10 +27,14 @@ its summary. Your only write surface is what the job's commit step lists —
 never touch `src/` beyond `src/lib/seo-keyword-overrides.json`, never touch
 the blog, never touch a workflow file.
 
-Auth is by service account: `GOOGLE_INDEXING_SA_KEY` and
-`GOOGLE_SEARCH_CONSOLE_PROPERTY` (and, for § C, `ANTHROPIC_API_KEY` +
-`GEMINI_API_KEY`) are provided in the run prompt. Export them before running
-the script. Node 24 (`.nvmrc`).
+Auth is by service account: § A and § B need only `GOOGLE_INDEXING_SA_KEY` and
+`GOOGLE_SEARCH_CONSOLE_PROPERTY`. § C also gets `GEMINI_API_KEY` (for its
+research pass). Export what the job needs before running. Node 24 (`.nvmrc`).
+
+**No `ANTHROPIC_API_KEY` — ever.** You ARE Claude on the subscription, so the
+metered Anthropic API is never needed: you write every report yourself. Gemini
+stays only where it does real *research* (§ C's opportunity pass) — never just
+to phrase a report.
 
 ---
 
@@ -83,7 +87,8 @@ the script. Node 24 (`.nvmrc`).
    ```
 
 ## § C — Monthly SEO Audit (monthly, 1st)
-1. Run:
+1. Run (no LLM keys — it collects the data regardless and writes a raw-template
+   summary as a fallback):
    ```
    node scripts/run-seo-audit.mjs
    ```
@@ -99,11 +104,31 @@ the script. Node 24 (`.nvmrc`).
      (git commit -m "Monthly SEO audit + keyword overrides $(date +%Y-%m)" && git push)
    ```
    Rebase-retry once on push rejection; report and stop if it still fails.
-3. **End the run** with the contents of `/tmp/seo-audit-message.txt`. Format:
+3. **Research next-month opportunities (Gemini).** Read
+   `scripts/seo-audit-<YYYY-MM>.json`, pull the underperforming pages/queries
+   (low-visibility pages, "Discovered – not indexed", high-impression /
+   low-click queries), and ask Gemini what to target next. Call it with Bash
+   (same pattern as the Social routine):
+   ```
+   curl -s "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=$GEMINI_API_KEY" \
+     -H "Content-Type: application/json" \
+     -d '{"contents":[{"parts":[{"text":"<for these LuliDigital pages + queries, what keywords/angles should we target next month for UK/EU/US founders? Be specific per page.>"}]}]}'
+   ```
+   **VERIFY with WebSearch** before using anything — Gemini's suggested keywords/
+   demand must be plausible and real. Discard anything you can't stand behind.
+   No fabricated search volumes or made-up opportunities.
+4. **Write the report yourself** (don't paste the script's raw template). A
+   plain-English monthly report: ≤1400 chars, plain text (no markdown), starting
+   `Monthly SEO — [Month YYYY]`, with 2–3 lines on what's working (real numbers
+   from the JSON), the **top 2–3 next-month opportunities from your verified
+   research** (page → target keyword/angle → why), 1 line on low-visibility
+   pages (count + names), and a closing line on what was auto-fixed (keyword
+   targets updated / drafts queued). No fabrication — JSON data + verified
+   research only. Then end the run:
    ```
    📊 Monthly SEO Audit — <month>
 
-   <audit report text>
+   <your report, incl. the researched next-month action plan>
 
    <"Committed audit report + keyword updates" or "No changes to commit.">
    ```
@@ -134,8 +159,9 @@ filled in:
 1. SEO Refresh — cron `20 8 * * 5` — § A — needs `GOOGLE_INDEXING_SA_KEY`,
    `GOOGLE_SEARCH_CONSOLE_PROPERTY`
 2. Recrawl — cron `33 7 * * 3` — § B — same two secrets
-3. SEO Audit — cron `23 8 1 * *` — § C — the two above plus
-   `ANTHROPIC_API_KEY` and `GEMINI_API_KEY`
+3. SEO Audit — cron `23 8 1 * *` — § C — the two Google secrets **plus
+   `GEMINI_API_KEY`** (for the research pass). Still **no `ANTHROPIC_API_KEY`** —
+   you write the report yourself.
 
 Then, one job at a time, after that job's routine is created and confirmed
 with a manual run, comment out that `.yml`'s `schedule:` block (keep
