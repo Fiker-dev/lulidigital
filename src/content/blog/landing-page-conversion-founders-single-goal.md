@@ -1,11 +1,10 @@
 ---
 title: "Your Landing Page Isn't Underperforming. It's Asking People to Do Too Much."
 description: "Most landing pages don't fail on looks. They fail by asking visitors to make too many decisions. Here's the structure that actually converts."
-pubDate: 2026-07-20
+pubDate: 2026-07-22
 category: "Digital Marketing"
 readingTime: "6 min read"
-draft: true
-scheduledFor: "2026-07-22"
+draft: false
 ---
 
 You spent good money sending people to a page, and most of them left without doing anything. The instinct is to blame the design — the colours, the hero image, the font. Usually that is not where the problem lives. A page that looks polished can still leak nearly every visitor if it asks them to make too many decisions at once.
