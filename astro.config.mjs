@@ -28,6 +28,9 @@ const ssrPages = [
   '/norway',
   '/blog',
   '/founder',
+  '/contact',
+  '/work',
+  '/web-design-desk',
 ];
 
 // https://astro.build/config

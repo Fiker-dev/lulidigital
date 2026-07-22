@@ -1,4 +1,25 @@
 User-agent: *
 Allow: /
 
+# Explicitly permit major search and answer-engine crawlers. These rules do not
+# grant rights beyond the site's published content; they only prevent accidental
+# robots exclusions.
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
 Sitemap: https://lulidigital.com/sitemap-index.xml

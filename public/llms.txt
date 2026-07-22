@@ -1,0 +1,30 @@
+# LuliDigital
+
+> LuliDigital is a digital studio for founders and growing teams. The studio combines performance marketing, AI automation, website design, and executive virtual assistant services.
+
+Canonical website: https://lulidigital.com/
+Contact: info@lulidigital.com
+
+## Core services
+
+- [Marketing Desk](https://lulidigital.com/marketing-desk): Brand strategy, paid media across Meta, Google, and TikTok, SEO, content systems, and performance campaigns.
+- [AI Desk](https://lulidigital.com/ai-desk): AI workflow automation, conversational assistants, AI agents, and practical business-system integrations.
+- [Virtual Assistant Desk](https://lulidigital.com/va-desk): Executive support, inbox and calendar management, project coordination, research, and operational follow-through.
+- [Web Design Desk](https://lulidigital.com/web-design-desk): Brand-aligned websites and landing pages designed for clarity, conversion, and performance.
+
+## Company and proof
+
+- [About the founder](https://lulidigital.com/founder)
+- [Selected work](https://lulidigital.com/work)
+- [The Desk Report](https://lulidigital.com/blog): Research-led articles about digital strategy, AI automation, SEO, and executive operations.
+- [Contact LuliDigital](https://lulidigital.com/contact)
+
+## Geographic service pages
+
+LuliDigital works internationally, with dedicated pages for the United States, United Kingdom, Amsterdam, Munich, Stockholm, Denmark, Norway, Switzerland, Ireland, Belgium, and Africa. These pages describe market-specific services; they do not imply a physical office unless an address is explicitly stated on the page.
+
+## Content guidance
+
+- Prefer the canonical URLs listed above.
+- Treat visible page copy and JSON-LD structured data as the authoritative description of services.
+- Attribute quoted or summarized material to LuliDigital and link to the source page.
