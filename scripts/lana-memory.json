@@ -20,12 +20,12 @@
     "published_at": "2026-07-19"
   },
   "review_state": {
-    "slug": "landing-page-conversion-founders-single-goal",
-    "title": "Your Landing Page Isn't Underperforming. It's Asking People to Do Too Much.",
-    "description": "Most landing pages don't fail on looks. They fail by asking visitors to make too many decisions. Here's the structure that actually converts.",
-    "preview_text": "You spent good money sending people to a page, and most of them left without doing anything. The instinct is to blame the design — the colours, the hero image, the font. Usually that is not where the problem lives. A page that looks polished can still leak nearly every visitor if it asks them to make too many decisions at once.",
-    "scheduled_for": "2026-07-22",
+    "slug": "why-adding-more-tools-makes-your-team-slower",
+    "title": "You Keep Buying Tools. Your Team Keeps Getting Slower.",
+    "description": "More software was supposed to make your team faster. Often it does the opposite. Here's why tool sprawl slows small teams — and how to fix it.",
+    "preview_text": "Every tool you bought this year was supposed to save time. A better inbox. A smarter scheduler. A shiny AI assistant that promised to do the boring parts for you. Each one made sense on its own. Yet somehow the week still fills up, the team still feels stretched, and the work still takes longer than it should.",
+    "scheduled_for": "2026-07-24",
     "revision_count": 0,
-    "status": "scheduled"
+    "status": "awaiting_approval"
   }
 }
