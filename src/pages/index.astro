@@ -76,7 +76,7 @@ const marqueeItems2 = [
         <span class="hero-line-1" data-blur-in>The studio that</span>
         <span class="hero-line-2" data-blur-in data-blur-delay="120">runs your</span>
         <span class="hero-cycling" aria-live="polite">
-          <span class="hero-typed" id="typewriter"></span><span class="hero-cursor" aria-hidden="true"></span>
+          <span class="hero-typed" id="typewriter">business.</span><span class="hero-cursor" aria-hidden="true"></span>
         </span>
       </h1>
 
@@ -576,8 +576,11 @@ const marqueeItems2 = [
     const el = document.getElementById("typewriter");
     if (!(el instanceof HTMLElement)) return;
     const node = el;
-    const words = ["brand.", "systems.", "AI.", "future."];
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) return;
+    const words = ["business.", "brand.", "systems.", "AI.", "future."];
     let wi = 0, ci = 0, deleting = false;
+    node.textContent = "";
     function tick() {
       const word = words[wi];
       if (!deleting) {

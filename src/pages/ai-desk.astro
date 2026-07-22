@@ -37,24 +37,24 @@ const aiMarquee = [
 
 const faqs = [
   {
-    q: "What can an AI assistant actually do?",
-    a: "Answer questions around the clock, qualify leads, route tasks, draft replies, and pull reports — trained on your business, not a generic bot.",
+    q: "Which parts of our workflow should we automate first?",
+    a: "Start with a frequent, rules-based task whose inputs and expected outcome are easy to describe. Lead routing, meeting preparation, document summaries, recurring reports, and first-draft follow-ups are common candidates. We map the workflow before choosing tools, then prioritise the task that removes meaningful repetition without placing sensitive judgment in the system too early.",
   },
   {
-    q: "Is my data safe?",
-    a: "Yes. We build around your tools with access scoped to what is needed, and nothing trained on your data leaves your control without permission.",
+    q: "Which decisions should remain human-approved?",
+    a: "Keep a person responsible for financial commitments, contracts, unusual customer situations, sensitive data, public brand claims, and any action that is difficult to reverse. AI can gather context, draft the response, and route the task, but an accountable person should approve the final decision. We design those checkpoints into the workflow instead of relying on someone to remember them later.",
   },
   {
-    q: "Will this replace my team?",
-    a: "No. AI carries the repetitive load so your people keep the judgment and the relationships. That is the whole point — humans on the work that needs them.",
+    q: "Can the automation use our existing tools?",
+    a: "Usually, yes. We first review your CRM, inbox, calendar, documents, forms, and communication tools, then check the available APIs, permissions, and data quality. If a tool cannot support a reliable integration, we explain the limitation and propose a simpler route rather than building a fragile workaround that your team cannot maintain.",
   },
   {
-    q: "Do I need any technical knowledge?",
-    a: "None. We handle the build, integration, and training, then hand you something simple to use and a clear way to manage it.",
+    q: "How do you protect our business data?",
+    a: "Access is limited to the accounts and information required for the workflow. We review where data enters, which services process it, what gets stored, and who can trigger an action. The right controls depend on your tools and risk level, so security and retention requirements are agreed before implementation rather than covered by a blanket promise.",
   },
   {
-    q: "What does it integrate with?",
-    a: "The tools you already use — inbox, calendar, CRM, documents, and chat. We map your stack before we build, so it fits how you already work.",
+    q: "What happens when the AI is uncertain or wrong?",
+    a: "The workflow should fail safely. Low-confidence cases, missing information, exceptions, and higher-risk actions are sent to a person with the relevant context. We also define logs and review points so errors can be traced and corrected. A useful automation is not one that pretends to be infallible; it makes uncertainty visible before it becomes a business problem.",
   },
 ];
 
@@ -160,33 +160,84 @@ const faqSchema = {
   </section>
 
   <!-- ════════════════════════════════════════ HOW IT WORKS -->
-  <section class="diagram-section" aria-label="How AI works for your business" data-reveal="up" data-bee-stop>
-    <span class="eyebrow">How It Works</span>
-    <h2 class="section-title">Your business. Smarter systems.</h2>
+  <section class="ai-story" aria-labelledby="ai-story-title" data-ai-scroll-story data-bee-stop>
+    <header class="ai-story__heading">
+      <div>
+        <span class="eyebrow">How It Works</span>
+        <h2 class="section-title" id="ai-story-title">A useful agent knows when to stop.</h2>
+      </div>
+      <p>
+        Routine work can move automatically. Sensitive decisions pause with the context a person needs to approve them.
+      </p>
+    </header>
 
-    <div class="how-flow" data-reveal="fade" data-reveal-delay="280" aria-label="AI workflow diagram">
-      <div class="how-node">
-        <span class="how-node-num">Input</span>
-        <span class="how-node-title">Your Business</span>
-        <span class="how-node-sub">Questions · Tasks · Data</span>
+    <div class="ai-story__pin">
+      <div class="ai-story__visual" aria-hidden="true">
+        <div class="ai-story__orbit"></div>
+        <div class="ai-story__core">
+          <span>LANa workflow</span>
+          <strong>Context in.<br/>Control kept.</strong>
+        </div>
+        <div class="ai-story__state-stack">
+          <span class="ai-story__state is-current" data-ai-story-state>Request received</span>
+          <span class="ai-story__state" data-ai-story-state>Context checked</span>
+          <span class="ai-story__state" data-ai-story-state>Action prepared</span>
+          <span class="ai-story__state" data-ai-story-state>Human approval</span>
+          <span class="ai-story__state" data-ai-story-state>Result logged</span>
+        </div>
+        <div class="ai-story__permission">
+          <span class="ai-story__permission-dot"></span>
+          <span>Guardrails active</span>
+        </div>
       </div>
-      <svg class="how-arrow" viewBox="0 0 48 24" aria-hidden="true" fill="none">
-        <path d="M4 12 L40 12" stroke="rgba(123,45,45,.4)" stroke-width="1.5"/>
-        <path d="M34 6 L44 12 L34 18" stroke="rgba(123,45,45,.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="how-node how-node--accent">
-        <span class="how-node-num">Process</span>
-        <span class="how-node-title">AI Agent Assistant</span>
-        <span class="how-node-sub">Memory · Context · Logic</span>
-      </div>
-      <svg class="how-arrow" viewBox="0 0 48 24" aria-hidden="true" fill="none">
-        <path d="M4 12 L40 12" stroke="rgba(123,45,45,.4)" stroke-width="1.5"/>
-        <path d="M34 6 L44 12 L34 18" stroke="rgba(123,45,45,.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="how-node">
-        <span class="how-node-num">Output</span>
-        <span class="how-node-title">Results</span>
-        <span class="how-node-sub">Answers · Actions · Reports</span>
+
+      <div class="ai-story__sequence">
+        <div class="ai-story__progress" aria-hidden="true">
+          <span class="ai-story__progress-track"></span>
+          <span class="ai-story__progress-fill" data-ai-story-progress></span>
+        </div>
+        <ol class="ai-story__steps">
+          <li class="ai-story__step is-current" data-ai-story-step>
+            <span class="ai-story__step-index">01</span>
+            <div>
+              <h3>A request arrives</h3>
+              <p>An enquiry, inbox task, document, or internal request enters one defined workflow.</p>
+            </div>
+            <span class="ai-story__step-owner">Input</span>
+          </li>
+          <li class="ai-story__step" data-ai-story-step>
+            <span class="ai-story__step-index">02</span>
+            <div>
+              <h3>The agent checks context</h3>
+              <p>It reads the relevant business rules, history, permissions, and source material before acting.</p>
+            </div>
+            <span class="ai-story__step-owner">AI prepares</span>
+          </li>
+          <li class="ai-story__step" data-ai-story-step>
+            <span class="ai-story__step-index">03</span>
+            <div>
+              <h3>Routine work moves</h3>
+              <p>Low-risk actions can be drafted, routed, scheduled, or completed inside agreed limits.</p>
+            </div>
+            <span class="ai-story__step-owner">Automated</span>
+          </li>
+          <li class="ai-story__step ai-story__step--approval" data-ai-story-step>
+            <span class="ai-story__step-index">04</span>
+            <div>
+              <h3>Judgment pauses for a person</h3>
+              <p>Financial, sensitive, unusual, or public-facing decisions arrive with context for approval.</p>
+            </div>
+            <span class="ai-story__step-owner">Human decides</span>
+          </li>
+          <li class="ai-story__step" data-ai-story-step>
+            <span class="ai-story__step-index">05</span>
+            <div>
+              <h3>The result stays traceable</h3>
+              <p>The action, approval, and outcome are recorded so the team can review what happened.</p>
+            </div>
+            <span class="ai-story__step-owner">Logged</span>
+          </li>
+        </ol>
       </div>
     </div>
   </section>
@@ -401,6 +452,17 @@ const faqSchema = {
 
 </BaseLayout>
 
+<script>
+  import { initAiScrollStory } from "../scripts/aiScrollStory.js";
+
+  const startAiScrollStory = () => initAiScrollStory();
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startAiScrollStory, { once: true });
+  } else {
+    startAiScrollStory();
+  }
+</script>
 
 <style>
   /* ── Hero ───────────────────────────────────────────────────── */
@@ -563,8 +625,223 @@ const faqSchema = {
   .ac-typing span:nth-child(3) { animation-delay: .4s; }
   @keyframes typingDot { 0%,80%,100%{transform:translateY(0);opacity:.4} 40%{transform:translateY(-5px);opacity:1} }
 
-  /* ── Diagram / How ──────────────────────────────────────────── */
-  .diagram-section { padding: 72px 0 80px; border-top: 1px solid rgba(30,24,22,.1); }
+  /* ── Scroll story / How it works ───────────────────────────── */
+  .ai-story {
+    padding: 72px 0 80px;
+    border-top: 1px solid rgba(30,24,22,.1);
+  }
+  .ai-story__heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, .52fr);
+    align-items: end;
+    gap: clamp(24px, 5vw, 64px);
+    margin-bottom: clamp(30px, 5vw, 52px);
+  }
+  .ai-story__heading p {
+    max-width: 48ch;
+    margin: 0;
+    color: rgba(20,19,18,.72);
+    font-size: 15px;
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+  .ai-story__pin {
+    display: grid;
+    grid-template-columns: minmax(300px, .82fr) minmax(420px, 1.18fr);
+    gap: clamp(24px, 5vw, 64px);
+    align-items: center;
+    min-height: min(680px, calc(100dvh - 104px));
+    padding: clamp(26px, 4vw, 48px);
+    border: 1px solid rgba(182,109,0,.2);
+    border-radius: 24px;
+    background:
+      linear-gradient(30deg, transparent 34%, rgba(182,109,0,.1) 35%, rgba(182,109,0,.1) 36%, transparent 37%),
+      linear-gradient(150deg, transparent 34%, rgba(182,109,0,.08) 35%, rgba(182,109,0,.08) 36%, transparent 37%),
+      rgba(255,247,223,.92);
+    background-size: 54px 94px, 54px 94px, auto;
+    box-shadow: 0 28px 70px rgba(107,59,0,.08), inset 0 1px 0 rgba(255,255,255,.78);
+  }
+  .ai-story__visual {
+    position: relative;
+    min-height: 410px;
+    display: grid;
+    place-items: center;
+    isolation: isolate;
+  }
+  .ai-story__orbit {
+    position: absolute;
+    width: min(330px, 86%);
+    aspect-ratio: 1;
+    border: 1px solid rgba(182,109,0,.2);
+    border-radius: 50%;
+  }
+  .ai-story__orbit::before,
+  .ai-story__orbit::after {
+    content: "";
+    position: absolute;
+    inset: 12%;
+    border: 1px dashed rgba(182,109,0,.24);
+    border-radius: 50%;
+  }
+  .ai-story__orbit::after {
+    inset: 28%;
+    border-style: solid;
+    background: rgba(255,212,90,.18);
+    box-shadow: 0 0 72px rgba(245,164,31,.22);
+  }
+  .ai-story__core {
+    position: relative;
+    z-index: 2;
+    width: 190px;
+    aspect-ratio: 1.12;
+    display: grid;
+    place-content: center;
+    gap: 8px;
+    padding: 30px;
+    text-align: center;
+    color: #fff8df;
+    clip-path: polygon(25% 4%, 75% 4%, 100% 50%, 75% 96%, 25% 96%, 0 50%);
+    background: linear-gradient(155deg, #2b1a05, #7a4300);
+    filter: drop-shadow(0 22px 28px rgba(107,59,0,.22));
+  }
+  .ai-story__core span,
+  .ai-story__permission,
+  .ai-story__step-owner {
+    font-family: var(--font-body, "DM Sans", sans-serif);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  .ai-story__core span { color: rgba(255,248,223,.66); }
+  .ai-story__core strong {
+    font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
+    font-size: 22px;
+    line-height: 1.08;
+    letter-spacing: -.025em;
+  }
+  .ai-story__state-stack {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    bottom: 28px;
+    width: min(280px, 88%);
+    transform: translateX(-50%);
+    min-height: 42px;
+  }
+  .ai-story__state {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 11px 18px;
+    border: 1px solid rgba(182,109,0,.2);
+    border-radius: 999px;
+    background: rgba(255,252,242,.96);
+    color: var(--honey-dark);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    opacity: 0;
+  }
+  .ai-story__state.is-current { opacity: 1; }
+  .ai-story__permission {
+    position: absolute;
+    z-index: 3;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(69,41,0,.72);
+    white-space: nowrap;
+  }
+  .ai-story__permission-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #25834f;
+    box-shadow: 0 0 0 5px rgba(37,131,79,.1);
+  }
+  .ai-story__sequence {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2px minmax(0, 1fr);
+    gap: 22px;
+  }
+  .ai-story__progress { position: relative; }
+  .ai-story__progress-track,
+  .ai-story__progress-fill {
+    position: absolute;
+    inset: 8px 0;
+    border-radius: 999px;
+  }
+  .ai-story__progress-track { background: rgba(182,109,0,.16); }
+  .ai-story__progress-fill {
+    background: linear-gradient(180deg, var(--honey-bright), var(--brand));
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  .ai-story__steps {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ai-story__step {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: start;
+    padding: 14px 16px;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    color: rgba(20,19,18,.72);
+    transition: border-color 220ms ease, background 220ms ease, color 220ms ease;
+  }
+  .ai-story__step.is-current {
+    border-color: rgba(182,109,0,.24);
+    background: rgba(255,255,255,.58);
+    color: var(--ink);
+  }
+  .ai-story__step--approval.is-current {
+    border-color: rgba(37,131,79,.24);
+    background: rgba(231,248,237,.68);
+  }
+  .ai-story__step-index {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(182,109,0,.2);
+    border-radius: 50%;
+    color: var(--brand);
+    font-size: 10px;
+    font-weight: 800;
+  }
+  .ai-story__step h3 {
+    margin: 0 0 4px;
+    color: inherit;
+    font-size: clamp(16px, 1.8vw, 20px);
+    line-height: 1.15;
+    letter-spacing: -.018em;
+  }
+  .ai-story__step p {
+    max-width: 54ch;
+    margin: 0;
+    color: inherit;
+    font-size: 13px;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+  .ai-story__step-owner {
+    align-self: center;
+    color: rgba(107,59,0,.68);
+    white-space: nowrap;
+  }
+  .ai-story__step--approval .ai-story__step-owner { color: #226b42; }
 
   /* ── AI metric 24/7 ─────────────────────────────────────────── */
   .ai-247 { display: inline-flex; align-items: baseline; gap: 2px; }
@@ -806,6 +1083,38 @@ const faqSchema = {
     .ai-hero-ctas { justify-content: center; }
     .ai-chat { max-width: 360px; margin: 0 auto; }
     .loop-heading { grid-template-columns: 1fr; align-items: start; }
+    .ai-story__heading { grid-template-columns: 1fr; align-items: start; }
+    .ai-story__pin {
+      display: block;
+      min-height: auto;
+      padding: 24px;
+      border-radius: 18px;
+    }
+    .ai-story__visual { min-height: 360px; }
+    .ai-story.is-mobile-enhanced .ai-story__visual {
+      z-index: 5;
+      min-height: 244px;
+      margin: -8px -8px 10px;
+      border: 1px solid rgba(182,109,0,.18);
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 50% 48%, rgba(255,212,90,.38), transparent 34%),
+        rgba(255,247,223,.96);
+      box-shadow: 0 16px 34px rgba(107,59,0,.11);
+    }
+    .ai-story.is-mobile-enhanced .ai-story__orbit { width: 218px; }
+    .ai-story.is-mobile-enhanced .ai-story__core { width: 142px; padding: 24px; }
+    .ai-story.is-mobile-enhanced .ai-story__core strong { font-size: 18px; }
+    .ai-story.is-mobile-enhanced .ai-story__permission { top: 15px; }
+    .ai-story.is-mobile-enhanced .ai-story__state-stack {
+      bottom: 14px;
+      width: min(248px, 86%);
+    }
+    .ai-story.is-mobile-enhanced .ai-story__step {
+      min-height: 150px;
+      align-content: center;
+    }
+    .ai-story.is-mobile-enhanced .ai-story__sequence { margin-top: 18px; }
     .hive-loop {
       min-height: auto;
       display: grid;
@@ -845,6 +1154,27 @@ const faqSchema = {
     .ai-chat { max-width: 100%; border-radius: 12px; animation-duration: 8s; }
     .ac-messages { padding: 12px; gap: 8px; }
     .ac-msg { font-size: 12.5px; max-width: 92%; }
+    .ai-story { padding: 56px 0 64px; }
+    .ai-story__pin { padding: 18px 14px; }
+    .ai-story__visual { min-height: 320px; }
+    .ai-story__core { width: 166px; }
+    .ai-story__sequence { gap: 12px; }
+    .ai-story__step {
+      grid-template-columns: 30px minmax(0, 1fr);
+      gap: 10px;
+      padding: 14px 10px;
+    }
+    .ai-story__step-index { width: 28px; height: 28px; }
+    .ai-story__step-owner {
+      grid-column: 2;
+      justify-self: start;
+      margin-top: 5px;
+    }
+    .ai-story.is-mobile-enhanced .ai-story__visual {
+      min-height: 226px;
+      margin-inline: -4px;
+    }
+    .ai-story.is-mobile-enhanced .ai-story__step { min-height: 162px; }
     .hive-loop {
       grid-template-columns: 1fr;
       gap: 10px;
@@ -872,8 +1202,14 @@ const faqSchema = {
     .ac-typing span,
     .hive-cell,
     .hive-flow,
-    .hive-loop::before { animation: none !important; }
+    .hive-loop::before,
+    .ai-story__orbit,
+    .ai-story__core,
+    .ai-story__state,
+    .ai-story__step { animation: none !important; transform: none; }
     .ac-msg,
     .ac-typing { opacity: 1; transform: none; }
+    .ai-story__state-stack { display: none; }
+    .ai-story__progress-fill { transform: scaleY(1); }
   }
 </style>
