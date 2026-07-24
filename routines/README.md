@@ -72,7 +72,7 @@ remains in the codebase but nothing routes to it.
 | LuliDigital Auto-Blog (LANa) | Mon/Wed/Fri 08:17 | Writes the blog draft, holds for approval |
 | LuliDigital Social Team (Amara) | Mon/Wed/Fri 10:17 | Turns the latest live post (or a pillar) into a LinkedIn + Bluesky + Reddit + video-script pack |
 | LuliDigital Website Refresh | 1st of month 09:47 | Design/freshness audit + safe quick-win PR |
-| LuliDigital GBP Posts | Mon/Thu 09:17 (once scheduled) | One GBP update per run, rotating desks/tips; holds for approval, paste-manual |
+| LuliDigital GBP Posts | Tue/Thu 09:17 | One GBP update per run (non-blog days), rotating desks/tips; holds for approval, paste-manual |
 | LuliDigital SEO Refresh | Fri 08:20 (once scheduled) | Refresh keyword targets from Search Console; commit + summary in-session |
 | LuliDigital Recrawl | Wed 07:33 (once scheduled) | Resubmit sitemap + report index status in-session (no commit) |
 | LuliDigital SEO Audit | 1st 08:23 (once scheduled) | Monthly SEO audit + keyword fixes; commit + report in-session |
