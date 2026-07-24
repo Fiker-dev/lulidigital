@@ -56,9 +56,38 @@ for (const file of readdirSync(BLOG_DIR)) {
     title: field(fm, "title"),
     description: field(fm, "description"),
     url: `${SITE}/blog/${slug}`,
+    pubDate: scheduledFor,
   });
   console.log(`Published scheduled post: ${slug} (was due ${scheduledFor})`);
 }
 
 writeFileSync("/tmp/published-scheduled.json", JSON.stringify(published));
 console.log(`Total published: ${published.length}`);
+
+// Keep lana-memory.json in sync so the routines' state never drifts: advance
+// latest_live_post, prune published slugs from pending_drafts, and clear a
+// review_state that points at a post we just published. (Without this the
+// state goes stale — Amara anchors to the wrong post and the blog routine can
+// skip a slot thinking a post is still "scheduled".)
+if (published.length > 0) {
+  const memoryPath = join(__dirname, "lana-memory.json");
+  try {
+    const memory = JSON.parse(readFileSync(memoryPath, "utf8"));
+    const publishedSlugs = new Set(published.map((p) => p.slug));
+    const newest = published.reduce((a, b) => (b.pubDate >= a.pubDate ? b : a));
+
+    memory.latest_live_post = { slug: newest.slug, title: newest.title, published_at: newest.pubDate };
+
+    if (Array.isArray(memory.pending_drafts)) {
+      memory.pending_drafts = memory.pending_drafts.filter((s) => !publishedSlugs.has(s));
+    }
+    if (memory.review_state && publishedSlugs.has(memory.review_state.slug)) {
+      memory.review_state = null;
+    }
+
+    writeFileSync(memoryPath, `${JSON.stringify(memory, null, 2)}\n`);
+    console.log(`Synced lana-memory.json → latest_live_post=${newest.slug}, pending_drafts pruned.`);
+  } catch (err) {
+    console.error("Warning: could not sync lana-memory.json:", err.message);
+  }
+}
