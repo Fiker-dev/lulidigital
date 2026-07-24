@@ -1,7 +1,8 @@
 # Cowork Routine: Google Business Profile (GBP) — LuliDigital
 
 > Canonical spec for the "LuliDigital GBP Posts" cloud routine.
-> Runs **Mon & Thu ~09:17 UTC** (after the blog slot). Produces ONE
+> Runs **Tue & Thu ~09:17 UTC** — the non-blog weekdays, so brand activity
+> spreads across the week (Mon/Wed/Fri = blog+social, Tue/Thu = GBP). Produces ONE
 > approval-ready Google Business Profile update per run, rotating through the
 > four service desks and operational tips. Approval happens by replying in
 > this session. **Nothing is posted automatically** — GBP posting is
@@ -116,7 +117,7 @@ GBP posting stays manual — nothing goes live until you paste it.
 ## Setup (when you're ready to schedule it)
 1. GitHub for cloud agents already connected (same as the blog/social
    routines on `Fiker-dev/lulidigital`).
-2. Create the routine with `/schedule`: cron `17 9 * * 1,4`, model
+2. Create the routine with `/schedule`: cron `17 9 * * 2,4` (Tue & Thu), model
    `claude-opus-4-8`, repo connected, prompt = this spec with `GEMINI_API_KEY`
    filled in.
 3. Run once → confirm the draft lands and the summary reads right → reply
