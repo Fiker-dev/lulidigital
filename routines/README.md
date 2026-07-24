@@ -14,7 +14,7 @@ else):
   spec: `routines/social-team-routine.md`
 - **LuliDigital Website Refresh** — `trig_017bcjvUiK4ojkaZBD3zyoJk` — spec:
   `routines/website-refresh-routine.md`
-- **LuliDigital GBP Posts** — _(not yet scheduled — spec ready)_ — spec:
+- **LuliDigital GBP Posts** — `trig_01WfKPndx4AAr5sXVEfpV6dN` — spec:
   `routines/gbp-routine.md` (write surface: `social/gbp-queue/` only)
 - **LuliDigital SEO Refresh / Recrawl / SEO Audit** — _(not yet scheduled —
   spec ready)_ — spec: `routines/seo-suite-routine.md` (write surface:
