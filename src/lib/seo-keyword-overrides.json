@@ -1,12 +1,13 @@
 {
-  "generatedAt": "2026-07-17T10:11:46.020Z",
-  "week": "2026-07-17",
+  "generatedAt": "2026-07-24T10:28:31.973Z",
+  "week": "2026-07-24",
   "pages": {
     "/va-desk": {
       "primary": [
-        "digital secretary"
+        "digital secretary",
+        "virtual secretary eos"
       ],
-      "source": "weekly Search Console refresh 2026-07-17"
+      "source": "weekly Search Console refresh 2026-07-24"
     }
   }
 }
