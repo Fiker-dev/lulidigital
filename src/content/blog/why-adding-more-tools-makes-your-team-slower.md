@@ -1,11 +1,10 @@
 ---
 title: "You Keep Buying Tools. Your Team Keeps Getting Slower."
 description: "More software was supposed to make your team faster. Often it does the opposite. Here's why tool sprawl slows small teams — and how to fix it."
-pubDate: 2026-07-22
+pubDate: 2026-07-24
 category: "AI Automation"
 readingTime: "6 min read"
-draft: true
-scheduledFor: "2026-07-24"
+draft: false
 ---
 
 Every tool you bought this year was supposed to save time. A better inbox. A smarter scheduler. A shiny AI assistant that promised to do the boring parts for you. Each one made sense on its own. Yet somehow the week still fills up, the team still feels stretched, and the work still takes longer than it should.
