@@ -17,5 +17,13 @@
     "title": "You Keep Buying Tools. Your Team Keeps Getting Slower.",
     "published_at": "2026-07-24"
   },
-  "review_state": null
+  "review_state": {
+    "slug": "the-first-two-weeks-decide-whether-a-client-stays",
+    "title": "The First Two Weeks Decide Whether a Client Stays. Most Founders Waste Them.",
+    "description": "Your best work won't save a client who felt lost in week one. Why onboarding quietly decides retention — and how to make the first days effortless.",
+    "preview_text": "You spent weeks winning the client. The calls, the proposal, the follow-ups, the small negotiations — all of it aimed at hearing the word yes. Then yes arrives, the contract is signed, and something strange happens: everyone relaxes. The energy that went into winning the work quietly disappears just as the client is paying closest attention.",
+    "scheduled_for": "2026-07-29",
+    "revision_count": 0,
+    "status": "awaiting_approval"
+  }
 }
