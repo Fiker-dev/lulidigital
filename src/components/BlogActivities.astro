@@ -37,9 +37,9 @@
   /* --- the mini-you reading companion --- */
   .blog-buddy {
     position: fixed;
-    left: clamp(8px, 3vw, 40px);
-    bottom: clamp(8px, 3vw, 32px);
-    width: clamp(88px, 14vw, 150px);
+    left: clamp(-6px, 1vw, 28px);
+    bottom: clamp(-4px, 1vw, 24px);
+    width: clamp(68px, 11vw, 124px);
     z-index: 40;
     pointer-events: none;
     opacity: 0;
@@ -92,13 +92,10 @@
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Placeholder activities (2D pose pack). Swap for 3D /assets/mini-fiker/ frames later.
-    const ROOT = "/assets/fiker-avatar-pack";
-    const ACTIVITIES = [
-      "coffee", "pointing-right", "thinking", "lightbulb",
-      "explaining", "excited", "sitting-perch", "notebook",
-    ];
-    const src = (pose: string) => `${ROOT}/${pose}.webp`;
+    // 3D mini-you activity frames (Nano-Banana generated, transparent).
+    const ROOT = "/assets/mini-fiker";
+    const ACTIVITIES = ["coffee", "laptop", "idea", "mop", "spill", "celebrate"];
+    const src = (pose: string) => `${ROOT}/${pose}.png`;
 
     // Preload so pose swaps don't flash.
     ACTIVITIES.forEach((p) => { const i = new Image(); i.src = src(p); });
