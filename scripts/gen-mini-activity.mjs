@@ -8,11 +8,16 @@ import { readFile, writeFile } from "node:fs/promises";
 const KEY = process.env.GEMINI_API_KEY;
 if (!KEY) { console.error("Set GEMINI_API_KEY"); process.exit(1); }
 const MODEL = process.env.IMG_MODEL || "gemini-2.5-flash-image";
-const [REF, PROMPT, OUT] = process.argv.slice(2);
-if (!REF || !PROMPT || !OUT) { console.error("args: <ref> <prompt> <out>"); process.exit(1); }
+const [REFS, PROMPT, OUT] = process.argv.slice(2);
+if (!REFS || !PROMPT || !OUT) { console.error("args: <ref[,ref2,...]> <prompt> <out>"); process.exit(1); }
 
-const ref = await readFile(REF);
-const mime = REF.toLowerCase().endsWith(".png") ? "image/png" : "image/jpeg";
+// One or more reference images (comma-separated) — multiple refs lock likeness.
+const parts = [{ text: PROMPT }];
+for (const p of REFS.split(",").map((s) => s.trim()).filter(Boolean)) {
+  const buf = await readFile(p);
+  const mime = p.toLowerCase().endsWith(".png") ? "image/png" : "image/jpeg";
+  parts.push({ inline_data: { mime_type: mime, data: buf.toString("base64") } });
+}
 
 const res = await fetch(
   `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${KEY}`,
@@ -20,7 +25,7 @@ const res = await fetch(
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      contents: [{ parts: [{ text: PROMPT }, { inline_data: { mime_type: mime, data: ref.toString("base64") } }] }],
+      contents: [{ parts }],
       generationConfig: { responseModalities: ["IMAGE"] },
     }),
   }

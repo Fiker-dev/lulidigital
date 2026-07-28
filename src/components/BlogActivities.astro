@@ -1,85 +1,97 @@
 ---
 /**
- * BlogActivities — scroll-reveal + a mini-you "reading companion" that performs
- * a different activity per section, to break up the text and pull readers down.
+ * BlogActivities — a mini-you who travels DOWN the article beside each block,
+ * telling a little story in sequence (e.g. coffee → reads phone → spills →
+ * mops → relaxes). She slides to the active block ("one block past, next
+ * coming"), swaps activity per block, and each block text-wipes open as she
+ * arrives. A DIFFERENT story is chosen per post (by slug), so it's never the
+ * same pattern twice.
  *
- * PROTOTYPE: uses the 2D FikerAvatar pose pack as placeholders. To upgrade to the
- * 3D mini-you, drop transparent activity frames into /assets/mini-fiker/ and
- * swap the ACTIVITIES list below (e.g. mop-1..3, coffee-1..2, spill-1..3).
- *
- * Accessibility: honors prefers-reduced-motion (text shows instantly, companion
- * static); the companion is decorative (aria-hidden) and never gates content.
+ * Accessibility: honors prefers-reduced-motion (text instant, buddy static);
+ * decorative (aria-hidden); never gates content.
  */
 ---
 
 <div class="blog-buddy" data-blog-buddy aria-hidden="true">
-  <img class="blog-buddy__img" alt="" width="150" height="150" decoding="async" />
+  <img class="blog-buddy__img" alt="" decoding="async" />
 </div>
 
-<style>
-  /* --- section text-wipe reveal (the "mop reveals the text" effect) --- */
-  #post-article.buddy-on > * {
-    opacity: 0;
-    transform: translateY(16px);
-    clip-path: inset(0 100% 0 0);
-    transition:
-      opacity 0.55s ease,
-      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-      clip-path 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: opacity, transform, clip-path;
-  }
-  #post-article.buddy-on > .buddy-revealed {
-    opacity: 1;
-    transform: none;
-    clip-path: inset(0 0 0 0);
-  }
+<style is:global>
+  /* is:global — these target #post-article (rendered by BlogArticle) and the
+     JS-created .coffee-splash, so they must not be Astro-scoped. */
+  #post-article { position: relative; }
+  #post-article.buddy-on > * { position: relative; } /* positioning context for the coffee drip */
 
-  /* --- the mini-you reading companion --- */
+  /* --- the traveling companion --- */
   .blog-buddy {
-    position: fixed;
-    left: clamp(-6px, 1vw, 28px);
-    bottom: clamp(-4px, 1vw, 24px);
-    width: clamp(68px, 11vw, 124px);
-    z-index: 40;
+    position: fixed; /* viewport-anchored so a clipping ancestor can't crop her */
+    top: 0;
+    right: clamp(4px, 2.5vw, 46px);
+    width: clamp(74px, 11vw, 138px);
+    z-index: 20;
     pointer-events: none;
     opacity: 0;
-    transform: translateY(12px) scale(0.96);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.18));
+    transform: translateY(8px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+    filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.16));
+    will-change: top;
   }
-  .blog-buddy[data-visible="true"] {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+  .blog-buddy[data-visible="true"] { opacity: 1; transform: translateY(0); }
+  /* on narrow screens she's smaller + a touch transparent so she never buries text */
+  @media (max-width: 720px) {
+    .blog-buddy { width: clamp(62px, 19vw, 94px); right: 2px; }
+    .blog-buddy[data-visible="true"] { opacity: 0.94; }
   }
+
   .blog-buddy__img {
-    width: 100%;
-    height: auto;
-    display: block;
-    animation: buddy-bob 3.2s ease-in-out infinite;
+    width: 100%; height: auto; display: block;
+    animation: buddy-bob 3.4s ease-in-out infinite;
   }
-  /* little pop each time she changes activity */
   .blog-buddy--pop .blog-buddy__img {
-    animation: buddy-pop 0.5s ease, buddy-bob 3.2s ease-in-out infinite 0.5s;
+    animation: buddy-pop 0.55s ease, buddy-bob 3.4s ease-in-out infinite 0.55s;
   }
-  @keyframes buddy-bob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-  }
+  @keyframes buddy-bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
   @keyframes buddy-pop {
-    0% { transform: translateY(0) scale(0.7); opacity: 0.4; }
-    60% { transform: translateY(-4px) scale(1.08); opacity: 1; }
-    100% { transform: translateY(0) scale(1); }
+    0%{transform:translateY(0) scale(0.72) rotate(-3deg);opacity:0.5}
+    60%{transform:translateY(-4px) scale(1.07) rotate(1deg);opacity:1}
+    100%{transform:translateY(0) scale(1) rotate(0)}
+  }
+
+  /* --- coffee-drip consequence: the spill dribbles onto the NEXT block, then fades --- */
+  #post-article.buddy-on > * { position: relative; }
+  .coffee-splash {
+    position: absolute;
+    top: 0;
+    left: 4%;
+    width: 130px;
+    height: 68px;
+    pointer-events: none;
+    z-index: 6;
+    background: linear-gradient(
+      180deg,
+      rgba(94, 55, 22, 0.9) 0%,
+      rgba(94, 55, 22, 0.6) 28%,
+      rgba(94, 55, 22, 0.28) 62%,
+      rgba(94, 55, 22, 0) 100%
+    );
+    border-radius: 0 0 46% 46% / 0 0 86% 86%;
+    transform-origin: top;
+    animation: coffee-drip 3.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  @keyframes coffee-drip {
+    0% { opacity: 0; transform: scaleY(0.12); }
+    24% { opacity: 0.95; transform: scaleY(1); }
+    65% { opacity: 0.8; transform: scaleY(1); }
+    100% { opacity: 0; transform: scaleY(1); }
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .coffee-splash { display: none; }
     #post-article.buddy-on > * {
-      opacity: 1 !important;
-      transform: none !important;
-      clip-path: none !important;
-      transition: none !important;
+      opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important;
     }
+    .blog-buddy { transition: opacity 0.3s ease; }
     .blog-buddy__img { animation: none !important; }
-    .blog-buddy { transition: none; }
   }
 </style>
 
@@ -90,72 +102,95 @@
     const img = buddy?.querySelector<HTMLImageElement>(".blog-buddy__img");
     if (!article || !buddy || !img) return;
 
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    // 3D mini-you activity frames (Nano-Banana generated, transparent).
     const ROOT = "/assets/mini-fiker";
-    const ACTIVITIES = ["coffee", "laptop", "idea", "mop", "spill", "celebrate"];
-    const src = (pose: string) => `${ROOT}/${pose}.png`;
+    const src = (f: string) => `${ROOT}/${f}.png`;
 
-    // Preload so pose swaps don't flash.
-    ACTIVITIES.forEach((p) => { const i = new Image(); i.src = src(p); });
+    // Story sets — each a coherent little narrative. Add more to grow the variety.
+    const STORIES: string[][] = [
+      ["story-coffee", "story-phone", "story-spill", "story-mop", "story-relax"], // the coffee mishap
+      ["story-coffee", "laptop", "idea", "celebrate", "story-relax"],             // getting to work
+      ["story-phone", "story-coffee", "idea", "story-mop", "celebrate"],          // mixed day
+    ];
 
+    // Pick a story deterministically per post (same post = same story; different post = different).
+    let h = 2166136261;
+    for (const c of location.pathname) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); }
+    const story = STORIES[(h >>> 0) % STORIES.length];
+
+    // Preload so pose swaps never flash.
+    story.forEach((f) => { const i = new Image(); i.src = src(f); });
+
+    const blocks = Array.from(article.children) as HTMLElement[];
     article.classList.add("buddy-on");
-    img.src = src(ACTIVITIES[0]);
+    img.src = src(story[0]);
 
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      // Reveal everything, keep a static companion.
-      Array.from(article.children).forEach((c) => c.classList.add("buddy-revealed"));
+      buddy.style.top = "40px";
       buddy.setAttribute("data-visible", "true");
       return;
     }
 
-    // 1) Text-wipe reveal for each top-level block.
-    const revealIO = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("buddy-revealed");
-            revealIO.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
-    );
-    Array.from(article.children).forEach((c) => revealIO.observe(c));
-
-    // 2) Companion swaps activity per heading (assign a fixed pose per h2).
-    const heads = Array.from(article.querySelectorAll("h2, h3"));
-    heads.forEach((h, i) => h.setAttribute("data-activity", ACTIVITIES[i % ACTIVITIES.length]));
-
-    let current = "";
-    const setActivity = (pose: string) => {
-      if (!pose || pose === current) return;
-      current = pose;
-      img.src = src(pose);
+    // the buddy travels to the active block + swaps to that block's story beat
+    let activeIdx = -1;
+    let activeBlock: HTMLElement | null = null;
+    const goTo = (idx: number) => {
+      if (idx === activeIdx || idx < 0 || idx >= blocks.length) return;
+      activeIdx = idx;
+      activeBlock = blocks[idx]; // the rAF loop below glides her to it
+      buddy.setAttribute("data-visible", "true");
+      const beat = story[idx % story.length];
+      img.src = src(beat);
       buddy.classList.remove("blog-buddy--pop");
-      void buddy.offsetWidth; // restart animation
+      void buddy.offsetWidth;
       buddy.classList.add("blog-buddy--pop");
+
+      // coffee-drip consequence: the spill dribbles onto the NEXT block
+      if (beat === "story-spill" && blocks[idx + 1]) {
+        const s = document.createElement("span");
+        s.className = "coffee-splash";
+        s.setAttribute("aria-hidden", "true");
+        blocks[idx + 1].appendChild(s);
+        window.setTimeout(() => s.remove(), 3700);
+      }
     };
 
-    const activityIO = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActivity(e.target.getAttribute("data-activity") || "");
-        });
+    // whichever block is nearest the middle of the viewport is "active"
+    const activeIO = new IntersectionObserver(
+      (es) => {
+        let bestIdx = -1;
+        let bestRatio = 0;
+        for (const e of es) {
+          if (e.isIntersecting && e.intersectionRatio >= bestRatio) {
+            bestRatio = e.intersectionRatio;
+            bestIdx = blocks.indexOf(e.target as HTMLElement);
+          }
+        }
+        if (bestIdx >= 0) goTo(bestIdx);
       },
-      { threshold: 0, rootMargin: "-35% 0px -55% 0px" }
+      { threshold: [0.25, 0.5, 0.75], rootMargin: "-30% 0px -45% 0px" }
     );
-    heads.forEach((h) => activityIO.observe(h));
+    blocks.forEach((b) => activeIO.observe(b));
 
-    // Show the companion once the reader is into the article.
+    // hide her when the article is out of view (top or bottom)
     const showIO = new IntersectionObserver(
-      (entries) => {
-        const inArticle = entries.some((e) => e.isIntersecting);
-        buddy.setAttribute("data-visible", inArticle ? "true" : "false");
-      },
+      (es) => { if (es.every((e) => !e.isIntersecting)) buddy.setAttribute("data-visible", "false"); },
       { threshold: 0 }
     );
     showIO.observe(article);
+
+    // smoothly glide her fixed position toward the active block (she "travels" with the reader)
+    let curTop = window.innerHeight * 0.4;
+    const follow = () => {
+      if (activeBlock && buddy.getAttribute("data-visible") === "true") {
+        const r = activeBlock.getBoundingClientRect();
+        const bh = buddy.offsetHeight || 200;
+        const target = Math.min(Math.max(r.top - 8, 70), window.innerHeight - bh - 54);
+        curTop += (target - curTop) * 0.14;
+        buddy.style.top = curTop + "px";
+      }
+      requestAnimationFrame(follow);
+    };
+    requestAnimationFrame(follow);
   })();
 </script>
