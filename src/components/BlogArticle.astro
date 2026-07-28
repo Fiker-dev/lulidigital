@@ -1,5 +1,6 @@
 ---
 import { type FikerAvatarPose } from "./FikerAvatar";
+import BlogActivities from "./BlogActivities.astro";
 
 // Shared blog article renderer used by both the live post page
 // (src/pages/blog/[...slug].astro) and the secured draft preview
@@ -98,6 +99,8 @@ function formatDate(date: Date) {
   <article class="post-body prose" id="post-article" data-anim={`t${animIndex}`}>
     {bodyHtml ? <Fragment set:html={bodyHtml} /> : <slot />}
   </article>
+
+  <BlogActivities />
 
   <hr class="rule rule--bottom" />
 
