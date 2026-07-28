@@ -1,10 +1,10 @@
 ---
 title: "The First Two Weeks Decide Whether a Client Stays. Most Founders Waste Them."
 description: "Your best work won't save a client who felt lost in week one. Why onboarding quietly decides retention — and how to make the first days effortless."
-pubDate: 2026-07-27
+pubDate: 2026-07-28
 category: "Virtual Assistant"
 readingTime: "6 min read"
-draft: true
+draft: false
 ---
 
 You spent weeks winning the client. The calls, the proposal, the follow-ups, the small negotiations — all of it aimed at hearing the word yes. Then yes arrives, the contract is signed, and something strange happens: everyone relaxes. The energy that went into winning the work quietly disappears just as the client is paying closest attention.
