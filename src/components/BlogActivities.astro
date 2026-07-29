@@ -105,11 +105,16 @@
     const ROOT = "/assets/mini-fiker";
     const src = (f: string) => `${ROOT}/${f}.png`;
 
-    // Story sets — each a coherent little narrative. Add more to grow the variety.
+    // Story arcs — each a coherent little narrative that uses ALL 8 poses
+    // exactly once, so no reaction ever repeats within a single post. The
+    // spill always sits right before the mop, so the coffee-drip has a payoff
+    // (she cleans it on the next block). Different arc per post = never the
+    // same pattern twice. Add more arcs to grow the variety further.
     const STORIES: string[][] = [
-      ["story-coffee", "story-phone", "story-spill", "story-mop", "story-relax"], // the coffee mishap
-      ["story-coffee", "laptop", "idea", "celebrate", "story-relax"],             // getting to work
-      ["story-phone", "story-coffee", "idea", "story-mop", "celebrate"],          // mixed day
+      ["story-coffee", "story-phone", "laptop", "idea", "story-spill", "story-mop", "celebrate", "story-relax"], // the mishap day
+      ["story-phone", "story-coffee", "laptop", "story-spill", "story-mop", "idea", "celebrate", "story-relax"], // productive morning
+      ["story-coffee", "idea", "laptop", "celebrate", "story-phone", "story-spill", "story-mop", "story-relax"], // creative burst
+      ["laptop", "story-phone", "story-coffee", "story-spill", "story-mop", "idea", "story-relax", "celebrate"], // heads-down build
     ];
 
     // Pick a story deterministically per post (same post = same story; different post = different).
