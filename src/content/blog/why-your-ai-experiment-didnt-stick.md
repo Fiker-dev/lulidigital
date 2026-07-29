@@ -4,7 +4,7 @@ description: "Most AI experiments quietly disappear — not because the tool fai
 pubDate: 2026-07-29
 category: "AI Automation"
 readingTime: "6 min read"
-draft: true
+draft: false
 ---
 
 You ran the trial. Maybe it was a chatbot for your inbox, a drafting assistant for proposals, or a tool that promised to summarise every meeting. The demo was genuinely impressive — it did in seconds what usually eats your afternoon. You told the team, everyone nodded, and for about a week it felt like the future had arrived early.
