@@ -18,11 +18,11 @@
     "published_at": "2026-07-28"
   },
   "review_state": {
-    "slug": "why-your-ai-experiment-didnt-stick",
-    "title": "You Tried AI and It Didn't Stick. The Problem Wasn't the Tool.",
-    "description": "Most AI experiments quietly disappear — not because the tool failed, but because no one wired it into the actual work. Here's what makes AI stick.",
-    "preview_text": "You ran the trial. Maybe it was a chatbot for your inbox, a drafting assistant for proposals, or a tool that promised to summarise every meeting. The demo was genuinely impressive — it did in seconds what usually eats your afternoon. You told the team, everyone nodded, and for about a week it felt like the future had arrived early.",
-    "scheduled_for": "2026-07-31",
+    "slug": "customers-ask-ai-who-to-hire",
+    "title": "Your Customers Are Asking AI Who to Hire. Right Now, It Isn't Saying You.",
+    "description": "More buyers now ask AI assistants who to hire instead of Googling. Here's how to make sure your business shows up when they do.",
+    "preview_text": "Picture the moment someone finally decides to fix the problem you solve. A year ago, they opened Google, typed a few words, and skimmed a page of blue links until something looked credible. This year, a growing number of them do something different: they open ChatGPT, Gemini, or Perplexity and simply ask.",
+    "scheduled_for": "2026-08-03",
     "revision_count": 0,
     "status": "awaiting_approval"
   }
