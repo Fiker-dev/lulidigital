@@ -1,0 +1,274 @@
+{
+  "generatedAt": "2026-08-01T10:11:48.053Z",
+  "property": "sc-domain:lulidigital.com",
+  "periods": {
+    "current": "2026-06-29 to 2026-07-29",
+    "previous": "2026-05-30 to 2026-06-29",
+    "wide90d": "2026-04-30 to 2026-07-29"
+  },
+  "summary": {
+    "totalClicks": 0,
+    "totalImpressions": 1001,
+    "pagesWithData": 8,
+    "lowVisibilityCount": 12
+  },
+  "topQueries": [
+    {
+      "query": "luli",
+      "clicks": 0,
+      "impressions": 9,
+      "avgPosition": 19,
+      "avgCtr": 0
+    },
+    {
+      "query": "luli agenta",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 6.5,
+      "avgCtr": 0
+    },
+    {
+      "query": "luli studio",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 25,
+      "avgCtr": 0
+    },
+    {
+      "query": "desk-ai-inc",
+      "clicks": 0,
+      "impressions": 4,
+      "avgPosition": 19.5,
+      "avgCtr": 0
+    },
+    {
+      "query": "luli ai",
+      "clicks": 0,
+      "impressions": 7,
+      "avgPosition": 8.8,
+      "avgCtr": 0
+    },
+    {
+      "query": "ai business tasks",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 17.5,
+      "avgCtr": 0
+    },
+    {
+      "query": "virtual assistant services for us founders daily operations",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 12,
+      "avgCtr": 0
+    },
+    {
+      "query": "lilla digital",
+      "clicks": 0,
+      "impressions": 5,
+      "avgPosition": 57.4,
+      "avgCtr": 0
+    },
+    {
+      "query": "lily digital",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 45,
+      "avgCtr": 0
+    },
+    {
+      "query": "ai digital marketing agency",
+      "clicks": 0,
+      "impressions": 10,
+      "avgPosition": 61.1,
+      "avgCtr": 0
+    }
+  ],
+  "opportunities": [
+    {
+      "query": "ai digital marketing service in switzerland",
+      "clicks": 0,
+      "impressions": 32,
+      "avgPosition": 14,
+      "avgCtr": 0
+    },
+    {
+      "query": "ai digital marketing services in switzerland",
+      "clicks": 0,
+      "impressions": 32,
+      "avgPosition": 19.1,
+      "avgCtr": 0
+    },
+    {
+      "query": "ai digital marketing service in zurich",
+      "clicks": 0,
+      "impressions": 31,
+      "avgPosition": 36.5,
+      "avgCtr": 0
+    }
+  ],
+  "pageStats": [
+    {
+      "path": "/switzerland",
+      "clicks": 0,
+      "impressions": 908,
+      "avgPosition": 24.7,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    },
+    {
+      "path": "/ireland",
+      "clicks": 0,
+      "impressions": 40,
+      "avgPosition": 60.2,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    },
+    {
+      "path": "/",
+      "clicks": 0,
+      "impressions": 22,
+      "avgPosition": 13,
+      "avgCtr": 0,
+      "previousAvgPosition": 8.7,
+      "positionChange": -4.3
+    },
+    {
+      "path": "/va-desk",
+      "clicks": 0,
+      "impressions": 15,
+      "avgPosition": 63,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    },
+    {
+      "path": "/contact",
+      "clicks": 0,
+      "impressions": 7,
+      "avgPosition": 36.5,
+      "avgCtr": 0,
+      "previousAvgPosition": 67,
+      "positionChange": 30.5
+    },
+    {
+      "path": "/blog",
+      "clicks": 0,
+      "impressions": 5,
+      "avgPosition": 14.8,
+      "avgCtr": 0,
+      "previousAvgPosition": 10,
+      "positionChange": -4.8
+    },
+    {
+      "path": "/blog/business-tasks-to-automate-with-ai",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 17.5,
+      "avgCtr": 0,
+      "previousAvgPosition": 18.5,
+      "positionChange": 1
+    },
+    {
+      "path": "/blog/how-to-hire-virtual-assistant-guide-founders-ceos",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 12,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    }
+  ],
+  "lowVisibilityPages": [
+    {
+      "path": "/marketing-desk",
+      "impressions": 0
+    },
+    {
+      "path": "/ai-desk",
+      "impressions": 0
+    },
+    {
+      "path": "/founder",
+      "impressions": 0
+    },
+    {
+      "path": "/africa",
+      "impressions": 0
+    },
+    {
+      "path": "/amsterdam",
+      "impressions": 0
+    },
+    {
+      "path": "/munich",
+      "impressions": 0
+    },
+    {
+      "path": "/stockholm",
+      "impressions": 0
+    },
+    {
+      "path": "/united-states",
+      "impressions": 0
+    },
+    {
+      "path": "/united-kingdom",
+      "impressions": 0
+    },
+    {
+      "path": "/denmark",
+      "impressions": 0
+    },
+    {
+      "path": "/belgium",
+      "impressions": 0
+    },
+    {
+      "path": "/norway",
+      "impressions": 0
+    }
+  ],
+  "lowCtrPages": [
+    {
+      "path": "/switzerland",
+      "clicks": 0,
+      "impressions": 908,
+      "avgPosition": 24.7,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    },
+    {
+      "path": "/ireland",
+      "clicks": 0,
+      "impressions": 40,
+      "avgPosition": 60.2,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    },
+    {
+      "path": "/",
+      "clicks": 0,
+      "impressions": 22,
+      "avgPosition": 13,
+      "avgCtr": 0,
+      "previousAvgPosition": 8.7,
+      "positionChange": -4.3
+    }
+  ],
+  "improvedPages": [
+    {
+      "path": "/contact",
+      "clicks": 0,
+      "impressions": 7,
+      "avgPosition": 36.5,
+      "avgCtr": 0,
+      "previousAvgPosition": 67,
+      "positionChange": 30.5
+    }
+  ]
+}
