@@ -46,12 +46,12 @@
     "published_at": "2026-07-28"
   },
   "review_state": {
-    "slug": "customers-ask-ai-who-to-hire",
-    "title": "Your Customers Are Asking AI Who to Hire. Right Now, It Isn't Saying You.",
-    "description": "More buyers now ask AI assistants who to hire instead of Googling. Here's how to make sure your business shows up when they do.",
-    "preview_text": "Picture the moment someone finally decides to fix the problem you solve. A year ago, they opened Google, typed a few words, and skimmed a page of blue links until something looked credible. This year, a growing number of them do something different: they open ChatGPT, Gemini, or Perplexity and simply ask.",
-    "scheduled_for": "2026-08-03",
+    "slug": "you-cant-automate-what-lives-in-your-head",
+    "title": "You Can't Automate What Only Lives in Your Head.",
+    "description": "AI automation fails when the process lives only in your head. Here's how to get it out — so you can finally delegate and automate what runs you.",
+    "preview_text": "Try to take a real week off — phone in a drawer, laptop shut — and watch what happens. For most founders, the business quietly slows to the speed of the messages they can't stop themselves answering. Not because the team is weak, but because too much of how the work actually gets done lives in one place: your head.",
+    "scheduled_for": "2026-08-05",
     "revision_count": 0,
-    "status": "scheduled"
+    "status": "awaiting_approval"
   }
 }
