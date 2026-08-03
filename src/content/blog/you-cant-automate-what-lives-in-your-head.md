@@ -5,6 +5,7 @@ pubDate: 2026-08-03
 category: "AI Automation"
 readingTime: "6 min read"
 draft: true
+scheduledFor: "2026-08-05"
 ---
 
 Try to take a real week off — phone in a drawer, laptop shut — and watch what happens. For most founders, the business quietly slows to the speed of the messages they can't stop themselves answering. Not because the team is weak, but because too much of how the work actually gets done lives in one place: your head.
