@@ -5,6 +5,7 @@ pubDate: 2026-08-05
 category: "Digital Marketing"
 readingTime: "6 min read"
 draft: true
+scheduledFor: "2026-08-07"
 ---
 
 Someone just found you. They read a page, liked what they saw, and did the rare, valuable thing — they filled in the form or sent the message. For a few minutes, you have their full attention and their intent. Then they close the tab, open three more, and start comparing you to everyone else who does what you do.
