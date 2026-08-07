@@ -94,39 +94,75 @@ re-verify once; otherwise report the exact build error in your final message.
 ## Step 5 — End the run with the review summary
 Final message format:
 ```
-📣 Social pack ready — <anchor title or pillar>
+✅ WENT LIVE TODAY
+<title> — LinkedIn personal <url> · company <url>
+(or: nothing was due today)
 
-LINKEDIN
-<full linkedin post text>
+📣 FOR TOMORROW — <anchor title or pillar>
 
-BLUESKY
-<full bluesky text/thread>
+LINKEDIN — PERSONAL
+<full text>
 
-VIDEO (<character>, <duration>s)
-<hook line + one-line beat summary>
+LINKEDIN — COMPANY
+<full text>
+
+✔ BLUESKY — already posted: <uri>
+
+VIDEO CAPTION (copy-paste, you upload)
+<full caption, or: no video in tomorrow's slot>
 
 Reddit draft + full video script are in social/queue/<slug>/.
 
 Reply here:
-• "approve" — I'll mark the pack approved; post LinkedIn + Bluesky from the
-  files (video renders locally via the avatar-animator pipeline).
-• "approve text only" — same, but skip the video this round.
-• Or tell me what to change — I'll revise and re-send.
+• "approve" — scheduled for tomorrow, posts on the next run.
+• "post now" — I'll publish the LinkedIn tracks immediately.
+• Or tell me what to change.
 
-Nothing posts until you approve. LinkedIn video upload stays manual.
+LinkedIn holds until you approve. Bluesky is already out.
 ```
 
-## When Fiker replies in this session
-- **approve / approve text only** → post the TEXT content (procedure below),
-  then set STATUS.md to `posted` (or `approved` + a note for anything that
-  needs his manual step), push, and confirm with links/results. Video always
-  renders locally — never blocked on it.
-- **Edit requests** → revise, re-check the quality gate, push, re-send the
-  summary.
-- **discard** → set STATUS.md to `discarded`, push, confirm.
-- **No reply** → the pack holds. Never escalate, never post.
+## What posts itself, and what waits for Fiker
 
-## Posting procedure (ONLY after Fiker's explicit approve reply)
+Autonomy is decided **per platform**, not per topic.
+
+**BLUESKY — autonomous.** Post it every run, no approval, as soon as the
+pack passes the quality gate. Low stakes and low reach; it is a mirror, not
+a channel. Report the URI in the summary.
+
+**LINKEDIN (personal + company) — always waits.** Never post either LinkedIn
+track without Fiker's explicit `approve` reply in the session. This is his
+professional face and his buyers are there.
+
+**VIDEO — never posted by this routine.** On days the calendar calls for a
+video, still write the full caption into the pack so Fiker can copy-paste
+it. He uploads the video himself and stays for the first hour.
+
+## Prepare a day ahead, publish on the day
+
+Each run does two jobs, in this order:
+
+1. **PUBLISH what is due.** Scan `social/queue/` for packs whose STATUS.md
+   is `approved` with a `scheduledFor` of today or earlier. Post their
+   LinkedIn tracks, set STATUS to `posted` with the live URLs, push, and
+   open the final summary with a clear "went live today" report.
+
+2. **PREPARE tomorrow's.** Build the next pack as normal, auto-post its
+   Bluesky, and end the run asking Fiker to approve the LinkedIn copy for
+   **tomorrow's** slot. On `approve`: set STATUS to `approved`, write
+   `scheduledFor: "<tomorrow's date>"` as a QUOTED string, push, and confirm
+   that it will go out on the next run.
+
+So Fiker always approves a day early, and always hears on the day it landed.
+
+## When Fiker replies in this session
+- **approve** → mark the pack `approved`, set `scheduledFor` to tomorrow,
+  push, confirm the date it will publish.
+- **post now** → publish the LinkedIn tracks immediately instead of waiting.
+- **Edit requests** → revise, re-check the quality gate, push, re-send.
+- **discard** → set STATUS.md to `discarded`, push, confirm.
+- **No reply** → the pack holds unapproved. Never escalate, never post.
+
+## Posting procedure (Bluesky automatically; LinkedIn only when due + approved)
 Credentials are provided in the run prompt.
 1. **Bluesky** (reliable, do first): create a session via
    `POST https://bsky.social/xrpc/com.atproto.server.createSession` with the
@@ -152,6 +188,9 @@ Credentials are provided in the run prompt.
   your write surface is `social/queue/` only.
 - Do NOT send Telegram messages.
 - Posting APIs may be called ONLY inside the posting procedure above, only
-  after Fiker's explicit approve reply in this session, and only with the
-  approved pack's content.
-- One pack per run. Quality over volume.
+  for content that passed the quality gate, and only with this run's pack.
+  LinkedIn additionally requires Fiker's explicit approve reply.
+- Video is NEVER posted by this routine. LinkedIn video upload stays manual
+  — Fiker posts those himself so he is present for the first hour.
+- Two packs per run: one for the personal track and one standalone company
+  post. The company page is not a mirror of the personal page.
