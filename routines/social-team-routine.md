@@ -141,6 +141,15 @@ it. He uploads the video himself and stays for the first hour.
 
 Each run does two jobs, in this order:
 
+0. **SWEEP what is stuck.** Before anything else, list every pack in
+   `social/queue/` whose STATUS.md is still `awaiting_approval` and older
+   than 3 days. Surface them at the very top of your final summary as a
+   short numbered list — slug, date, and its one-line hook — so Fiker can
+   clear the backlog by replying (e.g. `approve 1 and 3`, or `discard 2`).
+   Do NOT approve or post them yourself; they are his call. If a swept pack
+   references a blog post or news item that has since gone stale, say so and
+   recommend discarding it.
+
 1. **PUBLISH what is due.** Scan `social/queue/` for packs whose STATUS.md
    is `approved` with a `scheduledFor` of today or earlier. Post their
    LinkedIn tracks, set STATUS to `posted` with the live URLs, push, and
@@ -161,6 +170,9 @@ So Fiker always approves a day early, and always hears on the day it landed.
 ## When Fiker replies in this session
 - **approve** → mark the pack `approved`, set `scheduledFor` to tomorrow,
   push, confirm the date it will publish.
+- **approve <n>** / **discard <n>** (referring to the swept backlog list) →
+  apply to those packs. Approved ones schedule for the next available slot,
+  one per day, newest first; confirm each date.
 - **post now** → publish the LinkedIn tracks immediately instead of waiting.
 - **Edit requests** → revise, re-check the quality gate, push, re-send.
 - **discard** → set STATUS.md to `discarded`, push, confirm.
