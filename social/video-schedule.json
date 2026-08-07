@@ -1,0 +1,37 @@
+{
+  "_note": "Shared source of truth for upcoming videos. Videos are produced LOCALLY (Remotion pipeline on Fiker's Mac) and delivered to iCloud — the cloud routine cannot see those files, so it reads this schedule to know what is going out and writes the captions for it. Fiker uploads the video himself; the routine never posts video.",
+  "_maintained_by": "Updated locally whenever a batch is rendered.",
+  "upcoming": [
+    {
+      "date": "2026-08-07",
+      "file": "paper-W2.mp4",
+      "format": "crt",
+      "durationSeconds": 29,
+      "title": "You don't have an AI problem. You have six tabs.",
+      "hook": "YOU DON'T HAVE AN AI PROBLEM",
+      "altHook": "YOU'RE THE INTEGRATION LAYER",
+      "idea": "One tool for notes, one for email, one for scheduling, one for content — and none of them talk to each other. So the founder becomes the integration layer, copying output between tabs by hand. That is not automation, it is a second job. Real automation is one workflow that runs end to end with nobody in the middle. Before adding another tool, ask what it connects to.",
+      "series": "The System"
+    },
+    {
+      "date": "2026-08-10",
+      "file": "paper-W3.mp4",
+      "format": "crt",
+      "durationSeconds": 29,
+      "title": "Most people are using AI like a jet engine as a fan",
+      "hook": "A JET ENGINE USED AS A FAN",
+      "altHook": "YOU'RE USING AI AT IDLE",
+      "idea": "You ask AI a question, it answers, you copy the answer somewhere else. That is the smallest version of what it does. The shift now is AI that runs the whole workflow — reads the email, decides what it is, routes it, drafts the reply, books the follow-up. You just approve. Same technology, completely different leverage.",
+      "series": "The System"
+    }
+  ],
+  "posted": [
+    {
+      "date": "2026-08-05",
+      "file": "paper-W1.mp4",
+      "format": "paper",
+      "title": "Your AI isn't underperforming. Nobody gave it a job.",
+      "series": "The System"
+    }
+  ]
+}
