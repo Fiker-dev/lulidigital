@@ -145,6 +145,10 @@ Each run does two jobs, in this order:
    is `approved` with a `scheduledFor` of today or earlier. Post their
    LinkedIn tracks, set STATUS to `posted` with the live URLs, push, and
    open the final summary with a clear "went live today" report.
+   Then send ONE Telegram notification summarising what published, e.g.
+   `curl -s "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+     -d "chat_id=$TELEGRAM_CHAT_ID" -d "text=<what went live + URLs>"`.
+   Send nothing if nothing published.
 
 2. **PREPARE tomorrow's.** Build the next pack as normal, auto-post its
    Bluesky, and end the run asking Fiker to approve the LinkedIn copy for
@@ -186,7 +190,13 @@ Credentials are provided in the run prompt.
 - No fabrication. No engagement bait. No banned words (see brand system).
 - Never touch `src/` (the website), the blog posts, or any workflow file —
   your write surface is `social/queue/` only.
-- Do NOT send Telegram messages.
+- **Telegram — send only, never touch the webhook.** You MAY send an outbound
+  notification with `sendMessage` (credentials in the run prompt) to tell
+  Fiker what went live. You must NEVER register, modify or delete the bot's
+  webhook, and never run `ensure-telegram-webhook.mjs` or
+  `fix-telegram-webhook.mjs` — that bot belongs to OpenClaw, which long-polls
+  it, and a webhook breaks it. Approval never happens over Telegram; it
+  happens by Fiker replying in this session.
 - Posting APIs may be called ONLY inside the posting procedure above, only
   for content that passed the quality gate, and only with this run's pack.
   LinkedIn additionally requires Fiker's explicit approve reply.

@@ -34,6 +34,11 @@ additionally AUTHORISED to publish on Fiker's behalf as follows:
 - **Video — never.** The routine never uploads video anywhere; it writes the
   caption for Fiker to post manually.
 
+- **Telegram — outbound notifications only.** It may call `sendMessage` to
+  tell Fiker what went live. It must NEVER register, modify or delete the
+  bot's webhook (the bot belongs to OpenClaw, which long-polls it). Approval
+  never happens over Telegram.
+
 No other outbound posting is authorised. Reddit and Google Business Profile
 remain manual.
 
