@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-01T10:11:48.053Z",
-  "month": "2026-08",
+  "generatedAt": "2026-08-07T09:15:40.435Z",
+  "week": "2026-08-07",
   "pages": {
     "/switzerland": {
       "primary": [
@@ -10,6 +10,12 @@
         "ai marketing company in switzerland"
       ],
       "source": "Search Console — 2026-08"
+    },
+    "/va-desk": {
+      "primary": [
+        "digital secretary"
+      ],
+      "source": "weekly Search Console refresh 2026-08-07"
     }
   }
 }
