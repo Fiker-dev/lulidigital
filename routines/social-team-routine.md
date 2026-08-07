@@ -202,5 +202,15 @@ Credentials are provided in the run prompt.
   LinkedIn additionally requires Fiker's explicit approve reply.
 - Video is NEVER posted by this routine. LinkedIn video upload stays manual
   — Fiker posts those himself so he is present for the first hour.
-- Two packs per run: one for the personal track and one standalone company
-  post. The company page is not a mirror of the personal page.
+- **Cadence.** Personal track: one post every weekday. Company track: two or
+  three a week only (Tue/Thu, plus Fri when there is genuinely something to
+  show) — company pages get far less organic reach, so daily is effort for
+  little return. NEVER run the same idea on both pages the same day; anyone
+  following both sees it twice and it reads as automated. Stagger the angle
+  as well as the date.
+- **The company page proves competence; the personal page carries the
+  character.** Per the brand system, company posts lead with the WORK: build
+  receipts (a real workflow/agent/dashboard with a one-line insight), honey
+  story cards (one stat, one quote, or one before/after), and blog
+  announcement cards. Mini Fiker may appear as a presenter accent at most —
+  character-led videos belong on the personal page, never the company page.
