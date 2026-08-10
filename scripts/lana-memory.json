@@ -46,12 +46,12 @@
     "published_at": "2026-07-28"
   },
   "review_state": {
-    "slug": "the-referral-system-most-founders-never-build",
-    "title": "Your Best Clients Are Happy to Refer You. You've Just Left It to Chance.",
-    "description": "Referrals are your cheapest, highest-trust growth channel — and most founders leave them to luck. How to build a simple, repeatable referral system.",
-    "preview_text": "Think about the last client who told you, unprompted, how glad they were they hired you. Maybe it was in a call, maybe buried in a warm email after you delivered something they'd been dreading. In that moment they would have happily sent you the next person who needed what you do. All it would have taken was a name.",
-    "scheduled_for": "2026-08-10",
+    "slug": "stop-rebuilding-the-same-report-every-week",
+    "title": "You Spend Every Monday Rebuilding the Same Report. The Numbers Were Already There.",
+    "description": "You lose hours each week rebuilding the same report by hand. Why manual reporting quietly drains small teams — and how to automate it the right way.",
+    "preview_text": "It usually starts before the coffee has cooled. You open one tab, then another, then four more. You export a spreadsheet from one tool, copy a figure out of a second, screenshot a chart from a third because it won't export cleanly. You paste it all into the same document you built last week, and re-check two numbers that look suspiciously round.",
+    "scheduled_for": "2026-08-12",
     "revision_count": 0,
-    "status": "scheduled"
+    "status": "awaiting_approval"
   }
 }
