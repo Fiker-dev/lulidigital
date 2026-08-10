@@ -19,8 +19,11 @@ Open `social/video-schedule.json`. It is the only way you can know what
 video is going out — the files themselves are produced locally on Fiker's
 Mac and you cannot see them.
 
-- If `upcoming` contains an entry for **tomorrow** (the day you are
-  preparing for), that video IS tomorrow's post. Write its captions from the
+- Work out **the next posting day** first: the next weekday after today.
+  On a Friday run that is MONDAY, not Saturday — there are no weekend runs,
+  so a Friday session must prepare Monday or Monday arrives with nothing.
+- If `upcoming` contains an entry for that next posting day, that video IS
+  the next post. Write its captions from the
   entry's `title`, `hook` and `idea` — do not invent a different topic, and
   do not anchor on a blog post instead.
 - Produce for it: a **YouTube title + description**, the **LinkedIn personal**
@@ -182,17 +185,20 @@ Each run does two jobs, in this order:
      -d "chat_id=$TELEGRAM_CHAT_ID" -d "text=<what went live + URLs>"`.
    Send nothing if nothing published.
 
-2. **PREPARE tomorrow's.** Build the next pack as normal, auto-post its
-   Bluesky, and end the run asking Fiker to approve the LinkedIn copy for
-   **tomorrow's** slot. On `approve`: set STATUS to `approved`, write
-   `scheduledFor: "<tomorrow's date>"` as a QUOTED string, push, and confirm
-   that it will go out on the next run.
+2. **PREPARE the next posting day's.** Build the next pack as normal,
+   auto-post its Bluesky, and end the run asking Fiker to approve the
+   LinkedIn copy for **the next posting day** — the next weekday after
+   today. On a Friday run that is MONDAY. On `approve`: set STATUS to
+   `approved`, write `scheduledFor: "<that date>"` as a QUOTED string, push,
+   and confirm the exact date it will go out.
 
-So Fiker always approves a day early, and always hears on the day it landed.
+So Fiker always approves ahead, and always hears on the day it landed.
+Never prepare for a Saturday or Sunday — nothing runs then, so the pack
+would sit unpublished and the following weekday would have nothing.
 
 ## When Fiker replies in this session
-- **approve** → mark the pack `approved`, set `scheduledFor` to tomorrow,
-  push, confirm the date it will publish.
+- **approve** → mark the pack `approved`, set `scheduledFor` to the next
+  posting day (never a weekend), push, confirm the exact date.
 - **approve <n>** / **discard <n>** (referring to the swept backlog list) →
   apply to those packs. Approved ones schedule for the next available slot,
   one per day, newest first; confirm each date.
