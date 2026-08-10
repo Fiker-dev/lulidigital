@@ -1,11 +1,10 @@
 ---
 title: "Your Best Clients Are Happy to Refer You. You've Just Left It to Chance."
 description: "Referrals are your cheapest, highest-trust growth channel — and most founders leave them to luck. How to build a simple, repeatable referral system."
-pubDate: 2026-08-07
+pubDate: 2026-08-10
 category: "Digital Marketing"
 readingTime: "6 min read"
-draft: true
-scheduledFor: "2026-08-10"
+draft: false
 ---
 
 Think about the last client who told you, unprompted, how glad they were they hired you. Maybe it was in a call, maybe buried in a warm email after you delivered something they'd been dreading. In that moment they would have happily sent you the next person who needed what you do. All it would have taken was a name.
