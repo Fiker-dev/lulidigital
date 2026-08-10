@@ -156,8 +156,23 @@ LINKEDIN — COMPANY
 
 ✔ BLUESKY — already posted: <uri>
 
-VIDEO CAPTION (copy-paste, you upload)
-<full caption, or: no video in tomorrow's slot>
+🎬 VIDEO DAY — <date>
+File: <file from video-schedule.json>  ·  Hook frame: <hook>
+→ Open YouTube, upload the video, paste this:
+
+YOUTUBE TITLE
+<title>
+
+YOUTUBE DESCRIPTION
+<description>
+
+LINKEDIN CAPTION (upload the video there too, then paste)
+<caption>
+
+FIRST COMMENT (post right after)
+<first comment>
+
+(or: no video scheduled for the next posting day)
 
 Reddit draft + full video script are in social/queue/<slug>/.
 
