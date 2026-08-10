@@ -1,0 +1,1 @@
+awaiting_approval | series: who-its-for-ai-desk (Series B, no blog anchor) | 2026-08-10 | prepared for Tue 2026-08-11 (personal track); company track = same idea, stagger to Thu 2026-08-13 per cadence rule; Bluesky NOT auto-posted — bsky.social blocked by env egress policy (403), paste-ready for manual/local posting; video renders locally (Mini Fiker, full-size, trust preset)
