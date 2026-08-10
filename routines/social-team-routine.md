@@ -33,6 +33,28 @@ Mac and you cannot see them.
   it and the caption is ready to paste.
 - If there is no entry for tomorrow, carry on with Step 1 as normal.
 
+## Step 0b — Announce any new blog post (company page, guaranteed)
+This runs EVERY time and is independent of whichever anchor you pick for the
+personal track. A blog post must never go live without the company page
+announcing it.
+
+1. List every post in `src/content/blog/` with `draft: false` whose
+   `pubDate` has passed.
+2. Read `social/announced-blogs.json` → `announced`. Any live slug missing
+   from that list has not been announced yet.
+3. For each missing slug (newest first, at most one per run), write
+   `social/queue/<slug>/linkedin-company.md` as a **blog announcement**:
+   the post title, ONE sharp pull-line taken verbatim from the piece, and
+   the live URL `https://lulidigital.com/blog/<slug>`. Verify with WebFetch
+   that the URL actually resolves before using it — never announce a post
+   that 404s.
+4. State plainly in the summary which blog it announces and that the honey
+   blog card (`Card-blog`, rendered locally) is the image to attach.
+5. Only after that announcement is actually POSTED, append the slug to
+   `announced` in `social/announced-blogs.json` and push. Never append a
+   slug you have not posted — that would silently skip the announcement
+   forever.
+
 ## Step 1 — Pick the anchor
 1. Read `scripts/lana-memory.json` → `latest_live_post`, and check
    `src/content/blog/` for the newest post with `draft: false`.
