@@ -72,7 +72,9 @@
 | **full-size** | Fiker avatar talking direct-to-camera, lip-synced | Authority: AI Updates, education, buyer-facing | Mini or Anime Fiker |
 | **mini-irl** | Small Fiker composited over real b-roll (walking, café, desk) | Relatability, humor, New Season story | Mini or Anime Fiker |
 
-**B-roll rule:** no recognisable human faces in real footage — backs, hands, feet, screens, streets. Mini/Anime Fiker is the only face.
+**B-roll rule:** no recognisable human faces in real footage — backs, hands, feet, screens, streets. Mini/Anime Fiker is the only face. *(Exception: a video where you deliberately appear on camera yourself — that's you, real, by choice.)*
+
+**One video = one script = one caption (no mismatch).** Every video's **file name** is the key. It's listed in `video-schedule.json` with a `pack` pointing to `social/queue/<slug>/`, and that one folder holds **both** the script (`video-script.md`) and the captions — every file stamped `<!-- video: <file>.mp4 -->` at the top. Amara writes the script and caption together and never reuses another video's pack. When you render or film it, **name the export exactly as the `file`** — that's what guarantees the right caption is always paired with the right video. Real-footage videos of you follow the same rule: the pack still carries the script/shot-list and caption, bound to that file.
 
 ### 📺 Standalone series (rotate when there's no fresh blog to anchor)
 | Series | What | Character | Format leaning |
@@ -122,6 +124,19 @@ hand.** Match the tier to the register.
 
 These note formats are **text-led** — no character needed. They ride the
 personal page (Thoughts & Relatability / Trending).
+
+**Who writes the line?** Amara. Two ways: drop a raw thought in the idea inbox
+(or a session) and she sharpens it into a note-worthy line, OR ask her to
+*propose* 3–5 sticky-note lines from your pillars and you pick one. She writes
+the words; the format is yours to choose:
+
+- **Some days you write it by hand** (Tier 1) — your real handwriting, your
+  photo. Amara can still hand you the line to write and the caption to pair.
+- **Some days you use the generated sticky note** (Tier 2) — Amara's line
+  rendered in the paper/handwritten template, batched on the Mac.
+
+Alternate them so the feed doesn't feel like a template — a real-hand week,
+then a generated-note week. Both are the same **Thoughts & Relatability** slot.
 
 ## 3d. Mac → iPhone → post
 

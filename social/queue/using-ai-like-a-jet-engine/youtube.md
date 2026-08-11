@@ -1,4 +1,5 @@
-<!-- Video day: paper-W3.mp4 · format crt · 29s · series "The System" -->
+<!-- video: paper-W3.mp4 -->
+<!-- Video day: paper-W3.mp4 · format crt · 29s · series "The System" · script: video-script.md -->
 <!-- Fiker uploads the video manually. Paste title + description below. -->
 
 TITLE

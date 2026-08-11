@@ -1,5 +1,6 @@
+<!-- video: paper-W3.mp4 -->
+<!-- asset: video (paper-W3.mp4) — paste-only, Fiker uploads manually -->
 <!-- post the blog link as the FIRST COMMENT, not in the body: https://lulidigital.com/blog/you-cant-automate-what-lives-in-your-head -->
-<!-- Fiker uploads paper-W3.mp4 to LinkedIn manually, then pastes this caption. -->
 
 Picture a jet engine bolted to the ceiling to move a bit of air. That's how most of us are still using AI.
 

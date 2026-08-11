@@ -38,11 +38,24 @@ this rule instead:
    and `idea` — do not invent a different topic, and do not anchor on a blog
    post instead.
 
-- Produce for it: a **YouTube title + description**, the **LinkedIn personal**
-  caption, and the **Bluesky** post. Put them in the pack as usual and label
-  the pack clearly as a video day, and note the exact post `date` in STATUS.md.
-- You never upload the video. Say plainly in the summary that Fiker uploads
-  it and the caption is ready to paste.
+- Produce for it, ALL IN ONE PACK: the **video script** (`video-script.md`,
+  timestamped beats per the viral structure), a **YouTube title + description**,
+  the **LinkedIn personal** caption, and the **Bluesky** post.
+- **Bind caption to video so they can never cross (no-mismatch rule):**
+  - Stamp the exact `file` name at the TOP of `video-script.md` and every
+    caption file as an HTML comment: `<!-- video: paper-W3.mp4 -->`.
+  - Write the pack slug back into that schedule entry's `pack` field, and put
+    the `file` name in STATUS.md alongside the post `date`.
+  - One video = one pack = one script = one caption set. Never write a caption
+    for a video whose script isn't in the same folder; never reuse another
+    video's pack.
+- **Real-footage videos (Fiker on camera / `mini-irl`) follow the same rule** —
+  still write the script + the shot list and bind them to this `file`; Fiker
+  films to those beats and names the export exactly as `file`. The footage is
+  his; the script and caption are still the pack's, bound by the file name.
+- You never upload the video. In the summary, always pair them explicitly:
+  `File <file> → paste caption from social/queue/<pack>/` so there is zero doubt
+  which caption goes with which video.
 - If no upcoming entry falls in the today < D ≤ N window, carry on with
   Step 1 as normal.
 
