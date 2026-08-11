@@ -162,6 +162,35 @@ with `Authorization: Bearer $VERCEL_TOKEN` (token in the run prompt) until
 `/v3/deployments/<uid>/events`, fix your commit if it's the cause, push and
 re-verify once; otherwise report the exact build error in your final message.
 
+## Step 4b — Refresh the live dashboard
+The content playbook artifact carries a live status block that Fiker keeps on
+his phone. Update it at the end of every run so it reflects the run you just
+did. Source of truth: `social/content-playbook.html` (committed in the repo).
+
+1. In `social/content-playbook.html`, replace everything between
+   `<!-- LIVE:START -->` and `<!-- LIVE:END -->` with four `.row2` blocks
+   built from the state you already computed this run:
+   - **Last run** — today's date + a one-line note of what this run did.
+   - **Went live** — what actually posted today (LinkedIn/Bluesky), or
+     "Nothing due today".
+   - **Awaiting you** — count of `social/queue/*/STATUS.md` still
+     `awaiting_approval`, how many are stale (>3 days), and the newest 2 slugs.
+     Use `<span class="pill-num">N</span>` (add class `ok` when the count is 0).
+   - **Next video** — the next entry in `social/video-schedule.json` → `upcoming`
+     (date + file + title), or "none scheduled".
+   Also update the `<!-- LIVE:STAMP -->` line's `<span class="stamp">` to
+   `updated <DD Mon YYYY>`. Change ONLY the marked region and the stamp; never
+   touch the rest of the file. Keep the existing HTML/class structure exactly.
+2. Commit the file: `git add social/content-playbook.html` (fold into the
+   Step 4 commit or a follow-up `Live dashboard refresh` commit) and push.
+3. Redeploy the artifact so the phone copy updates: call the **Artifact tool**
+   with `file_path: social/content-playbook.html` and
+   `url: https://claude.ai/code/artifact/6ca1fb8f-de4e-4135-bb56-4511ddd920df`
+   (omit `capabilities` to keep the current declaration). If the Artifact tool
+   is not available in this run's toolset, skip the redeploy but STILL commit
+   the HTML, and say so in the summary — the block is refreshed on the next run
+   that can publish. Never fabricate numbers: the block must match the repo.
+
 ## Step 5 — End the run with the review summary
 Final message format:
 ```

@@ -1,0 +1,356 @@
+<title>LuliDigital Content Playbook</title>
+<style>
+  :root {
+    --ground: #F4ECDD;
+    --surface: #FBF6EC;
+    --note: #F6E7C9;
+    --ink: #2A211A;
+    --ink-soft: #6E6152;
+    --line: #E4D8C4;
+    --honey: #A96A10;
+    --honey-soft: #EBD6AE;
+    --clay: #A9564A;
+    --clay-soft: #EDD2C9;
+    --shadow: 0 1px 2px rgba(42,33,26,.06), 0 8px 24px rgba(42,33,26,.08);
+    --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-hand: "Bradley Hand", "Marker Felt", "Snell Roundhand", "Comic Sans MS", cursive;
+    --font-mono: "SF Mono", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #161210;
+      --surface: #211A15;
+      --note: #33271A;
+      --ink: #EFE6D6;
+      --ink-soft: #AE9F8C;
+      --line: #372C22;
+      --honey: #E0A644;
+      --honey-soft: #46381F;
+      --clay: #DB8B7C;
+      --clay-soft: #472C27;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #161210;
+    --surface: #211A15;
+    --note: #33271A;
+    --ink: #EFE6D6;
+    --ink-soft: #AE9F8C;
+    --line: #372C22;
+    --honey: #E0A644;
+    --honey-soft: #46381F;
+    --clay: #DB8B7C;
+    --clay-soft: #472C27;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.4);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 460px;
+    margin: 0 auto;
+    padding: 26px 18px 60px;
+  }
+
+  /* --- eyebrows / labels --- */
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    line-height: 1.15;
+    margin: 0 0 4px;
+    text-wrap: balance;
+  }
+  section { margin-top: 40px; animation: rise .6s ease both; }
+  .sec-head { margin-bottom: 16px; }
+  .sec-head p { margin: 6px 0 0; color: var(--ink-soft); font-size: 14px; }
+
+  /* --- hero pinned note --- */
+  header { text-align: center; padding-top: 8px; }
+  .brand {
+    font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--honey); font-weight: 700; margin: 0 0 18px;
+  }
+  .note {
+    position: relative;
+    background: var(--note);
+    border-radius: 3px;
+    padding: 30px 24px 26px;
+    box-shadow: var(--shadow);
+    transform: rotate(-1.4deg);
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .note::before {
+    content: "";
+    position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--clay);
+    box-shadow: 0 2px 5px rgba(0,0,0,.28);
+  }
+  .note p {
+    font-family: var(--font-hand);
+    font-size: 25px; line-height: 1.28; margin: 0; color: var(--ink);
+  }
+  .sub {
+    margin: 22px auto 0; max-width: 300px;
+    font-size: 14px; color: var(--ink-soft);
+  }
+
+  /* --- week rhythm --- */
+  .legend { display: flex; gap: 16px; justify-content: center; margin-bottom: 16px; font-size: 12px; color: var(--ink-soft); }
+  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .dot.op { background: var(--honey); }
+  .dot.hu { background: var(--clay); }
+  .week { display: flex; flex-direction: column; gap: 8px; }
+  .day {
+    display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 12px;
+    background: var(--surface); border: 1px solid var(--line);
+    border-left: 4px solid var(--gear); border-radius: 10px;
+    padding: 12px 14px; box-shadow: var(--shadow);
+  }
+  .day.op { --gear: var(--honey); }
+  .day.hu { --gear: var(--clay); }
+  .day .abbr { font-family: var(--font-display); font-weight: 700; font-size: 17px; }
+  .day .focus { font-size: 14px; font-weight: 600; }
+  .day .focus small { display: block; font-weight: 400; color: var(--ink-soft); font-size: 12px; margin-top: 2px; }
+  .tag {
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase; font-weight: 700;
+    padding: 3px 8px; border-radius: 20px; white-space: nowrap;
+  }
+  .tag.op { background: var(--honey-soft); color: var(--honey); }
+  .tag.hu { background: var(--clay-soft); color: var(--clay); }
+  .vid { font-size: 12px; color: var(--ink-soft); margin-top: 10px; text-align: center; }
+
+  /* --- generic cards --- */
+  .cards { display: flex; flex-direction: column; gap: 10px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 16px; box-shadow: var(--shadow);
+  }
+  .card h3 { margin: 0 0 4px; font-size: 15px; font-family: var(--font-display); }
+  .card p { margin: 0; font-size: 13.5px; color: var(--ink-soft); }
+  .card .k { font-family: var(--font-hand); font-size: 20px; color: var(--clay); margin-right: 8px; }
+
+  /* tier ladder */
+  .tier { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; }
+  .tier .n {
+    font-family: var(--font-display); font-weight: 700; font-size: 20px;
+    color: var(--honey); text-align: center;
+  }
+  .tier .n small { display: block; font-family: var(--font-body); font-weight: 600; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+
+  /* --- flow timeline --- */
+  .flow { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .step { display: grid; grid-template-columns: 40px 1fr; gap: 14px; padding-bottom: 20px; position: relative; }
+  .step:not(:last-child)::before {
+    content: ""; position: absolute; left: 19px; top: 34px; bottom: -2px; width: 2px; background: var(--line);
+  }
+  .step .num {
+    width: 38px; height: 38px; border-radius: 50%; z-index: 1;
+    background: var(--honey-soft); color: var(--honey);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 700; font-size: 17px;
+  }
+  .step h3 { margin: 6px 0 3px; font-size: 15px; }
+  .step p { margin: 0; font-size: 13.5px; color: var(--ink-soft); }
+  code { font-family: var(--font-mono); font-size: .86em; background: var(--honey-soft); color: var(--honey); padding: 1px 5px; border-radius: 4px; }
+
+  /* --- router list --- */
+  .router { display: flex; flex-direction: column; gap: 2px; }
+  .r {
+    display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: baseline;
+    padding: 10px 2px; border-bottom: 1px dashed var(--line); font-size: 13.5px;
+  }
+  .r:last-child { border-bottom: 0; }
+  .r .q { color: var(--ink); }
+  .r .a { color: var(--honey); font-weight: 600; text-align: right; white-space: nowrap; font-size: 12.5px; }
+
+  /* --- footer --- */
+  footer { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .gate { display: flex; flex-direction: column; gap: 7px; margin: 0; padding: 0; list-style: none; }
+  .gate li { font-size: 13px; color: var(--ink-soft); padding-left: 22px; position: relative; }
+  .gate li::before { content: "✓"; position: absolute; left: 0; color: var(--honey); font-weight: 700; }
+  .banned { margin-top: 18px; font-size: 12px; color: var(--ink-soft); }
+  .banned b { color: var(--clay); }
+  .sig { margin-top: 26px; text-align: center; font-family: var(--font-hand); font-size: 18px; color: var(--ink-soft); }
+
+  /* --- live status --- */
+  .live {
+    margin-top: 28px;
+    background: var(--surface); border: 1px solid var(--line);
+    border-top: 3px solid var(--honey); border-radius: 12px;
+    padding: 16px 16px 14px; box-shadow: var(--shadow);
+  }
+  .live-head { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .live-head .eyebrow { margin: 0; }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--honey); position: relative; }
+  .pulse::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1px solid var(--honey); animation: ping 2s ease-out infinite; }
+  .stamp { margin-left: auto; font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .live-grid { display: flex; flex-direction: column; gap: 0; }
+  .row2 {
+    display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: baseline;
+    padding: 9px 0; border-bottom: 1px dashed var(--line);
+  }
+  .row2:last-child { border-bottom: 0; }
+  .row2 .lbl { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; }
+  .row2 .val { font-size: 14px; }
+  .row2 .val b { font-family: var(--font-display); }
+  .pill-num {
+    display: inline-block; min-width: 20px; text-align: center;
+    background: var(--clay-soft); color: var(--clay); font-weight: 700;
+    border-radius: 20px; padding: 1px 8px; font-variant-numeric: tabular-nums;
+  }
+  .pill-num.ok { background: var(--honey-soft); color: var(--honey); }
+  .val small { display: block; color: var(--ink-soft); font-size: 12px; margin-top: 2px; }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes ping { from { transform: scale(1); opacity: .7; } to { transform: scale(2.4); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { section { animation: none; } .pulse::after { animation: none; } }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="brand">LuliDigital · Content Playbook</p>
+    <div class="note">
+      <p>The more it's your feeling, the more it's your actual hand.</p>
+    </div>
+    <p class="sub">Two gears a week. Every idea has a home. Nothing goes out without your yes.</p>
+  </header>
+
+  <div class="live">
+    <div class="live-head">
+      <span class="pulse"></span>
+      <p class="eyebrow">Live · refreshed each Amara run</p>
+      <!-- LIVE:STAMP -->
+      <span class="stamp">updated 11 Aug 2026</span>
+    </div>
+    <div class="live-grid">
+      <!-- LIVE:START -->
+      <div class="row2"><span class="lbl">Last run</span><span class="val"><b>Mon 11 Aug</b><small>—</small></span></div>
+      <div class="row2"><span class="lbl">Went live</span><span class="val">Nothing due today</span></div>
+      <div class="row2"><span class="lbl">Awaiting you</span><span class="val"><span class="pill-num">13</span> packs — <b>11 stale</b> (&gt;3 days)<small>newest: using-ai-like-a-jet-engine · who-its-for-ai-desk</small></span></div>
+      <div class="row2"><span class="lbl">Next video</span><span class="val"><b>Wed 12 Aug</b> · paper-W3<small>"Most people use AI like a jet engine as a fan"</small></span></div>
+      <!-- LIVE:END -->
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">The week</p>
+      <h2>Operator days &amp; human days</h2>
+    </div>
+    <div class="legend">
+      <span><span class="dot op"></span>Operator — the work</span>
+      <span><span class="dot hu"></span>Human — you</span>
+    </div>
+    <div class="week">
+      <div class="day op"><span class="abbr">Mon</span><span class="focus">Educational<small>counter-intuitive framework</small></span><span class="tag op">Operator</span></div>
+      <div class="day hu"><span class="abbr">Tue</span><span class="focus">Thoughts &amp; Relatability<small>handwritten note / quote card</small></span><span class="tag hu">Human</span></div>
+      <div class="day op"><span class="abbr">Wed</span><span class="focus">Value Tip + 🎬<small>one copy-able idea</small></span><span class="tag op">Operator</span></div>
+      <div class="day hu"><span class="abbr">Thu</span><span class="focus">Trending ↔ Get-to-know-me<small>alternate weekly</small></span><span class="tag hu">Human</span></div>
+      <div class="day op"><span class="abbr">Fri</span><span class="focus">Soft Promo + 🎬<small>outcome-led, anonymised</small></span><span class="tag op">Operator</span></div>
+    </div>
+    <p class="vid">Personal page posts daily · Company page Tue/Thu (+Fri w/ proof) · Video is manual</p>
+    <div class="card" style="margin-top:14px"><h3><span class="k" style="color:var(--honey)">!</span>AI Update — the wildcard</h3><p>News can't be calendared. When a real, verified AI development lands, it <b style="color:var(--ink)">becomes Wednesday's video</b> in place of the Value Tip (or jumps the queue same-day if it's big). No news that week → the default runs. Not to be confused with Trending — that's a vibe, this is verified news.</p></div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Tue / Thu</p>
+      <h2>The human buckets</h2>
+    </div>
+    <div class="cards">
+      <div class="card"><h3><span class="k">a</span>Get to know me</h3><p>Founder story, New Season, day-in-the-life, behind-the-build.</p></div>
+      <div class="card"><h3><span class="k">b</span>Thoughts &amp; Relatability</h3><p>A real thought or line that stops the scroll — the handwritten note / quote card.</p></div>
+      <div class="card"><h3><span class="k">c</span>Trending</h3><p>Your spin on a format or conversation moving <em>right now</em>. Not news — that's AI Update. Verify it's genuine.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Making a note / quote post</p>
+      <h2>Three tiers, by how personal it is</h2>
+    </div>
+    <div class="cards">
+      <div class="card tier"><div class="n">1<small>real hand</small></div><div><h3 style="margin:0 0 3px">Real handwriting</h3><p>Sticky note or torn paper, your hand, shot in your space. Imperfection is the credibility. → Shot on iPhone, post direct.</p></div></div>
+      <div class="card tier"><div class="n">2<small>template</small></div><div><h3 style="margin:0 0 3px">Branded paper</h3><p>Remotion "LULIDIGITAL TIMES" look, consistent hand-font + luli mark. Batch several. → Render on Mac.</p></div></div>
+      <div class="card tier"><div class="n">3<small>rare</small></div><div><h3 style="margin:0 0 3px">Billboard / flyer</h3><p>One punchy line staged in the real world. Novelty — use sparingly.</p></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">From screen to feed</p>
+      <h2>Mac → iPhone</h2>
+    </div>
+    <div class="cards">
+      <div class="card"><p><b style="color:var(--ink)">Real notes:</b> already on your phone — post straight from it.</p></div>
+      <div class="card"><p><b style="color:var(--ink)">Rendered:</b> AirDrop for one-offs (best quality), iCloud for batches → Photos on phone.</p></div>
+      <div class="card"><p><b style="color:var(--ink)">Always:</b> post video &amp; images from the phone; paste the caption from the pack.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Got a spontaneous idea?</p>
+      <h2>Capture → brainstorm → output</h2>
+      <p>Who you tell: <b style="color:var(--clay)">Amara</b>, your Social Team agent.</p>
+    </div>
+    <div class="flow">
+      <div class="step"><div class="num">1</div><div><h3>Capture</h3><p>Park one raw line in <code>ideas-inbox.md</code>. Don't polish, don't lose it.</p></div></div>
+      <div class="step"><div class="num">2</div><div><h3>Brainstorm with Amara</h3><p>Open a session — "Amara, let's work this" — or her next run picks it from the inbox. Pick the bucket, tier, hook, angles.</p></div></div>
+      <div class="step"><div class="num">3</div><div><h3>Shape into a pack</h3><p>She writes it to <code>social/queue/</code> or the video schedule. You reply <b style="color:var(--honey)">approve</b>.</p></div></div>
+      <div class="step"><div class="num">4</div><div><h3>Produce the media</h3><p>Hand-write it, render it, or shoot it — per the tier you landed on.</p></div></div>
+      <div class="step"><div class="num">5</div><div><h3>Post</h3><p>Media to phone, paste the caption, publish, stay for the first hour.</p></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Where does it go?</p>
+      <h2>The idea router</h2>
+    </div>
+    <div class="router">
+      <div class="r"><span class="q">A one-liner reframe</span><span class="a">Paper/CRT or Billboard</span></div>
+      <div class="r"><span class="q">A story or personal moment</span><span class="a">Personal post / mini-irl</span></div>
+      <div class="r"><span class="q">A real thought that hits</span><span class="a">Note card · Tue</span></div>
+      <div class="r"><span class="q">Reacting to AI news</span><span class="a">AI Update · Mini Fiker</span></div>
+      <div class="r"><span class="q">Riding a trend right now</span><span class="a">Trending · Thu</span></div>
+      <div class="r"><span class="q">Proof / a client outcome</span><span class="a">Company card</span></div>
+      <div class="r"><span class="q">A how-to tip</span><span class="a">Value Tip · Wed</span></div>
+      <div class="r"><span class="q">Strong thought, no visual</span><span class="a">Caption on both pages</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="eyebrow">Before anything ships</p>
+    <ul class="gate">
+      <li>Useful even without the CTA</li>
+      <li>Screenshot-worthy without the brand name</li>
+      <li>The CTA feels earned, not bolted on</li>
+      <li>No word left that you could cut</li>
+      <li>Sounds like your smartest friend — not a press release</li>
+    </ul>
+    <p class="banned"><b>Never:</b> invented stats or clients · engagement bait · "link in bio" · game-changer, unlock, leverage, supercharge, journey.</p>
+    <p class="sig">— keep it human</p>
+  </footer>
+
+</div>
