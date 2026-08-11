@@ -17,21 +17,34 @@ quality gate. Every output must pass its quality gate.
 ## Step 0 — Read the video schedule FIRST
 Open `social/video-schedule.json`. It is the only way you can know what
 video is going out — the files themselves are produced locally on Fiker's
-Mac and you cannot see them.
+Mac and you cannot see them. `upcoming` holds the next 2–3 rendered videos,
+newest-dated first is not guaranteed — read every entry.
 
-- Work out **the next posting day** first: the next weekday after today.
-  On a Friday run that is MONDAY, not Saturday — there are no weekend runs,
-  so a Friday session must prepare Monday or Monday arrives with nothing.
-- If `upcoming` contains an entry for that next posting day, that video IS
-  the next post. Write its captions from the
-  entry's `title`, `hook` and `idea` — do not invent a different topic, and
-  do not anchor on a blog post instead.
+**Prep each video on the run immediately BEFORE its post date, not the day
+after today.** Videos are themed to specific weekdays (Wed = Value Tip,
+Fri = Soft Promo), and those days are also run days — so a "next weekday
+after today" rule would never prep a Wednesday or Friday video in time. Use
+this rule instead:
+
+1. Work out your **next run day** N — the next Mon/Wed/Fri strictly after
+   today. (Mon→Wed, Wed→Fri, Fri→Mon.)
+2. For every entry in `upcoming`, prep it now if its `date` D satisfies
+   **today < D ≤ N**. That is exactly the set of videos due on or before the
+   next run, whose caption is not yet written. Concretely: a Wed video is
+   prepped on Mon's run, a Fri video on Wed's run, a Mon video on Fri's run,
+   and a Thu video on Wed's run. Never prep a video whose date has already
+   passed, and never re-prep one whose pack already exists in `social/queue/`.
+3. For each such video, write its captions from the entry's `title`, `hook`
+   and `idea` — do not invent a different topic, and do not anchor on a blog
+   post instead.
+
 - Produce for it: a **YouTube title + description**, the **LinkedIn personal**
   caption, and the **Bluesky** post. Put them in the pack as usual and label
-  the pack clearly as a video day.
+  the pack clearly as a video day, and note the exact post `date` in STATUS.md.
 - You never upload the video. Say plainly in the summary that Fiker uploads
   it and the caption is ready to paste.
-- If there is no entry for tomorrow, carry on with Step 1 as normal.
+- If no upcoming entry falls in the today < D ≤ N window, carry on with
+  Step 1 as normal.
 
 ## Step 0b — Announce any new blog post (company page, guaranteed)
 This runs EVERY time and is independent of whichever anchor you pick for the

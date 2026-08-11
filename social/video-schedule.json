@@ -1,6 +1,7 @@
 {
   "_note": "Shared source of truth for upcoming videos. Videos are produced LOCALLY (Remotion pipeline on Fiker's Mac) and delivered to iCloud — the cloud routine cannot see those files, so it reads this schedule to know what is going out and writes the captions for it. Fiker uploads the video himself; the routine never posts video.",
-  "_maintained_by": "Updated locally whenever a batch is rendered.",
+  "_prep_rule": "The Social Team routine (Mon/Wed/Fri) preps a video's caption on the run immediately BEFORE its post date (today < date <= next run day). So a video dated Wed is captioned on Mon's run, Fri on Wed's run, Mon on Fri's run. Keep the next 2-3 rendered videos in 'upcoming' so the routine can always see the one coming up.",
+  "_maintained_by": "Updated locally whenever a batch is rendered. Keep 2-3 videos in 'upcoming'; move each to 'posted' after it goes out.",
   "upcoming": [
     {
       "date": "2026-08-12",
