@@ -14,11 +14,13 @@
 | Day | LinkedIn — Personal | LinkedIn — Company | Video / YouTube | Theme |
 |---|---|---|---|---|
 | **Mon** | ✅ post (story/character) | — | optional | **Educational** — counter-intuitive framework, 200–400w, no pitch. CTA: *More at lulidigital.com* |
-| **Tue** | ✅ post | ✅ post (work-led) | — | — |
+| **Tue** | ✅ **Thoughts & Relatability** (handwritten note / quote card) | ✅ post (work-led) | — | *human day* |
 | **Wed** | ✅ post | — | 🎬 **video day** | **Value Tip** — one actionable idea, 100–200w. CTA: *More at lulidigital.com* |
-| **Thu** | ✅ post | ✅ post (work-led) | — | — |
+| **Thu** | ✅ **Trending** or **Get-to-know-me** (alternate weekly) | ✅ post (work-led) | — | *human day* |
 | **Fri** | ✅ post | ✅ (when there's something to show) | 🎬 **video day** | **Soft Promo** — outcome-led, anonymised, 150–300w. CTA: *If this sounds familiar, lulidigital.com* |
 | Sat/Sun | — | — | — | nothing runs |
+
+**The personal page has two gears:** Mon/Wed/Fri are *operator* days (framework, tip, promo + video). Tue/Thu are *human* days — the founder behind the work. Rotate the three human buckets across Tue/Thu (see §3b).
 
 **Cadence rules (from the brand system):**
 - **Personal** posts **every weekday**. It carries the character and story.
@@ -86,16 +88,62 @@
 
 ---
 
+## 3b. The personal page — the human buckets (Tue/Thu)
+
+Mon/Wed/Fri are the operator. Tue/Thu are *you*. Rotate these three buckets so
+the founder side stays varied:
+
+| Bucket | What it is | Typical form |
+|---|---|---|
+| **Get to know me** | Founder story, New Season, day-in-the-life, behind-the-build | mini-irl video, personal post, real photo |
+| **Thoughts & Relatability** | A real thought, hard-won lesson, or line that stops the scroll | **handwritten note / quote card** (see below), short personal post |
+| **Trending** | Your take on a format/sound/conversation moving *right now* — NOT news (that's AI Update). Put a founder or LuliDigital angle on it. | short video, note card, or post |
+
+**Rotation:** Tue = Thoughts & Relatability most weeks; Thu alternates Trending
+↔ Get-to-know-me week to week. Never run two note-cards back to back — space
+the format out so it stays special.
+
+**Sourcing "trending":** skim LinkedIn/Bluesky what's-being-reshared, the
+subreddits in the brand system, and creators in your lane (Codie Sanchez, Gary
+Vee do this format well). Verify it's genuinely current — **no fabricated
+trends, no borrowed screenshots.** Your spin is the post; the trend is only the
+doorway.
+
+## 3c. Making a thought / quote / note post — which method
+
+The rule: **the more it's YOUR actual feeling, the more it should be your actual
+hand.** Match the tier to the register.
+
+| Tier | Method | Use for | Where it's shot/made |
+|---|---|---|---|
+| **1 — Real hand** | Real sticky note / torn paper, your handwriting, photographed in your real space or held on a street. Imperfection = credibility; don't over-produce. | Genuine, vulnerable, get-to-know-me thoughts | **Shot on iPhone → post directly** |
+| **2 — Branded paper template** | Remotion "LULIDIGITAL TIMES" / crumpled-paper look, consistent hand-font + small luli signature. Batch several in one sitting. | Repeatable thoughts, quotes, "The System" reframes | **Rendered on Mac → AirDrop/iCloud → phone** |
+| **3 — Billboard / pole (flyer)** | One punchy line staged as a flyer or billboard in the real world. Novelty — use sparingly. | A rare scroll-stopper one-liner | Mac render or staged photo → phone |
+
+These note formats are **text-led** — no character needed. They ride the
+personal page (Thoughts & Relatability / Trending).
+
+## 3d. Mac → iPhone → post
+
+- **Real notes (Tier 1):** already on your iPhone — **post straight from the phone.** No Mac step.
+- **Rendered on Mac (Tier 2/3, and all videos):**
+  - **One-off:** **AirDrop** Mac → iPhone (best quality, instant, no compression).
+  - **Batch:** let the pipeline drop to **iCloud** → appears in Photos on the phone → post from there.
+- Post **video and images from the phone** — the upload feels native and compresses cleaner than desktop web.
+- Captions/titles come from the routine's pack (`social/queue/<slug>/`) — copy-paste them; the media is the only thing that moves off the Mac.
+
 ## 4. "I've got a spontaneous idea — where does it go?"
 
 Ask, in order:
 
 1. **Is it a punchy one-liner / reframe?** → **Paper/CRT** ("The System") or a **Billboard** video. Add it to `video-schedule.json` → `upcoming` on the next free Wed or Fri.
 2. **Is it a story or personal moment?** → **Personal** LinkedIn post, and/or a **mini-irl** video (Anime Fiker). Never the company page.
-3. **Is it reacting to AI news?** → **AI Update** series, Mini Fiker, full-size video + a personal post with "here's how you'd actually use this."
-4. **Is it proof / a client outcome / a real system?** → **Company** page: build receipt or honey story card. Anonymise, no fabrication.
-5. **Is it a how-to / tip someone could copy?** → **Value Tip** (Wed), personal page or paper video.
-6. **Just a strong thought, no visual?** → **caption-only on both pages** — story voice on personal, insight voice on company, staggered by a day.
+3. **Is it a real thought / lesson / line that hits?** → **Thoughts & Relatability**: a **handwritten note (Tier 1)** or **branded paper card (Tier 2)** on the personal page (Tue). See §3b–3c.
+4. **Is it reacting to AI *news*?** → **AI Update** series, Mini Fiker, full-size video + a personal post with "here's how you'd actually use this."
+5. **Is it riding something *trending* right now (a format/sound/conversation, not news)?** → **Trending** bucket, personal page (Thu), your founder spin. Verify it's genuine.
+6. **Is it proof / a client outcome / a real system?** → **Company** page: build receipt or honey story card. Anonymise, no fabrication.
+7. **Is it a how-to / tip someone could copy?** → **Value Tip** (Wed), personal page or paper video.
+8. **Just a strong thought, no visual?** → **caption-only on both pages** — story voice on personal, insight voice on company, staggered by a day.
 
 **Where to drop it:**
 - **Video idea** → add an entry to `social/video-schedule.json` → `upcoming` (`date`, `file`, `format`, `title`, `hook`, `idea`, `series`). The routine writes the caption on the run before that date.
