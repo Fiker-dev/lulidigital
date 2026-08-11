@@ -68,6 +68,16 @@ announcing it.
    slug you have not posted — that would silently skip the announcement
    forever.
 
+## Step 0c — Check the idea inbox
+Open `social/ideas-inbox.md`. For each unchecked line under `## Inbox` that
+does not already have a pack in `social/queue/`, treat it as Fiker's
+spontaneous idea: run it through the content guide's router
+(`social/CONTENT-GUIDE.md` §4), pick the bucket + tier/format, and build a
+normal pack for it (at most one new inbox idea per run so you don't flood the
+queue — newest first). Then move that line to `## Processed` with its slug and
+push. If a line is too thin to act on, leave it and note in the summary that it
+needs a one-line brainstorm from Fiker. Never invent an idea that isn't there.
+
 ## Step 1 — Pick the anchor
 1. Read `scripts/lana-memory.json` → `latest_live_post`, and check
    `src/content/blog/` for the newest post with `draft: false`.

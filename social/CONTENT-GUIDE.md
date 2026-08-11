@@ -151,6 +151,32 @@ Ask, in order:
 
 ---
 
+## 4b. The spontaneous-idea flow — capture → brainstorm → output
+
+**Who do you tell? Amara — your Social Team agent.** She's the content brain.
+Two ways to reach her:
+
+1. ⚡ **Capture** — the second it hits, park one line in
+   `social/ideas-inbox.md`. Don't polish, don't pick the format. Just don't
+   lose it. (On your phone that can be an Apple Note you paste in later — the
+   inbox file is the canonical home.)
+2. 🧠 **Brainstorm with Amara** — either open a session and say *"Amara, let's
+   work this idea,"* or let her **next scheduled run** (Mon/Wed/Fri) pick it
+   from the inbox. Together you: run it through the §4 router (which bucket?),
+   pick the tier/format (§3c), sharpen the hook, and draft 2–3 caption angles.
+3. ✅ **Shape into a pack** — Amara writes it into `social/queue/<slug>/` (a
+   post) or adds it to `video-schedule.json` → `upcoming` (a video). You reply
+   **approve** / edit / discard.
+4. 🎬 **Produce the media** — hand-write it (Tier 1), render it on the Mac
+   (Tier 2/3), or shoot the video — per the format the brainstorm landed on.
+5. 📲 **Post** — media to phone (AirDrop/iCloud), paste the caption from the
+   pack, post, and stay for the first hour.
+
+So: **idea → inbox → brainstorm with Amara → approved pack → produce → post.**
+Nothing goes out without your approve; nothing gets lost if you park it.
+
+---
+
 ## 5. The quality gate (every post clears this before it ships)
 1. Useful even without the CTA?
 2. Screenshot-worthy without the brand name?
