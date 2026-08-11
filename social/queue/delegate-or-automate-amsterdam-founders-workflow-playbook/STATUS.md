@@ -1,1 +1,1 @@
-awaiting_approval | anchor: delegate-or-automate-amsterdam-founders-workflow-playbook | 2026-07-19
+discarded | delegate-or-automate-amsterdam-founders-workflow-playbook | discarded 2026-08-11 (stale backlog cleanup, >3 days awaiting_approval)

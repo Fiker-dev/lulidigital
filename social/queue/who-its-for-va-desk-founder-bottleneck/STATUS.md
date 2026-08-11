@@ -1,1 +1,1 @@
-awaiting_approval | series: who-its-for-va-desk (Series B, no blog anchor) | 2026-07-22
+discarded | who-its-for-va-desk-founder-bottleneck | discarded 2026-08-11 (stale backlog cleanup, >3 days awaiting_approval)

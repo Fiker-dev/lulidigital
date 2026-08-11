@@ -107,11 +107,16 @@ Create `social/queue/<slug-or-pillar-slug>/` with these files:
 friend-to-friend (see the brand system's two-track LinkedIn rules). For news
 topics, always include the "here's how you can actually use this" leverage
 angle. Include at the top as HTML comment: `<!-- post the blog link as the
-FIRST COMMENT, not in the body: <url> -->`.
+FIRST COMMENT, not in the body: <url> -->`. **Also declare the asset on the
+first line:** `<!-- asset: none -->` for a text-only post (routine posts it on
+approve) or `<!-- asset: <honey-card|image|video> — paste-only -->` when it
+carries a locally-rendered asset (Fiker posts it manually even after approve).
 
 **`linkedin-company.md`** — LuliDigital company page: the operator's-take
 version of the same idea. Authority with warmth; never the same text as the
-personal post. Same first-comment link rule.
+personal post. Same first-comment link rule, and the same `<!-- asset: … -->`
+declaration. Company posts usually carry a honey card, so they are typically
+`asset: <honey-card>` → paste-only; a bare text take can be `asset: none`.
 
 **When the anchor is a NEWLY PUBLISHED blog post**, the company track is a
 **blog announcement** instead of an operator's take: the post title, one
@@ -167,15 +172,23 @@ The content playbook artifact carries a live status block that Fiker keeps on
 his phone. Update it at the end of every run so it reflects the run you just
 did. Source of truth: `social/content-playbook.html` (committed in the repo).
 
+This block is Fiker's CRM. It must refresh whenever the state changes: **when
+socials get approved/posted** (this run) and **when a blog goes live** (read the
+newest `draft: false` post whose `pubDate` has passed). Rebuild it from real
+state — never carry a stale number.
+
 1. In `social/content-playbook.html`, replace everything between
-   `<!-- LIVE:START -->` and `<!-- LIVE:END -->` with four `.row2` blocks
+   `<!-- LIVE:START -->` and `<!-- LIVE:END -->` with five `.row2` blocks
    built from the state you already computed this run:
    - **Last run** — today's date + a one-line note of what this run did.
-   - **Went live** — what actually posted today (LinkedIn/Bluesky), or
-     "Nothing due today".
+   - **Went live** — what actually posted today (text-only LinkedIn / Bluesky),
+     or "Nothing due today". Paste-only tracks are "handed to Fiker", not live.
    - **Awaiting you** — count of `social/queue/*/STATUS.md` still
      `awaiting_approval`, how many are stale (>3 days), and the newest 2 slugs.
      Use `<span class="pill-num">N</span>` (add class `ok` when the count is 0).
+   - **Latest blog** — the newest live post title + `pubDate`, linking
+     `https://lulidigital.com/blog/<slug>`. This is how a blog going live shows
+     up in the CRM (on the next run after it publishes).
    - **Next video** — the next entry in `social/video-schedule.json` → `upcoming`
      (date + file + title), or "none scheduled".
    Also update the `<!-- LIVE:STAMP -->` line's `<span class="stamp">` to
@@ -244,13 +257,34 @@ Autonomy is decided **per platform**, not per topic.
 pack passes the quality gate. Low stakes and low reach; it is a mirror, not
 a channel. Report the URI in the summary.
 
-**LINKEDIN (personal + company) — always waits.** Never post either LinkedIn
-track without Fiker's explicit `approve` reply in the session. This is his
-professional face and his buyers are there.
+**LINKEDIN — the rule turns on whether the post carries an asset.** Every
+LinkedIn track (personal + company) still waits for Fiker's explicit `approve`
+reply first. What happens on approve then depends on the asset:
 
-**VIDEO — never posted by this routine.** On days the calendar calls for a
-video, still write the full caption into the pack so Fiker can copy-paste
-it. He uploads the video himself and stays for the first hour.
+- **Text-only (no image/video/card) → the routine POSTS it on approve.** These
+  are pure-text posts; nothing lives on the Mac, so once Fiker approves, publish
+  it via the posting procedure and report the URL.
+- **Carries an asset (honey card, image, or video) → DRAFT / paste-only, always.**
+  The asset is rendered locally and the routine cannot attach it, so even after
+  `approve` the routine does NOT post — it delivers the paste-ready caption +
+  first comment and Fiker posts it manually with the asset attached, staying
+  for the first hour.
+
+Each `linkedin-*.md` MUST declare its asset at the top as an HTML comment:
+`<!-- asset: none -->` (text-only, auto-postable on approve) or
+`<!-- asset: <honey-card|image|video> — rendered locally, paste-only -->`.
+STATUS.md records the same so a later run knows how to publish it. When unsure,
+treat it as asset-bearing (paste-only) — never auto-post something meant to
+carry an image.
+
+**YOUTUBE — draft, always.** The routine writes the title + description into
+the pack; Fiker uploads the video and pastes them. Never posted by the routine.
+
+**REDDIT — draft, always.** Community-native draft only; Fiker posts manually.
+
+**VIDEO (LinkedIn/YouTube) — never posted by this routine.** Any post that
+carries a video is paste-only by the asset rule above. Fiker uploads and stays
+for the first hour.
 
 ## Prepare a day ahead, publish on the day
 
@@ -304,17 +338,20 @@ Credentials are provided in the run prompt.
    `com.atproto.repo.createRecord` (collection `app.bsky.feed.post`). For a
    thread, the second post carries `reply.root`/`reply.parent` refs to the
    first. Confirm the post URI in your reply.
-2. **LinkedIn text** (attempt, fall back gracefully): execute the Composio
-   LinkedIn create-post action with the Composio API key and connected
-   account id — `linkedin-personal.md` with the PERSON urn, and
-   `linkedin-company.md` with the ORGANIZATION urn (consult Composio's API
-   docs via WebFetch if the endpoint shape is unclear). If a call succeeds,
-   confirm. If it fails for ANY reason, do not retry more than twice —
-   deliver that post's paste-ready text in your reply, remind Fiker the blog
-   link goes in the first comment, and note the failure so the integration
-   can be fixed locally.
-3. Never post anything that wasn't in the approved pack. Never post to
-   Reddit (always manual). Never upload video (LinkedIn video is manual).
+2. **LinkedIn — ONLY text-only tracks, and only when approved.** First read the
+   track's `<!-- asset: … -->` line. If it is anything other than `none`, DO
+   NOT post — it is paste-only; deliver the caption + first comment for manual
+   posting and skip to the CRM step. If it is `none` and the pack is approved,
+   execute the Composio LinkedIn create-post action with the Composio API key
+   and connected account id — `linkedin-personal.md` with the PERSON urn, and
+   `linkedin-company.md` with the ORGANIZATION urn (consult Composio's API docs
+   via WebFetch if the endpoint shape is unclear). If a call succeeds, confirm.
+   If it fails for ANY reason, do not retry more than twice — deliver that
+   post's paste-ready text in your reply, remind Fiker the blog link goes in the
+   first comment, and note the failure so the integration can be fixed locally.
+3. Never post anything that wasn't in the approved pack. Never auto-post a track
+   whose asset is not `none`. Never post to Reddit (always manual). Never upload
+   video (always manual).
 
 ## Hard rules
 - No fabrication. No engagement bait. No banned words (see brand system).
