@@ -74,6 +74,11 @@
 
 **B-roll rule:** no recognisable human faces in real footage — backs, hands, feet, screens, streets. Mini/Anime Fiker is the only face. *(Exception: a video where you deliberately appear on camera yourself — that's you, real, by choice.)*
 
+**Two production lanes (who builds the video):**
+- **Generated** — paper/CRT, billboard, a winning format you're copying. Amara writes the script; it renders from that script with little/no editing; you just **upload**. Video stays local, named as the `file`.
+- **Edited** — real footage, mini-irl, Hedra. Amara writes the script + shot-list; **you cut it** to those beats, then upload.
+Both are **script-first** (Amara scripts before the build), and both are captioned ahead. Each `video-schedule.json` entry declares `produce: generated | edited`, so the CRM tells you *"ready — upload this"* vs *"needs your edit."*
+
 **One video = one script = one caption (no mismatch).** Every video's **file name** is the key. It's listed in `video-schedule.json` with a `pack` pointing to `social/queue/<slug>/`, and that one folder holds **both** the script (`video-script.md`) and the captions — every file stamped `<!-- video: <file>.mp4 -->` at the top. Amara writes the script and caption together and never reuses another video's pack. When you render or film it, **name the export exactly as the `file`** — that's what guarantees the right caption is always paired with the right video. Real-footage videos of you follow the same rule: the pack still carries the script/shot-list and caption, bound to that file.
 
 ### 📺 Standalone series (rotate when there's no fresh blog to anchor)

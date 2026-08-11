@@ -2,13 +2,15 @@
   "_note": "Shared source of truth for upcoming videos. Videos are produced LOCALLY (Remotion pipeline on Fiker's Mac) and delivered to iCloud — the cloud routine cannot see those files, so it reads this schedule to know what is going out and writes the captions for it. Fiker uploads the video himself; the routine never posts video.",
   "_prep_rule": "The Social Team routine (Mon/Wed/Fri) preps a video's caption on the run immediately BEFORE its post date (today < date <= next run day). So a video dated Wed is captioned on Mon's run, Fri on Wed's run, Mon on Fri's run. Keep the next 2-3 rendered videos in 'upcoming' so the routine can always see the one coming up.",
   "_maintained_by": "Updated locally whenever a batch is rendered. Keep 2-3 videos in 'upcoming'; move each to 'posted' after it goes out.",
-  "_binding": "NO MISMATCH RULE: the 'file' name is the unique key that ties a video to its caption. Every entry names its 'pack' (social/queue/<slug>/). That pack holds BOTH the script (video-script.md) and the captions, and every file in it is stamped with this exact 'file' name at the top. Amara writes script+caption together into that one pack and writes the 'pack' slug back here. When Fiker renders/films the video he names the file EXACTLY as 'file'. So caption↔video can never cross: same file name, same folder, one script. Real-footage videos (Fiker on camera) follow the same rule — the pack still carries the script/shot-list and caption bound to this file.",
+  "_binding": "NO MISMATCH RULE: the 'file' name is the unique key that ties a video to its caption. Every entry names its 'pack' (social/queue/<slug>/). That pack holds BOTH the script (video-script.md) and the captions, and every file in it is stamped with this exact 'file' name at the top. Amara writes script+caption together into that one pack and writes the 'pack' slug back here. When Fiker renders/films the video he names the file EXACTLY as 'file'. So caption↔video can never cross: same file name, same folder, one script. Real-footage videos (Fiker on camera) follow the same rule — the pack still carries the script/shot-list and caption bound to this file. The video binary stays LOCAL (Mac/iCloud); only the text pack is in the repo.",
+  "_produce": "Each entry declares 'produce': 'generated' = rendered from Amara's script with little/no editing (paper/crt/billboard/format-copy) → CRM says 'ready, upload this'. 'edited' = Fiker cuts it (real footage/mini-irl/hedra) → CRM says 'here's the script, edit then upload'. Both are script-first: Amara writes the script before the build either way.",
   "upcoming": [
     {
       "date": "2026-08-12",
       "file": "paper-W3.mp4",
       "pack": "using-ai-like-a-jet-engine",
       "format": "crt",
+      "produce": "generated",
       "durationSeconds": 29,
       "title": "Most people are using AI like a jet engine as a fan",
       "hook": "A JET ENGINE USED AS A FAN",

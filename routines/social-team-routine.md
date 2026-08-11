@@ -55,7 +55,10 @@ this rule instead:
   his; the script and caption are still the pack's, bound by the file name.
 - You never upload the video. In the summary, always pair them explicitly:
   `File <file> → paste caption from social/queue/<pack>/` so there is zero doubt
-  which caption goes with which video.
+  which caption goes with which video. Use the entry's `produce` field to tell
+  Fiker what's needed: `generated` → "ready — render/upload this + paste"; 
+  `edited` → "needs your edit — script + shot-list in the pack, then upload +
+  paste". Both are script-first: the script is written before the build.
 - If no upcoming entry falls in the today < D ≤ N window, carry on with
   Step 1 as normal.
 
