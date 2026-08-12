@@ -5,6 +5,7 @@ pubDate: 2026-08-12
 category: "AI Automation"
 readingTime: "6 min read"
 draft: true
+scheduledFor: "2026-08-14"
 ---
 
 The best automations are the ones you forget about. You set them up once — the invoice that sends itself, the lead that lands in the right list, the report that arrives every Monday without anyone touching it — and then you get on with your life. That is exactly the point. Automation is supposed to disappear.
