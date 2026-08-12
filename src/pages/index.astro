@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ShowreelSection from "../components/ShowreelSection.astro";
 import HeroTrust from "../components/HeroTrust.astro";
+import DecisionBridge from "../components/DecisionBridge.astro";
 import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
 
 export const prerender = false;
@@ -352,63 +353,8 @@ const marqueeItems2 = [
     </div>
   </section>
 
-  <!-- ═══════════════════════════════ WHAT ACTUALLY CHANGES -->
-  <section class="usecases-section" aria-label="Use cases" data-bee-stop data-atmosphere="usecases" data-hive-section>
-    <div class="section-header" data-reveal="up">
-      <span class="eyebrow">In Practice</span>
-      <h2 class="section-title">What actually<br/>changes.</h2>
-    </div>
-
-    <div class="usecases-grid">
-      <article class="glow-card usecase-card" data-motion-kind="rise" data-reveal="float-l" data-reveal-delay="0" data-tilt="7">
-        <div class="tilt-layer">
-          <div class="uc-top">
-            <div class="uc-desk-tag">Marketing Desk</div>
-            <div class="uc-metric-wrap">
-              <span class="uc-big uc-word">Offer</span>
-              <span class="uc-unit">clearer</span>
-            </div>
-          </div>
-          <h3 class="uc-headline">Brand undefined → brand that compounds.</h3>
-          <p class="card-typed" data-card-type="positioning locked... campaign ready..."></p>
-          <p class="uc-body">Positioning, creative direction, paid media, and SEO built as one system. You show up consistently everywhere it matters.</p>
-          <a class="cta-link" href="/marketing-desk">Marketing Desk <span class="arr">→</span></a>
-        </div>
-      </article>
-
-      <article class="glow-card usecase-card" data-motion-kind="steam" data-reveal="pop" data-reveal-delay="160" data-tilt="7">
-        <div class="tilt-layer">
-          <div class="uc-top">
-            <div class="uc-desk-tag">AI Desk</div>
-            <div class="uc-metric-wrap">
-              <span class="uc-big uc-no-count">24<span class="uc-slash">/7</span></span>
-              <span class="uc-unit">AI coverage</span>
-            </div>
-          </div>
-          <h3 class="uc-headline">Repetitive work → automated, always on.</h3>
-          <p class="card-typed" data-card-type="AI agent awake... routing next task..."></p>
-          <p class="uc-body">AI trained on your business handles tier-1 queries 24/7. Your team focuses only on work that actually moves things forward.</p>
-          <a class="cta-link" href="/ai-desk">AI Desk <span class="arr">→</span></a>
-        </div>
-      </article>
-
-      <article class="glow-card usecase-card" data-motion-kind="float" data-reveal="float-r" data-reveal-delay="320" data-tilt="7">
-        <div class="tilt-layer">
-          <div class="uc-top">
-            <div class="uc-desk-tag">Virtual Assistant Desk</div>
-            <div class="uc-metric-wrap">
-              <span class="uc-big uc-word">Ops</span>
-              <span class="uc-unit">handled</span>
-            </div>
-          </div>
-          <h3 class="uc-headline">Chaos controlled → operations that run.</h3>
-          <p class="card-typed" data-card-type="inbox clear... calendar protected..."></p>
-          <p class="uc-body">Inbox managed. Calendar owned. Deliverables tracked. You lead from the front — everything behind the scenes, handled.</p>
-          <a class="cta-link" href="/va-desk">Virtual Assistant Desk <span class="arr">→</span></a>
-        </div>
-      </article>
-    </div>
-  </section>
+  <!-- ═══════════════════════ WHAT ACTUALLY CHANGES (interactive) -->
+  <DecisionBridge />
 
   <!-- ══════════════════════════════ RECENT SELECTED WORK -->
   <ShowreelSection
