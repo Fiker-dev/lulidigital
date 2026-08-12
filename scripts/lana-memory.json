@@ -46,11 +46,11 @@
     "published_at": "2026-07-28"
   },
   "review_state": {
-    "slug": "stop-rebuilding-the-same-report-every-week",
-    "title": "You Spend Every Monday Rebuilding the Same Report. The Numbers Were Already There.",
-    "description": "You lose hours each week rebuilding the same report by hand. Why manual reporting quietly drains small teams — and how to automate it the right way.",
-    "preview_text": "It usually starts before the coffee has cooled. You open one tab, then another, then four more. You export a spreadsheet from one tool, copy a figure out of a second, screenshot a chart from a third because it won't export cleanly. You paste it all into the same document you built last week, and re-check two numbers that look suspiciously round.",
-    "scheduled_for": "2026-08-12",
+    "slug": "your-automation-is-quietly-breaking",
+    "title": "You Automated It and Moved On. It's Been Failing Quietly Ever Since.",
+    "description": "Most automations don't break loudly — they fail in silence for months while nobody watches. How to catch a broken automation before it costs you.",
+    "preview_text": "The best automations are the ones you forget about. You set them up once — the invoice that sends itself, the lead that lands in the right list, the report that arrives every Monday without anyone touching it — and then you get on with your life. That is exactly the point. Automation is supposed to disappear.",
+    "scheduled_for": "2026-08-14",
     "revision_count": 0,
     "status": "awaiting_approval"
   }
