@@ -84,7 +84,6 @@ const faqSchema = {
   <!-- ═══════════════════════════════════════════════════════ HERO -->
   <section class="wd-hero" aria-label="Web Design services" data-bee-stop data-atmosphere="hero" data-hive-section>
     <div class="wd-grid-field" aria-hidden="true"></div>
-
     <div class="wd-hero-inner">
       <span class="eyebrow wd-eyebrow" data-blur-in>Design Studio</span>
       <h1 class="wd-title" data-word-reveal>
@@ -104,16 +103,8 @@ const faqSchema = {
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════ MARQUEE -->
-  <div class="marquee-wrap" aria-hidden="true">
-    <div class="marquee-track">
-      {[...webMarquee, ...webMarquee].map((item) => (
-        <span class="marquee-item">{item}</span>
-      ))}
-    </div>
-  </div>
 
-  <section class="selling-point selling-point--web" aria-label="Premium web design selling point" data-reveal="up" data-bee-stop data-atmosphere="web" data-hive-section>
+  <section id="approach" class="selling-point selling-point--web" aria-label="Premium web design selling point" data-reveal="up" data-bee-stop data-atmosphere="web" data-hive-section>
     <span class="eyebrow">The Difference</span>
     <h2 class="selling-title">You get a website your business can actually grow on.</h2>
     <p class="selling-copy">
@@ -168,24 +159,6 @@ const faqSchema = {
       </article>
     </div>
   </section>
-
-  <!-- ═══════════════════════════════════════════ METRICS STRIP -->
-  <div class="metrics-strip" aria-label="Web design impact" data-reveal="up">
-    <div class="metric-item">
-      <span class="metric-num metric-word">Clear</span>
-      <span class="metric-label">hierarchy that guides every visitor</span>
-    </div>
-    <div class="metric-divider" aria-hidden="true"></div>
-    <div class="metric-item">
-      <span class="metric-num metric-word">Premium</span>
-      <span class="metric-label">feel that earns trust instantly</span>
-    </div>
-    <div class="metric-divider" aria-hidden="true"></div>
-    <div class="metric-item">
-      <span class="metric-num metric-word">Converts</span>
-      <span class="metric-label">visitors into action, not just views</span>
-    </div>
-  </div>
 
   <!-- ══════════════════════════════════════════ SERVICE BENTO GRID -->
   <section class="wd-services" aria-label="Web design services we offer" data-reveal="up" data-bee-stop data-atmosphere="services" data-hive-section>
@@ -303,14 +276,6 @@ const faqSchema = {
 
   <!-- ════════════════════════════════════ FAQ -->
   <FaqSection faqs={faqs} eyebrow="Questions, answered" title="The things people ask before we start." />
-
-  <!-- ══════════════════════════════ BOLD DARK STATEMENT -->
-  <section class="bold-statement" aria-label="Web design promise">
-    <div class="bs-inner">
-      <p class="bs-line" data-reveal="up" data-reveal-delay="0">Your site is your first impression.</p>
-      <p class="bs-line bs-accent" data-reveal="up" data-reveal-delay="140">Make it unforgettable.</p>
-    </div>
-  </section>
 
   <!-- ═══════════════════════════════════════════════════════ CTA -->
   <section class="wd-cta-section" aria-label="Start a web design project" data-reveal="fade" data-bee-final data-atmosphere="cta" data-hive-section>
@@ -455,7 +420,7 @@ const faqSchema = {
   .svc-icon {
     width: 40px; height: 40px; border-radius: 10px; background: rgba(123,45,45,.1);
     display: grid; place-items: center; color: var(--brand); flex-shrink: 0;
-    transition: background 350ms ease, color 300ms ease, transform 400ms cubic-bezier(.34,1.56,.64,1);
+    transition: background 350ms ease, color 300ms ease, transform 400ms cubic-bezier(.16,1,.3,1);
   }
   .svc-card:hover .svc-icon { background: rgba(123,45,45,.35); color: #f9f5ef; transform: rotate(8deg) scale(1.12); }
   .svc-title {

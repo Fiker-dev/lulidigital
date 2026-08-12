@@ -30,15 +30,6 @@ const fallbackKeywords = [
 ];
 
 const regionalFallbackKeywords = {
-  AFRICA: [
-    "digital marketing agency for African startups",
-    "AI automation for African companies",
-    "virtual assistant services for African businesses",
-    "performance marketing agency Africa",
-    "SEO services for African companies",
-    "remote executive assistant Africa",
-    "digital marketing agency for international companies in Africa",
-  ],
   NL: [
     "digital marketing agency Amsterdam",
     "AI automation Amsterdam",
@@ -189,16 +180,6 @@ const pageKeywordTargets = {
       "outsourced operations team",
     ],
   },
-  "/africa": {
-    page: "Africa",
-    primary: regionalFallbackKeywords.AFRICA,
-    secondary: [
-      "international companies in Africa",
-      "dollar earning African businesses",
-      "African startups digital marketing",
-      "AI automation for African businesses",
-    ],
-  },
   "/amsterdam": {
     page: "Amsterdam",
     primary: regionalFallbackKeywords.NL,
@@ -334,7 +315,6 @@ const serviceSignals = [
   "ireland",
   "belgium",
   "norway",
-  "africa",
   "nigeria",
   "kenya",
   "ghana",
@@ -741,18 +721,6 @@ export const getDailySeoRecommendation = async ({ forceRefresh = false, geo, mar
     if (cachedRecommendation && cachedRecommendation.expiresAt > Date.now()) {
       return cachedRecommendation.value;
     }
-  }
-
-  if (selectedGeo === "AFRICA") {
-    const keyword = fallbackForToday(new Date(), selectedGeo);
-    const recommendation = buildRecommendation(keyword, "LuliDigital Africa keyword rotation", selectedGeo);
-
-    cachedRecommendations.set(cacheKey, {
-      expiresAt: Date.now() + CACHE_TTL,
-      value: recommendation,
-    });
-
-    return recommendation;
   }
 
   try {

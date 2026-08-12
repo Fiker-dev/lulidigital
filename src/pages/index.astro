@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ShowreelSection from "../components/ShowreelSection.astro";
+import HeroTrust from "../components/HeroTrust.astro";
 import { getWeeklyPageSeoTarget } from "../lib/seoAgent.js";
 
 export const prerender = false;
@@ -45,27 +46,6 @@ const marqueeItems2 = [
 
   <!-- ═══════════════════════════════════════════════════════ HERO -->
   <section class="hero" aria-label="Introduction" data-atmosphere="hero" data-hive-section>
-    <div class="hero-orb orb-a" aria-hidden="true"></div>
-    <div class="hero-orb orb-b" aria-hidden="true"></div>
-    <div class="hero-orb orb-c" aria-hidden="true"></div>
-    <div class="hero-particles" aria-hidden="true"></div>
-    <div class="signal-field" aria-hidden="true" data-signal-field>
-      <canvas class="signal-field__canvas" data-signal-canvas></canvas>
-      <div class="signal-field__aura"></div>
-      <div class="signal-node signal-node--marketing">
-        <span class="signal-node__core"></span>
-        <span class="signal-node__label">Marketing</span>
-      </div>
-      <div class="signal-node signal-node--ai">
-        <span class="signal-node__core"></span>
-        <span class="signal-node__label">AI</span>
-      </div>
-      <div class="signal-node signal-node--ops">
-        <span class="signal-node__core"></span>
-        <span class="signal-node__label">Ops</span>
-      </div>
-    </div>
-
     <div class="hero-inner">
       <span class="hero-badge" data-blur-in>
         <span class="badge-dot" aria-hidden="true"></span>
@@ -86,16 +66,18 @@ const marqueeItems2 = [
       </p>
 
       <div class="hero-ctas" data-stagger data-stagger-gap="80">
-        <a class="pill pill--filled magnetic" href="/marketing-desk">
-          <span>Marketing Desk</span>
+        <a class="pill pill--filled magnetic" href="https://wa.me/27602551513?text=Hi%20LuliDigital%2C%20I%20would%20like%20to%20discuss%20my%20business%20priorities." target="_blank" rel="noopener noreferrer">
+          <span>Discuss your priorities</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a class="pill pill--outline magnetic" href="/ai-desk">
-          <span>AI Desk</span>
+        <a class="pill pill--outline magnetic" href="#desks">
+          <span>Explore the desks</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a class="pill pill--ghost" href="/va-desk">Virtual Assistant Desk →</a>
+        <a class="pill pill--ghost" href="/work">View selected work →</a>
       </div>
+
+      <HeroTrust items={["Founder-focused", "Human judgment", "One accountable studio"]} />
 
       <div class="scroll-hint" aria-label="Scroll to explore">
         <span class="scroll-hint__line"></span>
@@ -104,23 +86,6 @@ const marqueeItems2 = [
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════ MARQUEE -->
-  <div class="marquee-wrap" aria-hidden="true">
-    <div class="marquee-track">
-      {[...marqueeItems, ...marqueeItems].map((item) => (
-        <span class="marquee-item">{item}</span>
-      ))}
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════ MARQUEE ROW 2 -->
-  <div class="marquee-wrap marquee-wrap--alt" aria-hidden="true">
-    <div class="marquee-track marquee-track--rev">
-      {[...marqueeItems2, ...marqueeItems2].map((item) => (
-        <span class="marquee-item marquee-item--alt">{item}</span>
-      ))}
-    </div>
-  </div>
 
   <!-- ═════════════════════════════════════ STORY: THE PROBLEM -->
   <section class="story-problem" aria-label="The problem we solve" data-atmosphere="problem" data-hive-section>
@@ -164,7 +129,7 @@ const marqueeItems2 = [
   </section>
 
   <!-- ═════════════════════════════════ STORY: THE SOLUTION -->
-  <section class="bento-section" aria-label="Services" data-bee-stop data-atmosphere="services" data-hive-section>
+  <section id="desks" class="bento-section" aria-label="Services" data-bee-stop data-atmosphere="services" data-hive-section>
     <!-- Honeycomb fits the bee theme -->
     <div class="honeycomb" aria-hidden="true" data-reveal="fade">
       <pre class="honeycomb-pre">
@@ -337,42 +302,6 @@ const marqueeItems2 = [
     </div>
   </section>
 
-  <!-- ══════════════════════════════ HIVE SIGNAL FLOW ══════════ -->
-  <div class="hive-signal-flow" aria-hidden="true">
-    {Array.from({length: 10}).map(() => <span class="hsf-dot"></span>)}
-    <span class="hsf-label">signal active</span>
-    {Array.from({length: 10}).map(() => <span class="hsf-dot"></span>)}
-  </div>
-
-  <!-- ══════════════════════════ BOLD DARK STATEMENT (Floema) -->
-  <section class="bold-statement" aria-label="Our promise" data-atmosphere="statement" data-hive-section>
-    <!-- Living hive overlay: hex chars drift in the dark -->
-    <div class="bs-hive-overlay" aria-hidden="true">⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡</div>
-    <div class="bs-inner">
-      <p class="bs-line" data-reveal="up" data-reveal-delay="0">You run your business.</p>
-      <p class="bs-line bs-accent" data-reveal="up" data-reveal-delay="120">We run everything else.</p>
-    </div>
-    <div class="bs-reel" aria-hidden="true">
-      <div class="bs-reel-track">
-        <span class="bsr-word">Marketing</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">AI Automation</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Virtual Assistant</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Web Design</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Marketing</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">AI Automation</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Virtual Assistant</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Web Design</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Marketing</span><span class="bsr-sep">—</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════ DROP GUIDE -->
-  <div class="drop-guide" aria-hidden="true">
-    <div class="drop-guide__line"></div>
-    <div class="drop-guide__ball"></div>
-  </div>
-
   <!-- ═════════════════════════════════════════════ HOW ASCII -->
   <section class="how-section" aria-label="How LuliDigital works" data-reveal="up" data-atmosphere="how" data-hive-section data-hive-node="how">
     <span class="eyebrow">How It Works</span>
@@ -422,43 +351,6 @@ const marqueeItems2 = [
       </svg>
     </div>
   </section>
-
-  <!-- ══════════════════════════════════════════ WAVE GUIDE -->
-  <div class="wave-guide" aria-hidden="true">
-    <svg class="wave-svg" viewBox="0 0 1200 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="wave-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%"   stop-color="rgba(123,45,45,0)"/>
-          <stop offset="30%"  stop-color="rgba(123,45,45,0.38)"/>
-          <stop offset="70%"  stop-color="rgba(123,45,45,0.38)"/>
-          <stop offset="100%" stop-color="rgba(123,45,45,0)"/>
-        </linearGradient>
-      </defs>
-      <path d="M0,35 C150,5 350,65 600,35 C850,5 1050,65 1200,35" fill="none" stroke="url(#wave-grad)" stroke-width="1.5"/>
-      <circle r="5.5" fill="rgba(123,45,45,0.85)" style="filter:drop-shadow(0 0 6px rgba(123,45,45,.7))">
-        <animateMotion dur="3.8s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.6 1"
-          path="M0,35 C150,5 350,65 600,35 C850,5 1050,65 1200,35"/>
-      </circle>
-    </svg>
-  </div>
-
-  <!-- ═══════════════════════════════════════ METRICS STRIP -->
-  <div class="metrics-strip" aria-label="Studio impact" data-reveal="up">
-    <div class="metric-item">
-      <span class="metric-num">24/7</span>
-      <span class="metric-label">AI coverage</span>
-    </div>
-    <div class="metric-divider" aria-hidden="true"></div>
-    <div class="metric-item">
-      <span class="metric-num metric-word">Less admin</span>
-      <span class="metric-label">cleaner weekly operations</span>
-    </div>
-    <div class="metric-divider" aria-hidden="true"></div>
-    <div class="metric-item">
-      <span class="metric-num metric-word">Clear story</span>
-      <span class="metric-label">stronger brand direction</span>
-    </div>
-  </div>
 
   <!-- ═══════════════════════════════ WHAT ACTUALLY CHANGES -->
   <section class="usecases-section" aria-label="Use cases" data-bee-stop data-atmosphere="usecases" data-hive-section>
@@ -568,8 +460,6 @@ const marqueeItems2 = [
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     initTypewriter();
-    initParallaxOrbs();
-    initSignalField();
   });
 
   function initTypewriter() {
@@ -594,160 +484,6 @@ const marqueeItems2 = [
       }
     }
     tick();
-  }
-
-  function initParallaxOrbs() {
-    const orbs = document.querySelectorAll<HTMLElement>(".hero-orb");
-    if (!orbs.length || window.innerWidth < 768) return;
-    window.addEventListener("mousemove", (ev) => {
-      const e = ev as MouseEvent;
-      const cx = e.clientX / window.innerWidth  - 0.5;
-      const cy = e.clientY / window.innerHeight - 0.5;
-      orbs.forEach((orb, i) => {
-        const f = i === 0 ? 22 : i === 1 ? -16 : 10;
-        orb.style.transform = `translate(${cx * f}px, ${cy * f}px)`;
-      });
-    }, { passive: true });
-  }
-
-  function initSignalField() {
-    const field = document.querySelector<HTMLElement>("[data-signal-field]");
-    const canvas = document.querySelector<HTMLCanvasElement>("[data-signal-canvas]");
-    if (!field || !canvas) return;
-
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const ctx = canvas.getContext("2d", { alpha: true });
-    if (!ctx) return;
-
-    const nodes = [
-      { x: 0.21, y: 0.38 },
-      { x: 0.5, y: 0.18 },
-      { x: 0.79, y: 0.42 },
-      { x: 0.35, y: 0.72 },
-      { x: 0.66, y: 0.7 },
-    ];
-    const links = [[0, 1], [1, 2], [0, 3], [3, 4], [4, 2], [1, 4]];
-    let width = 1;
-    let height = 1;
-    let dpr = 1;
-    let raf = 0;
-    let running = false;
-    let pointerX = 0;
-    let pointerY = 0;
-
-    const resize = () => {
-      const rect = field.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = Math.max(1, Math.round(rect.width));
-      height = Math.max(1, Math.round(rect.height));
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      if (reduced) draw(900);
-    };
-
-    const pointFor = (node: { x: number; y: number }, time: number) => {
-      const driftX = reduced ? 0 : Math.sin(time * 0.0007 + node.x * 9) * 8;
-      const driftY = reduced ? 0 : Math.cos(time * 0.00055 + node.y * 11) * 6;
-      return {
-        x: width * node.x + pointerX * (node.x - 0.5) * 18 + driftX,
-        y: height * node.y + pointerY * (node.y - 0.5) * 16 + driftY,
-      };
-    };
-
-    const draw = (time: number) => {
-      ctx.clearRect(0, 0, width, height);
-      const glow = ctx.createRadialGradient(width * 0.5, height * 0.48, 10, width * 0.5, height * 0.48, Math.max(width, height) * 0.58);
-      glow.addColorStop(0, "rgba(127,26,26,0.12)");
-      glow.addColorStop(0.48, "rgba(245,164,31,0.05)");
-      glow.addColorStop(1, "rgba(127,26,26,0)");
-      ctx.fillStyle = glow;
-      ctx.fillRect(0, 0, width, height);
-
-      const points = nodes.map((node) => pointFor(node, time));
-      const pulse = reduced ? 0.55 : 0.5 + Math.sin(time * 0.0012) * 0.5;
-
-      links.forEach(([a, b], i) => {
-        const p1 = points[a];
-        const p2 = points[b];
-        const cx = (p1.x + p2.x) / 2 + Math.sin(time * 0.00045 + i) * 18;
-        const cy = (p1.y + p2.y) / 2 + Math.cos(time * 0.00042 + i) * 14;
-        const grad = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
-        grad.addColorStop(0, "rgba(127,26,26,0)");
-        grad.addColorStop(0.5, `rgba(127,26,26,${0.18 + pulse * 0.08})`);
-        grad.addColorStop(1, "rgba(245,164,31,0)");
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = i % 2 === 0 ? 1.2 : 0.8;
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.quadraticCurveTo(cx, cy, p2.x, p2.y);
-        ctx.stroke();
-
-        if (!reduced) {
-          const t = (time * 0.00018 + i * 0.17) % 1;
-          const x = (1 - t) * (1 - t) * p1.x + 2 * (1 - t) * t * cx + t * t * p2.x;
-          const y = (1 - t) * (1 - t) * p1.y + 2 * (1 - t) * t * cy + t * t * p2.y;
-          ctx.fillStyle = "rgba(245,164,31,0.42)";
-          ctx.beginPath();
-          ctx.arc(x, y, 2.4, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      });
-
-      points.forEach((point, i) => {
-        const active = reduced ? 0.55 : 0.5 + Math.sin(time * 0.0015 + i * 1.7) * 0.5;
-        const radius = 17 + active * 9;
-        const halo = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, radius * 2.7);
-        halo.addColorStop(0, `rgba(245,164,31,${0.18 + active * 0.12})`);
-        halo.addColorStop(0.38, "rgba(127,26,26,0.08)");
-        halo.addColorStop(1, "rgba(127,26,26,0)");
-        ctx.fillStyle = halo;
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, radius * 2.7, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = i < 3 ? "rgba(127,26,26,0.74)" : "rgba(245,164,31,0.62)";
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, i < 3 ? 3.8 : 2.8, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    };
-
-    const tick = (time: number) => {
-      draw(time);
-      if (running && !reduced) raf = requestAnimationFrame(tick);
-    };
-
-    const start = () => {
-      if (running) return;
-      running = true;
-      raf = requestAnimationFrame(tick);
-    };
-
-    const stop = () => {
-      running = false;
-      cancelAnimationFrame(raf);
-    };
-
-    window.addEventListener("pointermove", (event) => {
-      const rect = field.getBoundingClientRect();
-      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-      pointerX += ((event.clientX - rect.left) / rect.width - 0.5 - pointerX) * 0.18;
-      pointerY += ((event.clientY - rect.top) / rect.height - 0.5 - pointerY) * 0.18;
-    }, { passive: true });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) start();
-        else stop();
-      });
-    }, { threshold: 0.08 });
-
-    resize();
-    observer.observe(field);
-    window.addEventListener("resize", resize, { passive: true });
   }
 </script>
 
@@ -995,7 +731,7 @@ const marqueeItems2 = [
     color: var(--brand); font-family: var(--font-display, "Fraunces", ui-serif, Georgia, serif);
     display: inline-block;
     max-width: 6.5ch;
-    transition: transform 420ms cubic-bezier(.34,1.56,.64,1), color 300ms ease;
+    transition: transform 420ms cubic-bezier(.16,1,.3,1), color 300ms ease;
   }
   .problem-card:hover .prob-num { transform: translateY(-6px) scale(1.05); }
   .prob-unit {
@@ -1042,7 +778,7 @@ const marqueeItems2 = [
   .bento-icon {
     width: 44px; height: 44px; border-radius: 12px; background: rgba(123,45,45,.1);
     display: grid; place-items: center; color: var(--brand); flex-shrink: 0;
-    transition: background 350ms ease, color 300ms ease, transform 400ms cubic-bezier(.34,1.56,.64,1);
+    transition: background 350ms ease, color 300ms ease, transform 400ms cubic-bezier(.16,1,.3,1);
   }
   .bento-card:hover .bento-icon { background: rgba(123,45,45,.35); color: #f9f5ef; transform: rotate(8deg) scale(1.1); }
   .bento-title {
@@ -1203,7 +939,7 @@ const marqueeItems2 = [
   .usecase-card:hover .uc-big {
     color: #f5f0e8;
     transform: scale(1.06);
-    transition: transform 400ms cubic-bezier(.34,1.4,.64,1), color 300ms ease;
+    transition: transform 400ms cubic-bezier(.16,1,.3,1), color 300ms ease;
   }
   .usecase-card:hover .uc-unit { color: rgba(245,240,232,.4); }
   .usecase-card:hover .uc-headline { color: #f5f0e8; }

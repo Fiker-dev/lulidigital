@@ -5,7 +5,6 @@ import { timingSafeEqual } from "../../../lib/security";
 export const prerender = false;
 
 const regionalMarkets = [
-  { geo: "AFRICA", market: "africa" },
   { geo: "NL", market: "amsterdam" },
   { geo: "DE", market: "munich" },
   { geo: "SE", market: "stockholm" },

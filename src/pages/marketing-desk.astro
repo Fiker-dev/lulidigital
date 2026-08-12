@@ -84,7 +84,6 @@ const faqSchema = {
   <!-- ═══════════════════════════════════════════════════════ HERO -->
   <section class="mkt-hero" aria-label="Marketing services" data-bee-stop data-atmosphere="hero" data-hive-section>
     <div class="mkt-signal-field" aria-hidden="true"></div>
-
     <div class="mkt-hero-split">
       <div class="mkt-hero-text">
         <span class="eyebrow mkt-eyebrow" data-blur-in>Campaign Studio</span>
@@ -101,69 +100,23 @@ const faqSchema = {
         </div>
       </div>
 
-      <!-- Animated growth chart character -->
       <div class="mkt-chart" aria-hidden="true">
-        <div class="mc-flight-line"></div>
-        <div class="mc-header">
-          <span class="mc-label">Campaign Performance</span>
-          <span class="mc-live"><span class="mc-live-dot"></span>Live</span>
-        </div>
+        <div class="mc-flight-line"></div><div class="mc-header"><span class="mc-label">Campaign Performance</span><span class="mc-live"><span class="mc-live-dot"></span>Live</span></div>
         <div class="mc-bars">
-          <div class="mc-bar-wrap" style="--bh:38%;--bd:0ms">
-            <div class="mc-bar"></div>
-            <span class="mc-bar-label">Jan</span>
-          </div>
-          <div class="mc-bar-wrap" style="--bh:52%;--bd:80ms">
-            <div class="mc-bar"></div>
-            <span class="mc-bar-label">Feb</span>
-          </div>
-          <div class="mc-bar-wrap" style="--bh:44%;--bd:160ms">
-            <div class="mc-bar"></div>
-            <span class="mc-bar-label">Mar</span>
-          </div>
-          <div class="mc-bar-wrap" style="--bh:68%;--bd:240ms">
-            <div class="mc-bar"></div>
-            <span class="mc-bar-label">Apr</span>
-          </div>
-          <div class="mc-bar-wrap" style="--bh:75%;--bd:320ms">
-            <div class="mc-bar"></div>
-            <span class="mc-bar-label">May</span>
-          </div>
-          <div class="mc-bar-wrap mc-bar-wrap--accent" style="--bh:91%;--bd:400ms">
-            <div class="mc-bar"></div>
-            <span class="mc-bar-label">Now</span>
-          </div>
+          <div class="mc-bar-wrap" style="--bh:38%;--bd:0ms"><div class="mc-bar"></div><span class="mc-bar-label">Jan</span></div>
+          <div class="mc-bar-wrap" style="--bh:52%;--bd:80ms"><div class="mc-bar"></div><span class="mc-bar-label">Feb</span></div>
+          <div class="mc-bar-wrap" style="--bh:44%;--bd:160ms"><div class="mc-bar"></div><span class="mc-bar-label">Mar</span></div>
+          <div class="mc-bar-wrap" style="--bh:68%;--bd:240ms"><div class="mc-bar"></div><span class="mc-bar-label">Apr</span></div>
+          <div class="mc-bar-wrap" style="--bh:75%;--bd:320ms"><div class="mc-bar"></div><span class="mc-bar-label">May</span></div>
+          <div class="mc-bar-wrap mc-bar-wrap--accent" style="--bh:91%;--bd:400ms"><div class="mc-bar"></div><span class="mc-bar-label">Now</span></div>
         </div>
-        <div class="mc-stats">
-          <div class="mc-stat">
-            <span class="mc-stat-num mc-stat-word">Offer</span>
-            <span class="mc-stat-label">clearer</span>
-          </div>
-          <div class="mc-stat-div"></div>
-          <div class="mc-stat">
-            <span class="mc-stat-num mc-stat-word">SEO</span>
-            <span class="mc-stat-label">structured</span>
-          </div>
-          <div class="mc-stat-div"></div>
-          <div class="mc-stat">
-            <span class="mc-stat-num mc-stat-word">Launch</span>
-            <span class="mc-stat-label">ready</span>
-          </div>
-        </div>
+        <div class="mc-stats"><div class="mc-stat"><span class="mc-stat-num mc-stat-word">Offer</span><span class="mc-stat-label">clearer</span></div><div class="mc-stat-div"></div><div class="mc-stat"><span class="mc-stat-num mc-stat-word">SEO</span><span class="mc-stat-label">structured</span></div><div class="mc-stat-div"></div><div class="mc-stat"><span class="mc-stat-num mc-stat-word">Launch</span><span class="mc-stat-label">ready</span></div></div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════ MARQUEE -->
-  <div class="marquee-wrap" aria-hidden="true">
-    <div class="marquee-track">
-      {[...mktMarquee, ...mktMarquee].map((item) => (
-        <span class="marquee-item">{item}</span>
-      ))}
-    </div>
-  </div>
 
-  <section class="selling-point selling-point--marketing" aria-label="AI powered digital marketing selling point" data-reveal="up" data-bee-stop data-atmosphere="marketing" data-hive-section>
+  <section id="approach" class="selling-point selling-point--marketing" aria-label="AI powered digital marketing selling point" data-reveal="up" data-bee-stop data-atmosphere="marketing" data-hive-section>
     <span class="eyebrow">Why This Works</span>
     <h2 class="selling-title">You get digital marketing powered by AI, guided by human strategy.</h2>
     <p class="selling-copy">
@@ -229,24 +182,6 @@ const faqSchema = {
 
     <p class="process-note">Best for: Launches, rebrands, and growth sprints — weekly reporting, monthly iteration.</p>
   </section>
-
-  <!-- ═══════════════════════════════════════════ METRICS STRIP -->
-  <div class="metrics-strip" aria-label="Marketing impact" data-reveal="up">
-    <div class="metric-item">
-      <span class="metric-num metric-word">Clear offer</span>
-      <span class="metric-label">positioning people understand</span>
-    </div>
-    <div class="metric-divider" aria-hidden="true"></div>
-    <div class="metric-item">
-      <span class="metric-num metric-word">Better SEO</span>
-      <span class="metric-label">pages built around search intent</span>
-    </div>
-    <div class="metric-divider" aria-hidden="true"></div>
-    <div class="metric-item">
-      <span class="metric-num metric-word">Smarter ads</span>
-      <span class="metric-label">campaigns guided by learning</span>
-    </div>
-  </div>
 
   <!-- ══════════════════════════════════════════ SERVICE BENTO GRID -->
   <section class="mkt-services" aria-label="Marketing services we offer" data-reveal="up" data-bee-stop data-atmosphere="services" data-hive-section>
@@ -365,31 +300,6 @@ const faqSchema = {
       </div>
     </div>
   </section>
-
-  <!-- ══════════════════════════════════ LIVE DESK FEED -->
-  <div class="desk-feed" aria-hidden="true">
-    <span class="df-badge"><span class="df-dot"></span>Live</span>
-    <div class="df-track-wrap">
-      <div class="df-track">
-        {[
-          "Audience research complete — strongest search angles selected",
-          "Creative refresh queued — stronger hooks ready for testing",
-          "Landing page story tightened — offer easier to understand",
-          "Google campaign mapped — keywords grouped by intent",
-          "Content system live — posts aligned with the offer",
-          "SEO content compounding — pages built around buyer questions",
-          "Audience research complete — strongest search angles selected",
-          "Creative refresh queued — stronger hooks ready for testing",
-          "Landing page story tightened — offer easier to understand",
-        ].map((item) => (
-          <>
-            <span class="df-item">{item}</span>
-            <span class="df-sep" aria-hidden="true">·</span>
-          </>
-        ))}
-      </div>
-    </div>
-  </div>
 
   <!-- ════════════════════════════════════ FAQ -->
   <FaqSection faqs={faqs} eyebrow="Questions, answered" title="What founders ask before we run a campaign." />
@@ -539,7 +449,7 @@ const faqSchema = {
     width: 100%; border-radius: 4px 4px 0 0;
     background: rgba(123,45,45,.25);
     height: 0;
-    animation: barRise 700ms cubic-bezier(.34,1.4,.64,1) forwards;
+    animation: barRise 700ms cubic-bezier(.16,1,.3,1) forwards;
     animation-delay: calc(var(--bd, 0ms) + 600ms);
     --final-h: var(--bh, 60%);
   }
@@ -598,7 +508,7 @@ const faqSchema = {
   .svc-icon {
     width: 40px; height: 40px; border-radius: 10px; background: rgba(123,45,45,.1);
     display: grid; place-items: center; color: var(--brand); flex-shrink: 0;
-    transition: background 350ms ease, color 300ms ease, transform 400ms cubic-bezier(.34,1.56,.64,1);
+    transition: background 350ms ease, color 300ms ease, transform 400ms cubic-bezier(.16,1,.3,1);
   }
   .svc-card:hover .svc-icon { background: rgba(123,45,45,.35); color: #f9f5ef; transform: rotate(8deg) scale(1.12); }
   .svc-title {

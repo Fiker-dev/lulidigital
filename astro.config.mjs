@@ -18,7 +18,6 @@ const ssrPages = [
   '/amsterdam',
   '/stockholm',
   '/munich',
-  '/africa',
   '/united-states',
   '/united-kingdom',
   '/denmark',

@@ -6,32 +6,28 @@ brand
 
 ## Users
 
-Founders, operators, executives, and small teams in the UK, Europe, and the US who need reliable marketing, AI automation, website, or executive-support capacity without building several internal departments. They arrive while comparing providers, diagnosing an operational bottleneck, or checking whether LuliDigital can work with their existing team and tools.
+Founders and business owners evaluating a trusted partner for marketing, AI automation, web design, and executive operations. They are often time-constrained, commercially minded, and looking for evidence of judgment, capability, and a collaborative working style.
 
 ## Product Purpose
 
-The website explains LuliDigital's four service desks, demonstrates the studio's judgment and execution quality, and helps a qualified visitor choose a relevant service or start a conversation. Success means visitors understand what each desk does, where human approval remains, and what working together would involve.
+LuliDigital presents a credible, differentiated studio and helps prospective clients understand its services, trust its expertise, and start a useful conversation. Success means visitors quickly recognize the studio's value, feel confident that it can handle serious business work, and still sense a warm human team behind the systems.
 
 ## Brand Personality
 
-Warm, exact, and quietly opinionated. LuliDigital should feel like the reader's smartest operational friend: plain-spoken, accountable, visually distinctive, and confident without corporate performance or influencer hype.
+Assured, imaginative, human. The experience should combine premium authority with warmth and leave visitors thinking: “These people are highly capable, and I would enjoy working with them.”
 
 ## Anti-references
 
-- Generic AI-agency sites built from purple gradients, abstract robots, and inflated automation claims.
-- Corporate consultancy pages that hide simple services behind jargon.
-- SEO landing pages that repeat locations or keywords instead of answering buyer questions.
-- Template portfolios where decorative motion obscures the work or the next action.
-- Tech-bro, hustle, or AI-guru positioning.
+Avoid generic corporate consultancy websites, sterile SaaS templates, excessive AI-generated visual effects, and playful treatments that weaken commercial credibility. Avoid visual or motion choices that drift away from the established LuliDigital theme.
 
 ## Design Principles
 
-1. Show operational judgment, not just a list of capabilities.
-2. Answer buyer uncertainty in specific, plain language.
-3. Keep human responsibility visible wherever automation is discussed.
-4. Make every page useful before it asks for a conversation.
-5. Preserve the studio's honey-and-hive identity while keeping content easy to read and navigate.
+1. Lead with confident clarity: visitors should understand the offer and next step without decoding agency language.
+2. Prove expertise through specific work, process, and judgment rather than inflated claims.
+3. Pair premium execution with visible human warmth.
+4. Make every page feel unmistakably LuliDigital while allowing each service or market page a relevant character.
+5. Use animation to guide attention, communicate relationships, and create memorable moments without delaying comprehension.
 
 ## Accessibility & Inclusion
 
-Target WCAG 2.2 AA. Preserve keyboard access, visible focus states, semantic structure, sufficient contrast, responsive layouts, and reduced-motion alternatives. Important service information must remain present as text without requiring animation or JavaScript.
+Target WCAG 2.2 AA. Maintain strong contrast, semantic structure, visible keyboard focus, accessible controls, comfortable mobile typography and touch targets, and meaningful reduced-motion alternatives.

@@ -80,7 +80,6 @@ const faqSchema = {
   <!-- ═══════════════════════════════════════════════════════ HERO -->
   <section class="ai-hero" aria-label="AI services" data-bee-stop data-atmosphere="hero" data-hive-section>
     <div class="ai-matrix-field" aria-hidden="true"></div>
-
     <div class="ai-hero-split">
       <div class="ai-hero-text">
         <span class="eyebrow ai-eyebrow" data-blur-in>Automation Console</span>
@@ -97,48 +96,12 @@ const faqSchema = {
         </div>
       </div>
 
-      <!-- Animated AI chat character -->
-      <div class="ai-chat" aria-hidden="true">
-        <div class="ac-header">
-          <div class="ac-avatar">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><circle cx="12" cy="14" r="2"/></svg>
-          </div>
-          <div class="ac-header-info">
-            <span class="ac-name">AI AGENT ASSISTANT</span>
-            <span class="ac-online"><span class="ac-online-dot"></span>Always on</span>
-          </div>
-        </div>
-        <div class="ac-messages">
-          <div class="ac-msg ac-msg--in" style="--mi:0">
-            <p>How long does setup take?</p>
-          </div>
-          <div class="ac-msg ac-msg--out" style="--mi:1">
-            <p>We scope it on a quick call, then handle the full build — design, training, and launch.</p>
-          </div>
-          <div class="ac-msg ac-msg--in" style="--mi:2">
-            <p>What can it actually do?</p>
-          </div>
-          <div class="ac-msg ac-msg--out" style="--mi:3">
-            <p>Answer queries 24/7, qualify leads, route tasks, generate reports — trained on your business.</p>
-          </div>
-          <div class="ac-typing" style="--mi:4">
-            <span></span><span></span><span></span>
-          </div>
-        </div>
-      </div>
+      <div class="ai-chat" aria-hidden="true"><div class="ac-header"><div class="ac-avatar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="12" rx="2"/><circle cx="12" cy="14" r="2"/></svg></div><div class="ac-header-info"><span class="ac-name">AI AGENT ASSISTANT</span><span class="ac-online"><span class="ac-online-dot"></span>Always on</span></div></div><div class="ac-messages"><div class="ac-msg ac-msg--in" style="--mi:0"><p>How long does setup take?</p></div><div class="ac-msg ac-msg--out" style="--mi:1"><p>We scope it on a quick call, then handle the full build — design, training, and launch.</p></div><div class="ac-msg ac-msg--in" style="--mi:2"><p>What can it actually do?</p></div><div class="ac-msg ac-msg--out" style="--mi:3"><p>Answer queries 24/7, qualify leads, route tasks, generate reports — trained on your business.</p></div><div class="ac-typing" style="--mi:4"><span></span><span></span><span></span></div></div></div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════ MARQUEE -->
-  <div class="marquee-wrap" aria-hidden="true">
-    <div class="marquee-track">
-      {[...aiMarquee, ...aiMarquee].map((item) => (
-        <span class="marquee-item">{item}</span>
-      ))}
-    </div>
-  </div>
 
-  <section class="selling-point selling-point--ai" aria-label="AI automation selling point" data-reveal="up" data-bee-stop data-atmosphere="ai" data-hive-section>
+  <section id="approach" class="selling-point selling-point--ai" aria-label="AI automation selling point" data-reveal="up" data-bee-stop data-atmosphere="ai" data-hive-section>
     <span class="eyebrow">The Advantage</span>
     <h2 class="selling-title">You get practical AI that supports the work your team already does.</h2>
     <p class="selling-copy">
@@ -183,24 +146,6 @@ const faqSchema = {
       </div>
     </div>
   </section>
-
-  <!-- ═══════════════════════════════════════════ METRICS STRIP -->
-  <div class="metrics-strip" aria-label="AI impact" data-reveal="up">
-    <div class="metric-item">
-      <span class="metric-num ai-247">24<span class="metric-slash">/7</span></span>
-      <span class="metric-label">AI coverage</span>
-    </div>
-    <div class="metric-divider" aria-hidden="true"></div>
-    <div class="metric-item">
-      <span class="metric-num metric-word">Fewer repeats</span>
-      <span class="metric-label">routine questions handled first</span>
-    </div>
-    <div class="metric-divider" aria-hidden="true"></div>
-    <div class="metric-item">
-      <span class="metric-num metric-word">Cleaner flow</span>
-      <span class="metric-label">tasks routed with context</span>
-    </div>
-  </div>
 
   <!-- ═════════════════════════════════════ HONEYCOMB AI LOOP -->
   <section class="loop-section" aria-label="How the AI agent assistant improves over time" data-reveal="up" data-bee-stop data-atmosphere="ai" data-hive-section>
@@ -309,73 +254,6 @@ const faqSchema = {
 
     </div>
   </section>
-
-  <!-- ═══════════════════════════════════════════ FULL SERVICE LIST -->
-  <section class="full-services" aria-label="Full list of AI services" data-reveal="up">
-    <span class="eyebrow">All Services</span>
-    <div class="bento-grid" data-stagger data-stagger-gap="60">
-      {[
-        { name: "AI workflow automation", desc: "End-to-end automation of repetitive business processes — reporting, routing, approvals, and follow-ups." },
-        { name: "Conversational AI assistants", desc: "Custom AI chatbots trained on your business, deployed on your website, tools, or internal platforms." },
-        { name: "AI agent implementation", desc: "Autonomous AI agents that execute multi-step tasks, make decisions, and move work forward without manual input." },
-        { name: "Business process automation", desc: "Mapping, redesigning, and automating high-friction processes across operations, sales, and support." },
-        { name: "AI integration services", desc: "Connecting AI systems to your existing tools — CRMs, inboxes, databases, and platforms." },
-        { name: "Custom AI assistant development", desc: "Bespoke AI assistants built around your brand, knowledge base, and operational workflows." },
-      ].map(({ name, desc }) => (
-        <article class="glow-card mini-card" data-tilt="6">
-          <h4 class="mini-title">{name}</h4>
-          <p class="mini-desc">{desc}</p>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════ BOLD DARK STATEMENT -->
-  <section class="bold-statement" aria-label="AI promise">
-    <div class="bs-hive-overlay" aria-hidden="true">⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡ ⬡</div>
-    <div class="bs-inner">
-      <p class="bs-line" data-reveal="up" data-reveal-delay="0">Stop doing what machines</p>
-      <p class="bs-line bs-accent" data-reveal="up" data-reveal-delay="140">can do better.</p>
-    </div>
-    <div class="bs-reel" aria-hidden="true">
-      <div class="bs-reel-track">
-        <span class="bsr-word">Automate</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Optimise</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Scale</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">24/7</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Deploy</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Automate</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Optimise</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">Scale</span><span class="bsr-sep">—</span>
-        <span class="bsr-word">24/7</span><span class="bsr-sep">—</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════ LIVE DESK FEED -->
-  <div class="desk-feed" aria-hidden="true">
-    <span class="df-badge"><span class="df-dot"></span>Live</span>
-    <div class="df-track-wrap">
-      <div class="df-track">
-        {[
-          "47 customer queries handled — zero human hours spent",
-          "Lead qualification workflow triggered — 12 leads scored",
-          "Automated report dispatched to 3 stakeholders",
-          "New knowledge base query answered in 0.4 seconds",
-          "Onboarding workflow completed — no manual steps required",
-          "AI agent deployed for e-commerce support team",
-          "47 customer queries handled — zero human hours spent",
-          "Lead qualification workflow triggered — 12 leads scored",
-          "Automated report dispatched to 3 stakeholders",
-        ].map((item) => (
-          <>
-            <span class="df-item">{item}</span>
-            <span class="df-sep" aria-hidden="true">·</span>
-          </>
-        ))}
-      </div>
-    </div>
-  </div>
 
   <!-- ════════════════════════════════════ FAQ -->
   <FaqSection faqs={faqs} eyebrow="Questions, answered" title="What people ask before automating." />
@@ -545,7 +423,7 @@ const faqSchema = {
     max-width: 85%; padding: 9px 13px; border-radius: 14px; font-size: 13px; line-height: 1.5;
     font-family: var(--font-body, "DM Sans", sans-serif);
     opacity: 0; transform: translateY(8px);
-    animation: msgIn 350ms cubic-bezier(.34,1.4,.64,1) forwards;
+    animation: msgIn 350ms cubic-bezier(.16,1,.3,1) forwards;
     animation-delay: calc(var(--mi, 0) * 1000ms + 800ms);
   }
   .ac-msg p { margin: 0; }
@@ -556,7 +434,7 @@ const faqSchema = {
   .ac-typing {
     display: flex; align-items: center; gap: 5px; padding: 10px 14px; border-radius: 14px;
     background: rgba(255,248,223,.1); width: fit-content; border-bottom-left-radius: 4px;
-    opacity: 0; animation: msgIn 350ms cubic-bezier(.34,1.4,.64,1) forwards;
+    opacity: 0; animation: msgIn 350ms cubic-bezier(.16,1,.3,1) forwards;
     animation-delay: calc(var(--mi, 4) * 1000ms + 800ms);
   }
   .ac-typing span {
@@ -753,7 +631,7 @@ const faqSchema = {
   .svc-icon {
     width: 40px; height: 40px; border-radius: 9px; background: rgba(255,212,90,.14);
     display: grid; place-items: center; color: var(--honey-bright); flex-shrink: 0;
-    transition: background 350ms ease, color 300ms ease, transform 400ms cubic-bezier(.34,1.56,.64,1);
+    transition: background 350ms ease, color 300ms ease, transform 400ms cubic-bezier(.16,1,.3,1);
   }
   .svc-card:hover .svc-icon,
   .svc-card.is-honey-glazed .svc-icon { background: rgba(255,212,90,.3); color: #fff8df; transform: rotate(3deg) scale(1.08); }

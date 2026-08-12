@@ -1,34 +1,12 @@
 ---
-import { getCollection } from "astro:content";
 import { localContextByVariant } from "../data/marketLocalContext";
 
 const { market } = Astro.props;
 const localContext = localContextByVariant[market.variant];
 
-// Latest published posts — cross-links the geo page to fresh blog content so
-// new posts get internal links (helps them get crawled and indexed).
-const recentPosts = (await getCollection("blog"))
-  .filter((post) => !post.data.draft && post.data.pubDate.valueOf() <= Date.now())
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
-const isAmsterdam = market.variant === "amsterdam";
 const isMunich = market.variant === "munich";
-const isStockholm = market.variant === "stockholm";
-const hasCustomVisual = isAmsterdam || isMunich || isStockholm;
-const marketLinks = [
-  { href: "/united-states", label: "United States", copy: "Founders and remote-first teams" },
-  { href: "/united-kingdom", label: "United Kingdom", copy: "Founders and scale-ups" },
-  { href: "/amsterdam", label: "Amsterdam", copy: "Tech founders and scale-ups" },
-  { href: "/stockholm", label: "Stockholm", copy: "Nordic startups and brands" },
-  { href: "/denmark", label: "Denmark", copy: "Danish tech and Nordic businesses" },
-  { href: "/norway", label: "Norway", copy: "Nordic enterprises and tech" },
-  { href: "/switzerland", label: "Switzerland", copy: "Enterprises and precision businesses" },
-  { href: "/ireland", label: "Ireland", copy: "Tech founders and EU-facing teams" },
-  { href: "/belgium", label: "Belgium", copy: "EU agencies and international teams" },
-  { href: "/munich", label: "Munich", copy: "Enterprise and B2B teams" },
-  { href: "/africa", label: "Africa", copy: "International and dollar-earning teams" },
-];
-const currentMarketPath = `/${market.variant}`;
+const consultMessage = encodeURIComponent(`Hi LuliDigital, I would like to discuss a ${market.city} project.`);
+const consultUrl = `https://wa.me/27602551513?text=${consultMessage}`;
 ---
 
 <section class:list={["local-landing", `local-landing--${market.variant}`]}>
@@ -37,117 +15,39 @@ const currentMarketPath = `/${market.variant}`;
       <p class="local-eyebrow">{market.eyebrow}</p>
       <h1>{market.h1}</h1>
       <p class="local-positioning">{market.positioning}</p>
-      <p class="local-intro">{market.intro}</p>
       <div class="local-actions">
-        <a class="local-btn local-btn--primary" href="#local-contact">{market.primaryCta}</a>
-        <a class="local-btn local-btn--ghost" href="#capabilities">{market.secondaryCta}</a>
+        <a class="local-btn local-btn--primary" href={consultUrl} target="_blank" rel="noopener noreferrer">{market.primaryCta}</a>
+        <a class="local-btn local-btn--ghost" href="#capabilities">See what we improve</a>
       </div>
+      <ul class="local-reassurance" aria-label="Working principles">
+        <li>Strategy before tools</li>
+        <li>Human oversight</li>
+        <li>International delivery</li>
+      </ul>
     </div>
 
-    <aside class="hero-visual" aria-label={`${market.city} campaign system preview`}>
-      {isAmsterdam && (
-        <div class="ams-console">
-          <div class="ams-console__top">
-            <span>Global Campaign OS</span>
-            <strong>AMS / LIVE</strong>
-          </div>
-          <div class="ams-console__grid">
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-          </div>
-          <div class="ams-console__metric">
-            <strong>Fast</strong>
-            <span>asset workflow</span>
-          </div>
-        </div>
-      )}
-
-      {isMunich && (
-        <div class="munich-dashboard">
-          <div class="dash-row">
-            <span>Pipeline</span>
-            <strong>Active</strong>
-          </div>
-          <div class="dash-bars" aria-hidden="true">
-            <span style="--h:72%"></span>
-            <span style="--h:46%"></span>
-            <span style="--h:88%"></span>
-            <span style="--h:58%"></span>
-            <span style="--h:78%"></span>
-          </div>
-          <div class="dash-grid">
-            <span>Automation</span>
-            <span>Optimization</span>
-            <span>Brand QA</span>
-            <span>Reporting</span>
-          </div>
-        </div>
-      )}
-
-      {isStockholm && (
-        <div class="stockholm-glass" data-tilt-card>
-          <div class="glass-orbit" aria-hidden="true">
-            <span></span><span></span><span></span>
-          </div>
-          <p>Asset Engine</p>
-          <strong>cinematic / automated / exact</strong>
-          <div class="asset-strip" aria-hidden="true">
-            <span></span><span></span><span></span><span></span>
-          </div>
-        </div>
-      )}
-
-      {!hasCustomVisual && (
-        <div class="studio-signal">
-          <div class="signal-top">
-            <span>Studio Signal</span>
-            <span class="signal-live">● LIVE</span>
-          </div>
-          <div class="signal-bars" aria-hidden="true">
-            <span style="--sh:68%"></span>
-            <span style="--sh:44%"></span>
-            <span style="--sh:84%"></span>
-            <span style="--sh:52%"></span>
-            <span style="--sh:76%"></span>
-            <span style="--sh:38%"></span>
-          </div>
-          <div class="signal-desks" aria-hidden="true">
-            <div><strong>Marketing</strong><span class="signal-dot"></span></div>
-            <div><strong>AI Desk</strong><span class="signal-dot"></span></div>
-            <div><strong>VA Desk</strong><span class="signal-dot"></span></div>
-          </div>
-          <p class="signal-market">{market.city}</p>
-        </div>
-      )}
+    <aside class="hero-outcomes" aria-label={`What LuliDigital improves for ${market.city} teams`}>
+      <p class="hero-outcomes__label">Built for {market.city}</p>
+      <h2>{market.outcomeTitle}</h2>
+      <ul>
+        {(localContext?.points ?? [
+          "Sharper positioning for serious buyers",
+          "Faster follow-up across the customer journey",
+          "Less operational drag for your team",
+        ]).map((point: string, index: number) => (
+          <li><strong>{String(index + 1).padStart(2, "0")}</strong><span>{point}</span></li>
+        ))}
+      </ul>
     </aside>
   </section>
-
-  {market.seoRecommendation && (
-    <section class="local-seo-pulse reveal-block" aria-label={`${market.city} daily search focus`}>
-      <div>
-        <p class="local-eyebrow">Daily Search Focus</p>
-        <p class="local-seo-pulse__source">
-          {market.city} market signal, refreshed from {market.seoRecommendation.source}
-        </p>
-      </div>
-
-      <div>
-        <h2>{market.seoRecommendation.keyword}</h2>
-        <p>
-          The SEO agent checks country-level search trends each morning, then keeps this landing page aligned with the
-          strongest relevant demand for {market.city} across marketing, AI automation, and executive operations.
-        </p>
-      </div>
-    </section>
-  )}
 
   <section id="capabilities" class="local-section reveal-block" data-atmosphere="services" data-hive-section>
     <div class="section-head">
       <p class="local-eyebrow">Studio Capabilities</p>
-      <h2>{market.h2}</h2>
+      <h2>What we can improve for your {market.city} team.</h2>
     </div>
 
-    <div class:list={["capability-grid", isAmsterdam && "capability-grid--bento", isMunich && "capability-grid--catalog", isStockholm && "capability-grid--minimal"]}>
+    <div class="capability-grid">
       {market.capabilities.map((item: any, index: number) => (
         <article class="capability-card" style={`--i:${index}`}>
           <span>{item.label}</span>
@@ -194,75 +94,28 @@ const currentMarketPath = `/${market.variant}`;
     </section>
   )}
 
-  <section class="local-services reveal-block" data-atmosphere="services" data-hive-section>
-    <div class="section-head">
-      <p class="local-eyebrow">Full Studio Suite</p>
-      <h2>Marketing, AI &amp; operations — serving {market.city} and beyond.</h2>
-    </div>
-    <div class="services-grid">
-      <a class="service-card" href="/marketing-desk">
-        <span class="service-label">Marketing Desk</span>
-        <h3>Brand, paid media &amp; campaign production</h3>
-        <p>Brand positioning, visual direction, and paid media across Meta, Google, and TikTok. Automated launch systems built for international scale.</p>
-        <span class="service-link">Explore the desk →</span>
-      </a>
-      <a class="service-card" href="/ai-desk">
-        <span class="service-label">AI Desk</span>
-        <h3>AI integration &amp; business automation</h3>
-        <p>Custom chatbots, AI assistants, and smart workflows that answer customer questions, route leads, and move repetitive work out of your team's way.</p>
-        <span class="service-link">Explore the desk →</span>
-      </a>
-      <a class="service-card" href="/va-desk">
-        <span class="service-label">Virtual Assistant Desk</span>
-        <h3>Executive operations &amp; admin support</h3>
-        <p>Inbox management, calendar control, project tracking, and structured execution for founders and team leads who need quiet, reliable follow-through.</p>
-        <span class="service-link">Explore the desk →</span>
-      </a>
-    </div>
-  </section>
-
-  <section class="market-links reveal-block" aria-label="Market landing pages">
-    <div class="section-head">
-      <p class="local-eyebrow">Markets</p>
-      <h2>Local pages for the markets we serve.</h2>
-    </div>
-
-    <div class="market-links__grid">
-      {marketLinks.map((item) => (
-        <a class:list={["market-link-card", item.href === currentMarketPath && "is-current"]} href={item.href}>
-          <span>{item.label}</span>
-          <p>{item.copy}</p>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <section class:list={["local-proof", isStockholm && "local-proof--dark"]} data-atmosphere="marketing" data-hive-section>
+  <section class="local-proof" data-atmosphere="marketing" data-hive-section>
     <div class="proof-copy reveal-block">
-      <p class="local-eyebrow">Why It Works</p>
+      <p class="local-eyebrow">Our Point of View</p>
       <h2>{market.proofTitle}</h2>
       <p>{market.proofCopy}</p>
+      <div class="delivery-commitments" aria-label="How LuliDigital works">
+        <div>
+          <strong>Diagnose first</strong>
+          <span>We identify the commercial bottleneck before recommending services or tools.</span>
+        </div>
+        <div>
+          <strong>Keep a human accountable</strong>
+          <span>You get clear ownership, documented decisions, and practical follow-through.</span>
+        </div>
+        <div>
+          <strong>Build for handover</strong>
+          <span>Your campaigns, workflows, and operating systems remain understandable to your team.</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  {recentPosts.length > 0 && (
-    <section class="local-insights reveal-block" data-atmosphere="services" data-hive-section>
-      <div class="section-head">
-        <p class="local-eyebrow">From the Desk Report</p>
-        <h2>Insights for {market.city} founders and teams.</h2>
-      </div>
-      <div class="insights-grid">
-        {recentPosts.map((post) => (
-          <a class="insight-card" href={`/blog/${post.id.replace(/\.md$/, "")}`}>
-            <span>{post.data.category}</span>
-            <h3>{post.data.title}</h3>
-            <p>{post.data.description}</p>
-            <span class="insight-link">Read the article →</span>
-          </a>
-        ))}
-      </div>
-    </section>
-  )}
 
   <section id="local-contact" class="local-contact reveal-block" data-atmosphere="cta" data-hive-section>
     <div>
@@ -287,7 +140,7 @@ const currentMarketPath = `/${market.variant}`;
       </div>
       <div class="lana-invite__text">
         <p class="lana-invite__name">Lana</p>
-        <p class="lana-invite__desc">Tell me what you're building and I'll walk you through your options, match you to the right desk, and connect you with Fiker when you're ready.</p>
+        <p class="lana-invite__desc">Tell me what you are building. I will help clarify the need, point you to the right desk, and connect you with Fiker when a conversation would be useful.</p>
       </div>
       <button class="lana-invite__btn" data-open-lana>
         Chat with Lana
@@ -325,22 +178,6 @@ const currentMarketPath = `/${market.variant}`;
     revealBlocks.forEach((block) => block.classList.add("is-visible"));
   }
 
-  document.querySelectorAll("[data-tilt-card]").forEach((card) => {
-    const el = card as HTMLElement;
-    el.addEventListener("pointermove", (event) => {
-      const e = event as PointerEvent;
-      const rect = el.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
-      const y = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
-      el.style.setProperty("--rx", `${y}deg`);
-      el.style.setProperty("--ry", `${x}deg`);
-    });
-
-    el.addEventListener("pointerleave", () => {
-      el.style.removeProperty("--rx");
-      el.style.removeProperty("--ry");
-    });
-  });
 </script>
 
 <style>
@@ -371,24 +208,27 @@ const currentMarketPath = `/${market.variant}`;
   }
 
   .local-hero{
-    min-height: 650px;
+    min-height: min(720px, calc(100svh - 88px));
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(320px, .82fr);
-    gap: clamp(34px, 6vw, 76px);
+    grid-template-columns: minmax(0, 1.08fr) minmax(300px, .72fr);
+    gap: clamp(32px, 5vw, 64px);
     align-items: center;
+    padding: clamp(54px, 7vw, 88px) 0;
   }
 
   .local-hero h1{
     margin: 0;
-    max-width: 11ch;
-    font-family: ui-serif, Georgia, "Times New Roman", serif;
-    font-size: clamp(56px, 8vw, 106px);
-    line-height: .88;
-    letter-spacing: 0;
+    max-width: 13ch;
+    font-family: var(--font-display), ui-serif, Georgia, serif;
+    font-size: clamp(48px, 5.35vw, 76px);
+    line-height: .96;
+    letter-spacing: -.035em;
+    text-wrap: balance;
+    overflow-wrap: normal;
   }
 
   .local-landing--stockholm .local-hero h1{
-    max-width: 10ch;
+    max-width: 12ch;
   }
 
   .local-eyebrow{
@@ -407,7 +247,7 @@ const currentMarketPath = `/${market.variant}`;
   }
 
   .local-intro{
-    max-width: 650px;
+    max-width: 60ch;
     margin: 18px 0 0;
     color: var(--local-muted);
     font-size: 17px;
@@ -430,10 +270,10 @@ const currentMarketPath = `/${market.variant}`;
     justify-content: center;
     border: 1px solid var(--local-line);
     padding: 0 18px;
-    border-radius: 0;
-    font-size: 12px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0;
     text-decoration: none;
     transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
   }
@@ -450,6 +290,61 @@ const currentMarketPath = `/${market.variant}`;
     background: var(--local-ink);
     color: var(--local-bg);
   }
+
+  .local-reassurance{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--local-muted);
+    font-size: 13px;
+  }
+
+  .local-reassurance li{
+    position: relative;
+    padding-left: 17px;
+  }
+
+  .local-reassurance li::before{
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--local-accent);
+    font-weight: 800;
+  }
+
+  .hero-outcomes{
+    align-self:center;
+    padding:clamp(24px,2.6vw,34px);
+    border:1px solid var(--local-line);
+    background:rgba(255,255,255,.34);
+    box-shadow:14px 14px 0 rgba(182,109,0,.10);
+  }
+
+  .hero-outcomes__label{
+    margin:0 0 18px;
+    color:var(--local-accent);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+
+  .hero-outcomes h2{
+    max-width:18ch;
+    margin:0 0 26px;
+    font-size:clamp(26px,2.25vw,36px);
+    line-height:1.08;
+    letter-spacing:-.03em;
+    text-wrap:balance;
+  }
+
+  .hero-outcomes ul{display:grid;gap:0;margin:0;padding:0;list-style:none}
+  .hero-outcomes li{display:grid;gap:5px;padding:16px 0;border-top:1px solid var(--local-line)}
+  .hero-outcomes strong{color:var(--local-accent);font-size:12px;letter-spacing:.12em}
+  .hero-outcomes span{color:var(--local-muted);font-size:14px;line-height:1.5}
 
   .hero-visual{
     min-height: 460px;
@@ -469,7 +364,7 @@ const currentMarketPath = `/${market.variant}`;
     background: var(--local-ink);
     color: var(--local-bg);
     box-shadow: 18px 18px 0 rgba(123,45,45,.18);
-    animation: studioFloat 7s ease-in-out infinite;
+    animation: none;
   }
 
   .ams-console__top,
@@ -514,7 +409,7 @@ const currentMarketPath = `/${market.variant}`;
     padding: 22px;
     background: var(--local-card);
     box-shadow: 0 28px 70px rgba(0,0,0,.12);
-    animation: studioFloat 8s ease-in-out infinite;
+    animation: none;
   }
 
   .dash-bars{
@@ -558,7 +453,7 @@ const currentMarketPath = `/${market.variant}`;
     background:
       linear-gradient(135deg, rgba(107, 47, 58, .16), rgba(255,255,255,.22)),
       var(--local-card);
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(10px);
     transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
     box-shadow: 0 28px 70px rgba(0,0,0,.10);
   }
@@ -828,9 +723,11 @@ const currentMarketPath = `/${market.variant}`;
   .proof-copy h2,
   .local-contact h2{
     margin: 0;
-    font-size: clamp(34px, 5vw, 66px);
-    line-height: 1;
-    letter-spacing: 0;
+    max-width: 15ch;
+    font-size: clamp(32px, 4vw, 54px);
+    line-height: 1.02;
+    letter-spacing: -.03em;
+    text-wrap: balance;
   }
 
   .capability-grid{
@@ -961,10 +858,39 @@ const currentMarketPath = `/${market.variant}`;
   }
 
   .local-proof{
-    display: grid;
-    grid-template-columns: minmax(0, .9fr) minmax(320px, .72fr);
-    gap: clamp(28px, 5vw, 64px);
-    align-items: start;
+    display:block;
+  }
+
+  .proof-copy{max-width:980px}
+
+  .delivery-commitments{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:1px;
+    margin-top:clamp(30px,4vw,48px);
+    border:1px solid var(--local-line);
+    background:var(--local-line);
+  }
+
+  .delivery-commitments div{
+    display:grid;
+    align-content:start;
+    gap:10px;
+    min-height:180px;
+    padding:clamp(22px,3vw,32px);
+    background:var(--local-card);
+  }
+
+  .delivery-commitments strong{
+    font-family:var(--font-display),ui-serif,Georgia,serif;
+    font-size:clamp(22px,2vw,28px);
+    line-height:1.05;
+  }
+
+  .delivery-commitments span{
+    color:var(--local-muted);
+    font-size:15px;
+    line-height:1.6;
   }
 
   .review-carousel{
@@ -1080,7 +1006,7 @@ const currentMarketPath = `/${market.variant}`;
     background: var(--local-ink);
     color: var(--local-bg);
     box-shadow: 18px 18px 0 rgba(123,45,45,.14);
-    animation: studioFloat 7s ease-in-out infinite;
+    animation: none;
   }
   .signal-top {
     display: flex; justify-content: space-between;
@@ -1176,8 +1102,10 @@ const currentMarketPath = `/${market.variant}`;
 
     .local-hero{
       min-height: auto;
-      padding: 46px 0 70px;
+      padding: 54px 0 70px;
     }
+
+    .local-hero h1{ max-width: 14ch; }
 
     .capability-grid,
     .capability-grid--bento,
@@ -1192,11 +1120,21 @@ const currentMarketPath = `/${market.variant}`;
     .form-grid{
       grid-template-columns: 1fr;
     }
+
+    .delivery-commitments{
+      grid-template-columns:1fr;
+    }
+
+    .delivery-commitments div{
+      min-height:0;
+    }
   }
 
   @media (max-width: 620px){
     .local-hero h1{
-      font-size: clamp(46px, 14vw, 70px);
+      max-width: 100%;
+      font-size: clamp(39px, 11.5vw, 56px);
+      line-height: 1;
     }
 
     .capability-grid,

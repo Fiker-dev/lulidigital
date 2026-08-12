@@ -1,0 +1,14 @@
+---
+const { items = ["Senior-led strategy", "Human oversight", "Clear next steps"] } = Astro.props;
+---
+
+<ul class="hero-trust" aria-label="What to expect">
+  {items.map((item: string) => <li>{item}</li>)}
+</ul>
+
+<style>
+  .hero-trust{display:flex;flex-wrap:wrap;gap:10px 20px;margin:22px 0 0;padding:0;list-style:none;color:var(--muted,rgba(20,19,18,.66));font-size:13px;line-height:1.45}
+  .hero-trust li{position:relative;padding-left:17px}
+  .hero-trust li::before{content:"✓";position:absolute;left:0;color:var(--brand,#b66d00);font-weight:800}
+  @media(max-width:560px){.hero-trust{display:grid;gap:8px;font-size:14px}}
+</style>

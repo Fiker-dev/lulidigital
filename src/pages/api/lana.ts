@@ -14,7 +14,6 @@ const MARKET_NAMES: Record<string, string> = {
   "/amsterdam":      "Netherlands",
   "/stockholm":      "Sweden",
   "/munich":         "Germany",
-  "/africa":         "Africa",
   "/united-states":  "United States",
   "/united-kingdom": "United Kingdom",
   "/denmark":        "Denmark",

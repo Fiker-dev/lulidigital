@@ -131,16 +131,4 @@ export const localContextByVariant: Record<string, MarketLocalContext> = {
       "Executive VA cover across multiple US time zones",
     ],
   },
-  africa: {
-    heading: "Supporting ambitious African founders building across borders",
-    body: [
-      "Africa's growth markets are mobile-first, fast-moving, and increasingly cross-border, with founders often building for several countries — and international customers — at once.",
-      "We support that ambition with remote-first marketing, AI automation, and executive assistant services that work wherever the team and customers are, without the overhead of local infrastructure.",
-    ],
-    points: [
-      "Mobile-first, cross-border marketing and SEO",
-      "AI automation for lean teams operating across multiple markets",
-      "Remote executive VA support without local overhead",
-    ],
-  },
 };

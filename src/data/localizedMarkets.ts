@@ -2,7 +2,6 @@ const siteUrl = "https://lulidigital.com";
 
 export const regionalAlternates = [
   { hreflang: "x-default", href: `${siteUrl}/` },
-  { hreflang: "en-001", href: `${siteUrl}/africa` },
   { hreflang: "en-nl", href: `${siteUrl}/amsterdam` },
   { hreflang: "en-de", href: `${siteUrl}/munich` },
   { hreflang: "en-se", href: `${siteUrl}/stockholm` },
@@ -23,7 +22,7 @@ export const localizedOrganizationSchema = {
   "name": "LuliDigital",
   "url": siteUrl,
   "logo": `${siteUrl}/favicon.png`,
-  "description": "LuliDigital provides premium digital marketing, AI-driven business automation solutions, and specialized executive virtual assistant services for founders and modern brands across the United States, United Kingdom, Europe, and Africa.",
+  "description": "LuliDigital provides premium digital marketing, AI-driven business automation solutions, and specialized executive virtual assistant services for founders and modern brands across the United States, United Kingdom, and Europe.",
   "email": "info@lulidigital.com",
   "telephone": sharedTelephone,
   "sameAs": [
@@ -35,10 +34,6 @@ export const localizedOrganizationSchema = {
     { "@type": "AdministrativeArea", "name": "United States" },
     { "@type": "AdministrativeArea", "name": "United Kingdom" },
     { "@type": "AdministrativeArea", "name": "Europe" },
-    { "@type": "AdministrativeArea", "name": "Africa" },
-    { "@type": "Country", "name": "Nigeria" },
-    { "@type": "Country", "name": "Kenya" },
-    { "@type": "Country", "name": "Ghana" },
     { "@type": "Country", "name": "Netherlands" },
     { "@type": "Country", "name": "Germany" },
     { "@type": "Country", "name": "Sweden" },
@@ -60,89 +55,18 @@ export const localizedOrganizationSchema = {
 };
 
 export const markets = {
-  africa: {
-    city: "Africa",
-    variant: "africa",
-    title: "Digital Marketing, AI Automation & Virtual Assistant Services for African Companies | LuliDigital",
-    description:
-      "LuliDigital helps international companies, African startups, and dollar-earning service businesses with digital marketing, AI automation, SEO, and executive virtual assistant services.",
-    h1: "Digital marketing, AI automation, and executive support for ambitious African companies.",
-    h2: "For international teams, funded startups, exporters, agencies, and dollar-earning service businesses across Africa.",
-    eyebrow: "Africa Growth Desk",
-    positioning:
-    "An international studio helping companies that sell beyond borders build sharper marketing, cleaner automation, and stronger executive operations.",
-    intro:
-      "LuliDigital works with African companies serving global clients, international teams operating on the continent, and founders who need their digital presence, systems, and execution to match a dollar-paying market.",
-    primaryCta: "Start an Africa Project",
-    secondaryCta: "View All Services",
-    serviceSchema: {
-      name: "Digital Marketing, AI Automation & Virtual Assistant Services for African Companies",
-      serviceType: [
-        "digital marketing agency Africa",
-        "digital marketing agency for African startups",
-        "performance marketing agency Africa",
-        "SEO services Africa",
-        "AI automation Africa",
-        "AI automation for African companies",
-        "virtual assistant services Africa",
-        "remote executive assistant Africa",
-        "digital marketing for international companies in Africa",
-        "marketing agency for dollar earning African businesses",
-        "AI workflow automation for African businesses",
-      ],
-      description:
-        "Digital marketing, SEO, AI automation, paid media, brand strategy, and executive virtual assistant services for African companies, international teams, and dollar-earning service businesses.",
-      areaServed: [
-        { "@type": "AdministrativeArea", name: "Africa" },
-      ],
-    },
-    localBusinessSchema: {
-      name: "LuliDigital Africa",
-      logo: `${siteUrl}/favicon.png`,
-      telephone: sharedTelephone,
-      openingHours,
-      description:
-        "Africa-focused digital studio for international companies, funded startups, exporters, and dollar-earning service businesses.",
-    },
-    capabilities: [
-      {
-        label: "International Growth",
-        title: "Marketing for companies selling beyond borders",
-        copy: "Positioning, SEO, paid media, and landing pages for African companies that need to look credible to buyers in Europe, the US, the Middle East, and across the continent.",
-      },
-      {
-        label: "AI Automation",
-        title: "Lean systems for cross-border teams",
-        copy: "AI assistants, reporting workflows, lead routing, and internal knowledge tools for teams that cannot afford messy handoffs or slow response times.",
-      },
-      {
-        label: "Brand & Web",
-        title: "Premium digital presence for serious buyers",
-        copy: "Brand systems, conversion pages, and campaign assets built for trust with international customers, investors, partners, and procurement teams.",
-      },
-      {
-        label: "Executive Support",
-        title: "Remote executive assistant services",
-        copy: "Inbox, calendar, follow-ups, research, coordination, and operational support for founders and leadership teams working across time zones.",
-      },
-    ],
-    proofTitle: "Africa-based does not mean local-only",
-    proofCopy:
-      "Many African companies are already serving international customers, pitching global partners, or working with remote teams. The problem is often not ambition. It is that the website, follow-up system, campaign engine, and operations layer do not yet match the market they want to win.",
-    formTitle: "Start your Africa growth project",
-    formCopy: "Send the market, service, or operations bottleneck. We will map the most direct route to a cleaner international-facing system.",
-  },
   amsterdam: {
     city: "Amsterdam",
     variant: "amsterdam",
-    title: "Amsterdam Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    title: "Amsterdam Growth & Automation Studio | LuliDigital",
     description:
-      "LuliDigital is Amsterdam's digital marketing agency for tech founders and enterprise teams — performance marketing, brand strategy, AI workflow automation, and executive virtual assistant services, delivered in English.",
-    h1: "Amsterdam digital marketing agency. AI automation. Virtual assistant services.",
+      "Marketing, AI automation, and executive support for Amsterdam founders and international scale-up teams.",
+    h1: "Grow faster in Amsterdam without adding operational drag.",
     h2: "For Amsterdam tech founders, scale-ups, and enterprise marketing teams.",
+    outcomeTitle: "Built to scale beyond the Netherlands.",
     eyebrow: "Amsterdam Digital Marketing Agency",
     positioning:
-      "An international digital studio serving Amsterdam's tech ecosystem with performance marketing, AI automation, and executive virtual assistant services — English-first, globally executed.",
+      "An international studio helping Amsterdam technology teams improve demand generation, automate repetitive operations, and protect leadership attention.",
     intro:
       "LuliDigital helps Amsterdam tech founders, corporate marketing teams, and enterprise brands with paid media management, AI workflow automation, conversational AI assistants, and executive virtual assistant services — all in one desk.",
     primaryCta: "Start an Amsterdam Project",
@@ -207,7 +131,7 @@ export const markets = {
         copy: "Inbox management, calendar control, project coordination, and operational follow-through for Amsterdam founders and team leads.",
       },
     ],
-    proofTitle: "Why Amsterdam's fastest-growing teams go English-first",
+    proofTitle: "One operating language for an international market",
     proofCopy:
       "Amsterdam teams operate across borders by default — selling into the UK, US, and Middle East while managing multilingual markets. English-first production removes translation lag, keeps campaign strategy aligned, and lets your team move at global speed without local-agency friction.",
     formTitle: "Start your Amsterdam project",
@@ -216,14 +140,15 @@ export const markets = {
   munich: {
     city: "Munich",
     variant: "munich",
-    title: "Munich Digital Marketing Agency, Enterprise AI Automation & Virtual Assistant | LuliDigital",
+    title: "Munich B2B Growth & Automation Studio | LuliDigital",
     description:
-      "LuliDigital serves Munich enterprises and German tech companies with performance marketing, corporate brand strategy, enterprise AI automation, and executive virtual assistant services — English-first, globally delivered.",
-    h1: "Munich digital marketing agency. Enterprise AI automation. Virtual assistant services.",
+      "Structured marketing, AI automation, and executive support for Munich B2B and technology teams.",
+    h1: "Precision growth systems for ambitious Munich teams.",
     h2: "Performance marketing and AI systems for Munich enterprises and German tech companies.",
+    outcomeTitle: "Structured execution for considered B2B growth.",
     eyebrow: "Munich Digital Marketing Agency",
     positioning:
-      "A premium international studio serving Munich's leading enterprises with performance marketing, AI automation, and executive virtual assistant services — built in English, executed to global standards.",
+      "An international studio helping Munich B2B teams build structured marketing, documented automation, and reliable executive operations.",
     intro:
       "We serve mid-market B2B enterprises, industrial innovators, and fast-scaling German technology teams with performance marketing, corporate AI automation, and executive virtual assistant services.",
     primaryCta: "Start a Munich Project",
@@ -270,7 +195,7 @@ export const markets = {
       {
         label: "01",
         title: "Corporate performance marketing",
-        copy: "Enterprise-grade paid media campaigns, corporate brand strategy, and conversion systems built to perform in B2B and industrial markets.",
+        copy: "Paid media, corporate brand strategy, and conversion systems built for considered B2B and industrial buying cycles.",
       },
       {
         label: "02",
@@ -279,8 +204,8 @@ export const markets = {
       },
       {
         label: "03",
-        title: "High-end brand design Munich",
-        copy: "Premium digital design standards for enterprise pages, executive campaigns, product launches, and investor-facing assets.",
+        title: "Brand systems for serious buyers",
+        copy: "Clear digital design for corporate pages, executive campaigns, product launches, and investor-facing materials.",
       },
       {
         label: "04",
@@ -290,21 +215,22 @@ export const markets = {
     ],
     proofTitle: "Why English-first execution wins for Munich enterprises",
     proofCopy:
-      "Munich teams sell into Europe, North America, and the Middle East. English-first production removes translation drag, reduces regional design friction, and keeps executive, product, and campaign teams aligned around one global standard — without rebuilding your internal process.",
+      "Munich teams sell into Europe, North America, and the Middle East. English-first production reduces translation delays and keeps executive, product, and campaign teams aligned without forcing a new internal process.",
     formTitle: "Start your Munich project",
     formCopy: "Share your campaign priority, AI challenge, or operations need. We will respond with a production path.",
   },
   stockholm: {
     city: "Stockholm",
     variant: "stockholm",
-    title: "Stockholm Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    title: "Stockholm Growth & Automation Studio | LuliDigital",
     description:
-      "LuliDigital is Stockholm's digital marketing agency for startups and Nordic brands — performance marketing, brand strategy, AI workflow automation, and virtual assistant services for teams that move fast.",
-    h1: "Stockholm digital marketing agency. AI automation. Virtual assistant services.",
+      "Design-led marketing, AI automation, and executive support for Stockholm startups and Nordic brands.",
+    h1: "Nordic-quality growth, built to move at founder speed.",
     h2: "For Stockholm startups, Nordic tech platforms, and lifestyle brands.",
+    outcomeTitle: "Design quality that keeps pace with your team.",
     eyebrow: "Stockholm Digital Marketing Agency",
     positioning:
-      "A design-first international studio serving Stockholm's tech elite with performance marketing, AI automation, and executive virtual assistant services — engineered in English, built to Nordic standard.",
+      "A design-led international studio helping Stockholm teams connect sharper marketing with cleaner automation and dependable executive support.",
     intro:
       "We serve Nordic startups, tech platforms, and lifestyle brands with performance marketing, AI workflow automation, conversational AI assistants, and virtual assistant services that keep up with product velocity.",
     primaryCta: "Start a Stockholm Project",
@@ -361,7 +287,7 @@ export const markets = {
       {
         label: "Brand & Web",
         title: "Brand strategy & web production",
-        copy: "Sharp brand systems, minimal interfaces, and cinematic campaign assets built to the Nordic standard — fast, premium, production-grade.",
+        copy: "Sharp brand systems, focused interfaces, and campaign assets designed for fast-moving Nordic teams.",
       },
       {
         label: "Virtual Assistant Desk",
@@ -378,11 +304,12 @@ export const markets = {
   unitedStates: {
     city: "United States",
     variant: "united-states",
-    title: "US Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    title: "US Growth & Automation Partner | LuliDigital",
     description:
-      "LuliDigital serves US founders and remote-first teams with digital marketing, AI automation, SEO, paid media, and executive virtual assistant services.",
-    h1: "US digital marketing agency. AI automation. Virtual assistant services.",
+      "Marketing, AI automation, and executive support for ambitious US founders and remote-first teams.",
+    h1: "A sharper growth engine for ambitious US businesses.",
     h2: "For US founders, SaaS teams, and remote-first businesses.",
+    outcomeTitle: "More output across a demanding market.",
     eyebrow: "United States Growth Desk",
     positioning:
       "The US market moves fast and punishes hesitation. LuliDigital gives US founders a lean execution layer — marketing that compounds, AI that actually automates, and operations that don't fall apart at scale.",
@@ -453,11 +380,12 @@ export const markets = {
   unitedKingdom: {
     city: "United Kingdom",
     variant: "united-kingdom",
-    title: "UK Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    title: "UK Growth & Automation Partner | LuliDigital",
     description:
-      "LuliDigital serves UK founders and scale-ups with digital marketing, AI automation, SEO, paid media, and executive virtual assistant services.",
-    h1: "UK digital marketing agency. AI automation. Virtual assistant services.",
+      "Marketing, AI automation, and executive support for UK founders and scale-ups competing in crowded markets.",
+    h1: "Turn UK market attention into predictable growth.",
     h2: "For UK founders, agencies, and scale-ups.",
+    outcomeTitle: "A clearer edge in a crowded market.",
     eyebrow: "United Kingdom Growth Desk",
     positioning:
       "UK founders don't need another agency. They need execution. LuliDigital is the remote studio that runs the marketing, builds the AI systems, and keeps operations clean — so you can focus on growing.",
@@ -528,11 +456,12 @@ export const markets = {
   denmark: {
     city: "Denmark",
     variant: "denmark",
-    title: "Denmark Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    title: "Denmark Growth & Automation Studio | LuliDigital",
     description:
-      "LuliDigital serves Danish tech founders and Nordic businesses with digital marketing, AI automation, SEO, and executive virtual assistant services.",
-    h1: "Denmark digital marketing agency. AI automation. Virtual assistant services.",
+      "Clear marketing, AI automation, and executive support for Danish founders and lean Nordic teams.",
+    h1: "Clearer growth systems for ambitious Danish teams.",
     h2: "For Danish tech founders, scale-ups, and Nordic businesses.",
+    outcomeTitle: "Lean execution with no unnecessary noise.",
     eyebrow: "Denmark Digital Studio",
     positioning:
       "An international studio serving Danish founders and Nordic companies with performance marketing, AI workflow automation, and executive virtual assistant services — English-first, globally executed.",
@@ -605,14 +534,15 @@ export const markets = {
   switzerland: {
     city: "Switzerland",
     variant: "switzerland",
-    title: "Switzerland Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    title: "Swiss Marketing & Automation Partner | LuliDigital",
     description:
-      "LuliDigital serves Swiss enterprises and precision businesses with digital marketing, AI automation, SEO, and executive virtual assistant services.",
-    h1: "Switzerland digital marketing agency. AI automation. Virtual assistant services.",
+      "Careful marketing, AI automation, and executive support for Swiss businesses and international teams.",
+    h1: "Precision marketing and operations for Swiss businesses.",
     h2: "For Swiss enterprises, precision businesses, and international teams.",
+    outcomeTitle: "Careful execution for high-trust markets.",
     eyebrow: "Switzerland Digital Studio",
     positioning:
-      "A premium international studio serving Swiss enterprises and precision businesses with performance marketing, AI workflow automation, and executive virtual assistant services — built to European standard, delivered in English.",
+      "An international studio helping Swiss teams improve demand generation, automate carefully, and add dependable executive support in English.",
     intro:
       "LuliDigital helps Swiss enterprises, financial services teams, and international businesses with paid media, SEO, brand strategy, AI workflow automation, and executive virtual assistant services from one focused desk.",
     primaryCta: "Start a Switzerland Project",
@@ -656,7 +586,7 @@ export const markets = {
       {
         label: "Paid Media",
         title: "Performance marketing for Swiss enterprises",
-        copy: "Paid media campaigns with enterprise-grade audience logic, brand compliance controls, and optimization systems built for Swiss market precision.",
+        copy: "Paid media campaigns with precise audience logic, brand controls, and clear optimization rules for Swiss and international markets.",
       },
       {
         label: "AI Automation",
@@ -683,11 +613,12 @@ export const markets = {
   ireland: {
     city: "Ireland",
     variant: "ireland",
-    title: "Ireland Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    title: "Ireland Growth & Automation Partner | LuliDigital",
     description:
-      "LuliDigital serves Irish tech founders and EU-operating teams with digital marketing, AI automation, SEO, and executive virtual assistant services.",
-    h1: "Ireland digital marketing agency. AI automation. Virtual assistant services.",
+      "Marketing, AI automation, and executive support for Irish founders and EU-connected technology teams.",
+    h1: "A practical growth partner for Ireland's ambitious teams.",
     h2: "For Irish tech founders, scale-ups, and EU-operating teams.",
+    outcomeTitle: "One system for Irish, UK, EU, and US growth.",
     eyebrow: "Ireland Digital Studio",
     positioning:
       "An international studio serving Irish tech companies and EU-operating teams with performance marketing, AI workflow automation, and executive virtual assistant services — English-first, globally executed.",
@@ -760,11 +691,12 @@ export const markets = {
   belgium: {
     city: "Belgium",
     variant: "belgium",
-    title: "Belgium Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    title: "Belgium Growth & Automation Partner | LuliDigital",
     description:
-      "LuliDigital serves Belgian businesses and EU-operating teams with digital marketing, AI automation, SEO, and executive virtual assistant services.",
-    h1: "Belgium digital marketing agency. AI automation. Virtual assistant services.",
+      "Multilingual-ready marketing, AI automation, and executive support for Belgian and EU-facing teams.",
+    h1: "Connect Belgian expertise with the customers who need it.",
     h2: "For Belgian businesses, EU agencies, and international teams.",
+    outcomeTitle: "Cross-border growth for a multilingual market.",
     eyebrow: "Belgium Digital Studio",
     positioning:
       "An international studio serving Belgian businesses and EU-operating teams with performance marketing, AI workflow automation, and executive virtual assistant services — English-first, built to European standard.",
@@ -837,11 +769,12 @@ export const markets = {
   norway: {
     city: "Norway",
     variant: "norway",
-    title: "Norway Digital Marketing Agency, AI Automation & Virtual Assistant Services | LuliDigital",
+    title: "Norway Growth & Automation Studio | LuliDigital",
     description:
-      "LuliDigital serves Norwegian enterprises and Nordic businesses with digital marketing, AI automation, SEO, and executive virtual assistant services.",
-    h1: "Norway digital marketing agency. AI automation. Virtual assistant services.",
+      "Efficient marketing, AI automation, and executive support for Norwegian founders and Nordic businesses.",
+    h1: "Build a stronger growth system for your Norwegian business.",
     h2: "For Norwegian enterprises, tech companies, and Nordic businesses.",
+    outcomeTitle: "More capacity without another management layer.",
     eyebrow: "Norway Digital Studio",
     positioning:
       "An international studio serving Norwegian enterprises and Nordic companies with performance marketing, AI workflow automation, and executive virtual assistant services — English-first, built to Nordic standard.",
@@ -887,7 +820,7 @@ export const markets = {
       {
         label: "Paid Media",
         title: "Performance marketing for Norwegian enterprises",
-        copy: "Paid media campaigns with enterprise-grade audience logic and creative systems built for the Norwegian and Nordic commercial standard.",
+        copy: "Paid media campaigns with precise audience logic and creative systems built for Norwegian and Nordic buyers.",
       },
       {
         label: "AI Automation",
