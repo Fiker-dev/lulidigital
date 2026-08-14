@@ -5,6 +5,7 @@ pubDate: 2026-08-14
 category: "AI Automation"
 readingTime: "6 min read"
 draft: true
+scheduledFor: "2026-08-17"
 ---
 
 There is a number in your business you almost never look at directly: the total sitting in invoices you've sent but haven't been paid for. The work is done. The value was delivered. The money is, technically, yours. It's just... not here yet.
