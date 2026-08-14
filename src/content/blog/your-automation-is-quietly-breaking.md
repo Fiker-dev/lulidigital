@@ -1,11 +1,10 @@
 ---
 title: "You Automated It and Moved On. It's Been Failing Quietly Ever Since."
 description: "Most automations don't break loudly — they fail in silence for months while nobody watches. How to catch a broken automation before it costs you."
-pubDate: 2026-08-12
+pubDate: 2026-08-14
 category: "AI Automation"
 readingTime: "6 min read"
-draft: true
-scheduledFor: "2026-08-14"
+draft: false
 ---
 
 The best automations are the ones you forget about. You set them up once — the invoice that sends itself, the lead that lands in the right list, the report that arrives every Monday without anyone touching it — and then you get on with your life. That is exactly the point. Automation is supposed to disappear.
