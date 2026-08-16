@@ -19,6 +19,7 @@
  *   node scripts/post-approved-packs.mjs            # dry run (default, safe)
  *   node scripts/post-approved-packs.mjs --live     # actually post
  *   node scripts/post-approved-packs.mjs --live --only <slug>
+ *   node scripts/post-approved-packs.mjs --live --only <slug> --platform bluesky
  */
 
 import fs from "node:fs";
@@ -32,6 +33,10 @@ const QUEUE = path.join(ROOT, "social", "queue");
 const argv = process.argv.slice(2);
 const LIVE = argv.includes("--live");
 const ONLY = argv.includes("--only") ? argv[argv.indexOf("--only") + 1] : null;
+const PLATFORM = argv.includes("--platform") ? argv[argv.indexOf("--platform") + 1] : "all";
+if (!["all", "bluesky", "linkedin"].includes(PLATFORM)) {
+  throw new Error(`Invalid --platform ${PLATFORM}; expected all, bluesky, or linkedin`);
+}
 const TODAY = new Date().toISOString().slice(0, 10);
 
 const log = (...a) => console.log(...a);
@@ -187,7 +192,7 @@ async function main() {
     const notes = [];
 
     // --- Bluesky (autonomous per spec) ---
-    if (pack.bluesky?.posts?.length) {
+    if (PLATFORM !== "linkedin" && pack.bluesky?.posts?.length) {
       if (!LIVE) {
         log(`  [dry] Bluesky: would post ${pack.bluesky.posts.length} post(s)`);
       } else {
@@ -204,7 +209,9 @@ async function main() {
     }
 
     // --- LinkedIn (only asset:none) ---
-    for (const [profile, track] of [["personal", pack.personal], ["company", pack.company]]) {
+    for (const [profile, track] of PLATFORM === "bluesky"
+      ? []
+      : [["personal", pack.personal], ["company", pack.company]]) {
       if (!track) continue;
       // Cadence rule: the company track never goes out the same day as the
       // personal one. It waits for an explicit companyScheduledFor date.

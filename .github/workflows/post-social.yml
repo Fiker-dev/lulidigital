@@ -20,6 +20,14 @@ on:
         description: 'Optional: single pack slug to process'
         type: string
         required: false
+      platform:
+        description: 'Platform to publish (all, bluesky, or linkedin)'
+        type: choice
+        options:
+          - all
+          - bluesky
+          - linkedin
+        default: all
 
 jobs:
   post:
@@ -55,6 +63,9 @@ jobs:
           fi
           if [ -n "${{ inputs.only }}" ]; then
             ARGS="$ARGS --only ${{ inputs.only }}"
+          fi
+          if [ -n "${{ inputs.platform }}" ]; then
+            ARGS="$ARGS --platform ${{ inputs.platform }}"
           fi
           node scripts/post-approved-packs.mjs $ARGS | tee /tmp/post-summary.txt
 
