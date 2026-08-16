@@ -70,6 +70,11 @@ function readPack(slug) {
 
   return {
     slug, dir, statusPath, status, state, due, companyDue,
+    posted: {
+      bluesky: /bluesky POSTED https:\/\/bsky\.app\//i.test(status),
+      personal: /linkedin-personal POSTED https:\/\/www\.linkedin\.com\//i.test(status),
+      company: /linkedin-company POSTED https:\/\/www\.linkedin\.com\//i.test(status),
+    },
     personal: personalRaw && { asset: assetOf(personalRaw), body: stripComments(personalRaw) },
     company: companyRaw && { asset: assetOf(companyRaw), body: stripComments(companyRaw) },
     bluesky: blueskyRaw && { posts: parseBlueskyThread(stripComments(blueskyRaw)) },
@@ -192,7 +197,9 @@ async function main() {
     const notes = [];
 
     // --- Bluesky (autonomous per spec) ---
-    if (PLATFORM !== "linkedin" && pack.bluesky?.posts?.length) {
+    if (PLATFORM !== "linkedin" && pack.bluesky?.posts?.length && pack.posted.bluesky) {
+      log("  ⏭  Bluesky: already posted, skipped");
+    } else if (PLATFORM !== "linkedin" && pack.bluesky?.posts?.length) {
       if (!LIVE) {
         log(`  [dry] Bluesky: would post ${pack.bluesky.posts.length} post(s)`);
       } else {
@@ -213,6 +220,10 @@ async function main() {
       ? []
       : [["personal", pack.personal], ["company", pack.company]]) {
       if (!track) continue;
+      if (pack.posted[profile]) {
+        log(`  ⏭  LinkedIn ${profile}: already posted, skipped`);
+        continue;
+      }
       // Cadence rule: the company track never goes out the same day as the
       // personal one. It waits for an explicit companyScheduledFor date.
       if (profile === "company") {
@@ -244,9 +255,16 @@ async function main() {
 
     // --- record outcome in STATUS.md (never fabricate a URL) ---
     if (LIVE && notes.length) {
-      const allPosted = notes.some((n) => n.includes("POSTED")) && !notes.some((n) => n.includes("FAILED"));
       const first = pack.status.split("\n")[0];
-      const updated = (allPosted ? first.replace(/^approved/, "posted") : first)
+      const combined = `${pack.status} ${notes.join("; ")}`;
+      const blueskyDone = !pack.bluesky?.posts?.length || /bluesky POSTED https:\/\/bsky\.app\//i.test(combined);
+      const personalDone = !pack.personal || pack.personal.asset !== "none"
+        || /linkedin-personal POSTED https:\/\/www\.linkedin\.com\//i.test(combined);
+      const companyRequired = pack.company?.asset === "none" && pack.companyDue && pack.companyDue <= TODAY;
+      const companyDone = !companyRequired
+        || /linkedin-company POSTED https:\/\/www\.linkedin\.com\//i.test(combined);
+      const allPosted = blueskyDone && personalDone && companyDone && !notes.some((n) => n.includes("FAILED"));
+      const updated = (allPosted ? first.replace(/^approved/, "posted") : first.replace(/^posted/, "approved"))
         + ` | ${TODAY} auto-post: ${notes.join("; ")}`;
       fs.writeFileSync(pack.statusPath, [updated, ...pack.status.split("\n").slice(1)].join("\n"));
       results.push(pack.slug);
