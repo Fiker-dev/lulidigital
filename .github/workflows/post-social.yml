@@ -1,0 +1,87 @@
+name: Post Approved Social Packs
+
+# WHY: the Claude cloud routine writes packs but its sandbox blocks outbound
+# egress to bsky.social / Composio (403 CONNECT), so nothing ever published.
+# GitHub Actions has full network access, so posting happens here.
+# The routine still owns WRITING packs; this only PUBLISHES approved+due ones.
+
+on:
+  schedule:
+    # Weekdays 11:23 UTC — after the Social Team routine has written/updated
+    # packs (~10:17–10:40 UTC). Off-:00 to avoid the scheduler stampede.
+    - cron: '23 11 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      live:
+        description: 'Actually post (false = dry run)'
+        type: boolean
+        default: false
+      only:
+        description: 'Optional: single pack slug to process'
+        type: string
+        required: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Composio client
+        run: npm install --no-save @composio/client
+
+      - name: Post approved packs
+        env:
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_PASSWORD: ${{ secrets.BLUESKY_PASSWORD }}
+          COMPOSIO_API_KEY: ${{ secrets.COMPOSIO_API_KEY }}
+          LINKEDIN_CONNECTED_ACCOUNT_ID: ${{ secrets.LINKEDIN_CONNECTED_ACCOUNT_ID }}
+          LINKEDIN_USER_ID: ${{ secrets.LINKEDIN_USER_ID }}
+          LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+          LINKEDIN_ORG_URN: ${{ secrets.LINKEDIN_ORG_URN }}
+        run: |
+          ARGS=""
+          # Scheduled runs always publish; manual runs are dry unless live=true.
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.live }}" = "true" ]; then
+            ARGS="--live"
+          fi
+          if [ -n "${{ inputs.only }}" ]; then
+            ARGS="$ARGS --only ${{ inputs.only }}"
+          fi
+          node scripts/post-approved-packs.mjs $ARGS | tee /tmp/post-summary.txt
+
+      - name: Commit STATUS updates
+        run: |
+          if [ -z "$(git status --porcelain social/queue/)" ]; then
+            echo "No STATUS.md changes to commit."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add social/queue/
+          git commit -m "Social: post approved packs $(date -u +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push
+
+      - name: Telegram summary
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "No Telegram secrets — skipping notification."
+            exit 0
+          fi
+          MSG=$(cat /tmp/post-summary.txt 2>/dev/null || echo "Social poster ran (no summary).")
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${MSG}" > /dev/null

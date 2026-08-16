@@ -105,10 +105,12 @@ const urls = await getSitemapUrls();
 console.log(`\nInspecting ${urls.length} URL(s) from the sitemap...\n`);
 
 const notPassing = [];
+const inspectErrors = [];
 for (const url of urls) {
   const r = await inspect(token, url, inspectProperty);
   if (r.error) {
     console.log(`ERROR  ${r.error}  ${url}`);
+    inspectErrors.push(r);
     continue;
   }
   const flag = r.verdict === "PASS" ? "✅" : "❌";
@@ -130,3 +132,16 @@ const summaryLines = [
 ];
 const { writeFileSync } = await import("node:fs");
 writeFileSync("/tmp/recrawl-summary.txt", summaryLines.join("\n"));
+
+// Fail loudly. Previously this script swallowed API failures and still exited 0,
+// so the workflow showed green while nothing had actually been submitted.
+const hardFailures = [];
+if (!sm.ok) hardFailures.push(`sitemap resubmit failed (HTTP ${sm.status})`);
+if (urls.length === 0) hardFailures.push("no URLs found in sitemap (fetch or parse failed)");
+if (inspectErrors.length) hardFailures.push(`${inspectErrors.length} URL inspection error(s): ${inspectErrors[0].error}`);
+
+if (hardFailures.length) {
+  console.error(`\n❌ RECRAWL FAILED — ${hardFailures.join(" | ")}`);
+  process.exit(1);
+}
+console.log("\n✅ Recrawl completed successfully.");
