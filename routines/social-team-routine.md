@@ -67,6 +67,31 @@ This runs EVERY time and is independent of whichever anchor you pick for the
 personal track. A blog post must never go live without the company page
 announcing it.
 
+### Pre-schedule the announcement before the blog goes live
+Before scanning live posts, also scan for `draft: true` posts carrying a quoted
+`scheduledFor: "YYYY-MM-DD"`. For the nearest upcoming scheduled blog (at most
+one per run), prepare its LuliDigital company announcement in advance:
+
+1. Set `companyScheduledFor` to the next weekday after the blog's publication
+   date. Never schedule the company announcement on the same day as the blog's
+   personal track, and never use a weekend.
+2. Research current LinkedIn company-page creative patterns with Gemini, then
+   verify the selected pattern with web search and LinkedIn's current official
+   media guidance. Treat trends as creative direction, not as evidence for
+   unsupported performance claims.
+3. Write `linkedin-company.md` and
+   `linkedin-company-asset-brief.md`. The brief must name the selected pattern,
+   explain why it suits this specific article, define the headline/pull-line,
+   composition, alt text, and cite the sources used for the trend decision.
+4. Render a real upload-ready PNG by running:
+   `node scripts/render-linkedin-blog-card.mjs --brief social/queue/<slug>/linkedin-company-asset-brief.md --out social/queue/<slug>/linkedin-company-asset.png`
+   The renderer creates a 1080×1350 portrait card, within LinkedIn's supported
+   image ratio. If rendering fails, report **asset brief prepared; PNG blocked**
+   with the exact error. Never claim the asset is ready unless the PNG exists.
+5. Record the quoted `companyScheduledFor` date and asset path in `STATUS.md`.
+   This is a manual-upload appointment because the post carries an image; it
+   must never be auto-posted without the PNG.
+
 1. List every post in `src/content/blog/` with `draft: false` whose
    `pubDate` has passed.
 2. Read `social/announced-blogs.json` → `announced`. Any live slug missing
@@ -78,7 +103,8 @@ announcing it.
    that the URL actually resolves before using it — never announce a post
    that 404s.
 4. State plainly in the summary which blog it announces and that the honey
-   blog card (`Card-blog`, rendered locally) is the image to attach.
+   blog card (`linkedin-company-asset.png`) is the image to attach, its selected
+   trend-informed format, and its scheduled company date.
 5. Only after that announcement is actually POSTED, append the slug to
    `announced` in `social/announced-blogs.json` and push. Never append a
    slug you have not posted — that would silently skip the announcement
@@ -140,6 +166,9 @@ sharp pull-line from the piece, and the live URL. Confirm the URL actually
 resolves before using it. Note at the top of the file that the honey blog
 announcement card (`Card-blog`, rendered locally) is the intended image, and
 that the company page leads with the WORK — no character, no story voice.
+Also create the asset brief and PNG using the pre-scheduling procedure above
+if they do not already exist. Reuse an existing scheduled asset; never replace
+it silently with a different trend or design after Fiker has reviewed it.
 
 **`bluesky.md`** — mirrors the PERSONAL track, not the company one: same
 first-person smart-friend voice and the same idea as `linkedin-personal.md`,
@@ -256,6 +285,18 @@ FIRST COMMENT (post right after)
 (or: no video scheduled for the next posting day)
 
 Reddit draft + full video script are in social/queue/<slug>/.
+
+🏢 LULIDIGITAL COMPANY ANNOUNCEMENT
+Scheduled: <companyScheduledFor>
+Blog: <title>
+Asset: social/queue/<slug>/linkedin-company-asset.png — READY
+Format selected: <verified current LinkedIn creative pattern>
+Why this format: <one sentence>
+Manual step: upload the PNG with the company caption; put the blog URL in the
+first comment.
+
+(If the PNG does not exist, say `Asset brief prepared; PNG blocked: <error>`.
+Never say the asset is ready when only a brief exists.)
 
 Reply here:
 • "approve" — scheduled for tomorrow, posts on the next run.
