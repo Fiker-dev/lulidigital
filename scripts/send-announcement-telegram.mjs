@@ -40,7 +40,7 @@ const weekdayOf = (iso) => WEEKDAY[new Date(`${iso}T12:00:00Z`).getUTCDay()];
 
 const state = fs.existsSync(STATE)
   ? JSON.parse(fs.readFileSync(STATE, "utf8"))
-  : { delivered: [] };
+  : { delivered: [], video: [] };
 
 const api = async (method, form) => {
   const res = await fetch(`https://api.telegram.org/bot${TOKEN}/${method}`, { method: "POST", body: form });
@@ -64,6 +64,15 @@ const sendFile = async (file, kind, caption) => {
   if (kind === "carousel") { f.append("document", blob, path.basename(file)); return api("sendDocument", f); }
   f.append("photo", blob, path.basename(file));
   return api("sendPhoto", f);
+};
+
+const sendVideo = async (file, caption) => {
+  const f = new FormData();
+  f.append("chat_id", CHAT);
+  f.append("caption", caption.slice(0, 1000));
+  f.append("supports_streaming", "true");
+  f.append("video", new Blob([fs.readFileSync(file)]), path.basename(file));
+  return api("sendVideo", f);
 };
 
 if (!fs.existsSync(QUEUE)) { console.log("No social/queue."); process.exit(0); }
@@ -109,6 +118,56 @@ for (const slug of fs.readdirSync(QUEUE)) {
     await sendText(`CAPTION — copy from here:\n\n${caption}`);
     if (firstComment) await sendText(`FIRST COMMENT (post right after):\n${firstComment}`);
     state.delivered.push(slug);
+    sent++;
+  } catch (e) {
+    console.error(`FAILED ${slug}: ${e.message}`);
+  }
+}
+
+// ── YouTube shorts ─────────────────────────────────────────────────────────
+// The rendered video lives in the pack, so it can go straight to her phone
+// with the title and description ready to paste into YouTube.
+state.video ??= [];
+for (const slug of fs.readdirSync(QUEUE)) {
+  const dir = path.join(QUEUE, slug);
+  if (!fs.statSync(dir).isDirectory()) continue;
+
+  const ytPath = path.join(dir, "youtube.md");
+  if (!fs.existsSync(ytPath)) continue;
+  if (state.video.includes(slug)) continue;
+
+  const statusPath = path.join(dir, "STATUS.md");
+  const status = fs.existsSync(statusPath) ? fs.readFileSync(statusPath, "utf8") : "";
+  if (/youtube[^|]*POSTED/i.test(status)) continue;
+
+  // STATUS names the final cut; fall back to the pack's own <!-- video: --> stamp.
+  const yt = fs.readFileSync(ytPath, "utf8");
+  const named = (status.match(/asset:\s*([^\s|]+\.mp4)/i) || [])[1]
+    || (yt.match(/<!--\s*video:\s*([^\s>]+\.mp4)/i) || [])[1];
+  const video = named ? path.join(dir, named) : null;
+  if (!video || !fs.existsSync(video)) continue;
+
+  const mb = fs.statSync(video).size / 1048576;
+  const title = (yt.match(/#\s*YouTube title\s*\n+([^\n]+)/i) || [])[1]?.trim() || slug;
+  const desc = (yt.split(/#\s*Description\s*\n/i)[1] || "").trim();
+
+  console.log(`${DRY ? "[dry] " : ""}${slug} → youtube short (${mb.toFixed(1)} MB)`);
+  if (DRY) { sent++; continue; }
+
+  if (mb > 49) {
+    await sendText(`🎬 YouTube short ready: ${slug}\nVideo is ${mb.toFixed(1)} MB — too large for Telegram. Grab it from the repo:\nsocial/queue/${slug}/${named}`);
+  } else {
+    try {
+      await sendVideo(video, `🎬 YouTube Short ready to upload\nTitle + description follow — paste them in.`);
+    } catch (e) {
+      console.error(`video send failed (${slug}): ${e.message}`);
+      await sendText(`🎬 YouTube short ready: ${slug} (video too large or failed to send)`);
+    }
+  }
+  try {
+    await sendText(`TITLE — copy from here:\n\n${title}`);
+    if (desc) await sendText(`DESCRIPTION — copy from here:\n\n${desc}`);
+    state.video.push(slug);
     sent++;
   } catch (e) {
     console.error(`FAILED ${slug}: ${e.message}`);
