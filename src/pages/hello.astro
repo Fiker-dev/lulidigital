@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { FikerAvatar } from "../components/FikerAvatar.tsx";
 
 export const prerender = false;
 
@@ -95,8 +96,11 @@ const services = [
   </section>
 
   <section class="positioning" aria-labelledby="positioning-title" data-atmosphere="story" data-hive-section>
-    <div class="positioning-image" data-reveal="float-l">
-      <img src="/assets/outreach/fiker-mini-fiker-outreach.jpg" alt="Fiker with Mini Fiker" width="280" height="485" loading="lazy" />
+    <div class="positioning-avatars" data-reveal="float-l" aria-hidden="true">
+      <span class="av av--1"><FikerAvatar pose="coffee" size={150} alt="" /></span>
+      <span class="av av--2"><FikerAvatar pose="notebook" size={150} alt="" /></span>
+      <span class="av av--3"><FikerAvatar pose="laptop" size={150} alt="" /></span>
+      <span class="av av--4"><FikerAvatar pose="lightbulb" size={150} alt="" /></span>
     </div>
     <div class="positioning-copy" data-reveal="up" data-reveal-delay="120">
       <p class="hello-kicker">A lighter way to begin</p>
@@ -376,14 +380,30 @@ const services = [
 
   .positioning {
     display: grid;
-    grid-template-columns: 280px minmax(0, 1fr);
+    grid-template-columns: 320px minmax(0, 1fr);
     gap: clamp(48px, 9vw, 120px);
     align-items: center;
     padding-top: clamp(74px, 10vw, 132px);
     padding-bottom: clamp(74px, 10vw, 132px);
   }
-  .positioning-image { overflow: hidden; border-radius: 150px 150px 18px 18px; box-shadow: 0 20px 60px rgba(43,25,18,.14); }
-  .positioning-image img { display: block; width: 100%; height: auto; }
+  /* Mini-me cluster replaces the repeated video still. Idle bob only —
+     deliberately NOT scroll-driven like the blog avatars. */
+  .positioning-avatars {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(4px, 1.4vw, 14px);
+    place-items: center;
+  }
+  .av { display: block; will-change: transform; }
+  .av :global(picture) { display: block; }
+  .av--1 { animation: avFloat 5.2s ease-in-out infinite; }
+  .av--2 { animation: avFloat 6.1s ease-in-out infinite .45s; transform: rotate(2deg); }
+  .av--3 { animation: avFloat 5.6s ease-in-out infinite .9s; transform: rotate(-2deg); }
+  .av--4 { animation: avFloat 6.6s ease-in-out infinite 1.3s; }
+  @keyframes avFloat {
+    0%, 100% { translate: 0 0; }
+    50%      { translate: 0 -9px; }
+  }
   .positioning-copy p:last-child { max-width: 620px; margin: 25px 0 0; color: rgba(23,20,18,.68); font: 400 18px/1.65 var(--font-body, "DM Sans", sans-serif); }
 
   .hello-final {
@@ -407,13 +427,14 @@ const services = [
     .section-heading { grid-template-columns: 1fr; gap: 2px; }
     .service-row { grid-template-columns: 36px minmax(0, 1fr) 22px; gap: 10px; }
     .positioning { grid-template-columns: 1fr; gap: 42px; }
-    .positioning-image { width: min(72vw, 280px); margin: 0 auto; }
+    .positioning-avatars { width: min(86vw, 340px); margin: 0 auto; }
     .positioning-copy { text-align: center; }
     .positioning-copy p:last-child { margin-left: auto; margin-right: auto; }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .hello-button, .service-row, .sound-toggle, .founder-link, .founder-arrow { transition: none; }
+    .av--1, .av--2, .av--3, .av--4 { animation: none; }
     .sound-toggle:not(.is-on) { animation: none; }
   }
 </style>
