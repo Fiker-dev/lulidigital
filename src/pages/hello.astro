@@ -97,7 +97,7 @@ const services = [
   <section class="positioning" aria-labelledby="positioning-title" data-atmosphere="story" data-hive-section>
     <div class="hello-buddy" data-hello-buddy data-reveal="float-l" aria-hidden="true">
       <div class="hello-buddy__stage">
-        <img class="hello-buddy__img" src="/assets/fiker-avatar-pack/coffee.png" alt="" decoding="async" />
+        <img class="hello-buddy__img" src="/assets/mini-fiker/story-coffee.png" alt="" decoding="async" />
       </div>
       <p class="hello-buddy__caption" data-buddy-caption>Coffee first.</p>
     </div>
@@ -165,8 +165,10 @@ const services = [
     document.addEventListener("touchstart", once, { once: true, passive: true });
   })();
 
-  // Mini-me cycles poses while you read — same vocabulary as the blog buddy
-  // (pop on change, coffee spill), but on a timer instead of scroll.
+  // Mini-me cycles through the blog's story poses while you read. Same assets
+  // and same payoff as the blog buddy: the spill is immediately followed by
+  // the mop, so the coffee drip gets cleaned up rather than just fading.
+  // Timer-driven here (not scroll-driven) so she performs beside the copy.
   (() => {
     const buddy = document.querySelector<HTMLElement>("[data-hello-buddy]");
     const img = buddy?.querySelector<HTMLImageElement>(".hello-buddy__img");
@@ -174,21 +176,24 @@ const services = [
     const stage = buddy?.querySelector<HTMLElement>(".hello-buddy__stage");
     if (!buddy || !img || !stage) return;
 
+    const ROOT = "/assets/mini-fiker";
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const ROOT = "/assets/fiker-avatar-pack";
 
-    // One beat per service, so she nods at each of the four ways.
+    // spill sits directly before mop so the drip has a consequence.
     const beats = [
-      { pose: "coffee",    line: "Coffee first." },
-      { pose: "notebook",  line: "Admin, handled." },
-      { pose: "laptop",    line: "Systems doing the boring bits." },
-      { pose: "lightbulb", line: "And the good ideas get room." },
+      { pose: "story-coffee", line: "Coffee first." },
+      { pose: "laptop",       line: "Systems doing the boring bits." },
+      { pose: "story-spill",  line: "\u2026oops." },
+      { pose: "story-mop",    line: "Cleaned up. No fuss." },
+      { pose: "idea",         line: "Which frees up the good ideas." },
+      { pose: "celebrate",    line: "And the work actually moves." },
+      { pose: "story-relax",  line: "Lighter already." },
     ];
 
     beats.forEach((b) => { const i = new Image(); i.src = `${ROOT}/${b.pose}.png`; });
 
     if (caption) { caption.textContent = beats[0].line; caption.classList.add("is-in"); }
-    if (reduced) return; // static pose, no cycling
+    if (reduced) return;
 
     let idx = 0;
     let splash: HTMLElement | null = null;
@@ -199,7 +204,7 @@ const services = [
 
       img.src = `${ROOT}/${beat.pose}.png`;
       buddy.classList.remove("hello-buddy--pop");
-      void buddy.offsetWidth; // restart the pop animation
+      void buddy.offsetWidth; // restart the pop
       buddy.classList.add("hello-buddy--pop");
 
       if (caption) {
@@ -210,23 +215,24 @@ const services = [
         }, 260);
       }
 
-      // The coffee beat spills, like it does on the blog.
-      if (beat.pose === "coffee") {
+      if (beat.pose === "story-spill") {
         splash?.remove();
         splash = document.createElement("span");
         splash.className = "coffee-splash";
         stage.appendChild(splash);
+      } else if (beat.pose === "story-mop") {
+        // she mops it up — the drip is cleared rather than left to fade.
+        splash?.classList.add("is-cleaned");
         const el = splash;
-        window.setTimeout(() => el.remove(), 3700);
+        window.setTimeout(() => el?.remove(), 900);
+        splash = null;
       }
     };
 
-    let timer = window.setInterval(step, 3200);
-
-    // Don't animate off-screen — saves work and keeps the loop in sync.
+    let timer = window.setInterval(step, 3000);
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) {
-        if (e.isIntersecting && !timer) timer = window.setInterval(step, 3200);
+        if (e.isIntersecting && !timer) timer = window.setInterval(step, 3000);
         else if (!e.isIntersecting && timer) { clearInterval(timer); timer = 0; }
       }
     }, { threshold: 0.15 });
@@ -504,14 +510,16 @@ const services = [
       rgba(94,55,22,.26) 62%, rgba(94,55,22,0) 100%);
     border-radius: 0 0 46% 46% / 0 0 86% 86%;
     transform-origin: top;
-    animation: coffeeDrip 3.6s cubic-bezier(.4,0,.2,1) forwards;
+    animation: coffeeDrip 1.1s cubic-bezier(.4,0,.2,1) forwards;
+    transition: opacity .8s ease, transform .8s ease;
   }
   @keyframes coffeeDrip {
     0%   { opacity: 0; transform: scaleY(.12); }
-    24%  { opacity: .95; transform: scaleY(1); }
-    65%  { opacity: .8; transform: scaleY(1); }
-    100% { opacity: 0; transform: scaleY(1); }
+    70%  { opacity: .95; transform: scaleY(1.04); }
+    100% { opacity: .9; transform: scaleY(1); }
   }
+  /* mopped away rather than simply fading out */
+  .coffee-splash.is-cleaned { opacity: 0; transform: scaleY(.15) translateX(14px); }
   .positioning-copy p:last-child { max-width: 620px; margin: 25px 0 0; color: rgba(23,20,18,.68); font: 400 18px/1.65 var(--font-body, "DM Sans", sans-serif); }
 
   .hello-final {
