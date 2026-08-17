@@ -1,11 +1,10 @@
 ---
 title: "You're Owed Money Right Now. Chasing It Is Costing You More Than the Invoice."
 description: "Late payments quietly drain your cash and your week. How to get paid on time with a calm, automated follow-up system — without the awkward chase."
-pubDate: 2026-08-14
+pubDate: 2026-08-17
 category: "AI Automation"
 readingTime: "6 min read"
-draft: true
-scheduledFor: "2026-08-17"
+draft: false
 ---
 
 There is a number in your business you almost never look at directly: the total sitting in invoices you've sent but haven't been paid for. The work is done. The value was delivered. The money is, technically, yours. It's just... not here yet.
