@@ -24,6 +24,12 @@ const services = [
     href: "/ai-desk",
     copy: "Practical automation, AI assistants, workflow systems and less repetitive work.",
   },
+  {
+    number: "04",
+    title: "Web Design",
+    href: "/web-design-desk",
+    copy: "Fast, clear pages that explain the offer properly and make the next step obvious.",
+  },
 ];
 ---
 
@@ -32,42 +38,46 @@ const services = [
   description="Meet Fiker and see how LuliDigital supports business owners with operations, marketing, and practical AI systems."
   canonicalPath="/hello"
   ogImage="/assets/outreach/fiker-mini-fiker-outreach.jpg"
-  showBee={false}
-  showLana={false}
-  showFooter={false}
-  focusedHeader={true}
 >
-  <section class="hello-hero" aria-labelledby="hello-title">
+  <section class="hello-hero" aria-labelledby="hello-title" data-atmosphere="hero" data-hive-section>
     <div class="hello-copy">
-      <p class="hello-kicker">A personal hello from LuliDigital</p>
-      <h1 id="hello-title">Hi, I’m <em>Fiker.</em></h1>
-      <p class="hello-intro">I help business owners handle the work behind the scenes, so they can focus on leading, making decisions and growing the business.</p>
-      <a class="hello-button" href="mailto:info@lulidigital.com?subject=Hello%20Fiker">Email Fiker <span aria-hidden="true">↗</span></a>
+      <p class="hello-kicker" data-blur-in>A personal hello from LuliDigital</p>
+      <h1 id="hello-title" data-blur-in data-blur-delay="90">Hi, I’m <em>Fiker.</em></h1>
+      <p class="hello-intro" data-blur-in data-blur-delay="220">I help business owners handle the work behind the scenes, so they can focus on leading, making decisions and growing the business.</p>
+      <div class="hello-actions" data-stagger data-stagger-gap="80">
+        <a class="hello-button" href="mailto:info@lulidigital.com?subject=Hello%20Fiker">Email Fiker <span aria-hidden="true">↗</span></a>
+        <a class="hello-link" href="#services-title">See where I can help <span aria-hidden="true">↓</span></a>
+      </div>
     </div>
 
-    <div class="video-wrap">
+    <div class="video-wrap" data-reveal="fade" data-reveal-delay="120">
       <div class="video-frame">
         <iframe
-          src="https://www.youtube-nocookie.com/embed/88h6pCbbor4?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&origin=https%3A%2F%2Flulidigital.com"
+          id="hello-video"
+          src="https://www.youtube-nocookie.com/embed/88h6pCbbor4?autoplay=1&mute=1&loop=1&playlist=88h6pCbbor4&playsinline=1&rel=0&modestbranding=1&enablejsapi=1&origin=https%3A%2F%2Flulidigital.com"
           title="A short introduction from Fiker, founder of LuliDigital"
           allow="autoplay; encrypted-media; picture-in-picture"
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen
           loading="eager"
         ></iframe>
+        <button type="button" class="sound-toggle" data-sound-toggle aria-pressed="false">
+          <span class="sound-icon" aria-hidden="true">🔊</span>
+          <span class="sound-label">Tap for sound</span>
+        </button>
       </div>
-      <p class="video-note"><span aria-hidden="true"></span> Plays automatically without sound</p>
+      <p class="video-note" data-video-note><span aria-hidden="true"></span> Tap the video to turn the sound on</p>
     </div>
   </section>
 
-  <section class="services" aria-labelledby="services-title">
-    <div class="section-heading">
+  <section class="services" aria-labelledby="services-title" data-atmosphere="services" data-hive-section data-bee-stop>
+    <div class="section-heading" data-reveal="up">
       <p class="hello-kicker">Where I can help</p>
       <h2 id="services-title">Support that fits the work.</h2>
     </div>
     <div class="service-list">
-      {services.map((service) => (
-        <a class="service-row" href={service.href}>
+      {services.map((service, i) => (
+        <a class="service-row" href={service.href} data-reveal="up" data-reveal-delay={i * 90}>
           <span class="service-number">{service.number}</span>
           <div>
             <h3>{service.title}</h3>
@@ -80,23 +90,66 @@ const services = [
     </div>
   </section>
 
-  <section class="positioning" aria-labelledby="positioning-title">
-    <div class="positioning-image">
+  <section class="positioning" aria-labelledby="positioning-title" data-atmosphere="story" data-hive-section>
+    <div class="positioning-image" data-reveal="float-l">
       <img src="/assets/outreach/fiker-mini-fiker-outreach.jpg" alt="Fiker with Mini Fiker" width="280" height="485" loading="lazy" />
     </div>
-    <div class="positioning-copy">
+    <div class="positioning-copy" data-reveal="up" data-reveal-delay="120">
       <p class="hello-kicker">A lighter way to begin</p>
-      <h2 id="positioning-title">One person. Three ways to make work lighter.</h2>
-      <p>You do not need to begin with a large commitment. We can start with one practical need, make it work well and build from there if it makes sense.</p>
+      <h2 id="positioning-title">Four ways to make the work lighter.</h2>
+      <p>You do not need to begin with a large commitment. Start with one practical need, get it working properly, and build from there if it makes sense.</p>
     </div>
   </section>
 
-  <section class="hello-final" aria-labelledby="final-title">
+  <section class="hello-final" aria-labelledby="final-title" data-reveal="fade" data-atmosphere="cta" data-hive-section data-bee-stop>
     <p class="hello-kicker">Let’s make room for the important work</p>
     <h2 id="final-title">What could I take off your plate?</h2>
     <a class="hello-button hello-button--light" href="mailto:info@lulidigital.com?subject=What%20I’d%20like%20to%20take%20off%20my%20plate">Email Fiker <span aria-hidden="true">↗</span></a>
   </section>
 </BaseLayout>
+
+<script>
+  // Browsers refuse to autoplay video WITH sound — it must start muted or it
+  // won't play at all. So: autoplay muted, then unmute on the viewer's first
+  // real interaction (a gesture is what the browser requires), and give them
+  // an explicit control either way.
+  (() => {
+    const frame = document.getElementById("hello-video") as HTMLIFrameElement | null;
+    const toggle = document.querySelector<HTMLButtonElement>("[data-sound-toggle]");
+    const note = document.querySelector<HTMLElement>("[data-video-note]");
+    if (!frame || !toggle) return;
+
+    let on = false;
+
+    const send = (func: string, args: unknown[] = []) => {
+      frame.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args }), "*");
+    };
+
+    const setSound = (next: boolean) => {
+      on = next;
+      if (on) { send("unMute"); send("setVolume", [100]); }
+      else { send("mute"); }
+      toggle.setAttribute("aria-pressed", String(on));
+      toggle.classList.toggle("is-on", on);
+      toggle.querySelector(".sound-icon")!.textContent = on ? "🔊" : "🔇";
+      toggle.querySelector(".sound-label")!.textContent = on ? "Sound on" : "Tap for sound";
+      if (note) note.textContent = on ? "Sound is on — tap the speaker to mute" : "Tap the video to turn the sound on";
+    };
+
+    toggle.addEventListener("click", (e) => { e.stopPropagation(); setSound(!on); });
+
+    // First genuine gesture anywhere on the page turns sound on once.
+    const once = () => { if (!on) setSound(true); cleanup(); };
+    const cleanup = () => {
+      document.removeEventListener("pointerdown", once);
+      document.removeEventListener("keydown", once);
+      document.removeEventListener("touchstart", once);
+    };
+    document.addEventListener("pointerdown", once, { once: true });
+    document.addEventListener("keydown", once, { once: true });
+    document.addEventListener("touchstart", once, { once: true, passive: true });
+  })();
+</script>
 
 <style>
   :global(body) { background: var(--paper); }
@@ -164,7 +217,18 @@ const services = [
     transition: transform 220ms cubic-bezier(.16,1,.3,1), background 180ms ease;
   }
   .hello-button:hover { color: var(--paper); background: var(--honey-dark); transform: translateY(-2px); }
-  .hello-button:focus-visible, .service-row:focus-visible { outline: 3px solid var(--wine-soft); outline-offset: 4px; }
+  .hello-button:focus-visible, .service-row:focus-visible, .hello-link:focus-visible { outline: 3px solid var(--wine-soft); outline-offset: 4px; }
+
+  .hello-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 26px; }
+  .hello-link {
+    display: inline-flex; align-items: center; gap: 9px;
+    color: var(--wine-strong);
+    font: 700 12px/1 var(--font-body, "DM Sans", sans-serif);
+    letter-spacing: .12em; text-transform: uppercase;
+    text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px;
+    transition: opacity 180ms ease;
+  }
+  .hello-link:hover { opacity: .7; }
 
   .video-wrap { width: min(100%, 390px); justify-self: end; }
   .video-frame {
@@ -185,6 +249,39 @@ const services = [
     pointer-events: none;
   }
   .video-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  .sound-toggle {
+    position: absolute;
+    z-index: 2;
+    right: 14px;
+    bottom: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    border: 1px solid rgba(255,255,255,.28);
+    border-radius: 999px;
+    background: rgba(18,14,12,.72);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    color: #fdf5e6;
+    font: 700 11px/1 var(--font-body, "DM Sans", sans-serif);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 180ms ease, transform 180ms ease, border-color 180ms ease;
+  }
+  .sound-toggle:hover { background: rgba(18,14,12,.9); transform: translateY(-1px); }
+  .sound-toggle:focus-visible { outline: 3px solid var(--honey, #f5a41f); outline-offset: 3px; }
+  .sound-toggle.is-on { border-color: rgba(245,164,31,.7); }
+  .sound-icon { font-size: 13px; }
+
+  /* Gentle pulse until sound is enabled, so it reads as an invitation. */
+  .sound-toggle:not(.is-on) { animation: soundPulse 2.4s ease-in-out infinite; }
+  @keyframes soundPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,164,31,.45); }
+    50%      { box-shadow: 0 0 0 9px rgba(245,164,31,0); }
+  }
   .video-note {
     display: flex;
     align-items: center;
@@ -268,6 +365,7 @@ const services = [
     .video-wrap { width: min(100%, 340px); justify-self: center; order: -1; }
     .hello-copy { text-align: center; }
     .hello-intro { margin-left: auto; margin-right: auto; }
+    .hello-actions { justify-content: center; }
     .section-heading { grid-template-columns: 1fr; gap: 2px; }
     .service-row { grid-template-columns: 36px minmax(0, 1fr) 22px; gap: 10px; }
     .positioning { grid-template-columns: 1fr; gap: 42px; }
@@ -277,6 +375,7 @@ const services = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hello-button, .service-row { transition: none; }
+    .hello-button, .service-row, .sound-toggle { transition: none; }
+    .sound-toggle:not(.is-on) { animation: none; }
   }
 </style>
