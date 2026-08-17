@@ -69,6 +69,21 @@ jobs:
           fi
           node scripts/post-approved-packs.mjs $ARGS | tee /tmp/post-summary.txt
 
+      - name: Report pending blog announcements
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          OUT=$(node scripts/fetch-announcements.mjs --report 2>&1 || true)
+          echo "$OUT"
+          # Only ping when something is actually waiting to be posted.
+          if echo "$OUT" | grep -q "📣" && [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+              --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+              --data-urlencode "text=${OUT}" > /dev/null
+          fi
+
       - name: Commit STATUS updates
         run: |
           if [ -z "$(git status --porcelain social/queue/)" ]; then

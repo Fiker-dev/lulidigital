@@ -142,6 +142,27 @@ stats. If nothing genuinely current exists, lead with the post's own
 counter-intuitive idea. For the AI Update series, the news item MUST be
 verified by a primary or reputable source via web search.
 
+## Step 2b — Select the best content inspiration
+Before choosing the asset treatment, read
+`social/content-inspiration/catalog.json`. Describe the idea with its platform,
+format, and 3–6 specific tags, then run:
+
+`node scripts/select-content-inspiration.mjs --platform <linkedin|youtube> --format <static|video|thumbnail> --tags "<comma-separated tags>"`
+
+- Use the selected reference only when `usable` is true. Otherwise follow the
+  brand system without forcing an inspiration.
+- Borrow only the traits listed in `borrow`; obey every item in `avoid`.
+- Never copy another creator's wording, identity, logo, watermark, proprietary
+  character, or unsupported claim.
+- Write the selector's JSON result to the new pack as
+  `inspiration-selection.json`, including the chosen ID, score, matched tags,
+  and a one-sentence explanation of how the reference was adapted.
+- For a LinkedIn and YouTube pair, select separately: the best static LinkedIn
+  reference may be different from the best YouTube video or thumbnail
+  reference.
+- Mention the chosen inspiration ID and asset path in the review summary so
+  Fiker can verify the creative direction before posting.
+
 ## Step 3 — Write the pack
 Create `social/queue/<slug-or-pillar-slug>/` with these files:
 
