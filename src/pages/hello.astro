@@ -67,6 +67,10 @@ const services = [
         </button>
       </div>
       <p class="video-note" data-video-note><span aria-hidden="true"></span> Tap the video to turn the sound on</p>
+      <a class="founder-link" href="/founder">
+        <span>Read my founder story</span>
+        <span class="founder-arrow" aria-hidden="true">→</span>
+      </a>
     </div>
   </section>
 
@@ -127,8 +131,16 @@ const services = [
 
     const setSound = (next: boolean) => {
       on = next;
-      if (on) { send("unMute"); send("setVolume", [100]); }
-      else { send("mute"); }
+      if (on) {
+        // Unmuting alone can leave the player paused (the browser may have
+        // stopped it when the audio track came on), so always resume playback
+        // too — a tap on the speaker should mean "play this, with sound".
+        send("unMute");
+        send("setVolume", [100]);
+        send("playVideo");
+      } else {
+        send("mute");
+      }
       toggle.setAttribute("aria-pressed", String(on));
       toggle.classList.toggle("is-on", on);
       toggle.querySelector(".sound-icon")!.textContent = on ? "🔊" : "🔇";
@@ -294,6 +306,32 @@ const services = [
   }
   .video-note span { width: 6px; height: 6px; border-radius: 50%; background: var(--honey); }
 
+  .founder-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding: 13px 18px;
+    border: 1px solid rgba(23,20,18,.16);
+    border-radius: 999px;
+    background: rgba(255,255,255,.5);
+    color: var(--ink);
+    font: 700 11.5px/1 var(--font-body, "DM Sans", sans-serif);
+    letter-spacing: .11em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 200ms ease, border-color 200ms ease, transform 200ms cubic-bezier(.16,1,.3,1);
+  }
+  .founder-link:hover {
+    border-color: var(--brand);
+    background: rgba(255,255,255,.9);
+    transform: translateY(-2px);
+  }
+  .founder-link:focus-visible { outline: 3px solid var(--wine-soft); outline-offset: 4px; }
+  .founder-arrow { color: var(--brand); transition: transform 200ms ease; }
+  .founder-link:hover .founder-arrow { transform: translateX(4px); }
+
   .services {
     padding-top: clamp(74px, 10vw, 132px);
     padding-bottom: clamp(74px, 10vw, 132px);
@@ -375,7 +413,7 @@ const services = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hello-button, .service-row, .sound-toggle { transition: none; }
+    .hello-button, .service-row, .sound-toggle, .founder-link, .founder-arrow { transition: none; }
     .sound-toggle:not(.is-on) { animation: none; }
   }
 </style>
