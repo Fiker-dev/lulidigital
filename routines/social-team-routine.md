@@ -79,18 +79,45 @@ one per run), prepare its LuliDigital company announcement in advance:
    verify the selected pattern with web search and LinkedIn's current official
    media guidance. Treat trends as creative direction, not as evidence for
    unsupported performance claims.
-3. Write `linkedin-company.md` and
-   `linkedin-company-asset-brief.md`. The brief must name the selected pattern,
-   explain why it suits this specific article, define the headline/pull-line,
-   composition, alt text, and cite the sources used for the trend decision.
-4. Render a real upload-ready PNG by running:
-   `node scripts/render-linkedin-blog-card.mjs --brief social/queue/<slug>/linkedin-company-asset-brief.md --out social/queue/<slug>/linkedin-company-asset.png`
-   The renderer creates a 1080×1350 portrait card, within LinkedIn's supported
-   image ratio. If rendering fails, report **asset brief prepared; PNG blocked**
-   with the exact error. Never claim the asset is ready unless the PNG exists.
+3. Write `linkedin-company.md` and `linkedin-company-asset-brief.md`.
+
+   **DEFAULT TO A CAROUSEL, not a single card.** LinkedIn document (PDF
+   carousel) posts average ~6.6% engagement versus ~2% for text and well below
+   that for a lone image; 4:5 portrait at 1080x1350 takes maximum mobile space
+   and 71% of LinkedIn traffic is mobile. Dwell time is the strongest ranking
+   signal, and a carousel is the cheapest way to earn it.
+
+   The brief must contain, in this exact shape:
+   ```
+   Eyebrow: LuliDigital · New article
+   Slide 1: <the hook — one strong, opinionated line>
+   Slide 2: <one idea>
+   Slide 3: <one idea>
+   Slide 4: <one idea>
+   CTA: Full article in the comments.
+   ```
+   Rules: ONE idea per slide, very few words, no paragraphs, no fabricated
+   stats. Pull the lines verbatim from the article wherever possible. 4-6
+   slides total including hook and CTA.
+
+4. Render the upload-ready PDF:
+   `node scripts/render-linkedin-carousel.mjs --brief social/queue/<slug>/linkedin-company-asset-brief.md --out social/queue/<slug>/linkedin-company-carousel.pdf`
+   (Single card fallback, only when a carousel genuinely doesn't suit the piece:
+   `node scripts/render-linkedin-blog-card.mjs --brief ... --out social/queue/<slug>/linkedin-company-asset.png`)
+   If rendering fails, report **asset brief prepared; render blocked** with the
+   exact error. Never claim the asset is ready unless the file exists.
 5. Record the quoted `companyScheduledFor` date and asset path in `STATUS.md`.
-   This is a manual-upload appointment because the post carries an image; it
-   must never be auto-posted without the PNG.
+   This is a manual-upload appointment because the post carries an asset; it
+   must never be auto-posted.
+6. **Tell Fiker the asset is ready** in your run summary — name the file, the
+   format (carousel/card), the scheduled company date, and this one line so she
+   can collect it:
+   `On your Mac: node scripts/fetch-announcements.mjs`
+   That drops the asset + a copy-pastable caption into
+   `~/Desktop/LuliDigital Announcements/` named by weekday
+   (e.g. `Tuesday-blog-announcement.pdf` + `-caption.txt`). A daily GitHub
+   Action also pings her on Telegram whenever an announcement is waiting, so
+   she is told even when away from her Mac.
 
 1. List every post in `src/content/blog/` with `draft: false` whose
    `pubDate` has passed.

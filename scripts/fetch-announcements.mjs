@@ -38,9 +38,13 @@ for (const slug of fs.readdirSync(QUEUE)) {
   const dir = path.join(QUEUE, slug);
   if (!fs.statSync(dir).isDirectory()) continue;
 
+  // Prefer the carousel (LinkedIn document posts out-perform single images);
+  // fall back to the single card when only that exists.
+  const pdf = path.join(dir, "linkedin-company-carousel.pdf");
   const png = path.join(dir, "linkedin-company-asset.png");
+  const asset = fs.existsSync(pdf) ? pdf : fs.existsSync(png) ? png : null;
   const capPath = path.join(dir, "linkedin-company.md");
-  if (!fs.existsSync(png) || !fs.existsSync(capPath)) continue;
+  if (!asset || !fs.existsSync(capPath)) continue;
 
   const raw = fs.readFileSync(capPath, "utf8");
   const statusPath = path.join(dir, "STATUS.md");
@@ -63,15 +67,17 @@ for (const slug of fs.readdirSync(QUEUE)) {
   const body = raw.replace(/<!--[\s\S]*?-->/g, "").trim();
   const [caption, firstComment] = body.split(/^---\s*$/m).map((s) => (s || "").trim());
 
+  const ext = path.extname(asset);
+  const kind = ext === ".pdf" ? "carousel" : "card";
   const label = date ? `${weekdayOf(date)}-blog-announcement` : `${slug}-announcement`;
-  if (REPORT) { found.push({ slug, date, label, ready: true }); continue; }
+  if (REPORT) { found.push({ slug, date, label, kind, ext, ready: true }); continue; }
   fs.mkdirSync(OUT, { recursive: true });
-  fs.copyFileSync(png, path.join(OUT, `${label}.png`));
+  fs.copyFileSync(asset, path.join(OUT, `${label}${ext}`));
 
   const txt = [
     `LINKEDIN COMPANY PAGE — ${date ? `${weekdayOf(date)} ${date}` : "no date set"}`,
     `Post: ${slug}`,
-    `Image to attach: ${label}.png`,
+    `${kind === "carousel" ? "Document to upload" : "Image to attach"}: ${label}${ext}`,
     "",
     "--- CAPTION (copy from here) ---",
     caption,
@@ -82,7 +88,7 @@ for (const slug of fs.readdirSync(QUEUE)) {
   ].join("\n");
   fs.writeFileSync(path.join(OUT, `${label}-caption.txt`), txt);
 
-  found.push({ slug, date, label, ready: true });
+  found.push({ slug, date, label, kind, ext, ready: true });
 }
 
 const ready = found.filter((f) => f.ready);
@@ -94,7 +100,7 @@ if (!ready.length && !future.length) {
   if (ready.length && REPORT) {
     console.log(`📣 ${ready.length} blog announcement(s) ready to post on the LuliDigital company page:`);
     for (const f of ready) {
-      console.log(`• ${f.label}${f.date ? ` — post ${f.date}` : ""} (${f.slug})`);
+      console.log(`• ${f.label}${f.ext} [${f.kind}]${f.date ? ` — post ${f.date}` : ""} (${f.slug})`);
     }
     console.log(`\nOn your Mac run:  node scripts/fetch-announcements.mjs`);
     console.log(`→ drops the card + caption into ~/Desktop/LuliDigital Announcements/`);
@@ -102,11 +108,12 @@ if (!ready.length && !future.length) {
     console.log(`\n📣 ${ready.length} blog announcement(s) on your Desktop:\n`);
     console.log(`   ~/Desktop/LuliDigital Announcements/\n`);
     for (const f of ready) {
-      console.log(`   ${f.label}.png`);
+      console.log(`   ${f.label}${f.ext}   ${f.kind === "carousel" ? "(carousel — upload as a document)" : "(single card)"}`);
       console.log(`   ${f.label}-caption.txt   ${f.date ? `→ post ${f.date}` : ""}`);
       console.log(`      (${f.slug})\n`);
     }
-    console.log("   Upload the PNG to the LuliDigital company page, paste the caption,");
+    console.log("   Upload to the LuliDigital company page (PDF = \"Add a document\"),");
+    console.log("   paste the caption,");
     console.log("   then post the blog link as the FIRST COMMENT.\n");
   }
   for (const f of future) {
