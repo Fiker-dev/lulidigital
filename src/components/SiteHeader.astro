@@ -17,17 +17,15 @@ const nav = [
       <span class="luli">Luli</span><span class="digital">Digital</span>
     </a>
 
-    {!focused && <nav class="nav" aria-label="Primary navigation">
-      {nav.map(({ href, label, key }) => (
+    <nav class={`nav${focused ? " nav--focused" : ""}`} aria-label={focused ? "Service navigation" : "Primary navigation"}>
+      {(focused ? nav.slice(0, 3) : nav).map(({ href, label, key }) => (
         <a class={`nav-item${active === key ? " is-active" : ""}`} href={href}>
-          {label}
+          {focused ? label.replace("Virtual Assistant Desk", "Admin & Operations").replace(" Desk", "") : label}
         </a>
       ))}
-    </nav>}
+    </nav>
 
-    {focused ? (
-      <span class="header-focus">Personal introduction</span>
-    ) : (
+    {!focused && (
       <button class="header-cta" id="header-lana-btn" type="button">Contact Desk</button>
     )}
 
@@ -111,13 +109,7 @@ const nav = [
     margin-left: auto;
   }
 
-  .header-focus {
-    margin-left: auto;
-    color: var(--muted, rgba(20,19,18,.55));
-    font: 600 10px/1 var(--font-body, "DM Sans", sans-serif);
-    letter-spacing: .18em;
-    text-transform: uppercase;
-  }
+  .nav--focused { gap: clamp(12px, 2.5vw, 28px); }
 
   .nav-item {
     font-size: 11px;
@@ -145,6 +137,15 @@ const nav = [
   .nav-item:hover::after,
   .nav-item.is-active::after { transform: scaleX(1); }
   .nav-item.is-active { opacity: 1; color: var(--brand, #7b2d2d); }
+
+  @media (max-width: 680px) {
+    .nav--focused { gap: 12px; }
+    .nav--focused .nav-item { font-size: 9px; letter-spacing: .09em; }
+  }
+
+  @media (max-width: 440px) {
+    .nav--focused .nav-item:first-child { display: none; }
+  }
 
   .header-cta {
     font-size: 11px;
