@@ -69,6 +69,13 @@ jobs:
           fi
           node scripts/post-approved-packs.mjs $ARGS | tee /tmp/post-summary.txt
 
+      - name: Deliver pending blog announcements to Telegram
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node scripts/send-announcement-telegram.mjs
+
       - name: Report pending blog announcements
         if: always()
         env:
@@ -86,13 +93,13 @@ jobs:
 
       - name: Commit STATUS updates
         run: |
-          if [ -z "$(git status --porcelain social/queue/)" ]; then
+          if [ -z "$(git status --porcelain social/queue/ social/announcement-deliveries.json)" ]; then
             echo "No STATUS.md changes to commit."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add social/queue/
+          git add social/queue/ social/announcement-deliveries.json
           git commit -m "Social: post approved packs $(date -u +%Y-%m-%d)"
           git pull --rebase origin main
           git push
