@@ -1,5 +1,5 @@
 ---
-const { active = "" } = Astro.props;
+const { active = "", focused = false } = Astro.props;
 
 const nav = [
   { href: "/marketing-desk", label: "Marketing Desk", key: "marketing", note: "SEO, ads, content" },
@@ -17,17 +17,21 @@ const nav = [
       <span class="luli">Luli</span><span class="digital">Digital</span>
     </a>
 
-    <nav class="nav" aria-label="Primary navigation">
+    {!focused && <nav class="nav" aria-label="Primary navigation">
       {nav.map(({ href, label, key }) => (
         <a class={`nav-item${active === key ? " is-active" : ""}`} href={href}>
           {label}
         </a>
       ))}
-    </nav>
+    </nav>}
 
-    <button class="header-cta" id="header-lana-btn" type="button">Contact Desk</button>
+    {focused ? (
+      <span class="header-focus">Personal introduction</span>
+    ) : (
+      <button class="header-cta" id="header-lana-btn" type="button">Contact Desk</button>
+    )}
 
-    <details class="nav-mobile">
+    {!focused && <details class="nav-mobile">
       <summary class="nav-burger" aria-label="Open navigation menu">
         <span class="burger-icon" aria-hidden="true">
           <span></span><span></span><span></span>
@@ -52,7 +56,7 @@ const nav = [
           <span aria-hidden="true">→</span>
         </a>
       </div>
-    </details>
+    </details>}
   </div>
 </header>
 
@@ -105,6 +109,14 @@ const nav = [
     align-items: center;
     gap: clamp(16px, 2.5vw, 32px);
     margin-left: auto;
+  }
+
+  .header-focus {
+    margin-left: auto;
+    color: var(--muted, rgba(20,19,18,.55));
+    font: 600 10px/1 var(--font-body, "DM Sans", sans-serif);
+    letter-spacing: .18em;
+    text-transform: uppercase;
   }
 
   .nav-item {

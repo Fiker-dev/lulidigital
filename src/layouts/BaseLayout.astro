@@ -21,6 +21,9 @@ const {
   ogImage,
   hreflangLinks = [],
   showBee = true,
+  showLana = true,
+  showFooter = true,
+  focusedHeader = false,
   robots = "index,follow",
 } = Astro.props;
 
@@ -305,12 +308,12 @@ const jsonLd = {
       </div>
     )}
 
-    <SiteHeader active={active} />
+    <SiteHeader active={active} focused={focusedHeader} />
     <main class="page">
       <slot />
     </main>
-    <SiteFooter />
-    <LanaChat />
+    {showFooter && <SiteFooter />}
+    {showLana && <LanaChat />}
   </body>
 </html>
 

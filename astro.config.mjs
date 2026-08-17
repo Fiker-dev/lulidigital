@@ -27,6 +27,7 @@ const ssrPages = [
   '/norway',
   '/blog',
   '/founder',
+  '/hello',
   '/contact',
   '/work',
   '/web-design-desk',

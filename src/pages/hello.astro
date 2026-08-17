@@ -1,0 +1,268 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+export const prerender = false;
+
+Astro.response.headers.set("Cache-Control", "s-maxage=86400, stale-while-revalidate=604800");
+
+const services = [
+  {
+    number: "01",
+    title: "Admin & Operations",
+    href: "/va-desk",
+    copy: "Inbox and calendar management, research, client follow-up, scheduling, reporting and project coordination.",
+  },
+  {
+    number: "02",
+    title: "Marketing",
+    href: "/marketing-desk",
+    copy: "Content systems, social media, campaign support, SEO and consistent digital execution.",
+  },
+  {
+    number: "03",
+    title: "AI Systems & Automation",
+    href: "/ai-desk",
+    copy: "Practical automation, AI assistants, workflow systems and less repetitive work.",
+  },
+];
+---
+
+<BaseLayout
+  title="Hi, I’m Fiker. | LuliDigital"
+  description="Meet Fiker and see how LuliDigital supports business owners with operations, marketing, and practical AI systems."
+  canonicalPath="/hello"
+  ogImage="/assets/outreach/fiker-mini-fiker-outreach.jpg"
+  showBee={false}
+  showLana={false}
+  showFooter={false}
+  focusedHeader={true}
+>
+  <section class="hello-hero" aria-labelledby="hello-title">
+    <div class="hello-copy">
+      <p class="hello-kicker">A personal hello from LuliDigital</p>
+      <h1 id="hello-title">Hi, I’m <em>Fiker.</em></h1>
+      <p class="hello-intro">I help business owners handle the work behind the scenes, so they can focus on leading, making decisions and growing the business.</p>
+      <a class="hello-button" href="mailto:info@lulidigital.com?subject=Hello%20Fiker">Email Fiker <span aria-hidden="true">↗</span></a>
+    </div>
+
+    <div class="video-wrap">
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/88h6pCbbor4?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1"
+          title="A short introduction from Fiker, founder of LuliDigital"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+          loading="eager"
+        ></iframe>
+      </div>
+      <p class="video-note"><span aria-hidden="true"></span> Plays automatically without sound</p>
+    </div>
+  </section>
+
+  <section class="services" aria-labelledby="services-title">
+    <div class="section-heading">
+      <p class="hello-kicker">Where I can help</p>
+      <h2 id="services-title">Support that fits the work.</h2>
+    </div>
+    <div class="service-list">
+      {services.map((service) => (
+        <a class="service-row" href={service.href}>
+          <span class="service-number">{service.number}</span>
+          <div>
+            <h3>{service.title}</h3>
+            <p>{service.copy}</p>
+          </div>
+          <span class="service-arrow" aria-hidden="true">↗</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="positioning" aria-labelledby="positioning-title">
+    <div class="positioning-image">
+      <img src="/assets/outreach/fiker-mini-fiker-outreach.jpg" alt="Fiker with Mini Fiker" width="280" height="485" loading="lazy" />
+    </div>
+    <div class="positioning-copy">
+      <p class="hello-kicker">A lighter way to begin</p>
+      <h2 id="positioning-title">One person. Three ways to make work lighter.</h2>
+      <p>You do not need to begin with a large commitment. We can start with one practical need, make it work well and build from there if it makes sense.</p>
+    </div>
+  </section>
+
+  <section class="hello-final" aria-labelledby="final-title">
+    <p class="hello-kicker">Let’s make room for the important work</p>
+    <h2 id="final-title">What could I take off your plate?</h2>
+    <a class="hello-button hello-button--light" href="mailto:info@lulidigital.com?subject=What%20I’d%20like%20to%20take%20off%20my%20plate">Email Fiker <span aria-hidden="true">↗</span></a>
+  </section>
+</BaseLayout>
+
+<style>
+  :global(body) { background: #f3efe7; }
+  :global(main.page) { overflow: hidden; }
+
+  .hello-hero,
+  .services,
+  .positioning,
+  .hello-final {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding-left: clamp(20px, 5vw, 56px);
+    padding-right: clamp(20px, 5vw, 56px);
+  }
+
+  .hello-hero {
+    min-height: calc(100svh - 76px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(290px, 390px);
+    align-items: center;
+    gap: clamp(44px, 8vw, 112px);
+    padding-top: clamp(48px, 7vw, 92px);
+    padding-bottom: clamp(64px, 9vw, 120px);
+  }
+
+  .hello-kicker {
+    margin: 0 0 18px;
+    color: #7b2d2d;
+    font: 700 10px/1.2 var(--font-body, "DM Sans", sans-serif);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+  }
+
+  h1, h2, h3 { font-family: var(--font-display, "Fraunces", Georgia, serif); }
+  h1 {
+    max-width: 620px;
+    margin: 0;
+    color: #171412;
+    font-size: clamp(58px, 8vw, 106px);
+    font-weight: 760;
+    letter-spacing: -.055em;
+    line-height: .94;
+  }
+  h1 em { color: #7b2d2d; font-weight: 620; }
+  .hello-intro {
+    max-width: 600px;
+    margin: 28px 0 32px;
+    color: rgba(23,20,18,.72);
+    font: 400 clamp(18px, 2vw, 23px)/1.55 var(--font-body, "DM Sans", sans-serif);
+  }
+
+  .hello-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    min-height: 48px;
+    padding: 13px 21px;
+    border: 1px solid #7b2d2d;
+    border-radius: 999px;
+    background: #7b2d2d;
+    color: #fffaf2;
+    font: 700 12px/1 var(--font-body, "DM Sans", sans-serif);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    transition: transform 220ms cubic-bezier(.16,1,.3,1), background 180ms ease;
+  }
+  .hello-button:hover { color: #fffaf2; background: #632323; transform: translateY(-2px); }
+  .hello-button:focus-visible, .service-row:focus-visible { outline: 3px solid rgba(123,45,45,.25); outline-offset: 4px; }
+
+  .video-wrap { width: min(100%, 390px); justify-self: end; }
+  .video-frame {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    border-radius: 24px;
+    background: #171412;
+    box-shadow: 0 30px 80px rgba(43,25,18,.18), 0 0 0 1px rgba(23,20,18,.1);
+  }
+  .video-frame::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    z-index: 1;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 16px;
+    pointer-events: none;
+  }
+  .video-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .video-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 15px 0 0;
+    color: rgba(23,20,18,.55);
+    font: 500 11px/1.4 var(--font-body, "DM Sans", sans-serif);
+    letter-spacing: .06em;
+  }
+  .video-note span { width: 6px; height: 6px; border-radius: 50%; background: #7b2d2d; }
+
+  .services {
+    padding-top: clamp(74px, 10vw, 132px);
+    padding-bottom: clamp(74px, 10vw, 132px);
+    border-top: 1px solid rgba(23,20,18,.1);
+  }
+  .section-heading { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: start; margin-bottom: 54px; }
+  .section-heading h2, .positioning h2, .hello-final h2 {
+    margin: 0;
+    color: #171412;
+    font-size: clamp(40px, 5.4vw, 68px);
+    font-weight: 650;
+    letter-spacing: -.04em;
+    line-height: 1.02;
+  }
+  .service-list { border-top: 1px solid rgba(23,20,18,.14); }
+  .service-row {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) 28px;
+    gap: 18px;
+    align-items: start;
+    padding: clamp(25px, 4vw, 42px) 0;
+    border-bottom: 1px solid rgba(23,20,18,.14);
+    transition: padding-left 260ms cubic-bezier(.16,1,.3,1), color 180ms ease;
+  }
+  .service-row:hover { padding-left: 12px; }
+  .service-number { padding-top: 9px; color: #7b2d2d; font: 700 10px/1 var(--font-body, sans-serif); letter-spacing: .16em; }
+  .service-row h3 { margin: 0 0 8px; font-size: clamp(25px, 3vw, 37px); font-weight: 600; letter-spacing: -.025em; }
+  .service-row p { max-width: 680px; margin: 0; color: rgba(23,20,18,.65); font: 400 16px/1.65 var(--font-body, "DM Sans", sans-serif); }
+  .service-arrow { padding-top: 6px; color: #7b2d2d; font-size: 20px; }
+
+  .positioning {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: clamp(48px, 9vw, 120px);
+    align-items: center;
+    padding-top: clamp(74px, 10vw, 132px);
+    padding-bottom: clamp(74px, 10vw, 132px);
+  }
+  .positioning-image { overflow: hidden; border-radius: 150px 150px 18px 18px; box-shadow: 0 20px 60px rgba(43,25,18,.14); }
+  .positioning-image img { display: block; width: 100%; height: auto; }
+  .positioning-copy p:last-child { max-width: 620px; margin: 25px 0 0; color: rgba(23,20,18,.68); font: 400 18px/1.65 var(--font-body, "DM Sans", sans-serif); }
+
+  .hello-final {
+    max-width: none;
+    padding-top: clamp(80px, 11vw, 146px);
+    padding-bottom: clamp(80px, 11vw, 146px);
+    text-align: center;
+    background: #6f2929;
+  }
+  .hello-final .hello-kicker { color: rgba(255,250,242,.64); }
+  .hello-final h2 { max-width: 780px; margin: 0 auto 36px; color: #fffaf2; }
+  .hello-button--light { border-color: #fffaf2; background: #fffaf2; color: #6f2929; }
+  .hello-button--light:hover { background: #f1e8dc; color: #6f2929; }
+
+  @media (max-width: 760px) {
+    .hello-hero { grid-template-columns: 1fr; min-height: auto; gap: 45px; padding-top: 58px; }
+    .video-wrap { width: min(100%, 340px); justify-self: center; order: -1; }
+    .hello-copy { text-align: center; }
+    .hello-intro { margin-left: auto; margin-right: auto; }
+    .section-heading { grid-template-columns: 1fr; gap: 2px; }
+    .service-row { grid-template-columns: 36px minmax(0, 1fr) 22px; gap: 10px; }
+    .positioning { grid-template-columns: 1fr; gap: 42px; }
+    .positioning-image { width: min(72vw, 280px); margin: 0 auto; }
+    .positioning-copy { text-align: center; }
+    .positioning-copy p:last-child { margin-left: auto; margin-right: auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hello-button, .service-row { transition: none; }
+  }
+</style>
