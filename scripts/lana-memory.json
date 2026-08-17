@@ -49,12 +49,12 @@
     "published_at": "2026-07-28"
   },
   "review_state": {
-    "slug": "getting-paid-on-time-without-chasing",
-    "title": "You're Owed Money Right Now. Chasing It Is Costing You More Than the Invoice.",
-    "description": "Late payments quietly drain your cash and your week. How to get paid on time with a calm, automated follow-up system — without the awkward chase.",
-    "preview_text": "There is a number in your business you almost never look at directly: the total sitting in invoices you've sent but haven't been paid for. The work is done. The value was delivered. The money is, technically, yours. It's just... not here yet.",
-    "scheduled_for": "2026-08-17",
+    "slug": "why-clients-go-quiet-before-they-leave",
+    "title": "The Client You're About to Lose Won't Complain. They'll Go Quiet First.",
+    "description": "Most clients who leave never complain — they quietly disengage first. The early warning signs of silent churn, and a check-in system that catches them.",
+    "preview_text": "A client rarely fires you in a dramatic scene. There's no confrontation, no long email listing everything that went wrong. More often, the ending is quiet: replies get shorter, a renewal arrives without the usual warmth, and one day you notice you haven't actually heard from them in a few weeks.",
+    "scheduled_for": "2026-08-19",
     "revision_count": 0,
-    "status": "scheduled"
+    "status": "awaiting_approval"
   }
 }
