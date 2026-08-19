@@ -5,6 +5,7 @@ pubDate: 2026-08-19
 category: "AI Automation"
 readingTime: "6 min read"
 draft: true
+scheduledFor: "2026-08-21"
 ---
 
 Most founders have stopped asking whether AI can help. They've seen it draft the proposal, summarise the call, sort the inbox. The capability question is settled. What keeps a careful founder up at night now is quieter and harder to answer: *when I paste that client's details into a tool, where does it actually go — and would my client be comfortable if they knew?*
