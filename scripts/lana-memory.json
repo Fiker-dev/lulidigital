@@ -49,11 +49,11 @@
     "published_at": "2026-07-28"
   },
   "review_state": {
-    "slug": "why-clients-go-quiet-before-they-leave",
-    "title": "The Client You're About to Lose Won't Complain. They'll Go Quiet First.",
-    "description": "Most clients who leave never complain — they quietly disengage first. The early warning signs of silent churn, and a check-in system that catches them.",
-    "preview_text": "A client rarely fires you in a dramatic scene. There's no confrontation, no long email listing everything that went wrong. More often, the ending is quiet: replies get shorter, a renewal arrives without the usual warmth, and one day you notice you haven't actually heard from them in a few weeks.",
-    "scheduled_for": "2026-08-19",
+    "slug": "use-ai-without-losing-client-trust",
+    "title": "You Want the Speed AI Gives You. Your Clients Want to Know Where Their Data Went.",
+    "description": "You want AI's speed. Your clients want their data kept safe. How to use AI with client data responsibly — and stay ahead of the rules landing in 2026.",
+    "preview_text": "Most founders have stopped asking whether AI can help. They've seen it draft the proposal, summarise the call, sort the inbox. The capability question is settled. What keeps a careful founder up at night now is quieter and harder to answer: when I paste that client's details into a tool, where does it actually go?",
+    "scheduled_for": "2026-08-21",
     "revision_count": 0,
     "status": "awaiting_approval"
   }
