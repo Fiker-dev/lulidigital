@@ -1,10 +1,10 @@
 ---
 title: "The Client You're About to Lose Won't Complain. They'll Go Quiet First."
 description: "Most clients who leave never complain — they quietly disengage first. The early warning signs of silent churn, and a check-in system that catches them."
-pubDate: 2026-08-17
+pubDate: 2026-08-20
 category: "Virtual Assistant"
 readingTime: "6 min read"
-draft: true
+draft: false
 ---
 
 A client rarely fires you in a dramatic scene. There's no confrontation, no long email listing everything that went wrong. More often, the ending is quiet: replies get shorter, a renewal arrives without the usual warmth, and one day you notice you haven't actually heard from them in a few weeks. By the time it feels obvious, the decision was made a long time ago.
