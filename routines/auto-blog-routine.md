@@ -31,6 +31,13 @@ Before researching anything:
 
 1. List every post in `src/content/blog/` with `draft: true` and NO
    `scheduledFor`. These are orphans, oldest `pubDate` first.
+   **Only consider orphans whose `pubDate` is within the last 21 days.** This
+   guard exists to catch a draft Fiker simply didn't get to — not to resurrect
+   an old backlog. As of 2026-08-20 there are a dozen orphans from June–July,
+   several of which contradict current positioning (Amsterdam-based framing,
+   an Algeria comparison) and must never be auto-scheduled. Anything older than
+   21 days is listed in the summary for Fiker to triage or discard, never
+   scheduled automatically.
 2. Work out the next publish slot — the next Mon/Wed/Fri after today — and check
    whether any post already carries that `scheduledFor` date.
 3. **If that slot is empty and an orphan exists, schedule the OLDEST orphan into
