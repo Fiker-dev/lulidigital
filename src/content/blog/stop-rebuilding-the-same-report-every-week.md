@@ -1,10 +1,11 @@
 ---
 title: "You Spend Every Monday Rebuilding the Same Report. The Numbers Were Already There."
 description: "You lose hours each week rebuilding the same report by hand. Why manual reporting quietly drains small teams — and how to automate it the right way."
-pubDate: 2026-08-10
+pubDate: 2026-08-24
 category: "AI Automation"
 readingTime: "6 min read"
 draft: true
+scheduledFor: "2026-08-24"
 ---
 
 It usually starts before the coffee has cooled. You open one tab, then another, then four more. You export a spreadsheet from one tool, copy a figure out of a second, screenshot a chart from a third because it won't export cleanly. You paste it all into the same document you built last week, fix the formatting that broke on the way in, and re-check two numbers that look suspiciously round. An hour later — sometimes closer to two — you have a report that says roughly what last week's said, and the actual work of the day can finally begin.
