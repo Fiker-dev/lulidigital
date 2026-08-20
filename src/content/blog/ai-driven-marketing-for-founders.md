@@ -104,7 +104,7 @@ A practical sequence looks like this:
 5. Have one person review and approve before anything goes live
 6. Review performance monthly and adjust the brief, not the whole system
 
-If you are based in or targeting Northern Europe, the [LuliDigital Amsterdam studio](/amsterdam) works with founders across the region on exactly this kind of structured marketing build. The approach is the same whether you are a solo founder or running a team of twenty.
+If you are based in or targeting Northern Europe, LuliDigital works with founders across the region — including [in Amsterdam](/amsterdam) — on exactly this kind of structured marketing build. The approach is the same whether you are a solo founder or running a team of twenty.
 
 ---
 

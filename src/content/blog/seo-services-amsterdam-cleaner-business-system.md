@@ -65,4 +65,4 @@ Then build a dashboard executives actually want to read — one that shows how s
 
 Cleaner growth through search isn't about perfect optimisation. It's about creating a predictable engine that plugs into the rest of the business, so organic growth becomes sustainable rather than chaotic and expensive.
 
-If you're ready to turn messy search operations into a system, our [Amsterdam studio](/amsterdam) builds integrated digital marketing systems that connect directly to revenue — not just traffic reports. And for teams that want search folded into a wider plan, our [performance marketing services](/marketing) turn marketing from an expense line into a predictable revenue engine.
+If you're ready to turn messy search operations into a system, LuliDigital [works with founders in Amsterdam](/amsterdam) and builds integrated digital marketing systems that connect directly to revenue — not just traffic reports. And for teams that want search folded into a wider plan, our [performance marketing services](/marketing) turn marketing from an expense line into a predictable revenue engine.
