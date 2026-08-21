@@ -128,7 +128,11 @@ Nothing publishes until you reply.
 
 ## When Fiker replies in this session
 - **"approve" / yes / ship it** → add `scheduledFor: "<scheduled_for>"` to the post frontmatter — ALWAYS QUOTED (unquoted YAML dates become Date objects and fail the Astro schema, breaking the Vercel build). Keep `draft: true`, set `review_state.status` to `"scheduled"`, commit ("Schedule: <slug> for <date>"), push, then run the deploy verification below. The existing `publish-scheduled.yml` cron publishes + indexes it that morning. Confirm to Fiker.
-- **"publish it now"** → set `draft: false`, set `pubDate` to today, remove any `scheduledFor`, clear `review_state` (set to null), commit ("Publish: <slug>"), push. Vercel deploys; `index-on-publish.yml` requests Google indexing automatically. Confirm with the live URL.
+- **"publish it now"** → **only if today is a Monday, Wednesday or Friday.** Blog
+  posts go out on those days only; publishing off-rhythm is what put a post live
+  on Thursday 2026-08-20. If Fiker asks on any other day, say so and offer the
+  next Mon/Wed/Fri slot instead — publish off-rhythm only if he confirms after
+  that. When it is a publishing day: set `draft: false`, set `pubDate` to today, remove any `scheduledFor`, clear `review_state` (set to null), commit ("Publish: <slug>"), push. Vercel deploys; `index-on-publish.yml` requests Google indexing automatically. Confirm with the live URL.
 - **Edit requests** → revise the article writing (wording, structure, tone, headline, CTA, sections). Re-run `npm run test:blog-quality`, bump `review_state.revision_count`, commit ("Revise: <slug>"), push, and re-send the review summary. You cannot change layout/avatar/fonts from here — say so and offer writing changes instead.
 - **"reject" / scrap it** → delete the draft file, clear `review_state`, commit ("Remove draft: <slug>"), push, confirm.
 

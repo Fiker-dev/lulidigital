@@ -36,6 +36,21 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Enforce the Mon/Wed/Fri publishing rhythm
+        run: |
+          # Blog posts go out on Monday, Wednesday and Friday only. The cron
+          # runs daily so a post is never left waiting after its date, but
+          # publishing itself is gated here — otherwise a post dated Tue/Thu
+          # (or a manual dispatch on the wrong day) breaks the rhythm.
+          DOW=$(date -u +%u)   # 1=Mon … 7=Sun
+          case "$DOW" in
+            1|3|5) echo "Publishing day ($(date -u +%A)) — continuing." ;;
+            *)
+              echo "$(date -u +%A) is not a publishing day (Mon/Wed/Fri only). Skipping."
+              echo "SKIP" > /tmp/skip_publish.txt
+              ;;
+          esac
+
       - name: Publish any due scheduled posts
         run: node scripts/publish-scheduled.mjs
 
