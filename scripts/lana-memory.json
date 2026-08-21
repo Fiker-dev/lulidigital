@@ -47,12 +47,12 @@
     "published_at": "2026-07-28"
   },
   "review_state": {
-    "slug": "use-ai-without-losing-client-trust",
-    "title": "You Want the Speed AI Gives You. Your Clients Want to Know Where Their Data Went.",
-    "description": "You want AI's speed. Your clients want their data kept safe. How to use AI with client data responsibly \u2014 and stay ahead of the rules landing in 2026.",
-    "preview_text": "Most founders have stopped asking whether AI can help. They've seen it draft the proposal, summarise the call, sort the inbox. The capability question is settled. What keeps a careful founder up at night now is quieter and harder to answer: when I paste that client's details into a tool, where does it actually go?",
-    "scheduled_for": "2026-08-21",
+    "slug": "meeting-action-items-vanish-by-friday",
+    "title": "Every Meeting Ends With a List of Action Items. By Friday, Half of Them Are Gone.",
+    "description": "Meeting action items quietly disappear by week's end. Why follow-through breaks on small teams \u2014 and how to fix it without another tool nobody uses.",
+    "preview_text": "The meeting felt good. Everyone was in the room, the decisions came quickly, and by the end you had a clear list: six things to do, four of them yours, a couple handed off. You closed the laptop with the satisfying sense of a problem handled. Momentum.",
+    "scheduled_for": "2026-08-26",
     "revision_count": 0,
-    "status": "scheduled"
+    "status": "awaiting_approval"
   }
 }
