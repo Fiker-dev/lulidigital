@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-14T09:27:55.137Z",
-  "week": "2026-08-14",
+  "generatedAt": "2026-08-21T08:58:34.469Z",
+  "week": "2026-08-21",
   "pages": {
     "/switzerland": {
       "primary": [
@@ -15,7 +15,13 @@
       "primary": [
         "digital secretary"
       ],
-      "source": "weekly Search Console refresh 2026-08-14"
+      "source": "weekly Search Console refresh 2026-08-21"
+    },
+    "/marketing-desk": {
+      "primary": [
+        "lulisocial"
+      ],
+      "source": "weekly Search Console refresh 2026-08-21"
     }
   }
 }
