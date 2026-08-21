@@ -1,11 +1,10 @@
 ---
 title: "You Want the Speed AI Gives You. Your Clients Want to Know Where Their Data Went."
 description: "You want AI's speed. Your clients want their data kept safe. How to use AI with client data responsibly — and stay ahead of the rules landing in 2026."
-pubDate: 2026-08-19
+pubDate: 2026-08-21
 category: "AI Automation"
 readingTime: "6 min read"
-draft: true
-scheduledFor: "2026-08-21"
+draft: false
 ---
 
 Most founders have stopped asking whether AI can help. They've seen it draft the proposal, summarise the call, sort the inbox. The capability question is settled. What keeps a careful founder up at night now is quieter and harder to answer: *when I paste that client's details into a tool, where does it actually go — and would my client be comfortable if they knew?*
