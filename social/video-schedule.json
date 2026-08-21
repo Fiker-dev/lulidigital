@@ -34,5 +34,23 @@
       "title": "Your AI isn't underperforming. Nobody gave it a job.",
       "series": "The System"
     }
-  ]
+  ],
+  "_ab_tests": {
+    "W1-format": {
+      "hypothesis": "Does the marker-on-creased-paper format outperform the typewriter format for the same script?",
+      "script": "words1 — 'Your AI isn't underperforming. Nobody gave it a job.'",
+      "variant_a": {
+        "file": "paper-W1.mp4",
+        "format": "typewriter/paper",
+        "posted": "2026-08-05"
+      },
+      "variant_b": {
+        "file": "paper-Marker-M1.mp4",
+        "format": "marker/creased-paper",
+        "posted": null
+      },
+      "keep_constant": "Title AND description must match variant A exactly, or the visual format is not the only variable. Original title: \"Your AI isn't underperforming. Nobody gave it a job.\" — pull the description from the 2026-08-05 upload in YouTube Studio.",
+      "measure": "Shorts ranks on retention, not timing: viewed-vs-swiped in the first 3s, and average view duration. Compare those first; views follow them."
+    }
+  }
 }
