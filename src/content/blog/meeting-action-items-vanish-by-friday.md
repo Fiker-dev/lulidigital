@@ -5,6 +5,7 @@ pubDate: 2026-08-21
 category: "AI Automation"
 readingTime: "6 min read"
 draft: true
+scheduledFor: "2026-08-26"
 ---
 
 The meeting felt good. Everyone was in the room, the decisions came quickly, and by the end you had a clear list: six things to do, four of them yours, a couple handed off. You closed the laptop with the satisfying sense of a problem handled. Momentum.
