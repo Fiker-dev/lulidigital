@@ -54,6 +54,40 @@ jobs:
           git push
           echo "true" > /tmp/scheduled_changed.txt
 
+      - name: Verify each post is actually LIVE before claiming it
+        if: ${{ always() }}
+        run: |
+          # The git commit succeeding does NOT mean the page exists — Vercel
+          # still has to build. On 2026-08-21 a post was announced as live
+          # while the URL 404'd for 40 minutes. Poll before saying anything.
+          if [ "$(cat /tmp/scheduled_changed.txt 2>/dev/null || echo false)" != "true" ]; then
+            echo "Nothing published; skipping verification."
+            exit 0
+          fi
+          ALL_LIVE=true
+          : > /tmp/live-status.txt
+          for url in $(node -e "JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8')).forEach(p=>console.log(p.url))"); do
+            CODE=000
+            # up to ~4 min, Vercel builds this site in well under a minute
+            for i in $(seq 1 24); do
+              CODE=$(curl -s -o /dev/null -w "%{http_code}" "$url" || echo 000)
+              [ "$CODE" = "200" ] && break
+              sleep 10
+            done
+            if [ "$CODE" = "200" ]; then
+              echo "LIVE $url" >> /tmp/live-status.txt
+            else
+              echo "DEAD($CODE) $url" >> /tmp/live-status.txt
+              ALL_LIVE=false
+            fi
+          done
+          echo "$ALL_LIVE" > /tmp/all_live.txt
+          cat /tmp/live-status.txt
+          if [ "$ALL_LIVE" != "true" ]; then
+            echo "::error::One or more published posts are not reachable — the deploy likely failed."
+            exit 1
+          fi
+
       - name: Request indexing for each published post
         if: ${{ always() }}
         env:
@@ -61,6 +95,11 @@ jobs:
         run: |
           if [ "$(cat /tmp/scheduled_changed.txt 2>/dev/null || echo false)" != "true" ]; then
             echo "No newly published posts; skipping indexing."
+            exit 0
+          fi
+          # Never ask Google to index a URL that isn't resolving.
+          if [ "$(cat /tmp/all_live.txt 2>/dev/null || echo false)" != "true" ]; then
+            echo "Posts are not live yet — skipping indexing so we don't submit 404s."
             exit 0
           fi
           for url in $(node -e "JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8')).forEach(p=>console.log(p.url))"); do
@@ -75,7 +114,13 @@ jobs:
         run: |
           if [ "$(cat /tmp/scheduled_changed.txt 2>/dev/null || echo false)" != "true" ]; then exit 0; fi
           if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then exit 0; fi
-          MSG=$(node -e "const p=JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8'));console.log('✅ Blog live + submitted to Google:\n\n'+p.map(x=>x.title+'\n'+x.url).join('\n\n')+'\n\n📍 Google Business Profile — paste as a new post, button Learn more → the link above:\n———\n'+p.map(x=>'New from LuliDigital: '+x.title+'.').join('\n')+'\n———')")
+          ALL_LIVE=$(cat /tmp/all_live.txt 2>/dev/null || echo false)
+          if [ "$ALL_LIVE" = "true" ]; then
+            MSG=$(node -e "const p=JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8'));console.log('✅ Blog live + submitted to Google:\n\n'+p.map(x=>x.title+'\n'+x.url).join('\n\n')+'\n\n📍 Google Business Profile — paste as a new post, button Learn more → the link above:\n———\n'+p.map(x=>'New from LuliDigital: '+x.title+'.').join('\n')+'\n———')")
+          else
+            # Never claim live when it isn't — that is what sent a dead link on 2026-08-21.
+            MSG=$(node -e "const p=JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8'));console.log('⚠️ Blog published in git but NOT reachable yet — the Vercel deploy has probably failed. NOT submitted to Google.\n\n'+p.map(x=>x.title+'\n'+x.url).join('\n\n')+'\n\nCheck: vercel ls (an UNKNOWN status with no build duration means it never built).')")
+          fi
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "text=${MSG}" > /dev/null

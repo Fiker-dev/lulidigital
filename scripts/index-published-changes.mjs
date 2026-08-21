@@ -56,10 +56,21 @@ for (const file of changed) {
 
 if (newlyLive.length === 0) {
   console.log("No posts flipped live in this push. Nothing to index.");
+  writeFileSync("/tmp/newly-live.json", "[]");
   process.exit(0);
 }
 
 console.log(`Posts flipped live in this push:\n${newlyLive.map((p) => `  ${p.url}`).join("\n")}`);
+
+// --detect-only: write the list and stop, so the workflow can confirm the pages
+// actually resolve BEFORE we ask Google to index them. Submitting a URL that
+// 404s (because the deploy hasn't built) is worse than submitting nothing.
+writeFileSync("/tmp/newly-live.json", JSON.stringify(newlyLive));
+if (process.argv.includes("--detect-only")) {
+  console.log("detect-only: wrote /tmp/newly-live.json, skipping indexing.");
+  process.exit(0);
+}
+
 for (const { url } of newlyLive) {
   try {
     execFileSync(process.execPath, ["scripts/request-indexing.mjs", url], {
