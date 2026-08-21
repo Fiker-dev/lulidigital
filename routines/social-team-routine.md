@@ -120,7 +120,12 @@ one per run), prepare its LuliDigital company announcement in advance:
    she is told even when away from her Mac.
 
 1. List every post in `src/content/blog/` with `draft: false` whose
-   `pubDate` has passed.
+   `pubDate` has passed. **Catch up on ALL unannounced live posts, not just the
+   newest** — a post published between your runs (or published manually) is
+   otherwise skipped forever. As of 2026-08-21 two live posts had no
+   announcement at all: `why-clients-go-quiet-before-they-leave` (08-20) and
+   `use-ai-without-losing-client-trust` (08-21). Work newest-first, one per run
+   as below, until `announced-blogs.json` covers every live post.
 2. Read `social/announced-blogs.json` → `announced`. Any live slug missing
    from that list has not been announced yet.
 3. For each missing slug (newest first, at most one per run), write

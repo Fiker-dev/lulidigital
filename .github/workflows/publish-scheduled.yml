@@ -121,6 +121,33 @@ jobs:
             node scripts/request-indexing.mjs "$url" || true
           done
 
+      - name: Send the LinkedIn company announcement for each new post
+        if: ${{ always() }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          # Fiker wants the company announcement in hand the moment a blog is
+          # live, not hours later when the Social Team routine next runs.
+          if [ "$(cat /tmp/scheduled_changed.txt 2>/dev/null || echo false)" != "true" ]; then exit 0; fi
+          if [ "$(cat /tmp/all_live.txt 2>/dev/null || echo false)" != "true" ]; then
+            echo "Post isn't live; not sending an announcement for it."
+            exit 0
+          fi
+          for url in $(node -e "JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8')).forEach(p=>console.log(p.url))"); do
+            SLUG=$(basename "$url")
+            OUT=$(node scripts/send-announcement-telegram.mjs --for "$SLUG" 2>&1 || true)
+            echo "$OUT"
+            # The caption is written by the Social Team routine (an LLM job) —
+            # if it hasn't run yet there is no pack, so say so rather than
+            # leaving her wondering where the announcement is.
+            if echo "$OUT" | grep -q "Nothing due to deliver"; then
+              curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+                --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+                --data-urlencode "text=📝 LinkedIn company announcement for '${SLUG}' isn't written yet — the Social Team routine writes it on its next run (Mon/Wed/Fri ~10:17 UTC) and it'll be sent here automatically." > /dev/null
+            fi
+          done
+
       - name: Telegram notification
         if: ${{ always() }}
         env:

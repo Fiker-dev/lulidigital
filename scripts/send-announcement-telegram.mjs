@@ -25,6 +25,10 @@ const QUEUE = path.join(ROOT, "social", "queue");
 const STATE = path.join(ROOT, "social", "announcement-deliveries.json");
 
 const ALL = process.argv.includes("--all");
+// --for <slug>: deliver this pack now regardless of its scheduled date. Used
+// the moment a blog goes live, so Fiker has the company announcement in hand
+// immediately even though it is scheduled to be POSTED on a later day.
+const FOR = process.argv.includes("--for") ? process.argv[process.argv.indexOf("--for") + 1] : null;
 const DRY = process.argv.includes("--dry");
 const TODAY = new Date().toISOString().slice(0, 10);
 
@@ -88,6 +92,7 @@ for (const slug of fs.readdirSync(QUEUE)) {
   const asset = fs.existsSync(pdf) ? pdf : fs.existsSync(png) ? png : null;
   const capPath = path.join(dir, "linkedin-company.md");
   if (!asset || !fs.existsSync(capPath)) continue;
+  if (FOR && FOR !== slug) continue;
 
   const raw = fs.readFileSync(capPath, "utf8");
   const statusPath = path.join(dir, "STATUS.md");
@@ -99,7 +104,7 @@ for (const slug of fs.readdirSync(QUEUE)) {
     (raw.match(/companyScheduledFor:\s*"?(\d{4}-\d{2}-\d{2})"?/) || [])[1] ||
     (status.match(/companyScheduledFor:\s*"?(\d{4}-\d{2}-\d{2})"?/) || [])[1] ||
     null;
-  if (!ALL && date && date > TODAY) continue;
+  if (!ALL && FOR !== slug && date && date > TODAY) continue;
 
   const body = raw.replace(/<!--[\s\S]*?-->/g, "").trim();
   const [caption, firstCommentRaw] = body.split(/^---\s*$/m).map((s) => (s || "").trim());
@@ -108,7 +113,8 @@ for (const slug of fs.readdirSync(QUEUE)) {
 
   const header =
     `📣 LinkedIn company post ready${date ? ` — ${weekdayOf(date)} ${date}` : ""}\n` +
-    `${kind === "carousel" ? "Upload as a DOCUMENT (carousel)" : "Attach this image"} + paste the caption below.`;
+    `${kind === "carousel" ? "Upload as a DOCUMENT (carousel)" : "Attach this image"} + paste the caption below.` +
+    (date && date > TODAY ? `\n(Scheduled for ${date} — sent now so you have it ready.)` : "");
 
   console.log(`${DRY ? "[dry] " : ""}${slug} → ${kind} (${date ?? "no date"})`);
   if (DRY) { sent++; continue; }
