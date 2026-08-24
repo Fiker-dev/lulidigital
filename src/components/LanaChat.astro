@@ -442,6 +442,13 @@
     box-sizing: border-box;
   }
 
+  /* Keep browser zoom available over the fixed chat UI. */
+  .lana-backdrop,
+  .lana-chat,
+  .lana-chat__panel {
+    touch-action: pan-x pan-y pinch-zoom;
+  }
+
   /* ── Wing flap — applied to <g class="lw"> inside any bee SVG ── */
   .lw {
     transform-origin: 48px 22px;
@@ -731,6 +738,11 @@
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 8px;
       padding: 8px 12px 12px;
+    }
+
+    /* iOS zooms focused form controls whose text is smaller than 16px. */
+    .lana-chat__composer textarea {
+      font-size: 16px;
     }
   }
   .lana-chat__composer textarea {
