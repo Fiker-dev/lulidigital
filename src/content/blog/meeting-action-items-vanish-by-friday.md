@@ -1,11 +1,10 @@
 ---
 title: "Every Meeting Ends With a List of Action Items. By Friday, Half of Them Are Gone."
 description: "Meeting action items quietly disappear by week's end. Why follow-through breaks on small teams — and how to fix it without another tool nobody uses."
-pubDate: 2026-08-21
+pubDate: 2026-08-26
 category: "AI Automation"
 readingTime: "6 min read"
-draft: true
-scheduledFor: "2026-08-26"
+draft: false
 ---
 
 The meeting felt good. Everyone was in the room, the decisions came quickly, and by the end you had a clear list: six things to do, four of them yours, a couple handed off. You closed the laptop with the satisfying sense of a problem handled. Momentum.
