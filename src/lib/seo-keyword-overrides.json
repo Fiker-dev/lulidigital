@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-21T08:58:34.469Z",
-  "week": "2026-08-21",
+  "generatedAt": "2026-08-28T20:12:16.378Z",
+  "week": "2026-08-28",
   "pages": {
     "/switzerland": {
       "primary": [
@@ -22,6 +22,12 @@
         "lulisocial"
       ],
       "source": "weekly Search Console refresh 2026-08-21"
+    },
+    "/ai-desk": {
+      "primary": [
+        "luli ai"
+      ],
+      "source": "weekly Search Console refresh 2026-08-28"
     }
   }
 }
