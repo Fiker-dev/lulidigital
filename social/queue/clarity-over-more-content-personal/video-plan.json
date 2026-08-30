@@ -1,0 +1,31 @@
+{
+  "title": "Clarity over more content",
+  "sceneDuration": 4,
+  "scenes": [
+    {
+      "pose": "thinking",
+      "eyebrow": "A LESSON I LEARNED",
+      "headline": "I thought good marketing meant saying more.",
+      "subline": "More posts. More detail. More reasons to choose us."
+    },
+    {
+      "pose": "explaining",
+      "eyebrow": "WHAT I NOTICED",
+      "headline": "More information can create more hesitation.",
+      "subline": "People do not need another wall of content."
+    },
+    {
+      "pose": "confidence",
+      "eyebrow": "THE REAL SHIFT",
+      "headline": "Clarity creates confidence.",
+      "subline": "Show the process. Explain the trade-offs. Be honest."
+    },
+    {
+      "pose": "thumbsup",
+      "eyebrow": "MY RULE NOW",
+      "headline": "Make the next step feel obvious.",
+      "subline": "The goal is not more content. It is a clearer decision.",
+      "footer": "FIKER · FOUNDER, LULIDIGITAL"
+    }
+  ]
+}

@@ -109,6 +109,24 @@ one per run), prepare its LuliDigital company announcement in advance:
 5. Record the quoted `companyScheduledFor` date and asset path in `STATUS.md`.
    This is a manual-upload appointment because the post carries an asset; it
    must never be auto-posted.
+5b. **Announcement asset style — rotate, and always keep Mini Fiker on the side.**
+   The honeycomb card is retired: it was decoration-led and reads as static.
+   Pick per post, and never repeat the same treatment twice running:
+   - **Video (preferred when there is time)** — `BlogAnnounce` in the local
+     Remotion project (`Bureau/socials/paper-videos`). Fiker's CLONED voice
+     reads a condensed version of the article, one beat per line, while Mini
+     Fiker REACTS with a different pose each beat (idea → spill → mop →
+     coffee → celebrate). Branded `LuliDigital · The Blog`, closing on
+     "Read it on the LuliDigital blog". It is an EXTENSION of the article,
+     not a trailer — the argument, condensed, in her voice. Rendering is
+     LOCAL (Remotion + Chatterbox); write the beat script and pose plan, and
+     say plainly in the summary that Fiker renders it.
+   - **Editorial card** — `node scripts/render-linkedin-minime-card.mjs`
+     (cream paper, serif statement, Mini Fiker on the right).
+   - **Carousel** — `render-linkedin-carousel.mjs` for step-by-step pieces.
+   Sound plus motion is what earns attention, so favour the video for the
+   strongest posts and keep the card for quick turnarounds.
+
 6. **Tell Fiker the asset is ready** in your run summary — name the file, the
    format (carousel/card), the scheduled company date, and this one line so she
    can collect it:

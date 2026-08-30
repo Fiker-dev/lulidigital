@@ -1,0 +1,19 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding
+Style: Default,Arial,54,&H00FFF8EE,&H0000FFFF,&H0011100F,&H99000000,-1,0,0,0,100,100,0,0,3,2,0,2,72,72,235,1
+
+[Events]
+Format: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text
+Dialogue: 0,0:00:00.00,0:00:02.20,Default,,0,0,0,,Your buyers aren't {\c&H004BB8F2&}confused.{\c&H00FFF8EE&}
+Dialogue: 0,0:00:02.20,0:00:05.30,Default,,0,0,0,,They're afraid of making the {\c&H004BB8F2&}wrong choice.{\c&H00FFF8EE&}
+Dialogue: 0,0:00:05.30,0:00:07.50,Default,,0,0,0,,More content won't fix that fear.
+Dialogue: 0,0:00:07.50,0:00:10.20,Default,,0,0,0,,Information is everywhere. {\c&H004BB8F2&}Confidence isn't.{\c&H00FFF8EE&}
+Dialogue: 0,0:00:10.20,0:00:12.30,Default,,0,0,0,,AI made comparison easy.
+Dialogue: 0,0:00:12.30,0:00:15.70,Default,,0,0,0,,Make the decision feel {\c&H004BB8F2&}safe.{\c&H00FFF8EE&}
+Dialogue: 0,0:00:15.70,0:00:19.10,Default,,0,0,0,,Show the process. Name the trade-offs.\NMake the next step {\c&H004BB8F2&}clear.{\c&H00FFF8EE&}

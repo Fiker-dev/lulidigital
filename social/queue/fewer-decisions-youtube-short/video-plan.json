@@ -1,0 +1,37 @@
+{
+  "title": "I needed fewer decisions",
+  "platform": "youtube-shorts",
+  "sceneDuration": 3.7,
+  "scenes": [
+    {
+      "label": "REAL FOUNDER MOMENT",
+      "headline": "I thought I needed more discipline.",
+      "accent": "More discipline?"
+    },
+    {
+      "label": "THE REAL PROBLEM",
+      "headline": "I needed fewer decisions.",
+      "accent": "Decision fatigue."
+    },
+    {
+      "label": "1 · INBOX",
+      "headline": "Stop writing every reply from scratch.",
+      "accent": "Saved replies + human review"
+    },
+    {
+      "label": "2 · FOLLOW-UPS",
+      "headline": "Stop trusting your memory.",
+      "accent": "Automated reminders"
+    },
+    {
+      "label": "3 · REPEAT WORK",
+      "headline": "Stop rebuilding the same task.",
+      "accent": "Reusable workflows"
+    },
+    {
+      "label": "YOUR TURN",
+      "headline": "Which one steals your time?",
+      "accent": "Comment 1, 2 or 3 ↓"
+    }
+  ]
+}

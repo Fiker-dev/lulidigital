@@ -1,0 +1,1 @@
+awaiting_approval | buyers-need-confidence | LinkedIn personal educational authority video | asset: buyers-need-confidence-linkedin.mp4 | voice: consented Fiker clone from myoutreachvid.MP4 | manual upload only | prepared 2026-08-16

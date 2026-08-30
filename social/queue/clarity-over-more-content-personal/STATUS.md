@@ -1,0 +1,1 @@
+awaiting_approval | clarity-over-more-content-personal | LinkedIn personal founder lesson | asset: clarity-over-more-content-linkedin-personal.mp4 | voice: consented Fiker clone from myoutreachvid.MP4 | manual upload only | prepared 2026-08-16

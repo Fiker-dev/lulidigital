@@ -1,0 +1,13 @@
+{
+  "duration": 20.8,
+  "headline": "Your brain should not be your entire business system.",
+  "popups": [
+    { "start": 0.25, "duration": 3.05, "y": 180, "label": "BE HONEST", "text": "How many jobs is your brain doing?", "accent": "Mine had at least seven." },
+    { "start": 3.70, "duration": 4.05, "y": 1040, "label": "THE SITUATION", "text": "Inbox. Calendar. Follow-ups.", "accent": "One very tired brain." },
+    { "start": 8.20, "duration": 3.20, "y": 260, "label": "NOT PRODUCTIVITY", "text": "Chaos with good intentions.", "accent": "That was the real problem." },
+    { "start": 13.50, "duration": 1.20, "y": 1070, "label": "SMALL FIX #1", "text": "Replies got templates.", "accent": "I still review them." },
+    { "start": 14.82, "duration": 1.25, "y": 220, "label": "SMALL FIX #2", "text": "Follow-ups got reminders.", "accent": "My memory is now off duty." },
+    { "start": 16.18, "duration": 1.70, "y": 1030, "label": "SMALL FIX #3", "text": "Repeat work got checklists.", "accent": "Much better." },
+    { "start": 18.46, "duration": 2.10, "y": 400, "label": "ANYWAY...", "text": "Follow for more of my thoughts.", "accent": "More honest founder notes." }
+  ]
+}

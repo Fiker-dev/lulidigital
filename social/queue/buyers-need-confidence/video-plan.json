@@ -1,0 +1,31 @@
+{
+  "title": "Your buyers need confidence",
+  "sceneDuration": 4,
+  "scenes": [
+    {
+      "pose": "thinking",
+      "eyebrow": "THE B2B CONTENT SHIFT",
+      "headline": "Your buyers aren't confused.",
+      "subline": "They're afraid of making the wrong choice."
+    },
+    {
+      "pose": "explaining",
+      "eyebrow": "THE REAL FRICTION",
+      "headline": "More content won't fix that fear.",
+      "subline": "Information is everywhere. Confidence isn't."
+    },
+    {
+      "pose": "confidence",
+      "eyebrow": "WHAT CHANGED",
+      "headline": "AI made comparison easy.",
+      "subline": "Your advantage is making the decision feel safe."
+    },
+    {
+      "pose": "thumbsup",
+      "eyebrow": "THE MOVE",
+      "headline": "Make the next step feel safe.",
+      "subline": "Show the process. Name the trade-offs. Clarity beats volume.",
+      "footer": "MORE AT LULIDIGITAL.COM"
+    }
+  ]
+}
