@@ -1,10 +1,11 @@
 ---
 title: "Everything Waits on You. That's Not Control — It's a Ceiling."
 description: "When every decision needs your sign-off, the business grows at the speed of one inbox. How to break the founder bottleneck without losing your judgment."
-pubDate: 2026-08-28
+pubDate: 2026-08-31
 category: "AI Automation"
 readingTime: "6 min read"
 draft: true
+scheduledFor: "2026-08-31"
 ---
 
 There's a particular kind of message that arrives when you're mid-sentence in something important. "Quick one — can you approve this before it goes out?" A quote. A social post. A refund. A supplier email. None of them is hard. Each takes you thirty seconds. And each one pulls you out of the work only you can do, to make a decision almost anyone could have made.
