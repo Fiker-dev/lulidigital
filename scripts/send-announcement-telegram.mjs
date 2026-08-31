@@ -29,6 +29,21 @@ const ALL = process.argv.includes("--all");
 // the moment a blog goes live, so Fiker has the company announcement in hand
 // immediately even though it is scheduled to be POSTED on a later day.
 const FOR = process.argv.includes("--for") ? process.argv[process.argv.indexOf("--for") + 1] : null;
+// --force: send even if the blog isn't live yet. Deliberately awkward to reach.
+const FORCE = process.argv.includes("--force");
+
+/**
+ * An announcement is only useful once the article it points at exists. Sending
+ * it early means the caption, the asset and the "link in the comments" all
+ * arrive before there is anything to link to — which is how the same post ended
+ * up being announced three times before it published. Check the page first.
+ */
+async function blogIsLive(slug) {
+  try {
+    const res = await fetch(`https://lulidigital.com/blog/${slug}`, { method: "HEAD" });
+    return res.status === 200;
+  } catch { return false; }
+}
 const DRY = process.argv.includes("--dry");
 const TODAY = new Date().toISOString().slice(0, 10);
 
@@ -106,6 +121,12 @@ for (const slug of fs.readdirSync(QUEUE)) {
     null;
   if (!ALL && FOR !== slug && date && date > TODAY) continue;
 
+  // Gate on the article actually existing, unless explicitly forced.
+  if (!FORCE && !(await blogIsLive(slug))) {
+    console.log(`${slug}: blog not live yet — holding the announcement.`);
+    continue;
+  }
+
   const body = raw.replace(/<!--[\s\S]*?-->/g, "").trim();
   const [caption, firstCommentRaw] = body.split(/^---\s*$/m).map((s) => (s || "").trim());
   const firstComment = (firstCommentRaw || "").replace(/^FIRST COMMENT:\s*/i, "").trim();
@@ -114,7 +135,7 @@ for (const slug of fs.readdirSync(QUEUE)) {
   const header =
     `📣 LinkedIn company post ready${date ? ` — ${weekdayOf(date)} ${date}` : ""}\n` +
     `${kind === "carousel" ? "Upload as a DOCUMENT (carousel)" : "Attach this image"} + paste the caption below.` +
-    (date && date > TODAY ? `\n(Scheduled for ${date} — sent now so you have it ready.)` : "");
+    (date && date > TODAY ? `\nBlog is live now — post this on ${date}.` : "");
 
   console.log(`${DRY ? "[dry] " : ""}${slug} → ${kind} (${date ?? "no date"})`);
   if (DRY) { sent++; continue; }
