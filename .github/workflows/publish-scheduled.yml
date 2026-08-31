@@ -6,8 +6,18 @@ name: Publish Scheduled Posts
 
 on:
   schedule:
-    # Daily at 06:07 UTC (off :00 to avoid dropped runs), before Auto Blog Post.
-    - cron: '7 6 * * *'
+    # GitHub's scheduled runs are best-effort: observed 06:07 UTC firing at
+    # 11:49, 12:37, 17:34 and 18:34 on consecutive days, and sometimes skipped
+    # entirely. Every "the blog didn't go out" so far traces to this, not to the
+    # content pipeline. So: run EARLY, and run again later as a catch-up.
+    #
+    # 04:23 UTC — early enough that even a 4-hour slip still lands in Fiker's
+    # morning (SAST is UTC+2).
+    - cron: '23 4 * * *'
+    # 13:41 UTC — catch-up. The job is idempotent (it only publishes posts whose
+    # scheduledFor is due and still draft), so a second run costs nothing when
+    # the first one worked, and rescues the day when it didn't.
+    - cron: '41 13 * * *'
   workflow_dispatch:
 
 concurrency:
