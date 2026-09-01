@@ -80,6 +80,13 @@ const sendFile = async (file, kind, caption) => {
   f.append("chat_id", CHAT);
   f.append("caption", caption.slice(0, 1000));
   const blob = new Blob([fs.readFileSync(file)]);
+  if (kind === "video") {
+    f.append("supports_streaming", "true");
+    f.append("video", blob, path.basename(file));
+    const thumb = file.replace(/\.mp4$/, "-thumb.png");
+    if (fs.existsSync(thumb)) f.append("thumbnail", new Blob([fs.readFileSync(thumb)]), "thumb.png");
+    return api("sendVideo", f);
+  }
   if (kind === "carousel") { f.append("document", blob, path.basename(file)); return api("sendDocument", f); }
   f.append("photo", blob, path.basename(file));
   return api("sendPhoto", f);
@@ -102,9 +109,13 @@ for (const slug of fs.readdirSync(QUEUE)) {
   const dir = path.join(QUEUE, slug);
   if (!fs.statSync(dir).isDirectory()) continue;
 
+  // Preference order: VIDEO first — sound and motion stop a scroll, and vertical
+  // video is the one LinkedIn format that reaches non-followers — then the
+  // carousel (documents out-perform single images), then the single card.
+  const mp4 = path.join(dir, "blog-announce-video.mp4");
   const pdf = path.join(dir, "linkedin-company-carousel.pdf");
   const png = path.join(dir, "linkedin-company-asset.png");
-  const asset = fs.existsSync(pdf) ? pdf : fs.existsSync(png) ? png : null;
+  const asset = fs.existsSync(mp4) ? mp4 : fs.existsSync(pdf) ? pdf : fs.existsSync(png) ? png : null;
   const capPath = path.join(dir, "linkedin-company.md");
   if (!asset || !fs.existsSync(capPath)) continue;
   if (FOR && FOR !== slug) continue;
@@ -113,7 +124,7 @@ for (const slug of fs.readdirSync(QUEUE)) {
   const statusPath = path.join(dir, "STATUS.md");
   const status = fs.existsSync(statusPath) ? fs.readFileSync(statusPath, "utf8") : "";
   if (/linkedin-company\s+POSTED/i.test(status)) continue;
-  if (state.delivered.includes(slug)) continue;
+  if (!FORCE && state.delivered.includes(slug)) continue;
 
   const date =
     (raw.match(/companyScheduledFor:\s*"?(\d{4}-\d{2}-\d{2})"?/) || [])[1] ||
@@ -130,12 +141,17 @@ for (const slug of fs.readdirSync(QUEUE)) {
   const body = raw.replace(/<!--[\s\S]*?-->/g, "").trim();
   const [caption, firstCommentRaw] = body.split(/^---\s*$/m).map((s) => (s || "").trim());
   const firstComment = (firstCommentRaw || "").replace(/^FIRST COMMENT:\s*/i, "").trim();
-  const kind = path.extname(asset) === ".pdf" ? "carousel" : "card";
+  const e = path.extname(asset);
+  const kind = e === ".mp4" ? "video" : e === ".pdf" ? "carousel" : "card";
 
   const header =
     `📣 LinkedIn company post ready${date ? ` — ${weekdayOf(date)} ${date}` : ""}\n` +
-    `${kind === "carousel" ? "Upload as a DOCUMENT (carousel)" : "Attach this image"} + paste the caption below.` +
-    (date && date > TODAY ? `\nBlog is live now — post this on ${date}.` : "");
+    `${kind === "video" ? "Upload this VIDEO" : kind === "carousel" ? "Upload as a DOCUMENT (carousel)" : "Attach this image"} + paste the caption below.` +
+    (date && date > TODAY
+      ? `\nBlog is live now — post this on ${date}.`
+      : date === TODAY
+        ? `\n📌 DUE TODAY (${date}) — post it now.`
+        : "");
 
   console.log(`${DRY ? "[dry] " : ""}${slug} → ${kind} (${date ?? "no date"})`);
   if (DRY) { sent++; continue; }
