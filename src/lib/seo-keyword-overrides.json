@@ -1,33 +1,42 @@
 {
-  "generatedAt": "2026-08-28T20:12:16.378Z",
-  "week": "2026-08-28",
+  "generatedAt": "2026-09-01T13:31:43.700Z",
+  "month": "2026-09",
   "pages": {
+    "/denmark": {
+      "primary": [
+        "online marketing agency for danish b2b",
+        "digital marketing agency in denmark",
+        "danish online marketing agency",
+        "digital marketing agency for danish markets"
+      ],
+      "source": "Search Console — 2026-09"
+    },
+    "/munich": {
+      "primary": [
+        "digital agency munich",
+        "digital marketing agency munich",
+        "digital agency münchen",
+        "conversational ai consultancy munich"
+      ],
+      "source": "Search Console — 2026-09"
+    },
+    "/norway": {
+      "primary": [
+        "digital marketing agency norway",
+        "ai digital marketing agency in norway",
+        "ai digital marketing company in norway",
+        "ai digital marketing services in norway"
+      ],
+      "source": "Search Console — 2026-09"
+    },
     "/switzerland": {
       "primary": [
         "ai digital marketing service in switzerland",
         "ai digital marketing services in switzerland",
-        "ai digital marketing service in zurich",
-        "ai marketing company in switzerland"
+        "ai digital marketing agencies in switzerland",
+        "ai advertising service in switzerland"
       ],
-      "source": "Search Console — 2026-08"
-    },
-    "/va-desk": {
-      "primary": [
-        "digital secretary"
-      ],
-      "source": "weekly Search Console refresh 2026-08-21"
-    },
-    "/marketing-desk": {
-      "primary": [
-        "lulisocial"
-      ],
-      "source": "weekly Search Console refresh 2026-08-21"
-    },
-    "/ai-desk": {
-      "primary": [
-        "luli ai"
-      ],
-      "source": "weekly Search Console refresh 2026-08-28"
+      "source": "Search Console — 2026-09"
     }
   }
 }
