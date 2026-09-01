@@ -38,6 +38,7 @@ const services = [
   description="Meet Fiker and see how LuliDigital supports business owners with operations, marketing, and practical AI systems."
   canonicalPath="/hello"
   ogImage="/assets/outreach/fiker-mini-fiker-outreach.jpg"
+  preconnectOrigins={["https://www.youtube-nocookie.com", "https://i.ytimg.com"]}
 >
   <section class="hello-hero" aria-labelledby="hello-title" data-atmosphere="hero" data-hive-section>
     <div class="hello-copy">
@@ -119,10 +120,8 @@ const services = [
 </BaseLayout>
 
 <script>
-  // Browsers refuse to autoplay video WITH sound — it must start muted or it
-  // won't play at all. So: autoplay muted, then unmute on the viewer's first
-  // real interaction (a gesture is what the browser requires), and give them
-  // an explicit control either way.
+  // Keep autoplay muted, recover playback once the embedded player is ready,
+  // and only enable sound from the dedicated user control.
   (() => {
     const frame = document.getElementById("hello-video") as HTMLIFrameElement | null;
     const toggle = document.querySelector<HTMLButtonElement>("[data-sound-toggle]");
@@ -156,16 +155,20 @@ const services = [
 
     toggle.addEventListener("click", (e) => { e.stopPropagation(); setSound(!on); });
 
-    // First genuine gesture anywhere on the page turns sound on once.
-    const once = () => { if (!on) setSound(true); cleanup(); };
-    const cleanup = () => {
-      document.removeEventListener("pointerdown", once);
-      document.removeEventListener("keydown", once);
-      document.removeEventListener("touchstart", once);
+    const ensurePlayback = () => {
+      if (!on) send("mute");
+      send("playVideo");
     };
-    document.addEventListener("pointerdown", once, { once: true });
-    document.addEventListener("keydown", once, { once: true });
-    document.addEventListener("touchstart", once, { once: true, passive: true });
+
+    frame.addEventListener("load", () => {
+      ensurePlayback();
+      window.setTimeout(ensurePlayback, 500);
+      window.setTimeout(ensurePlayback, 1500);
+    }, { once: true });
+    window.addEventListener("pageshow", ensurePlayback, { passive: true });
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) ensurePlayback();
+    });
   })();
 
   // Travelling mini-me. She joins at the services block, changes pose per

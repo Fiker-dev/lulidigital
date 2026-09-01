@@ -19,7 +19,8 @@ const {
       <video
         class="showreel-video"
         src="/assets/lulidigital-showreel.mp4"
-        muted loop playsinline preload="metadata"
+        poster="/assets/lulidigital-showreel-poster.jpg"
+        autoplay muted loop playsinline preload="auto"
         aria-label="LuliDigital recent selected work showreel"
       ></video>
     </div>
@@ -87,13 +88,18 @@ const {
 <script>
   const reels = document.querySelectorAll<HTMLVideoElement>(".showreel-video");
   reels.forEach((video) => {
+    const play = () => video.play().catch(() => {});
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) video.play().catch(() => {});
+        if (entry.isIntersecting) play();
         else video.pause();
       },
-      { threshold: 0.35 }
+      { rootMargin: "320px 0px", threshold: 0.01 }
     );
     io.observe(video);
+    window.addEventListener("pageshow", play, { passive: true });
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && video.getBoundingClientRect().top < window.innerHeight + 320) play();
+    });
   });
 </script>

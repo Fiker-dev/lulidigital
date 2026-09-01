@@ -20,7 +20,7 @@
 </button>
 
 <div class="lana-chat" data-lana-chat>
-  <section class="lana-chat__panel" id="lana-panel" role="dialog" aria-label="Chat with Lana" aria-modal="true">
+  <section class="lana-chat__panel" id="lana-panel" role="dialog" aria-label="Chat with Lana" aria-modal="true" aria-hidden="true">
 
     <!-- drag handle (mobile only) -->
     <div class="lana-chat__handle" aria-hidden="true"></div>
@@ -209,6 +209,8 @@
     };
 
     const hbee = root.querySelector(".lana-hbee");
+    const isMobile = () => window.matchMedia("(max-width: 640px)").matches;
+    let returnFocus = null;
     const syncMobileViewport = () => {
       const vv = window.visualViewport;
       const viewportHeight = vv?.height || window.innerHeight;
@@ -225,13 +227,16 @@
       if (backdrop) backdrop.classList.toggle("is-open", open);
       panel.setAttribute("aria-hidden", String(!open));
       if (open) {
+        returnFocus = document.activeElement;
         syncMobileViewport();
-        input.focus();
+        if (!isMobile()) input.focus({ preventScroll: true });
         document.body.classList.add("lana-open");
         if (hbee) hbee.classList.add("is-alive");
       } else {
         document.body.classList.remove("lana-open");
         if (hbee) hbee.classList.remove("is-alive");
+        if (returnFocus instanceof HTMLElement) returnFocus.focus({ preventScroll: true });
+        returnFocus = null;
       }
     };
 
@@ -332,7 +337,7 @@
       }
 
       setInputLocked(false);
-      input.focus();
+      if (!isMobile()) input.focus({ preventScroll: true });
     };
 
     const runGreeting = async () => {
@@ -487,6 +492,7 @@
     font-weight: 600;
     letter-spacing: 0.01em;
     cursor: pointer;
+    min-height: 44px;
     box-shadow: 0 4px 18px rgba(184,107,0,.40), 0 1px 3px rgba(0,0,0,.14);
     transition: opacity 280ms ease, transform 200ms ease, background 150ms ease;
   }
@@ -580,7 +586,7 @@
       right: 8px;
       bottom: max(10px, calc(env(safe-area-inset-bottom, 0px) + var(--lana-vv-bottom, 0px)));
       width: auto;
-      max-height: min(78dvh, calc(var(--lana-vh, 100dvh) - var(--lana-vv-bottom, 0px) - 88px));
+      max-height: min(82dvh, calc(var(--lana-vh, 100dvh) - 20px));
       border-radius: 24px;
       border-bottom: 1px solid rgba(20,19,18,.10);
       z-index: 210;
@@ -665,9 +671,14 @@
     overscroll-behavior: contain;
   }
   @media (max-width: 640px) {
+    .lana-chat__close {
+      width: 44px;
+      height: 44px;
+    }
     .lana-chat__messages {
       max-height: none;
       padding: 12px 12px 8px;
+      -webkit-overflow-scrolling: touch;
     }
   }
 
@@ -740,10 +751,6 @@
       padding: 8px 12px 12px;
     }
 
-    /* iOS zooms focused form controls whose text is smaller than 16px. */
-    .lana-chat__composer textarea {
-      font-size: 16px;
-    }
   }
   .lana-chat__composer textarea {
     resize: none;
@@ -752,6 +759,11 @@
     min-height: 44px; max-height: 140px;
     background: rgba(255,255,255,.82); color: rgba(20,19,18,.92);
     outline: none; transition: border-color 160ms ease;
+  }
+  @media (max-width: 640px) {
+    .lana-chat__composer textarea {
+      font-size: 16px;
+    }
   }
   .lana-chat__composer textarea:focus { border-color: rgba(245,164,31,.55); }
   .lana-chat__send {
@@ -775,6 +787,16 @@
   .lana-contact-actions {
     display: flex; gap: 7px;
     padding: 4px 16px 8px 43px;
+  }
+  @media (max-width: 640px) {
+    .lana-contact-actions {
+      flex-wrap: wrap;
+      padding-left: 47px;
+      padding-right: 12px;
+    }
+    .lana-contact-btn {
+      min-height: 44px;
+    }
   }
   .lana-contact-btn {
     display: inline-flex; align-items: center;

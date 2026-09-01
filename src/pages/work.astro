@@ -40,11 +40,13 @@ const description = "A selection of recent work from LuliDigital — performance
         id="showreel"
         class="reel-video"
         src="/assets/lulidigital-showreel.mp4"
+        poster="/assets/lulidigital-showreel-poster.jpg"
         controls
+        autoplay
         muted
         playsinline
         loop
-        preload="metadata"
+        preload="auto"
         aria-label="LuliDigital recent selected work showreel"
       ></video>
     </div>
@@ -61,17 +63,22 @@ const description = "A selection of recent work from LuliDigital — performance
 <script>
   const video = document.getElementById("showreel") as HTMLVideoElement | null;
   if (video) {
+    const play = () => video.play().catch(() => {});
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          video.play().catch(() => {});
+          play();
         } else {
           video.pause();
         }
       },
-      { threshold: 0.4 }
+      { rootMargin: "320px 0px", threshold: 0.01 }
     );
     observer.observe(video);
+    window.addEventListener("pageshow", play, { passive: true });
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && video.getBoundingClientRect().top < window.innerHeight + 320) play();
+    });
   }
 </script>
 
@@ -148,7 +155,7 @@ const description = "A selection of recent work from LuliDigital — performance
     width: 100%;
     height: auto;
     min-height: 480px;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 1;
     object-fit: contain;
   }
 
