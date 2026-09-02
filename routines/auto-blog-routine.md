@@ -32,9 +32,14 @@ verify the blog pipeline actually did its job, and you report to Fiker.
    - Has a date → it is approved and queued. Say when it goes live.
    - No date → it is **waiting for Fiker to tap Approve** in Telegram.
      Remind him, and include the title and the go-live date it would take.
-3. **Did the Action run at all?** If today is a posting day and there is no
-   draft dated today and nothing went live, say so plainly — that means
-   `auto-blog.yml` failed, and Fiker needs to know rather than assume.
+3. **Did the Action run at all?** `auto-blog.yml` fires at 08:17 UTC on the
+   same days you do, so on a posting day it may still be mid-run when you
+   look. Before declaring a failure, check the run:
+   `gh run list --workflow=auto-blog.yml --limit 1`
+   - `in_progress` / `queued` → say "drafting now", nothing is wrong.
+   - `success` → find the draft it wrote and report it as awaiting approval.
+   - `failure`, or no run at all today → **that is a real miss.** Say so
+     plainly with the run URL. Do not write the post yourself.
 
 ## Context you must honour
 - **Founder voice (Fiker):** ex nurse-anaesthetist who moved into digital. Dignified "new season" tone, never framing the past as lesser. Grounded, hook-led, educational, solution-based.
