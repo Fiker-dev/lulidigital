@@ -4,8 +4,7 @@ description: "The people who enquired once and went quiet are your cheapest pipe
 pubDate: 2026-09-02
 category: "Digital Marketing"
 readingTime: "6 min read"
-draft: true
-scheduledFor: "2026-09-02"
+draft: false
 ---
 
 Every founder I speak to has the same instinct when growth stalls: get more leads. More ads. A new channel. Another push at the top of the funnel. It feels like the honest answer, because it's the hardest one — and hard usually feels right.
