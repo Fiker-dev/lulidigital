@@ -1,7 +1,8 @@
 ---
 title: "You Don't Need More Leads. You Need to Go Back to the Ones Who Already Said Maybe."
 description: "The people who enquired once and went quiet are your cheapest pipeline. How to reactivate dormant leads without sounding desperate — or losing judgment."
-pubDate: 2026-08-31
+pubDate: 2026-09-04
+scheduledFor: "2026-09-04"
 category: "Digital Marketing"
 readingTime: "6 min read"
 draft: true
