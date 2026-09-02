@@ -1,0 +1,38 @@
+{
+  "slug": "go-back-to-the-leads-who-said-maybe",
+  "title": "You Don't Need More Leads. You Need to Go Back to the Ones Who Already Said Maybe.",
+  "url": "https://lulidigital.com/blog/go-back-to-the-leads-who-said-maybe",
+  "note": "Render on the Mac: BlogAnnounce.tsx + the cloned voice. Output blog-announce-video.mp4 into this folder.",
+  "beats": [
+    {
+      "vo": "Your next few clients probably already know your name.",
+      "screen": "They already know you.",
+      "reaction": "idea"
+    },
+    {
+      "vo": "They enquired once, went quiet, and nobody went back for them.",
+      "screen": "Maybe ≠ no.",
+      "reaction": "laptop"
+    },
+    {
+      "vo": "Silence is almost never a decision — it's usually just bad timing.",
+      "screen": "Timing, not rejection.",
+      "reaction": "coffee"
+    },
+    {
+      "vo": "You've already paid for these contacts once — in ads, in time.",
+      "screen": "You already paid.",
+      "reaction": "laptop"
+    },
+    {
+      "vo": "A short, calm follow-up sequence is competing against near silence.",
+      "screen": "The field is empty.",
+      "reaction": "idea"
+    },
+    {
+      "vo": "The full blog post is linked in the comments — go read it.",
+      "screen": "Link in comments.",
+      "reaction": "story-phone"
+    }
+  ]
+}

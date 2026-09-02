@@ -49,11 +49,22 @@ jobs:
       - name: Clear review state from memory
         run: node scripts/clear-review-state.mjs "$SCHEDULE_SLUG"
 
+      # Built HERE, at approval, not "when the Social Team routine next runs".
+      # A post used to go live with no pack, so Telegram said "announcement
+      # isn't written yet" instead of sending the announcement.
+      - name: Build the LinkedIn company announcement pack
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          npm ci --no-audit --no-fund
+          node scripts/generate-blog-announcement.mjs --slug "$SCHEDULE_SLUG"
+
       - name: Commit and push
         run: |
           git config user.name "LuliDigital Bot"
           git config user.email "bot@lulidigital.com"
-          git add src/content/blog/ scripts/lana-memory.json
+          git add src/content/blog/ scripts/lana-memory.json social/queue/
           git diff --staged --quiet && echo "No changes" && exit 0
           git commit -m "Schedule draft ${SCHEDULE_SLUG} for ${SCHEDULE_DATE}"
           git push
@@ -64,7 +75,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then exit 0; fi
-          TEXT=$(printf "🗓 Scheduled: %s\n\nIt'll go live and get submitted to Google automatically on %s (around 06:00 UTC). Say \"publish %s now\" if you want it live sooner." "$SCHEDULE_SLUG" "$SCHEDULE_DATE" "$SCHEDULE_SLUG")
+          TEXT=$(printf "🗓 Scheduled: %s\n\nGoes live %s (around 04:30 UTC) and gets submitted to Google automatically.\n\nThe LinkedIn company announcement is written and waiting — caption + asset land here the moment the post is confirmed live." "$SCHEDULE_SLUG" "$SCHEDULE_DATE")
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "text=${TEXT}" > /dev/null

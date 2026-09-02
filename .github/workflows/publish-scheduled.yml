@@ -136,6 +136,7 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           # Fiker wants the company announcement in hand the moment a blog is
           # live, not hours later when the Social Team routine next runs.
@@ -146,15 +147,25 @@ jobs:
           fi
           for url in $(node -e "JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8')).forEach(p=>console.log(p.url))"); do
             SLUG=$(basename "$url")
+            # Safety net: the pack is normally built at approval time by
+            # schedule-draft.yml. Posts approved before that existed — and the
+            # "publish now" path — can still arrive here without one, so build
+            # it on the spot rather than sending an apology message.
+            if [ ! -f "social/queue/${SLUG}/linkedin-company.md" ]; then
+              echo "No announcement pack for ${SLUG}; building it now."
+              node scripts/generate-blog-announcement.mjs --slug "$SLUG" || true
+              if [ -f "social/queue/${SLUG}/linkedin-company.md" ]; then
+                git add "social/queue/${SLUG}" || true
+                git commit -m "Announcement pack for ${SLUG}" || true
+                git push || true
+              fi
+            fi
             OUT=$(node scripts/send-announcement-telegram.mjs --for "$SLUG" 2>&1 || true)
             echo "$OUT"
-            # The caption is written by the Social Team routine (an LLM job) —
-            # if it hasn't run yet there is no pack, so say so rather than
-            # leaving her wondering where the announcement is.
             if echo "$OUT" | grep -q "Nothing due to deliver"; then
               curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
                 --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-                --data-urlencode "text=📝 LinkedIn company announcement for '${SLUG}' isn't written yet — the Social Team routine writes it on its next run (Mon/Wed/Fri ~10:17 UTC) and it'll be sent here automatically." > /dev/null
+                --data-urlencode "text=📝 The LinkedIn company announcement for '${SLUG}' could not be built automatically. Ask Claude to run: node scripts/generate-blog-announcement.mjs --slug ${SLUG}" > /dev/null
             fi
           done
 
