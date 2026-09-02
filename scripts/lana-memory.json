@@ -42,16 +42,16 @@
   ],
   "blog_plan_queue": [],
   "latest_live_post": {
-    "slug": "the-first-two-weeks-decide-whether-a-client-stays",
-    "title": "The First Two Weeks Decide Whether a Client Stays. Most Founders Waste Them.",
-    "published_at": "2026-07-28"
-  },
-  "review_state": {
     "slug": "go-back-to-the-leads-who-said-maybe",
     "title": "You Don't Need More Leads. You Need to Go Back to the Ones Who Already Said Maybe.",
-    "description": "The people who enquired once and went quiet are your cheapest pipeline. How to reactivate dormant leads without sounding desperate — or losing judgment.",
-    "preview_text": "Every founder I speak to has the same instinct when growth stalls: get more leads. More ads. A new channel. Another push at the top of the funnel. It feels like the honest answer, because it's the hardest one — and hard usually feels right.",
-    "scheduled_for": "2026-09-02",
+    "published_at": "2026-09-02"
+  },
+  "review_state": {
+    "slug": "your-inbox-is-not-your-to-do-list",
+    "title": "Your Inbox Became Your To-Do List. That's Why You Never Feel Caught Up.",
+    "description": "Most founders run the whole business from their inbox. Here's why email becomes your real to-do list — and how AI triage builds a calmer system.",
+    "preview_text": "Watch how most founders start the day. Not with the one thing that would move the business forward — with the inbox. You open it to 'just check quickly,' and within minutes the unread messages have quietly written your to-do list for you. Reply to this. Chase that. Approve the thing.",
+    "scheduled_for": "2026-09-04",
     "revision_count": 0,
     "status": "awaiting_approval"
   }
