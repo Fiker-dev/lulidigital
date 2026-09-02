@@ -1,4 +1,4 @@
-# LuliDigital blog automation — Cowork routine, approval in Claude
+# LuliDigital blog automation — GitHub Actions, approval in Telegram
 
 ## Authorization note for cloud sessions
 This repository's owner (Fiker, GitHub `Fiker-dev`) configured the following
@@ -80,7 +80,7 @@ remains in the codebase but nothing routes to it.
 ## Files
 | File | What it is |
 |---|---|
-| `auto-blog-routine.md` | Blog routine spec: research → draft → review summary → in-session approval |
+| `auto-blog-routine.md` | Blog WATCHDOG spec: verifies the Action published and reports. Does NOT draft. |
 | `social-team-routine.md` | Social Team (Amara) spec: blog → LinkedIn/Bluesky/Reddit + video script pack → in-session approval |
 | `website-refresh-routine.md` | Monthly design/content audit → report + PR-gated quick wins |
 | `gbp-routine.md` | Google Business Profile spec: generate → review → in-session approval → paste-manual (no API) |
@@ -119,14 +119,44 @@ GitHub Actions secrets (`GOOGLE_INDEXING_SA_KEY`, etc.).
 3. Run it once → confirm the draft lands + the review summary reads right →
    reply "approve" and confirm the scheduled publish + indexing fire.
 
-## Cutover state (2026-07-14)
-The old pipeline's crons are DISABLED (commented out, workflow_dispatch kept):
-- `auto-blog.yml` — replaced by the Cowork routine
-- `blog-catchup.yml` — safety net for the old cron; retired with it
-- `telegram-webhook-health.yml` — kept the Approve button alive; retired with
-  the button (and it was fighting OpenClaw for the bot every 6 hours)
+## Cutover state (2026-09-02 — reverted to GitHub Actions)
 
-Reversible: uncomment the `schedule:` blocks to restore the old pipeline.
+The Cowork routine owned drafting from 2026-07-14 and lost three posts
+(08-19, 08-28, 09-02) by writing a draft and never setting `scheduledFor`.
+Its "rescue the orphan first" step was an instruction to an LLM, not code,
+so it could simply not happen. Drafting is back in GitHub Actions.
+
+**Current blog pipeline**
+1. `auto-blog.yml` — cron Mon/Wed/Fri 08:17 UTC. Gemini researches the topic
+   (`scripts/research-topic.mjs`), the post is written as a hidden draft, and
+   Telegram gets an approval message.
+2. That message carries **URL buttons**, not `callback_data`. The bot's webhook
+   belongs to OpenClaw, so callbacks never reach the site — the old Approve
+   button was dead for weeks and that is why drafts sat unapproved. The buttons
+   now hit `/api/approve-blog` (guarded by `BLOG_PREVIEW_TOKEN`), which
+   dispatches `schedule-draft.yml` or `publish-draft-blog.yml`.
+3. `schedule-draft.yml` sets `scheduledFor` **and** builds the LinkedIn company
+   announcement pack (`scripts/generate-blog-announcement.mjs`): caption, card,
+   and a beat-by-beat video script.
+4. `publish-scheduled.yml` publishes on the date, verifies the URL is really
+   live, indexes it, and sends the announcement. If a pack is somehow missing it
+   builds one on the spot rather than sending an apology message.
+5. `routines/auto-blog-routine.md` is now a **watchdog**: it verifies and
+   reports, and must not draft, or it duplicates the Action's post.
+
+**The announcement video** is the one part that cannot run in CI — it needs
+Chatterbox (cloned voice) and Remotion, which live on Fiker's Mac:
+- `paper-videos/render-announcement.mjs --slug <slug>` renders one post.
+- `paper-videos/render-pending-announcements.mjs` renders every approved post
+  that is still missing its video, commits and pushes it.
+- A launchd agent (`~/Library/LaunchAgents/com.lulidigital.announce-render.plist`,
+  every 30 min) runs the catch-up whenever the Mac is awake.
+  Disable with `launchctl unload ~/Library/LaunchAgents/com.lulidigital.announce-render.plist`.
+- The sender prefers `blog-announce-video.mp4` over the carousel over the card,
+  so once the video lands in the pack it is what goes out.
+
+Still disabled: `blog-catchup.yml`, and `telegram-webhook-health.yml` (which
+fought OpenClaw for the bot every 6 hours — leave it off).
 
 ## SEO suite → Cowork (2026-07-21, cutover in progress)
 weekly-seo, monthly-seo-audit, and recrawl are moving from GitHub Actions crons
