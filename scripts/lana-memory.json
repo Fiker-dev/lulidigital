@@ -46,13 +46,5 @@
     "title": "You Don't Need More Leads. You Need to Go Back to the Ones Who Already Said Maybe.",
     "published_at": "2026-09-02"
   },
-  "review_state": {
-    "slug": "your-inbox-is-not-your-to-do-list",
-    "title": "Your Inbox Became Your To-Do List. That's Why You Never Feel Caught Up.",
-    "description": "Most founders run the whole business from their inbox. Here's why email becomes your real to-do list — and how AI triage builds a calmer system.",
-    "preview_text": "Watch how most founders start the day. Not with the one thing that would move the business forward — with the inbox. You open it to 'just check quickly,' and within minutes the unread messages have quietly written your to-do list for you. Reply to this. Chase that. Approve the thing.",
-    "scheduled_for": "2026-09-04",
-    "revision_count": 0,
-    "status": "awaiting_approval"
-  }
+  "review_state": null
 }

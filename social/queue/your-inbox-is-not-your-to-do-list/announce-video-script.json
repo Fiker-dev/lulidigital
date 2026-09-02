@@ -1,0 +1,38 @@
+{
+  "slug": "your-inbox-is-not-your-to-do-list",
+  "title": "Your Inbox Became Your To-Do List. That's Why You Never Feel Caught Up.",
+  "url": "https://lulidigital.com/blog/your-inbox-is-not-your-to-do-list",
+  "note": "Render on the Mac: BlogAnnounce.tsx + the cloned voice. Output blog-announce-video.mp4 into this folder.",
+  "beats": [
+    {
+      "vo": "You opened your inbox to check quickly. Two hours just disappeared.",
+      "screen": "Sound familiar?",
+      "reaction": "story-phone"
+    },
+    {
+      "vo": "Your inbox shows messages by arrival time, not by what matters.",
+      "screen": "Wrong priority system.",
+      "reaction": "laptop"
+    },
+    {
+      "vo": "A client emergency sits next to a newsletter. Both look equally urgent.",
+      "screen": "Everything feels urgent.",
+      "reaction": "idea"
+    },
+    {
+      "vo": "Inbox zero just empties the queue so it can fill up again.",
+      "screen": "That's not the fix.",
+      "reaction": "story-relax"
+    },
+    {
+      "vo": "Sort the noise automatically. Move real tasks to a real list.",
+      "screen": "Build the calmer system.",
+      "reaction": "celebrate"
+    },
+    {
+      "vo": "The full breakdown is on the blog — link is in the comments.",
+      "screen": "Read it. Link in comments.",
+      "reaction": "story-phone"
+    }
+  ]
+}

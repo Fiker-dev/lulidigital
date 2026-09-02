@@ -1,4 +1,5 @@
 ---
+scheduledFor: "2026-09-04"
 title: "Your Inbox Became Your To-Do List. That's Why You Never Feel Caught Up."
 description: "Most founders run the whole business from their inbox. Here's why email becomes your real to-do list — and how AI triage builds a calmer system."
 pubDate: 2026-09-02
