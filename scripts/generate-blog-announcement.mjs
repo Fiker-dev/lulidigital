@@ -143,10 +143,17 @@ try {
 }
 
 // ── Video script for the local Remotion render ────────────────────────────────
+// A pose that has no PNG kills the render half an hour in, so pin anything
+// unexpected back to a pose that exists rather than trusting the model.
+const POSES = ["idea", "laptop", "coffee", "celebrate", "story-phone", "story-relax"];
+const beats = (json.beats ?? []).map((b) => ({
+  ...b,
+  reaction: POSES.includes(b.reaction) ? b.reaction : "idea",
+}));
 writeFileSync(join(outDir, "announce-video-script.json"), JSON.stringify({
   slug, title, url,
   note: "Render on the Mac: BlogAnnounce.tsx + the cloned voice. Output blog-announce-video.mp4 into this folder.",
-  beats: json.beats,
+  beats,
 }, null, 2));
 
 console.log(`Announcement pack ready: social/queue/${slug}/`);
