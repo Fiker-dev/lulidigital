@@ -1,0 +1,8 @@
+{
+  "ran": false,
+  "reason": "social/content-inspiration/catalog.json is not present in the cloud repo (it lives in the local pipeline on Fiker's Mac). scripts/select-content-inspiration.mjs exits ENOENT. Per Step 2b, no inspiration is forced — the pack follows the brand system directly.",
+  "platform": "linkedin",
+  "format": "static",
+  "tags": ["soft-promo", "operator-lesson", "automation", "anonymised-client-story", "founder-time", "friction"],
+  "creative_direction": "Amara brand system: personal-page soft-promo, first-person operator voice, one anonymised outcome, no stats. No external reference copied."
+}
