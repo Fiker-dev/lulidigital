@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-01T13:31:43.700Z",
-  "month": "2026-09",
+  "generatedAt": "2026-09-04T12:43:56.433Z",
+  "week": "2026-09-04",
   "pages": {
     "/denmark": {
       "primary": [
@@ -37,6 +37,13 @@
         "ai advertising service in switzerland"
       ],
       "source": "Search Console — 2026-09"
+    },
+    "/ai-desk": {
+      "primary": [
+        "ai digital service",
+        "luli ai"
+      ],
+      "source": "weekly Search Console refresh 2026-09-04"
     }
   }
 }
