@@ -1,11 +1,10 @@
 ---
-scheduledFor: "2026-09-04"
 title: "Your Inbox Became Your To-Do List. That's Why You Never Feel Caught Up."
 description: "Most founders run the whole business from their inbox. Here's why email becomes your real to-do list — and how AI triage builds a calmer system."
-pubDate: 2026-09-02
+pubDate: 2026-09-04
 category: "AI Automation"
 readingTime: "6 min read"
-draft: true
+draft: false
 ---
 
 Watch how most founders start the day. Not with the one thing that would move the business forward — with the inbox. You open it to "just check quickly," and within minutes the unread messages have quietly written your to-do list for you. Reply to this. Chase that. Approve the thing. Forward the other. By the time you look up, two hours are gone and the work you actually planned to do hasn't started.
