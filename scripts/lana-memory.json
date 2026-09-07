@@ -9,7 +9,8 @@
     "ai-driven-marketing-for-founders",
     "stop-rebuilding-the-same-report-every-week",
     "seo-services-amsterdam-cleaner-business-system",
-    "lead-generation-problem-solution-benefits"
+    "lead-generation-problem-solution-benefits",
+    "ai-powered-seo-beyond-keywords-into-conversion"
   ],
   "seo_opportunity_queue": [
     {
@@ -46,5 +47,13 @@
     "title": "You Don't Need More Leads. You Need to Go Back to the Ones Who Already Said Maybe.",
     "published_at": "2026-09-02"
   },
-  "review_state": null
+  "review_state": {
+    "slug": "ai-powered-seo-beyond-keywords-into-conversion",
+    "title": "AI-Powered SEO: Beyond Keywords, Into Conversion",
+    "description": "Ranking without converting is a waste of budget. Here's how founders can use AI to move from keyword chasing to real business outcomes.",
+    "preview_text": "Most SEO advice tells you to rank higher. Almost none of it tells you how to turn that ranking into revenue. If your site pulls decent traffic but your pipeline stays thin, the problem is not your keyword list. It is the strategy behind it.",
+    "scheduled_for": "2026-09-09",
+    "revision_count": 0,
+    "status": "awaiting_approval"
+  }
 }
