@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, existsSync } from "fs";
+import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { getBestRegionalSeoRecommendation, inferSeoCategory } from "../src/lib/seoAgent.js";
@@ -182,13 +182,35 @@ const seoAgentTopic = seoRecommendation
 
 // Priority: explicit/queued title → Gemini research (blended) → SEO agent → rotation.
 const isCustomTopic = Boolean(customTitle || geminiTopic || seoAgentTopic);
-const topic = customTitle
+let topic = customTitle
   ? {
       title: customTitle,
       category: customCategory || "AI Automation",
       keyword: customKeyword || customTitle,
     }
   : geminiTopic ?? seoAgentTopic ?? topicsData.topics[index];
+
+// Both the SEO-agent fallback and the static rotation can surface a topic that
+// has already been written. That used to sail through here and die at the
+// overwrite guard below, aborting the run and losing the day's post entirely
+// (2026-09-04: Gemini was down, the fallback picked an already-PUBLISHED slug,
+// and the guard killed the run). Skip candidates whose slug is already taken
+// instead, and only give up if every one of them is.
+const blogDir = join(ROOT, "src", "content", "blog");
+const slugTaken = (title) => existsSync(join(blogDir, `${normalizeBlogSlug(slugify(title))}.md`));
+
+if (!customTitle && slugTaken(topic.title)) {
+  // Walk the rotation from the current index; wrap once.
+  const rotation = topicsData.topics;
+  const alt = Array.from({ length: rotation.length }, (_, i) => rotation[(index + i) % rotation.length])
+    .find((t) => !slugTaken(t.title));
+  if (alt) {
+    console.log(`Topic "${topic.title}" already exists — using "${alt.title}" instead.`);
+    topic = alt;
+  } else {
+    console.log(`Topic "${topic.title}" already exists and every rotation topic is used too — letting it run; the overwrite guard is the backstop.`);
+  }
+}
 
 console.log(`Generating ${isCustomTopic ? "custom" : `post ${topicsData.published_count + 1}`}: "${topic.title}"`);
 
@@ -236,7 +258,22 @@ Writing rules:
 
 Provide the finished post by calling the submit_blog_post tool with: title, description (clear meta description under 155 chars, written for a person), slug (url-slug-with-hyphens), readingTime (e.g. "6 min read"), and content (the full markdown article body starting with the first paragraph, no frontmatter, use ## for H2 headings, --- for horizontal rules between sections).`;
 
+// The overwrite guard aborts the whole run if the finished post lands on a slug
+// that already exists — which cost the 2026-09-04 post. The guard can only see
+// the collision after the article is written, so the cheaper fix is to tell the
+// model what is already published and require a distinct angle up front.
+const existingTitles = readdirSync(blogDir)
+  .filter((f) => f.endsWith(".md"))
+  .map((f) => readFileSync(join(blogDir, f), "utf8").match(/^title:\s*["'](.+?)["']\s*$/m)?.[1])
+  .filter(Boolean);
+
 const userPrompt = `Write a complete blog post about: "${topic.title}"
+
+These articles are ALREADY published on this blog. Your post must not repeat any
+of them, and the title and slug you return must be clearly distinct from all of
+them. If your assigned topic overlaps one of these, find a genuinely different
+angle on it rather than rewriting the same piece:
+${existingTitles.map((t) => `- ${t}`).join("\n")}
 
 Primary search intent: "${topic.keyword}"
 Use this to understand what the reader needs. It is not a phrase you must repeat verbatim. If the exact wording sounds unnatural, do not use it.
