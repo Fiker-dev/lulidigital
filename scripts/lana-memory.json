@@ -11,7 +11,8 @@
     "seo-services-amsterdam-cleaner-business-system",
     "lead-generation-problem-solution-benefits",
     "ai-powered-seo-beyond-keywords-into-conversion",
-    "ai-geopolitical-event-analysis-for-business"
+    "ai-geopolitical-event-analysis-for-business",
+    "stop-operational-brushfires-before-they-spread"
   ],
   "seo_opportunity_queue": [
     {
@@ -49,11 +50,11 @@
     "published_at": "2026-09-02"
   },
   "review_state": {
-    "slug": "ai-geopolitical-event-analysis-for-business",
-    "title": "When the World Moves Fast, Your Business Analysis Shouldn't Lag Behind",
-    "description": "Geopolitical events move markets in hours. Here's how founders can use AI to cut through the noise and act on what matters before competitors do.",
-    "preview_text": "A head of state lands in a new country. Trade corridors shift. Regulatory signals change. Investor sentiment tilts. By the time most founders have read a news summary and forwarded it to a colleague, the window for a smart, early response has already narrowed.",
-    "scheduled_for": "2026-09-09",
+    "slug": "stop-operational-brushfires-before-they-spread",
+    "title": "The Brushfire Problem: How Small Operational Failures Burn Down Your Week",
+    "description": "Compounding operational failures don't stay small. Here's how to spot the pattern, stop the spread, and build systems that hold.",
+    "preview_text": "One missed handoff turns into a delayed deliverable. The delayed deliverable turns into a client chase. The client chase pulls you out of a planning session. By Thursday, you're firefighting again, and the week you planned on Sunday is gone.",
+    "scheduled_for": "2026-09-11",
     "revision_count": 0,
     "status": "awaiting_approval"
   }
