@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-04T12:43:56.433Z",
-  "week": "2026-09-04",
+  "generatedAt": "2026-09-11T12:50:23.015Z",
+  "week": "2026-09-11",
   "pages": {
     "/denmark": {
       "primary": [
@@ -40,10 +40,15 @@
     },
     "/ai-desk": {
       "primary": [
-        "ai digital service",
-        "luli ai"
+        "ai digital service"
       ],
-      "source": "weekly Search Console refresh 2026-09-04"
+      "source": "weekly Search Console refresh 2026-09-11"
+    },
+    "/va-desk": {
+      "primary": [
+        "digital secretary"
+      ],
+      "source": "weekly Search Console refresh 2026-09-11"
     }
   }
 }
