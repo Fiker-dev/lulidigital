@@ -12,7 +12,8 @@
     "lead-generation-problem-solution-benefits",
     "ai-powered-seo-beyond-keywords-into-conversion",
     "ai-geopolitical-event-analysis-for-business",
-    "stop-operational-brushfires-before-they-spread"
+    "stop-operational-brushfires-before-they-spread",
+    "german-b2b-marketing-automation-ai"
   ],
   "seo_opportunity_queue": [
     {
@@ -50,11 +51,11 @@
     "published_at": "2026-09-02"
   },
   "review_state": {
-    "slug": "stop-operational-brushfires-before-they-spread",
-    "title": "The Brushfire Problem: How Small Operational Failures Burn Down Your Week",
-    "description": "Compounding operational failures don't stay small. Here's how to spot the pattern, stop the spread, and build systems that hold.",
-    "preview_text": "One missed handoff turns into a delayed deliverable. The delayed deliverable turns into a client chase. The client chase pulls you out of a planning session. By Thursday, you're firefighting again, and the week you planned on Sunday is gone.",
-    "scheduled_for": "2026-09-11",
+    "slug": "german-b2b-marketing-automation-ai",
+    "title": "German B2B Marketing Is Still Mostly Manual. That's the Gap AI Fills.",
+    "description": "German B2B founders are losing time and deals to manual marketing ops. Here's how AI automation closes that gap and builds a system that scales.",
+    "preview_text": "German B2B marketing has a reputation for being thorough. Detailed proposals, careful relationship-building, long sales cycles. That reputation is earned. What it masks, though, is how much of the operational work behind that thoroughness is still done by hand.",
+    "scheduled_for": "2026-09-14",
     "revision_count": 0,
     "status": "awaiting_approval"
   }
