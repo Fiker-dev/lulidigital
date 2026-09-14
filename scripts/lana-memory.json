@@ -13,7 +13,8 @@
     "ai-powered-seo-beyond-keywords-into-conversion",
     "ai-geopolitical-event-analysis-for-business",
     "stop-operational-brushfires-before-they-spread",
-    "german-b2b-marketing-automation-ai"
+    "german-b2b-marketing-automation-ai",
+    "automate-client-onboarding-retention"
   ],
   "seo_opportunity_queue": [
     {
@@ -51,11 +52,11 @@
     "published_at": "2026-09-02"
   },
   "review_state": {
-    "slug": "german-b2b-marketing-automation-ai",
-    "title": "German B2B Marketing Is Still Mostly Manual. That's the Gap AI Fills.",
-    "description": "German B2B founders are losing time and deals to manual marketing ops. Here's how AI automation closes that gap and builds a system that scales.",
-    "preview_text": "German B2B marketing has a reputation for being thorough. Detailed proposals, careful relationship-building, long sales cycles. That reputation is earned. What it masks, though, is how much of the operational work behind that thoroughness is still done by hand.",
-    "scheduled_for": "2026-09-14",
+    "slug": "automate-client-onboarding-retention",
+    "title": "The Onboarding Gap That's Quietly Costing You Clients",
+    "description": "Most founders lose clients in the first 30 days without knowing why. Here's how to automate onboarding and retention before the damage is done.",
+    "preview_text": "Most client churn doesn't happen at month six. It happens in the first 30 days, quietly, while you're focused on the next sale. A new client signs, you send a welcome email, someone on your team promises a kickoff call, and then life intervenes. Three weeks later, they're not sure if they made the right decision.",
+    "scheduled_for": "2026-09-16",
     "revision_count": 0,
     "status": "awaiting_approval"
   }
