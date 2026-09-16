@@ -1,11 +1,10 @@
 ---
-scheduledFor: "2026-09-16"
 title: "The Onboarding Gap That's Quietly Costing You Clients"
 description: "Most founders lose clients in the first 30 days without knowing why. Here's how to automate onboarding and retention before the damage is done."
-pubDate: 2026-09-14
+pubDate: 2026-09-16
 category: "AI Automation"
 readingTime: "6 min read"
-draft: true
+draft: false
 ---
 
 Most client churn doesn't happen at month six. It happens in the first 30 days, quietly, while you're focused on the next sale. A new client signs, you send a welcome email, someone on your team promises a kickoff call, and then life intervenes. Three weeks later, they're not sure if they made the right decision.
