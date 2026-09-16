@@ -1,4 +1,5 @@
 ---
+scheduledFor: "2026-09-16"
 title: "The Onboarding Gap That's Quietly Costing You Clients"
 description: "Most founders lose clients in the first 30 days without knowing why. Here's how to automate onboarding and retention before the damage is done."
 pubDate: 2026-09-14
