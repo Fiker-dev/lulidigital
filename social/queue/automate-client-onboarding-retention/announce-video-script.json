@@ -1,0 +1,38 @@
+{
+  "slug": "automate-client-onboarding-retention",
+  "title": "The Onboarding Gap That's Quietly Costing You Clients",
+  "url": "https://lulidigital.com/blog/automate-client-onboarding-retention",
+  "note": "Render on the Mac: BlogAnnounce.tsx + the cloned voice. Output blog-announce-video.mp4 into this folder.",
+  "beats": [
+    {
+      "vo": "Most clients who leave actually decided to leave in the first 30 days.",
+      "screen": "Gone by day 30",
+      "reaction": "idea"
+    },
+    {
+      "vo": "Not because the work was bad — because the handoff felt chaotic.",
+      "screen": "The handoff breaks it",
+      "reaction": "laptop"
+    },
+    {
+      "vo": "A good onboarding system makes the right thing happen at the right time, automatically.",
+      "screen": "Right thing, every time",
+      "reaction": "laptop"
+    },
+    {
+      "vo": "Start with a one-hour audit: write out what a new client gets in seven days.",
+      "screen": "Map your first 7 days",
+      "reaction": "coffee"
+    },
+    {
+      "vo": "The gaps will be obvious. Those are exactly where clients go quiet on you.",
+      "screen": "Find the quiet spots",
+      "reaction": "story-relax"
+    },
+    {
+      "vo": "The full breakdown is on the blog — link is in the comments.",
+      "screen": "Read it — link in comments",
+      "reaction": "celebrate"
+    }
+  ]
+}
