@@ -69,6 +69,17 @@ jobs:
           fi
           node scripts/post-approved-packs.mjs $ARGS | tee /tmp/post-summary.txt
 
+      # Without this nothing can ever reach `approved`, which is how 24 packs
+      # went stale unposted. Rate-limited to 3/run so the backlog doesn't
+      # arrive as a wall of messages that just gets ignored again.
+      - name: Ask Fiker to approve pending social packs
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          BLOG_PREVIEW_TOKEN: ${{ secrets.BLOG_PREVIEW_TOKEN }}
+        run: node scripts/request-pack-approvals.mjs --max 3
+
       - name: Deliver pending blog announcements to Telegram
         if: always()
         env:
@@ -93,13 +104,13 @@ jobs:
 
       - name: Commit STATUS updates
         run: |
-          if [ -z "$(git status --porcelain social/queue/ social/announcement-deliveries.json)" ]; then
+          if [ -z "$(git status --porcelain social/queue/ social/announcement-deliveries.json social/approval-requests.json)" ]; then
             echo "No STATUS.md changes to commit."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add social/queue/ social/announcement-deliveries.json
+          git add social/queue/ social/announcement-deliveries.json social/approval-requests.json
           git commit -m "Social: post approved packs $(date -u +%Y-%m-%d)"
           git pull --rebase origin main
           git push

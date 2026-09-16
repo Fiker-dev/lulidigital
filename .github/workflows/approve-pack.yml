@@ -1,0 +1,73 @@
+name: Approve Social Pack
+
+# Dispatched by /api/approve-pack when Fiker taps Approve on a social pack in
+# Telegram. Flips STATUS.md to `approved` so post-social.yml will publish it.
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'Pack slug in social/queue/'
+        required: true
+        type: string
+      date:
+        description: 'Due date YYYY-MM-DD (defaults to today)'
+        required: false
+        type: string
+      discard:
+        description: 'Discard instead of approving'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: lulidigital-content-writes
+  cancel-in-progress: false
+
+jobs:
+  approve-pack:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      PACK_SLUG: ${{ github.event.inputs.slug }}
+      PACK_DATE: ${{ github.event.inputs.date }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - run: git pull --ff-only origin main
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Flip the pack status
+        run: |
+          EXTRA=""
+          if [ "${{ github.event.inputs.discard }}" = "true" ]; then EXTRA="--discard"; fi
+          if [ -n "$PACK_DATE" ]; then EXTRA="$EXTRA --date $PACK_DATE"; fi
+          node scripts/approve-pack.mjs --slug "$PACK_SLUG" $EXTRA
+
+      - name: Commit and push
+        run: |
+          git config user.name "LuliDigital Bot"
+          git config user.email "bot@lulidigital.com"
+          git add social/queue/
+          git diff --staged --quiet && echo "No change" && exit 0
+          git commit -m "Social pack ${PACK_SLUG}: status updated by Fiker"
+          git push
+
+      - name: Telegram confirmation
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ]; then exit 0; fi
+          if [ "${{ github.event.inputs.discard }}" = "true" ]; then
+            TEXT=$(printf '🗑 Discarded social pack: %s' "$PACK_SLUG")
+          else
+            TEXT=$(printf '✅ Approved social pack: %s\n\nIt posts on the next Post Approved Social Packs run (weekdays 11:23 UTC).' "$PACK_SLUG")
+          fi
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" --data-urlencode "text=${TEXT}" > /dev/null
