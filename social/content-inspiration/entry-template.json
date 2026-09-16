@@ -1,0 +1,12 @@
+{
+  "id": "short-unique-name",
+  "active": true,
+  "asset": "assets/reference-file.png",
+  "sourceUrl": "",
+  "platforms": ["linkedin"],
+  "formats": ["static"],
+  "tags": ["personal", "founder-lesson"],
+  "borrow": ["composition", "texture"],
+  "avoid": ["creator identity", "original wording", "logos"],
+  "notes": "Why this format works and when to use it."
+}

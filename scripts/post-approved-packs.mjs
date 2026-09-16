@@ -48,7 +48,10 @@ function readPack(slug) {
   if (!fs.existsSync(statusPath)) return null;
   const status = fs.readFileSync(statusPath, "utf8");
   const first = status.split("\n")[0];
-  const state = first.split("|")[0].trim();
+  // Leading token, not split("|"): one pack used an em-dash separator and
+  // its state parsed as the entire sentence, so it could never be approved
+  // or posted — silently stuck forever.
+  const state = (first.match(/^\s*([a-z_]+)/) || [])[1] || "";
   const due = (first.match(/scheduledFor:\s*"?(\d{4}-\d{2}-\d{2})"?/) || [])[1] || null;
   // Company track is staggered to its own day (brand rule: never the same idea
   // on both pages the same day). It posts ONLY if STATUS names a company date.

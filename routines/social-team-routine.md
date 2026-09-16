@@ -160,17 +160,35 @@ one per run), prepare its LuliDigital company announcement in advance:
    slug you have not posted — that would silently skip the announcement
    forever.
 
-## Step 0c — Check the idea inbox
-Open `social/ideas-inbox.md`. For each unchecked line under `## Inbox` that
-does not already have a pack in `social/queue/`, treat it as Fiker's
-spontaneous idea: run it through the content guide's router
-(`social/CONTENT-GUIDE.md` §4), pick the bucket + tier/format, and build a
-normal pack for it (at most one new inbox idea per run so you don't flood the
-queue — newest first). Then move that line to `## Processed` with its slug and
-push. If a line is too thin to act on, leave it and note in the summary that it
-needs a one-line brainstorm from Fiker. Never invent an idea that isn't there.
+## Step 0c — STOP if the queue is already full
 
-## Step 1 — Pick the anchor
+Count the packs in `social/queue/` whose STATUS state is `awaiting_approval`.
+
+**If that count is 4 or more, do not write a new pack this run.** Report the
+backlog in your summary and stop after Step 0b. This rule exists because there
+was no cap before: packs were produced every weekday into an approval gate that
+could not be opened, and 24 piled up until they went stale and had to be
+deleted. Writing a 25th would not have helped. Unapproved work is not progress.
+
+## Step 0d — Take the next idea FROM THE VAULT
+
+The vault is `social/ideas-inbox.md`. It is the FIRST place you look for what
+to make — not a side channel. It holds both Fiker's spontaneous ideas and good
+ideas returned from retired packs (marked `returned to vault`).
+
+1. Take the newest unchecked line under `## Inbox` that has no pack in
+   `social/queue/` yet. **One per run**, newest first.
+2. Run it through the content guide's router (`social/CONTENT-GUIDE.md` §4),
+   pick the bucket + tier/format, and build a normal pack for it.
+3. Move that line to `## Processed` with its slug, and push.
+4. If a line is too thin to act on, leave it and say in the summary that it
+   needs a one-line brainstorm from Fiker.
+
+**Only if the vault is empty** do you fall through to Step 1 and pick an anchor
+yourself. Never invent an idea that isn't there, and never skip a vault item to
+write something you find more interesting.
+
+## Step 1 — Pick the anchor (ONLY if the vault was empty)
 1. Read `scripts/lana-memory.json` → `latest_live_post`, and check
    `src/content/blog/` for the newest post with `draft: false`.
 2. Check `social/queue/` — if a pack for that slug already exists, the post

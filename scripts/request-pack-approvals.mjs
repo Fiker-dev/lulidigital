@@ -46,7 +46,7 @@ const pending = fs.readdirSync(QUEUE)
     if (!fs.statSync(dir).isDirectory() || !fs.existsSync(sp)) return null;
     const raw = fs.readFileSync(sp, "utf8");
     const first = raw.split("\n")[0];
-    if (first.split("|")[0].trim() !== "awaiting_approval") return null;
+    if (((first.match(/^\s*([a-z_]+)/) || [])[1] || "") !== "awaiting_approval") return null;
     if (/POSTED/i.test(raw)) return null;
     if (state.asked.includes(slug)) return null;
     return { slug, dir, mtime: fs.statSync(sp).mtimeMs };

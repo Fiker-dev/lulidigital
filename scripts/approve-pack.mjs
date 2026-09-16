@@ -27,7 +27,7 @@ if (!existsSync(statusPath)) throw new Error(`No STATUS.md for ${slug}`);
 const raw = readFileSync(statusPath, "utf8");
 const lines = raw.split("\n");
 const first = lines[0];
-const state = first.split("|")[0].trim();
+const state = (first.match(/^\s*([a-z_]+)/) || [])[1] || "";
 const target = discard ? "discarded" : "approved";
 
 if (state === target) {

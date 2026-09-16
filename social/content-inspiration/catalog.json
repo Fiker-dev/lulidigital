@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "minimumScore": 4,
+  "entries": [
+    {
+      "id": "creased-paper-text-note",
+      "active": true,
+      "asset": "assets/creased-paper-text-note.png",
+      "sourceUrl": "",
+      "platforms": ["linkedin"],
+      "formats": ["static", "portrait"],
+      "tags": [
+        "personal",
+        "founder-lesson",
+        "thought-leadership",
+        "handwritten",
+        "creased-paper",
+        "reflective",
+        "clarity",
+        "text-message"
+      ],
+      "borrow": [
+        "black sender header",
+        "circular Fiker profile photo",
+        "creased off-white paper texture",
+        "large handwritten message",
+        "one concise reflective idea"
+      ],
+      "avoid": [
+        "other creator identity",
+        "source wording",
+        "source logos or handles",
+        "fake engagement metrics",
+        "phone status bar and app controls"
+      ],
+      "notes": "Best for a personal LinkedIn lesson that can be understood in one glance. Keep the copy short enough to remain readable on mobile."
+    },
+    {
+      "id": "portrait-notification-pop-up",
+      "active": true,
+      "asset": "assets/portrait-notification-pop-up.png",
+      "sourceUrl": "",
+      "platforms": ["linkedin", "youtube"],
+      "formats": ["static", "shorts-cover", "portrait"],
+      "tags": [
+        "personal",
+        "founder-lesson",
+        "quick-tip",
+        "notification",
+        "pop-up",
+        "photo-background",
+        "clarity",
+        "mobile-native"
+      ],
+      "borrow": [
+        "full-frame Fiker portrait",
+        "single frosted-glass notification",
+        "short two-line message",
+        "one warm-gold emphasis phrase",
+        "face kept clear"
+      ],
+      "avoid": [
+        "fake platform interface",
+        "fake engagement metrics",
+        "covering Fiker's eyes or face",
+        "more than one message",
+        "small unreadable copy"
+      ],
+      "notes": "Use for one sharp personal insight. Works as a LinkedIn static post or a deliberately composed opening/cover frame for a YouTube Short."
+    }
+  ]
+}
