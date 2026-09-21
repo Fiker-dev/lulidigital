@@ -16,7 +16,8 @@
     "german-b2b-marketing-automation-ai",
     "automate-client-onboarding-retention",
     "idea-to-action-gap-ai-automation",
-    "munich-local-seo-ai-system"
+    "munich-local-seo-ai-system",
+    "operations-ai-co-pilot-founders"
   ],
   "seo_opportunity_queue": [
     {
@@ -54,11 +55,11 @@
     "published_at": "2026-09-02"
   },
   "review_state": {
-    "slug": "munich-local-seo-ai-system",
-    "title": "Your Munich SEO Isn't Failing. Your SEO System Is Just Built for Everywhere Else.",
-    "description": "Generic SEO doesn't win local markets. Here's how Munich founders can build an AI-driven local SEO system that actually converts.",
-    "preview_text": "Most Munich businesses doing SEO are playing a national game in a local market. They target broad keywords, publish generic content, and wonder why traffic doesn't convert. The problem isn't effort. It's architecture.",
-    "scheduled_for": "2026-09-21",
+    "slug": "operations-ai-co-pilot-founders",
+    "title": "Your Operations Are Running You. Here's How to Flip That.",
+    "description": "Founders buried in manual work need a clear path to AI-powered operations. Here's what to audit, what to automate, and what a human should still own.",
+    "preview_text": "Most founders didn't sign up to spend their best hours chasing status updates, reformatting data, or manually triggering workflows that a well-built system could handle in seconds. But that's where many of them are, week after week, with AI sitting on the shelf like a gym membership they meant to use.",
+    "scheduled_for": "2026-09-23",
     "revision_count": 0,
     "status": "awaiting_approval"
   }
