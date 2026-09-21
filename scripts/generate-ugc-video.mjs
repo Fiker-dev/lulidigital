@@ -59,11 +59,16 @@ const SHOTS = {
       "steady at chest height and backs away slightly to keep her framed. " + HOLD_THE_PRODUCT,
   },
   cozy: {
-    label: "Pulling the hoodie sleeves (comfort cue)",
+    // First version had her hug her arms across her chest, which covered the
+    // chest logo for most of the shot — a comfort cue that hides the brand mark
+    // is not a usable apparel ad. Hands stay low and the chest stays clear.
+    label: "Sleeves over hands (comfort cue, logo stays visible)",
     prompt:
-      "She stops walking, tugs the hoodie sleeves down over her hands and hugs the " +
-      "fabric to herself for a moment, the way you do when something is genuinely soft " +
-      "and warm. A small contented smile. Subtle handheld sway. " + HOLD_THE_PRODUCT,
+      "She stops walking and tugs the hoodie sleeves down over her hands, holding the " +
+      "cuffs in her fingers at waist height, the way you do when something is genuinely " +
+      "soft and warm. Her arms stay LOW and relaxed at her sides — they never cross her " +
+      "chest and never cover the chest logo, which stays fully visible to camera the " +
+      "entire time. A small contented smile. Subtle handheld sway. " + HOLD_THE_PRODUCT,
   },
   turn: {
     label: "Half turn to show the fit",
