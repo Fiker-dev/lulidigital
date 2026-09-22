@@ -189,6 +189,40 @@ jobs:
           PREVIEW=$(cat /tmp/review_preview.txt)
           SCHEDULED_FOR=$(cat /tmp/review_scheduled_for.txt)
           SLUG=$(cat /tmp/post_slug.txt)
+          # The /draft/ preview and /api/approve-blog both gate on
+          # BLOG_PREVIEW_TOKEN, and that env var does not match on Vercel — both
+          # return a 9-byte "Not found". Every Approve tap since has silently
+          # done nothing, which is why 6 drafts piled up unpublished and the
+          # links looked empty. The repo is public, so the raw markdown on
+          # GitHub needs no token and cannot break the same way.
+          READ_URL="https://github.com/Fiker-dev/lulidigital/blob/main/src/content/blog/${SLUG}.md"
+          TEXT=$(printf "\U0001F4DD Draft ready for your approval\n\n%s\n\n%s\n\n%s\n\nRead it:\n%s\n\nWould go live: %s\nSlug: %s\n\nTo approve: reply in the Claude routine session — say \"approve\" to schedule it, or tell it what to change. Nothing publishes until you do.\n\nYou'll get a separate \"blog is live\" message here once it actually publishes." "$TITLE" "$DESCRIPTION" "$PREVIEW" "$READ_URL" "$SCHEDULED_FOR" "$SLUG")
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${TEXT}" \
+            --data-urlencode "disable_web_page_preview=true")
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          echo "Telegram response: $RESPONSE"
+          if [ "$HTTP_CODE" != "200" ]; then echo "ERROR: Telegram failed HTTP $HTTP_CODE"; exit 1; fi
+
+      - name: Send draft preview for approval
+        if: ${{ github.event_name == 'schedule' || github.event.inputs.publish_status != 'publish' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          BLOG_PREVIEW_TOKEN: ${{ secrets.BLOG_PREVIEW_TOKEN }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "ERROR: Telegram secrets not set."
+            exit 1
+          fi
+          # Webhook re-registration removed 2026-07-14: the Telegram bot now
+          # belongs to OpenClaw (long-polling); re-registering would break it.
+          TITLE=$(cat /tmp/post_title.txt)
+          DESCRIPTION=$(cat /tmp/post_description.txt)
+          PREVIEW=$(cat /tmp/review_preview.txt)
+          SCHEDULED_FOR=$(cat /tmp/review_scheduled_for.txt)
+          SLUG=$(cat /tmp/post_slug.txt)
           PREVIEW_URL="https://lulidigital.com/draft/${SLUG}?key=${BLOG_PREVIEW_TOKEN}"
           TEXT=$(printf "Draft ready for approval\n\n%s\n\n%s\n\n%s\n\n📄 Read the full draft:\n%s\n\nGoes live: %s\nSlug: %s\n\nTap Approve below to schedule it — it goes live that morning, gets indexed, and the LinkedIn company announcement (video + caption) lands here right after. Nothing publishes until you tap." "$TITLE" "$DESCRIPTION" "$PREVIEW" "$PREVIEW_URL" "$SCHEDULED_FOR" "$SLUG")
           # URL buttons, not callback_data: the bot's webhook belongs to OpenClaw

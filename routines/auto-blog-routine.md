@@ -27,11 +27,19 @@ verify the blog pipeline actually did its job, and you report to Fiker.
    `src/content/blog/` for a post with `scheduledFor` (or `pubDate`) = today
    and `draft: false`. Fetch `https://lulidigital.com/blog/<slug>` and
    confirm it returns 200 — a commit is not proof the page is live.
-2. **Is a draft waiting on Fiker?** List every post with `draft: true`.
-   For each, report whether it has a `scheduledFor` date.
-   - Has a date → it is approved and queued. Say when it goes live.
-   - No date → it is **waiting for Fiker to tap Approve** in Telegram.
-     Remind him, and include the title and the go-live date it would take.
+2. **APPROVAL HAPPENS HERE — ask for it every run.** This is your main job.
+   List every post with `draft: true`:
+   - Has a `scheduledFor` date → already approved and queued. Say when it goes live.
+   - No date → **it is waiting on Fiker, and you must ask him in this session.**
+     Show the title, the one-line description, the first paragraph, the link
+     `https://github.com/Fiker-dev/lulidigital/blob/main/src/content/blog/<slug>.md`,
+     and the date it would go live. Ask plainly: approve, change, or drop it?
+     Ask about the OLDEST unapproved draft first — those are the ones going stale.
+
+   Do not tell him to tap anything in Telegram. The Telegram tap-links are
+   retired: they gated on a token that does not match on Vercel, so every tap
+   returned a 9-byte "Not found" and six drafts piled up unpublished. Telegram
+   is now notification-only. **Approval is a reply in this session.**
 3. **Did the Action run at all?** `auto-blog.yml` fires at 08:17 UTC on the
    same days you do, so on a posting day it may still be mid-run when you
    look. Before declaring a failure, check the run:
@@ -49,9 +57,8 @@ verify the blog pipeline actually did its job, and you report to Fiker.
 - **Engagement, not walls of text:** short sections, bullets, `---` dividers, and one animation break with `data-anim` rotated (t0/t1/t2, different from the last post).
 
 ## When Fiker replies in this session
-*(This is the second approval channel. The first is the Telegram Approve
-button, which hits `/api/approve-blog` and dispatches `schedule-draft.yml`.
-Either is a real human approval — act on a reply here exactly as before.)*
+*(This is now the ONLY approval channel. The Telegram Approve buttons are
+retired — they returned "Not found" on every tap. Telegram only notifies.)*
 - **"approve" / yes / ship it** → add `scheduledFor: "<scheduled_for>"` to the post frontmatter — ALWAYS QUOTED (unquoted YAML dates become Date objects and fail the Astro schema, breaking the Vercel build). Keep `draft: true`, set `review_state.status` to `"scheduled"`, commit ("Schedule: <slug> for <date>"), push, then run the deploy verification below. The existing `publish-scheduled.yml` cron publishes + indexes it that morning. Confirm to Fiker.
 - **"publish it now"** → **only if today is a Monday, Wednesday or Friday.** Blog
   posts go out on those days only; publishing off-rhythm is what put a post live
@@ -79,9 +86,9 @@ Each push triggers a Vercel production deploy of lulidigital.com. Verify it:
 - **Do NOT write, research, or spawn a new blog post.** `auto-blog.yml` owns
   drafting now. A draft you write on your own initiative collides with the
   Action and produces a duplicate post.
-- Do NOT set `scheduledFor` on your own initiative. It is set either by Fiker
-  tapping Approve in Telegram, or by him replying "approve" in this session —
-  never by you deciding a draft looks ready.
+- Do NOT set `scheduledFor` on your own initiative. It is set ONLY when Fiker
+  replies "approve" in this session — never by you deciding a draft looks ready,
+  and never because a draft has been waiting a long time. Ask again instead.
 - Do NOT report "the blog is live" from a git commit alone. Fetch the URL and
   confirm 200 — a commit is not a live page.
 - Do NOT publish or set `draft: false` unless Fiker explicitly said "publish it now" in this session. Silence = the draft holds. Approval is human-only.
