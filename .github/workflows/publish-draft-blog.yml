@@ -88,6 +88,33 @@ jobs:
           GOOGLE_ACCOUNT_ID: ${{ secrets.GOOGLE_ACCOUNT_ID }}
           GOOGLE_LOCATION_ID: ${{ secrets.GOOGLE_LOCATION_ID }}
 
+      # publish-scheduled.yml sends the announcement but this path never did,
+      # so anything published immediately went live with no LinkedIn caption or
+      # video — it had to be sent by hand. Same gate: only once the page is
+      # really reachable, never off a commit.
+      - name: Send the LinkedIn company announcement
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ "$(cat /tmp/published_changed.txt 2>/dev/null || echo false)" != "true" ]; then exit 0; fi
+          URL="https://lulidigital.com/blog/${PUBLISH_SLUG}"
+          for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            CODE=$(curl -s -o /dev/null -w "%{http_code}" "$URL")
+            [ "$CODE" = "200" ] && break
+            echo "waiting for deploy (HTTP $CODE) $i/12"; sleep 20
+          done
+          if [ "$CODE" != "200" ]; then
+            echo "Post is not reachable (HTTP $CODE) — not announcing a dead link."
+            exit 0
+          fi
+          if [ ! -f "social/queue/${PUBLISH_SLUG}/linkedin-company.md" ]; then
+            node scripts/generate-blog-announcement.mjs --slug "$PUBLISH_SLUG" || true
+          fi
+          node scripts/send-announcement-telegram.mjs --for "$PUBLISH_SLUG" || true
+
       - name: Send Telegram notification
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
