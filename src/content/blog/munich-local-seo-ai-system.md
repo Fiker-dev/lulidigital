@@ -103,6 +103,6 @@ Every month you run a generic or inconsistent local SEO setup, you're ceding gro
 
 The founders who act now are building a lead channel that compounds. The ones who wait are paying the same monthly cost for diminishing returns.
 
-If you're based in Munich and want to understand what a properly structured local visibility system looks like in practice, the [Munich Studio](/munich) page outlines how we approach this market specifically.
+If you're based in Munich and want to understand what a properly structured local visibility system looks like in practice, the [Munich page](/munich) sets out how this market is approached specifically.
 
 For the broader system, from content strategy to AI-assisted execution, our [Marketing Desk](/marketing-desk) is where founders start.

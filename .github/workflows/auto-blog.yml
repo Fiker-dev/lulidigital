@@ -196,6 +196,24 @@ jobs:
           # links looked empty. The repo is public, so the raw markdown on
           # GitHub needs no token and cannot break the same way.
           READ_URL="https://github.com/Fiker-dev/lulidigital/blob/main/src/content/blog/${SLUG}.md"
+
+          # QA the link BEFORE sending it. Fiker spent two weeks tapping links
+          # that returned "Not found" because nothing ever checked them. A
+          # broken link in an approval message is worse than no message: it
+          # looks like the system worked.
+          for i in 1 2 3 4 5 6; do
+            CODE=$(curl -s -o /dev/null -w "%{http_code}" -L "$READ_URL")
+            [ "$CODE" = "200" ] && break
+            echo "Read link not ready (HTTP $CODE) — retry $i/6"; sleep 10
+          done
+          if [ "$CODE" != "200" ]; then
+            echo "ERROR: read link is $CODE, not 200 — refusing to send a broken approval message."
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+              --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+              --data-urlencode "text=⚠️ Draft '${SLUG}' was written, but its read link returns HTTP ${CODE}. Not sending a broken link. Ask Claude to check auto-blog.yml." > /dev/null
+            exit 1
+          fi
+          echo "Read link verified HTTP 200."
           TEXT=$(printf "\U0001F4DD Draft ready for your approval\n\n%s\n\n%s\n\n%s\n\nRead it:\n%s\n\nWould go live: %s\nSlug: %s\n\nTo approve: reply in the Claude routine session — say \"approve\" to schedule it, or tell it what to change. Nothing publishes until you do.\n\nYou'll get a separate \"blog is live\" message here once it actually publishes." "$TITLE" "$DESCRIPTION" "$PREVIEW" "$READ_URL" "$SCHEDULED_FOR" "$SLUG")
           RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \

@@ -88,7 +88,7 @@ The rule is simple: **automate the path, not the decision.** Build the system th
 
 The idea-to-action gap is worse on international and distributed teams. When your operations span time zones, the lag between a trigger and a response can stretch to a full business day. Manual handoffs break silently because no one is watching the same clock.
 
-This is exactly the context behind the work we support through the [Africa Growth Desk](/africa), where teams need workflows that don't rely on everyone being online at the same time. The principles apply anywhere: build systems that move on their own, escalate when they should, and leave the decision-making to the person with the context.
+This is exactly the context distributed teams face: workflows that don't rely on everyone being online at the same time. The principles apply anywhere: build systems that move on their own, escalate when they should, and leave the decision-making to the person with the context.
 
 **What that looks like in practice:**
 
