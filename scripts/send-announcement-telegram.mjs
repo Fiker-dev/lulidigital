@@ -18,6 +18,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { verifyLink } from "./verify-link.mjs";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -155,6 +156,18 @@ for (const slug of fs.readdirSync(QUEUE)) {
 
   console.log(`${DRY ? "[dry] " : ""}${slug} → ${kind} (${date ?? "no date"})`);
   if (DRY) { sent++; continue; }
+
+  // The first comment IS the link she pastes onto LinkedIn. Sending a dead one
+  // means posting a 404 to the company page, so check it before it goes out
+  // rather than trusting that publishing worked.
+  if (firstComment) {
+    const check = await verifyLink(firstComment, { attempts: 3, waitMs: 8000 });
+    if (!check.ok) {
+      console.error(`${slug}: first-comment link is ${check.status} — not sending an announcement for a dead link.`);
+      continue;
+    }
+    console.log(`${slug}: link verified ${check.status}`);
+  }
 
   try {
     await sendFile(asset, kind, header);

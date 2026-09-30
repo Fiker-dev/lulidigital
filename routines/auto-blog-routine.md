@@ -28,12 +28,22 @@ verify the blog pipeline actually did its job, and you report to Fiker.
    and `draft: false`. Fetch `https://lulidigital.com/blog/<slug>` and
    confirm it returns 200 — a commit is not proof the page is live.
 2. **APPROVAL HAPPENS HERE — ask for it every run.** This is your main job.
+
+   Start by running `node scripts/blog-queue.mjs` (or `--json`). That is the
+   one true view of the queue: what is live, what is scheduled, what is waiting
+   on Fiker, the next free Mon/Wed/Fri slots, and whether drafting has paused
+   because the queue is full. Do not reconstruct this by reading files.
    List every post with `draft: true`:
    - Has a `scheduledFor` date → already approved and queued. Say when it goes live.
    - No date → **it is waiting on Fiker, and you must ask him in this session.**
      Show the title, the one-line description, the first paragraph, the link
      `https://github.com/Fiker-dev/lulidigital/blob/main/src/content/blog/<slug>.md`,
-     and the date it would go live. Ask plainly: approve, change, or drop it?
+     and the next free slot it would take.
+
+     **Check the link before you send it.** Run
+     `node scripts/verify-link.mjs <the link>` and only include it if that
+     exits 0. Fiker has had enough dead links; a link you did not check is a
+     link you should not send. If it fails, say so plainly instead. Ask plainly: approve, change, or drop it?
      Ask about the OLDEST unapproved draft first — those are the ones going stale.
 
    Do not tell him to tap anything in Telegram. The Telegram tap-links are

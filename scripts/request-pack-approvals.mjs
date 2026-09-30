@@ -14,6 +14,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { verifyLink } from "./verify-link.mjs";
 
 // fileURLToPath, not .pathname — the repo path contains a space, which
 // .pathname returns percent-encoded, silently pointing at nothing.
@@ -87,6 +88,15 @@ for (const { slug, dir } of pending) {
   };
 
   if (DRY) { console.log(`[dry] would ask about ${slug} (${cap.platform})`); sent++; continue; }
+
+  // Both buttons point at /api/approve-pack. If that route is broken or the
+  // token does not match, the tap does nothing and the ask is worse than
+  // useless — it looks answered. Check before sending.
+  const probe = await verifyLink(`${base}&date=${today}`, { attempts: 2, waitMs: 5000 });
+  if (!probe.ok) {
+    console.error(`${slug}: approve link is ${probe.status} — not sending a dead button.`);
+    continue;
+  }
 
   const res = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
     method: "POST",

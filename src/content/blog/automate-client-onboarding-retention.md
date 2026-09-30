@@ -104,7 +104,7 @@ The hesitation most founders have is assuming this requires a new hire or a big 
 
 It doesn't. A well-structured system built on tools you likely already pay for, combined with one person who owns the process, is enough to handle onboarding and retention for 50 to 100 clients.
 
-**For US-based founders** looking to build this without the setup overhead, the [LuliDigital US studio](/united-states) works with SMBs and scale-ups to design and deploy exactly this kind of system, without months of consulting and no blueprint at the end.
+**For US-based founders** looking to build this without the setup overhead, the [US page](/united-states) covers how this kind of system is designed and deployed for SMBs and scale-ups, without months of consulting and no blueprint at the end.
 
 The sequence is always the same: audit, map, automate the repeatable, and assign a human to the rest.
 

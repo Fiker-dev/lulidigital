@@ -290,6 +290,18 @@ ${customCta ? `End-of-article CTA text: "${customCta}"${customCtaLink ? ` — li
 
 The article should give genuinely useful, actionable advice. It should feel like pain relief for a founder who is tired of vague advice and wants the next practical move. Do not fabricate relatability. Do not write fake scenes like "a founder told me" or "one client called it" unless that exact source note was provided.
 
+HARD RULES — these are not style preferences:
+- LuliDigital has NO offices, studios, branches or local presence anywhere.
+  Never write "the LuliDigital <place> studio", "our <place> office", or
+  anything implying a physical or local team. When you link a location page,
+  describe what the PAGE covers, never a place LuliDigital supposedly occupies.
+  Posts claiming a "US studio", "Switzerland studio" and "Amsterdam Studio" all
+  had to be corrected after publishing — one of them while live.
+- LuliDigital is one person plus AI systems. Never write "we", "our team",
+  "us" or anything implying staff. Address the reader as "you" and describe
+  the work impersonally.
+- Never invent statistics, clients, testimonials, case studies or events.
+
 Make it easy and quick to read. Structure it with a strong opening hook (two short paragraphs, no heading), then 5 to 7 short H2 sections, and a brief closing section. Each section should be only a few short paragraphs or a list — never a long block. Use at least two bulleted or numbered lists across the article (for example: the signs, the steps, what to audit, what to automate, what a human still approves). Include exactly one short pull-quote blockquote for the single most important idea. Separate major sections with a --- rule. At least one section should teach the solution path clearly: what to audit, what to automate or systemise, what a human should still approve, and when to bring in support. Include a relevant internal link to the LuliDigital service page at the end (use markdown link format to either /ai-desk, /marketing-desk, or /va-desk depending on the topic). If a local landing page is provided, include exactly one natural internal link to that local page as well.`;
 
 const anthropicInit = {
@@ -451,6 +463,33 @@ if (locationStuffingReason) {
 const fabricatedPattern = contentLooksFabricated(post.content);
 if (fabricatedPattern) {
   console.error(`Generated content appears to contain fabricated relatability: ${fabricatedPattern}`);
+  process.exit(1);
+}
+
+// The prompt forbids these, but a prompt is a request, not a guarantee — three
+// posts claimed offices that do not exist and one of them went live. Rewrite
+// the claim rather than abort: losing the slot helps nobody, and the fix is
+// mechanical.
+const FALSE_LOCALITY = [
+  [/\[LuliDigital ([A-Z][\w ]*?) (?:studio|Studio|office|Office|desk)\]\(([^)]+)\)/g, "[$1 page]($2)"],
+  [/\bthe LuliDigital ([A-Z][\w ]*?) (?:studio|office)\b/g, "the $1 page"],
+  [/\bour ([A-Z][\w ]*?) (?:studio|office)\b/g, "the $1 page"],
+];
+let localityFixes = 0;
+for (const [re, rep] of FALSE_LOCALITY) {
+  const before = post.content;
+  post.content = post.content.replace(re, rep);
+  if (post.content !== before) localityFixes++;
+}
+if (localityFixes) {
+  console.log(`Removed ${localityFixes} false office/studio claim(s) from the generated post.`);
+}
+
+// First person implies staff. Fiker works alone; "we" is a factual error here.
+const teamHits = (post.content.match(/\b(we|our team|us)\s+\w+/gi) || [])
+  .filter((m) => !/\bus\s+(dollars?|market|founders?|based|smbs?)\b/i.test(m));
+if (teamHits.length) {
+  console.error(`Generated content uses team language (${teamHits.slice(0, 3).join(", ")}). LuliDigital is one person — aborting rather than publishing a false claim.`);
   process.exit(1);
 }
 
