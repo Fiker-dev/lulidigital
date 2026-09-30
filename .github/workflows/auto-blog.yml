@@ -98,7 +98,46 @@ jobs:
         with:
           node-version: '24'
 
+      # Production has to pause for approval or it just fills the repo. Drafts
+      # were written every Mon/Wed/Fri while approval happens in a routine
+      # session, so 18 piled up and nothing published for over a week. An
+      # unapproved 19th draft is not output, it is noise.
+      - name: Stop if drafts are already waiting
+        id: backlog
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          # Only count drafts from the last 45 days — ancient ones are a
+          # separate cleanup decision, not a reason to stop writing forever.
+          WAITING=$(node -e "
+            const fs=require('fs');
+            const cut=Date.now()-45*864e5;
+            const n=fs.readdirSync('src/content/blog').filter(f=>{
+              if(!f.endsWith('.md'))return false;
+              const t=fs.readFileSync('src/content/blog/'+f,'utf8');
+              const fm=(t.match(/^---\n([\s\S]*?)\n---/)||[])[1]||'';
+              if(!/^draft:\s*true\s*\$/m.test(fm))return false;
+              if(/^scheduledFor:/m.test(fm))return false;
+              const d=(fm.match(/^pubDate:\s*(\S+)/m)||[])[1];
+              return d && Date.parse(d)>=cut;
+            }).length;
+            console.log(n);
+          ")
+          echo "Unapproved recent drafts: $WAITING"
+          if [ "$WAITING" -ge 3 ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            if [ -n "$TELEGRAM_BOT_TOKEN" ]; then
+              TEXT=$(printf "\U0001F4E5 %s drafts are already waiting for your approval, so I didn't write another one today.\n\nApprove or drop some in the Claude routine session and writing resumes automatically." "$WAITING")
+              curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+                --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" --data-urlencode "text=${TEXT}" > /dev/null
+            fi
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Generate blog post
+        if: steps.backlog.outputs.skip != 'true'
         run: node scripts/generate-post.mjs
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -120,10 +159,11 @@ jobs:
           BLOG_SEO_AGENT_GEOS: ${{ vars.BLOG_SEO_AGENT_GEOS || 'NL,DE,SE,GB,US,DK,CH,IE,BE,NO,AFRICA' }}
 
       - name: Save review state (draft only)
-        if: ${{ github.event_name == 'schedule' || github.event.inputs.publish_status != 'publish' }}
+        if: ${{ steps.backlog.outputs.skip != 'true' && (github.event_name == 'schedule' || github.event.inputs.publish_status != 'publish') }}
         run: node scripts/save-review-state.mjs
 
       - name: Commit and push new post
+        if: steps.backlog.outputs.skip != 'true'
         run: |
           git config user.name "LuliDigital Bot"
           git config user.email "bot@lulidigital.com"
@@ -172,7 +212,7 @@ jobs:
           if [ "$HTTP_CODE" != "200" ]; then echo "ERROR: Telegram failed HTTP $HTTP_CODE"; exit 1; fi
 
       - name: Send draft preview for approval
-        if: ${{ github.event_name == 'schedule' || github.event.inputs.publish_status != 'publish' }}
+        if: ${{ steps.backlog.outputs.skip != 'true' && (github.event_name == 'schedule' || github.event.inputs.publish_status != 'publish') }}
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -219,40 +259,6 @@ jobs:
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "text=${TEXT}" \
             --data-urlencode "disable_web_page_preview=true")
-          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
-          echo "Telegram response: $RESPONSE"
-          if [ "$HTTP_CODE" != "200" ]; then echo "ERROR: Telegram failed HTTP $HTTP_CODE"; exit 1; fi
-
-      - name: Send draft preview for approval
-        if: ${{ github.event_name == 'schedule' || github.event.inputs.publish_status != 'publish' }}
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          BLOG_PREVIEW_TOKEN: ${{ secrets.BLOG_PREVIEW_TOKEN }}
-        run: |
-          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
-            echo "ERROR: Telegram secrets not set."
-            exit 1
-          fi
-          # Webhook re-registration removed 2026-07-14: the Telegram bot now
-          # belongs to OpenClaw (long-polling); re-registering would break it.
-          TITLE=$(cat /tmp/post_title.txt)
-          DESCRIPTION=$(cat /tmp/post_description.txt)
-          PREVIEW=$(cat /tmp/review_preview.txt)
-          SCHEDULED_FOR=$(cat /tmp/review_scheduled_for.txt)
-          SLUG=$(cat /tmp/post_slug.txt)
-          PREVIEW_URL="https://lulidigital.com/draft/${SLUG}?key=${BLOG_PREVIEW_TOKEN}"
-          TEXT=$(printf "Draft ready for approval\n\n%s\n\n%s\n\n%s\n\n📄 Read the full draft:\n%s\n\nGoes live: %s\nSlug: %s\n\nTap Approve below to schedule it — it goes live that morning, gets indexed, and the LinkedIn company announcement (video + caption) lands here right after. Nothing publishes until you tap." "$TITLE" "$DESCRIPTION" "$PREVIEW" "$PREVIEW_URL" "$SCHEDULED_FOR" "$SLUG")
-          # URL buttons, not callback_data: the bot's webhook belongs to OpenClaw
-          # now, so callbacks never reach this site. These open /api/approve-blog,
-          # which dispatches the same workflows the old handler did.
-          APPROVE_URL="https://lulidigital.com/api/approve-blog?slug=${SLUG}&date=${SCHEDULED_FOR}&key=${BLOG_PREVIEW_TOKEN}"
-          NOW_URL="https://lulidigital.com/api/approve-blog?slug=${SLUG}&action=now&key=${BLOG_PREVIEW_TOKEN}"
-          REPLY_MARKUP=$(printf '{"inline_keyboard":[[{"text":"✅ Approve — go live %s","url":"%s"}],[{"text":"⚡ Publish now","url":"%s"}],[{"text":"📄 Read the draft","url":"%s"}]]}' "$SCHEDULED_FOR" "$APPROVE_URL" "$NOW_URL" "$PREVIEW_URL")
-          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=${TEXT}" \
-            --data-urlencode "reply_markup=${REPLY_MARKUP}")
           HTTP_CODE=$(echo "$RESPONSE" | tail -1)
           echo "Telegram response: $RESPONSE"
           if [ "$HTTP_CODE" != "200" ]; then echo "ERROR: Telegram failed HTTP $HTTP_CODE"; exit 1; fi

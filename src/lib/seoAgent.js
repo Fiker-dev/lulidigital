@@ -282,6 +282,9 @@ const pageKeywordTargets = {
   },
 };
 
+// Split deliberately: a keyword has to be about the WORK, not merely mention a
+// place LuliDigital sells into. "solar battery grant ireland" used to score 1
+// on "ireland" and become a blog post about solar grants.
 const serviceSignals = [
   "ai",
   "digital",
@@ -304,7 +307,16 @@ const serviceSignals = [
   "meta ads",
   "content",
   "brand",
+  "branding",
   "productivity",
+  "lead generation",
+  "crm",
+  "email marketing",
+  "social media",
+];
+
+// Geography can only ADD to a score that a service signal already opened.
+const geoSignals = [
   "amsterdam",
   "munich",
   "stockholm",
@@ -372,16 +384,22 @@ const parseGoogleTrendsRss = (xml, geo) => {
     .filter((item) => item.keyword);
 };
 
+// Whole words only. Plain .includes() matched "brand" inside the Dutch word
+// "brandstof" (fuel), which is how a post about fuel costs got written.
+const matchesSignal = (keyword, signal) =>
+  new RegExp(`\\b${signal.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(keyword);
+
+const serviceRelevance = (keyword) =>
+  serviceSignals.reduce((score, signal) => (matchesSignal(keyword, signal) ? score + 1 : score), 0);
+
+const geoRelevance = (keyword) =>
+  geoSignals.reduce((score, signal) => (matchesSignal(keyword, signal) ? score + 1 : score), 0);
+
+// Zero when the keyword names no service, however many places it mentions, so
+// callers filtering on > 0 reject it outright.
 const relevanceScore = (keyword) => {
-  const normalized = keyword.toLowerCase();
-
-  return serviceSignals.reduce((score, signal) => {
-    if (signal === "ai") {
-      return /\bai\b/i.test(keyword) ? score + 1 : score;
-    }
-
-    return normalized.includes(signal) ? score + 1 : score;
-  }, 0);
+  const service = serviceRelevance(keyword);
+  return service === 0 ? 0 : service + geoRelevance(keyword);
 };
 
 const fallbackForToday = (date = new Date(), geo = "NL") => {
