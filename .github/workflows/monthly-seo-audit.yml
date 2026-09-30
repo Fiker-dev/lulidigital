@@ -69,7 +69,9 @@ jobs:
             echo "ERROR: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set."
             exit 1
           fi
-          if [ ! -f /tmp/seo-audit-message.txt ]; then
+          # Same trap as index-on-publish: a file that exists but is empty still
+          # passes -f, and Telegram gets a blank message. Require content.
+          if [ ! -s /tmp/seo-audit-message.txt ]; then
             echo "No audit message generated (Search Console likely not configured). Skipping Telegram."
             exit 0
           fi
