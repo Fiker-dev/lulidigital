@@ -1,4 +1,5 @@
 ---
+scheduledFor: "2026-10-02"
 title: "Your Operations Are Running You. Here's How to Flip That."
 description: "Founders buried in manual work need a clear path to AI-powered operations. Here's what to audit, what to automate, and what a human should still own."
 pubDate: 2026-09-21
