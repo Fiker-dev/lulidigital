@@ -460,6 +460,26 @@ if (locationStuffingReason) {
   process.exit(1);
 }
 
+// Semantic duplicate check. The prompt is handed every published title and
+// told to be distinct, but that is a request — "Your Operations Are Running
+// You" still came back 0.892 similar to an already-published post, because two
+// pieces can share an idea while sharing almost no words. This compares
+// meaning, after the fact, where it can actually be measured.
+try {
+  const { execFileSync } = await import("node:child_process");
+  execFileSync("node", [
+    join(__dirname, "topic-memory.mjs"), "--check", post.title, post.description || "",
+  ], { stdio: "inherit", env: process.env });
+} catch (err) {
+  if (err.status === 1) {
+    console.error("Refusing to write a post that repeats one already published.");
+    process.exit(1);
+  }
+  // Exit 2 (no API key) or a network failure must not block the day's post —
+  // the check is a safeguard, not a dependency.
+  console.warn(`Duplicate check could not run (${err.message.split("\n")[0]}) — continuing.`);
+}
+
 const fabricatedPattern = contentLooksFabricated(post.content);
 if (fabricatedPattern) {
   console.error(`Generated content appears to contain fabricated relatability: ${fabricatedPattern}`);

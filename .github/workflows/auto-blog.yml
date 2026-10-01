@@ -135,6 +135,15 @@ jobs:
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
 
+      # Keep the topic memory current before writing, so the duplicate check
+      # compares against what is actually published today.
+      - name: Refresh topic memory
+        if: steps.backlog.outputs.skip != 'true'
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: node scripts/topic-memory.mjs --sync
+
       - name: Generate blog post
         if: steps.backlog.outputs.skip != 'true'
         run: node scripts/generate-post.mjs
