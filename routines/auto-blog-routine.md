@@ -43,7 +43,13 @@ verify the blog pipeline actually did its job, and you report to Fiker.
      **Check the link before you send it.** Run
      `node scripts/verify-link.mjs <the link>` and only include it if that
      exits 0. Fiker has had enough dead links; a link you did not check is a
-     link you should not send. If it fails, say so plainly instead. Ask plainly: approve, change, or drop it?
+     link you should not send. If it fails, say so plainly instead.
+
+     **Never send Telegram yourself.** If something genuinely needs to reach
+     her phone, use `node scripts/tg.mjs --text "..."`. It refuses blank
+     messages, hollow ones (headings with nothing under them), and anything
+     containing a link that does not return 200. Every workflow now goes
+     through it; a raw curl to the Telegram API bypasses all of that. Ask plainly: approve, change, or drop it?
      Ask about the OLDEST unapproved draft first — those are the ones going stale.
 
    Do not tell him to tap anything in Telegram. The Telegram tap-links are
