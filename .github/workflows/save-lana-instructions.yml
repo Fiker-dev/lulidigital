@@ -146,6 +146,4 @@ jobs:
           if [ -z "$TOPIC" ]; then TOPIC="(SEO auto-select)"; fi
           if [ "$DRAFT" = "false" ]; then STATUS="and publish immediately"; else STATUS="as a draft for your approval"; fi
           TEXT=$(printf "Got it. Queued for the next scheduled post.\n\nTopic: %s\nAngle: %s\nSource notes: %s\nWill generate: %s\n\nI'll run this on the next scheduled post (Mon, Wed, or Fri at 08:17 UTC / 10:17 South Africa). You can override it anytime by sending new instructions." "$TOPIC" "${ANGLE:-not specified}" "${SOURCE:-not specified}" "$STATUS")
-          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=${TEXT}"
+          node scripts/tg.mjs --text "${TEXT}"

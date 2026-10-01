@@ -46,9 +46,7 @@ jobs:
           set -e
           if [ "$STATUS" != "0" ]; then
             if [ "$STATUS" != "2" ]; then exit "$STATUS"; fi
-            curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-              --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-              --data-urlencode "text=Could not find a draft with slug: ${DELETE_SLUG}. Check the slug and try again."
+          node scripts/tg.mjs --text "Could not find a draft with slug: ${DELETE_SLUG}. Check the slug and try again."
             exit 0
           fi
 
@@ -74,9 +72,10 @@ jobs:
           git push
 
       - name: Send Telegram confirmation
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           SLUG="$DELETE_SLUG"
           TEXT=$(printf "Draft deleted: %s\n\nIt's gone from the repo. Want me to write a new one? Just tell me the topic." "$SLUG")
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            --data-urlencode "text=${TEXT}"
+          node scripts/tg.mjs --text "${TEXT}"

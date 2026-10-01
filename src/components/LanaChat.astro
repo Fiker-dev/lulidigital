@@ -5,6 +5,11 @@
 <div class="lana-backdrop" data-lana-backdrop aria-hidden="true"></div>
 
 <!-- Persistent chat trigger pill — desktop + mobile -->
+<aside class="lana-proactive" data-lana-proactive hidden aria-live="polite">
+  <button class="lana-proactive__message" type="button" data-lana-proactive-open></button>
+  <button class="lana-proactive__dismiss" type="button" aria-label="Dismiss Lana's suggestion" data-lana-proactive-dismiss>×</button>
+</aside>
+
 <button class="lana-trigger" id="lana-mobile-trigger" type="button" aria-label="Chat with Lana">
   <svg class="lana-trigger__bee" viewBox="0 0 96 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <g class="lw"><ellipse cx="38" cy="18" rx="21" ry="12" fill="rgba(210,235,255,.75)"/><ellipse cx="57" cy="19" rx="17" ry="10" fill="rgba(210,235,255,.65)"/></g>
@@ -98,8 +103,14 @@
     const h = new Date().getHours();
     const timeWord = h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
 
-    const history = [];
-    let greetingDone = false;
+    const HISTORY_KEY = "luli:lana-history:v1";
+    let history = [];
+    try {
+      const stored = JSON.parse(sessionStorage.getItem(HISTORY_KEY) || "[]");
+      if (Array.isArray(stored)) history = stored.filter(item => item && (item.role === "user" || item.role === "assistant") && typeof item.content === "string").slice(-20);
+    } catch {}
+    let greetingDone = history.length > 0;
+    const saveHistory = () => { try { sessionStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(-20))); } catch {} };
 
     // Helpers
     const sleep = (ms) => new Promise(r => setTimeout(r, ms));
@@ -152,6 +163,15 @@
       messagesEl.appendChild(el);
       messagesEl.scrollTop = messagesEl.scrollHeight;
     };
+
+    history.forEach(item => {
+      if (item.role === "user") appendUserMsg(item.content);
+      else {
+        const { row, bubble } = makeBeeRow(false);
+        bubble.textContent = item.content;
+        messagesEl.appendChild(row);
+      }
+    });
 
     const showTyping = () => {
       const row = document.createElement("div");
@@ -230,6 +250,7 @@
         returnFocus = document.activeElement;
         syncMobileViewport();
         if (!isMobile()) input.focus({ preventScroll: true });
+        else closeBtn.focus({ preventScroll: true });
         document.body.classList.add("lana-open");
         if (hbee) hbee.classList.add("is-alive");
       } else {
@@ -246,6 +267,8 @@
 
       appendUserMsg(msg);
       history.push({ role: "user", content: msg });
+      saveHistory();
+      window.__lanaIntelligence?.markResponded?.();
       input.value = "";
       autoSize();
       setInputLocked(true);
@@ -256,12 +279,13 @@
         res = await fetch("/api/lana", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ messages: history.slice(-14), market: currentMarket }),
+          body: JSON.stringify({ messages: history.slice(-14), market: currentMarket, context: window.__lanaIntelligence?.getContext?.() || null }),
         });
       } catch {
         hideTyping();
         showErrorMsg();
         history.push({ role: "assistant", content: "Experiencing issues — please tap the contact desk." });
+        saveHistory();
         setInputLocked(false);
         return;
       }
@@ -271,6 +295,7 @@
       if (!res.ok) {
         showErrorMsg();
         history.push({ role: "assistant", content: "Experiencing issues — please tap the contact desk." });
+        saveHistory();
         setInputLocked(false);
         return;
       }
@@ -314,6 +339,7 @@
         const displayText = fullText.replace(LEAD_RE,"").replace(CONTACT_RE,"").replace(/\s+/g," ").trim() || localFallback(msg);
         bubble.textContent = displayText;
         history.push({ role: "assistant", content: displayText });
+        saveHistory();
 
         const contactMatch = fullText.match(CONTACT_RE);
         if (contactMatch) {
@@ -326,6 +352,7 @@
         }
 
         if (leadData?.email) {
+          window.dispatchEvent(new CustomEvent("luli:lana-lead-captured"));
           fetch("/api/lana-lead", {
             method:"POST", headers:{"content-type":"application/json"},
             body: JSON.stringify(leadData),
@@ -334,6 +361,7 @@
       } else {
         showErrorMsg();
         history.push({ role: "assistant", content: "Experiencing issues — please tap the contact desk." });
+        saveHistory();
       }
 
       setInputLocked(false);
@@ -353,6 +381,7 @@
       messagesEl.appendChild(r1);
       await typeWriter(b1, line1);
       history.push({ role: "assistant", content: line1 });
+      saveHistory();
 
       await sleep(600);
       showTyping();
@@ -364,18 +393,39 @@
       messagesEl.appendChild(r2);
       await typeWriter(b2, line2);
       history.push({ role: "assistant", content: line2 });
+      saveHistory();
 
       input.focus();
     };
 
     const mobileTrigger = document.getElementById("lana-mobile-trigger");
+    const proactive = document.querySelector("[data-lana-proactive]");
+    const proactiveMessage = proactive?.querySelector("[data-lana-proactive-open]");
+    const proactiveDismiss = proactive?.querySelector("[data-lana-proactive-dismiss]");
+    let proactiveId = "";
+    const hideProactive = () => { if (proactive) proactive.hidden = true; };
     const dispatchClose = () => window.dispatchEvent(new CustomEvent("luli:lana-close"));
     const dispatchOpen  = () => window.dispatchEvent(new CustomEvent("luli:lana-open"));
 
     window.addEventListener("luli:lana-open", () => {
+      hideProactive();
       setOpen(true);
       if (mobileTrigger) { mobileTrigger.style.opacity="0"; mobileTrigger.style.pointerEvents="none"; }
       runGreeting();
+    });
+    window.addEventListener("luli:lana-proactive", (event) => {
+      if (!proactive || !proactiveMessage || !event.detail?.message) return;
+      proactiveId = event.detail.id || "";
+      proactiveMessage.textContent = event.detail.message;
+      proactive.hidden = false;
+    });
+    proactiveMessage?.addEventListener("click", () => {
+      window.dispatchEvent(new CustomEvent("luli:lana-prompt-open", { detail: { id: proactiveId } }));
+      dispatchOpen();
+    });
+    proactiveDismiss?.addEventListener("click", () => {
+      hideProactive();
+      window.dispatchEvent(new CustomEvent("luli:lana-prompt-dismiss", { detail: { id: proactiveId } }));
     });
     window.addEventListener("luli:lana-close", () => {
       setOpen(false);
@@ -391,6 +441,14 @@
     window.visualViewport?.addEventListener("scroll", syncMobileViewport, { passive: true });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && panel.classList.contains("is-open")) dispatchClose();
+      if (e.key === "Tab" && panel.classList.contains("is-open")) {
+        const focusable = [...panel.querySelectorAll('button:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])')]
+          .filter(el => !el.hidden && el.getClientRects().length > 0);
+        if (!focusable.length) return;
+        const first = focusable[0], last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     });
 
     form.addEventListener("submit", (e) => { e.preventDefault(); sendMessage(input.value); });
@@ -482,7 +540,7 @@
     bottom: 24px;
     right: 24px;
     z-index: 195;
-    background: #B86B00;
+    background: var(--brand, #B86B00);
     color: white;
     border: 0;
     border-radius: 28px;
@@ -496,7 +554,7 @@
     box-shadow: 0 4px 18px rgba(184,107,0,.40), 0 1px 3px rgba(0,0,0,.14);
     transition: opacity 280ms ease, transform 200ms ease, background 150ms ease;
   }
-  .lana-trigger:hover  { background: #9A5800; transform: translateY(-1px); }
+  .lana-trigger:hover  { background: var(--wine-strong, #9A5800); transform: translateY(-1px); }
   .lana-trigger:active { transform: scale(0.97); }
   /* Stay visible while scrolling — just soften so it never blocks reading */
   .lana-trigger.is-scrolling {
@@ -506,7 +564,31 @@
   .lana-trigger__bee  { width: 22px; height: auto; flex-shrink: 0; }
   .lana-trigger__label { white-space: nowrap; }
 
+  .lana-proactive {
+    position: fixed;
+    right: 24px;
+    bottom: 82px;
+    z-index: 196;
+    width: min(300px, calc(100vw - 32px));
+    padding: 5px 38px 5px 6px;
+    border: 1px solid rgba(20,19,18,.1);
+    border-radius: 18px;
+    background: rgba(255,252,240,.98);
+    box-shadow: 0 14px 34px rgba(20,12,4,.18);
+  }
+  .lana-proactive[hidden] { display: none; }
+  .lana-proactive__message {
+    width: 100%; min-height: 44px; padding: 8px 10px; border: 0; background: transparent;
+    color: rgba(20,19,18,.9); font: 500 13.5px/1.4 var(--font-body, sans-serif); text-align: left; cursor: pointer;
+  }
+  .lana-proactive__dismiss {
+    position: absolute; top: 8px; right: 8px; width: 30px; height: 30px; border: 0; border-radius: 50%;
+    background: rgba(20,19,18,.06); color: rgba(20,19,18,.6); font-size: 20px; cursor: pointer;
+  }
+
   @media (max-width: 640px) {
+    .lana-proactive { right: 16px; bottom: 72px; }
+    .lana-proactive__dismiss { top: 2px; right: 2px; width: 44px; height: 44px; }
     .lana-trigger {
       padding: 7px 13px 7px 8px;
       font-size: 12px;
@@ -769,12 +851,12 @@
   .lana-chat__send {
     align-self: flex-end; border: 0; border-radius: 13px;
     padding: 0 16px; height: 44px;
-    background: #B86B00; color: white;
+    background: var(--brand, #B86B00); color: white;
     font: inherit; font-size: 13.5px; font-weight: 600;
     cursor: pointer; letter-spacing: .01em;
     transition: background 160ms ease, opacity 160ms ease;
   }
-  .lana-chat__send:hover    { background: #9A5800; }
+  .lana-chat__send:hover    { background: var(--wine-strong, #9A5800); }
   .lana-chat__send:disabled { opacity: .55; cursor: not-allowed; }
   @media (max-width: 640px) {
     .lana-chat__send {
@@ -812,4 +894,18 @@
   .lana-contact-btn--email:hover { background: rgba(20,19,18,.13); }
   .lana-contact-btn--wa { background: #25D366; color: #fff; border: none; }
   .lana-contact-btn--wa:hover { background: #1ebe5d; }
+
+  .lana-trigger:focus-visible,
+  .lana-proactive button:focus-visible,
+  .lana-chat button:focus-visible,
+  .lana-chat textarea:focus-visible,
+  .lana-chat a:focus-visible {
+    outline: 3px solid var(--honey-bright, #ffd45a);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lw, .lana-hbee.is-alive .lw, .lana-av--think, .lana-typing__dots span { animation: none !important; }
+    .lana-trigger, .lana-backdrop, .lana-chat__panel, .lana-chat__close, .lana-chat__send { transition: none !important; }
+  }
 </style>

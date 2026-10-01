@@ -1,5 +1,8 @@
 const DEFAULT_GEMINI_MODEL = "gemini-2.5-flash";
 
+/** @typedef {{ role: "user" | "assistant", content: string }} GeminiMessage */
+/** @typedef {{ system?: string, messages?: GeminiMessage[], maxTokens?: number, temperature?: number, thinkingBudget?: number }} GeminiOptions */
+
 export function getGeminiApiKey() {
   return import.meta?.env?.GEMINI_API_KEY ?? process.env.GEMINI_API_KEY;
 }
@@ -8,13 +11,15 @@ export function getGeminiModel() {
   return import.meta?.env?.GEMINI_MODEL ?? process.env.GEMINI_MODEL ?? DEFAULT_GEMINI_MODEL;
 }
 
-export async function generateGeminiText({
+/** @param {GeminiOptions} [options] */
+export async function generateGeminiText(options = {}) {
+  const {
   system = "",
   messages = [],
   maxTokens = 800,
   temperature = 0.4,
   thinkingBudget,
-} = {}) {
+  } = options;
   const apiKey = getGeminiApiKey();
   if (!apiKey) return "";
 

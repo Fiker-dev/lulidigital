@@ -76,9 +76,7 @@ jobs:
             exit 0
           fi
           TEXT=$(cat /tmp/seo-audit-message.txt)
-          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=${TEXT}")
+          node scripts/tg.mjs --text "${TEXT}"
           HTTP_CODE=$(echo "$RESPONSE" | tail -1)
           echo "Telegram response: $RESPONSE"
           if [ "$HTTP_CODE" != "200" ]; then echo "ERROR: Telegram failed HTTP $HTTP_CODE"; exit 1; fi

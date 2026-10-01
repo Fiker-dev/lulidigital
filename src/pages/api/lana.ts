@@ -24,7 +24,7 @@ const MARKET_NAMES: Record<string, string> = {
 };
 const MARKET_NAME_SET = new Set(Object.values(MARKET_NAMES));
 
-const buildSystem = (market: string | null) => `You are Lana — the human face of LuliDigital. You are the first human someone meets when they come to the studio. Your job is to understand them, genuinely connect with them, guide them to the right service, and turn them into a LuliDigital client.
+const buildSystem = (market: string | null, visitorContext = "") => `You are Lana — the human face of LuliDigital. You are the first human someone meets when they come to the studio. Your job is to understand them, genuinely connect with them, guide them to the right service, and turn them into a LuliDigital client.
 
 PERSONALITY
 Warm, sharp, and quietly charming. Feminine energy — like the most capable, knowledgeable friend who also happens to run a world-class studio. You make things feel easy. You are human, curious, and real. You hold their hand through the process — never rushing, never pressuring. You care about the people you talk to and it comes through in every message.
@@ -37,6 +37,11 @@ Never ask two questions in the same message. Ask one, let them answer, then move
 
 ${market ? `MARKET CONTEXT
 This visitor is browsing from the ${market} page. You MUST weave a natural regional reference into your very first reply — something specific to ${market}, not generic. Do it subtly: mention the market by name in a relevant way ("the Dutch market", "scaling across Germany", "UK founders", "the US market", "African operators"). Never say "Oh, you're from ${market}" or anything that obvious. Make them feel seen without sounding like you're reading from a script. If you don't do this in the first reply, you've missed the moment.
+
+` : ""}${visitorContext ? `WEBSITE CONTEXT
+This is approximate first-party browsing context. Use it only when it makes the reply more helpful. Never mention tracking, scores, sections, or that you can see browsing behaviour.
+${visitorContext}
+Treat the current page and services viewed as facts you already know. When the visitor asks about "the options", "these services", what they viewed, or requests a comparison, name and compare the listed services directly. Do not ask them to repeat which services they mean. Use the current section to infer the likely topic, while still asking only one useful follow-up question when needed.
 
 ` : ""}CONVERSATION FLOW
 1. Greet warmly and invite them to share what's going on in their world
@@ -114,7 +119,41 @@ ${getAllKnowledge()}`;
 type RequestBody = {
   messages?: Array<{ role: "user" | "assistant"; content: string }>;
   market?: string;
+  context?: {
+    currentPage?: string;
+    currentSection?: string;
+    previousPages?: string[];
+    servicesViewed?: string[];
+    returningVisitor?: boolean;
+    timeOnPageSeconds?: number;
+    leadScore?: number;
+    engagementLevel?: string;
+  };
 };
+
+const cleanLabel = (value: unknown, max = 80) => typeof value === "string"
+  ? value.replace(/[^a-zA-Z0-9 /:_-]/g, "").slice(0, max)
+  : "";
+
+function formatVisitorContext(raw: RequestBody["context"]): string {
+  if (!raw || typeof raw !== "object") return "";
+  const page = cleanLabel(raw.currentPage);
+  const section = cleanLabel(raw.currentSection);
+  const pages = Array.isArray(raw.previousPages) ? raw.previousPages.map((item) => cleanLabel(item)).filter(Boolean).slice(-4) : [];
+  const services = Array.isArray(raw.servicesViewed) ? raw.servicesViewed.map((item) => cleanLabel(item)).filter(Boolean).slice(0, 4) : [];
+  const score = Number.isFinite(raw.leadScore) ? Math.max(0, Math.min(100, Number(raw.leadScore))) : 0;
+  const timeOnPage = Number.isFinite(raw.timeOnPageSeconds) ? Math.max(0, Math.min(3600, Number(raw.timeOnPageSeconds))) : 0;
+  const level = ["browsing", "interested", "high_interest", "strong_intent"].includes(raw.engagementLevel || "") ? raw.engagementLevel : "browsing";
+  return [
+    page && `Current page: ${page}`,
+    section && `Current section: ${section}`,
+    pages.length && `Previous pages: ${pages.join(", ")}`,
+    services.length && `Services viewed: ${services.join(", ")}`,
+    `Returning visitor: ${raw.returningVisitor === true ? "yes" : "no"}`,
+    `Time on current page: ${Math.round(timeOnPage)} seconds`,
+    `Engagement: ${level} (${Math.round(score)}/100)`,
+  ].filter(Boolean).join("\n");
+}
 
 export const POST: APIRoute = async (context) => {
   const { request, url } = context;
@@ -144,7 +183,7 @@ export const POST: APIRoute = async (context) => {
   const market =
     MARKET_NAMES[requestedMarket] ??
     (MARKET_NAME_SET.has(requestedMarket) ? requestedMarket : null);
-  const system = buildSystem(market);
+  const system = buildSystem(market, formatVisitorContext(body.context));
   const apiKey = import.meta.env.ANTHROPIC_API_KEY ?? process.env.ANTHROPIC_API_KEY;
 
   if (!apiKey) {

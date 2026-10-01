@@ -30,6 +30,4 @@ jobs:
         run: |
           if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then exit 0; fi
           MSG=$(cat /tmp/indexing-summary.txt 2>/dev/null || echo "Indexing request run finished.")
-          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=${MSG}" > /dev/null
+          node scripts/tg.mjs --text "${MSG}"

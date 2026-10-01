@@ -69,5 +69,4 @@ jobs:
           else
             TEXT=$(printf '✅ Approved social pack: %s\n\nIt posts on the next Post Approved Social Packs run (weekdays 11:23 UTC).' "$PACK_SLUG")
           fi
-          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" --data-urlencode "text=${TEXT}" > /dev/null
+          node scripts/tg.mjs --text "${TEXT}"

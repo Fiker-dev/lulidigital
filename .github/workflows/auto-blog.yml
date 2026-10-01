@@ -129,8 +129,7 @@ jobs:
             echo "skip=true" >> "$GITHUB_OUTPUT"
             if [ -n "$TELEGRAM_BOT_TOKEN" ]; then
               TEXT=$(printf "\U0001F4E5 %s drafts are already waiting for your approval, so I didn't write another one today.\n\nApprove or drop some in the Claude routine session and writing resumes automatically." "$WAITING")
-              curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-                --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" --data-urlencode "text=${TEXT}" > /dev/null
+              node scripts/tg.mjs --text "${TEXT}"
             fi
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
@@ -204,12 +203,7 @@ jobs:
           SLUG=$(cat /tmp/post_slug.txt)
           URL="https://lulidigital.com/blog/${SLUG}"
           TEXT=$(printf "New post live on LuliDigital\n\n%s\n\n%s\n\nNot happy? Reply: take down %s" "$TITLE" "$URL" "$SLUG")
-          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=${TEXT}")
-          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
-          echo "Telegram response: $RESPONSE"
-          if [ "$HTTP_CODE" != "200" ]; then echo "ERROR: Telegram failed HTTP $HTTP_CODE"; exit 1; fi
+          node scripts/tg.mjs --text "${TEXT}"
 
       - name: Send draft preview for approval
         if: ${{ steps.backlog.outputs.skip != 'true' && (github.event_name == 'schedule' || github.event.inputs.publish_status != 'publish') }}
@@ -248,17 +242,9 @@ jobs:
           done
           if [ "$CODE" != "200" ]; then
             echo "ERROR: read link is $CODE, not 200 — refusing to send a broken approval message."
-            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-              --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-              --data-urlencode "text=⚠️ Draft '${SLUG}' was written, but its read link returns HTTP ${CODE}. Not sending a broken link. Ask Claude to check auto-blog.yml." > /dev/null
+            node scripts/tg.mjs --text "⚠️ Draft '${SLUG}' was written, but its read link returns HTTP ${CODE}. Not sending a broken link. Ask Claude to check auto-blog.yml."
             exit 1
           fi
           echo "Read link verified HTTP 200."
           TEXT=$(printf "\U0001F4DD Draft ready for your approval\n\n%s\n\n%s\n\n%s\n\nRead it:\n%s\n\nWould go live: %s\nSlug: %s\n\nTo approve: reply in the Claude routine session — say \"approve\" to schedule it, or tell it what to change. Nothing publishes until you do.\n\nYou'll get a separate \"blog is live\" message here once it actually publishes." "$TITLE" "$DESCRIPTION" "$PREVIEW" "$READ_URL" "$SCHEDULED_FOR" "$SLUG")
-          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=${TEXT}" \
-            --data-urlencode "disable_web_page_preview=true")
-          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
-          echo "Telegram response: $RESPONSE"
-          if [ "$HTTP_CODE" != "200" ]; then echo "ERROR: Telegram failed HTTP $HTTP_CODE"; exit 1; fi
+          node scripts/tg.mjs --text "${TEXT}" --no-preview

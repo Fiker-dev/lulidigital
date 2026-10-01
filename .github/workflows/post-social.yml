@@ -97,9 +97,7 @@ jobs:
           echo "$OUT"
           # Only ping when something is actually waiting to be posted.
           if echo "$OUT" | grep -q "📣" && [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
-            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-              --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-              --data-urlencode "text=${OUT}" > /dev/null
+            node scripts/tg.mjs --text "${OUT}"
           fi
 
       - name: Commit STATUS updates
@@ -126,6 +124,4 @@ jobs:
             exit 0
           fi
           MSG=$(cat /tmp/post-summary.txt 2>/dev/null || echo "Social poster ran (no summary).")
-          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=${MSG}" > /dev/null
+          node scripts/tg.mjs --text "${MSG}"

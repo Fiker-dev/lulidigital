@@ -76,6 +76,4 @@ jobs:
         run: |
           if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then exit 0; fi
           TEXT=$(printf "🗓 Scheduled: %s\n\nGoes live %s (around 04:30 UTC) and gets submitted to Google automatically.\n\nThe LinkedIn company announcement is written and waiting — caption + asset land here the moment the post is confirmed live." "$SCHEDULE_SLUG" "$SCHEDULE_DATE")
-          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=${TEXT}" > /dev/null
+          node scripts/tg.mjs --text "${TEXT}"

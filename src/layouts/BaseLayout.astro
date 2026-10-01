@@ -213,7 +213,7 @@ const jsonLd = {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
     {seoTarget?.keywords?.length > 0 && (
       <meta name="keywords" content={seoTarget.keywords.join(", ")} />
@@ -322,6 +322,8 @@ const jsonLd = {
 </html>
 
 <script>
+  import { initLanaIntelligence } from "../scripts/lana/tracker.js";
+
   const scheduleEnhancements = (callback: () => void) => {
     if ("requestIdleCallback" in window) {
       window.requestIdleCallback(callback, { timeout: 1200 });
@@ -331,6 +333,7 @@ const jsonLd = {
   };
 
   const initPageEnhancements = () => {
+    initLanaIntelligence();
     if (document.querySelector("[data-bee-rim]")) {
       initBee();
     }

@@ -48,8 +48,9 @@ jobs:
           git push
 
       - name: Send Telegram confirmation
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           SLUG="$UNPUBLISH_SLUG"
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            --data-urlencode "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            --data-urlencode "text=Taken down: ${SLUG}. It's hidden from the site. Let me know if you want a replacement."
+          node scripts/tg.mjs --text "Taken down: ${SLUG}. It's hidden from the site. Let me know if you want a replacement."
