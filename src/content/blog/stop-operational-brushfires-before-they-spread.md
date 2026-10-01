@@ -1,4 +1,5 @@
 ---
+scheduledFor: "2026-10-02"
 title: "The Brushfire Problem: How Small Operational Failures Burn Down Your Week"
 description: "Compounding operational failures don't stay small. Here's how to spot the pattern, stop the spread, and build systems that hold."
 pubDate: 2026-09-09
