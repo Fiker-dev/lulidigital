@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-25T13:49:06.182Z",
-  "week": "2026-09-25",
+  "generatedAt": "2026-10-01T15:29:18.173Z",
+  "month": "2026-10",
   "pages": {
     "/denmark": {
       "primary": [
@@ -9,16 +9,16 @@
         "danish online marketing agency",
         "digital marketing agency for danish markets"
       ],
-      "source": "Search Console — 2026-09"
+      "source": "Search Console — 2026-10"
     },
     "/munich": {
       "primary": [
         "digital agency munich",
         "digital marketing agency munich",
         "digital agency münchen",
-        "conversational ai consultancy munich"
+        "it marketing in munich"
       ],
-      "source": "Search Console — 2026-09"
+      "source": "Search Console — 2026-10"
     },
     "/norway": {
       "primary": [
@@ -27,7 +27,7 @@
         "ai digital marketing company in norway",
         "ai digital marketing services in norway"
       ],
-      "source": "Search Console — 2026-09"
+      "source": "Search Console — 2026-10"
     },
     "/switzerland": {
       "primary": [
@@ -36,19 +36,7 @@
         "ai digital marketing agencies in switzerland",
         "ai advertising service in switzerland"
       ],
-      "source": "Search Console — 2026-09"
-    },
-    "/ai-desk": {
-      "primary": [
-        "ai digital service"
-      ],
-      "source": "weekly Search Console refresh 2026-09-11"
-    },
-    "/va-desk": {
-      "primary": [
-        "digital secretary"
-      ],
-      "source": "weekly Search Console refresh 2026-09-18"
+      "source": "Search Console — 2026-10"
     }
   }
 }
