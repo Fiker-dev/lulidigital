@@ -1,0 +1,1 @@
+discarded | operations-ai-co-pilot-founders | blog draft UNSCHEDULED 2026-10-01: 0.892 semantic duplicate of the published "Your Team Is Still Doing These 5 Things Manually" (and 0.887 of "You Can't Automate What Only Lives in Your Head"). Assets left in place in case the piece is rewritten from a genuinely different angle; do NOT announce as-is.
