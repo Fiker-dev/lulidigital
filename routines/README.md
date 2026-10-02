@@ -155,6 +155,28 @@ Chatterbox (cloned voice) and Remotion, which live on Fiker's Mac:
 - The sender prefers `blog-announce-video.mp4` over the carousel over the card,
   so once the video lands in the pack it is what goes out.
 
+**Punctual publishing (2026-10-02).** GitHub's scheduler is the reason posts
+land late: measured over ten consecutive runs, the 04:23 UTC cron fires
+10:02-10:59 and the 13:41 one 17:55-20:13 — a steady ~6h slip. Two earlier
+slots (00:17, 02:29) now absorb that, and a launchd agent on the Mac dispatches
+the workflow at 06:15/08:15 local:
+
+- `~/Library/Application Support/lulidigital/publish-blog-now.sh` (copy kept at
+  `scripts/publish-blog-now.sh` for version control)
+- `~/Library/LaunchAgents/com.lulidigital.blog-publish.plist`
+- Off: `launchctl bootout gui/$(id -u)/com.lulidigital.blog-publish`
+
+**It must NOT live in the repo.** launchd agents are blocked by TCC from reading
+Desktop files — `stat` succeeds, `open` fails — so a script under
+`~/Desktop/...` loads and then silently never runs. For the same reason it
+reads due-post state from the GitHub API rather than the local checkout.
+
+**Vercel is not a working path right now.** `/api/cron/seo-agent` would dispatch
+the publish on time, but that project has no `CRON_SECRET` (both Vercel crons
+have returned 500 daily) and its `GITHUB_WORKFLOW_TOKEN` returns
+`401 Bad credentials`. Setting both in the Vercel dashboard restores the SEO
+crons, the draft previews, and on-time publishing from Vercel's scheduler.
+
 Still disabled: `blog-catchup.yml`, and `telegram-webhook-health.yml` (which
 fought OpenClaw for the bot every 6 hours — leave it off).
 
