@@ -107,6 +107,9 @@ export const GET: APIRoute = async ({ request }) => {
         mode: "degraded",
         reason: "CRON_SECRET is not configured on this project",
         blogPublishDispatched: publishOnly.ok,
+        // Surfaced because a false here was unexplainable from outside, and the
+        // whole point of this route is that it fails where someone can see it.
+        dispatchError: publishOnly.ok ? null : publishOnly.reason,
         seoSweep: "skipped — set CRON_SECRET to re-enable",
         calledByVercelCron: isVercelCron,
       }),
