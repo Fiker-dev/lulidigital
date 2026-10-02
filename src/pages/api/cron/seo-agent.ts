@@ -28,6 +28,43 @@ async function sendTelegramNotification(text: string) {
   }
 }
 
+
+/**
+ * Fire the blog publish workflow.
+ *
+ * GitHub's own scheduler is the reason posts keep landing late: the 04:23 UTC
+ * cron has fired at ~10:30 every day, and 13:41 at ~19:00 — a steady six-hour
+ * slip, so a post meant for Fiker's morning appears at lunchtime. Vercel's
+ * scheduler runs on time, and this route already runs daily at 04:00 UTC, so it
+ * kicks the workflow itself.
+ *
+ * The workflow is idempotent — it publishes only drafts whose scheduledFor is
+ * due and still draft:true — so the GitHub crons stay on as a backstop and a
+ * duplicate run costs nothing.
+ */
+async function dispatchBlogPublish() {
+  const token = process.env.GITHUB_WORKFLOW_TOKEN;
+  if (!token) return { ok: false, reason: "no GITHUB_WORKFLOW_TOKEN" };
+  try {
+    const res = await fetch(
+      "https://api.github.com/repos/Fiker-dev/lulidigital/actions/workflows/publish-scheduled.yml/dispatches",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/vnd.github+json",
+          "X-GitHub-Api-Version": "2022-11-28",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ref: "main" }),
+      },
+    );
+    return res.ok ? { ok: true } : { ok: false, reason: `${res.status} ${await res.text()}` };
+  } catch (error) {
+    return { ok: false, reason: String(error) };
+  }
+}
+
 export const GET: APIRoute = async ({ request }) => {
   const cronSecret = process.env.CRON_SECRET;
   const authHeader = request.headers.get("authorization");
@@ -44,6 +81,18 @@ export const GET: APIRoute = async ({ request }) => {
       status: 401,
       headers: { "Content-Type": "application/json" },
     });
+  }
+
+  // Publishing goes FIRST and is isolated: the SEO sweep below makes a dozen
+  // network calls, and a slow or failing sweep must never hold up the blog.
+  const publish = await dispatchBlogPublish();
+  if (publish.ok) {
+    console.log("Blog publish workflow dispatched.");
+  } else {
+    console.error(`Blog publish dispatch failed: ${publish.reason}`);
+    await sendTelegramNotification(
+      `⚠️ Could not start the blog publish job from the Vercel cron (${publish.reason}). GitHub's own schedule is the backstop, but it runs hours late — check if today's post is missing.`,
+    );
   }
 
   const markets = await Promise.all([
