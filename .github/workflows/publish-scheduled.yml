@@ -13,6 +13,14 @@ on:
     #
     # 04:23 UTC — early enough that even a 4-hour slip still lands in Fiker's
     # morning (SAST is UTC+2).
+    # Measured 2026-10-02 over ten consecutive runs: this 04:23 slot actually
+    # fires 10:02-10:59, and the 13:41 one 17:55-20:13. A steady ~6h slip. So
+    # add two slots just after midnight UTC — the same slip puts them in Fiker's
+    # early morning instead of her lunchtime. Whichever fires first publishes;
+    # the rest find nothing to do, because the job only touches drafts that are
+    # due and still draft:true.
+    - cron: '17 0 * * *'
+    - cron: '29 2 * * *'
     - cron: '23 4 * * *'
     # 13:41 UTC — catch-up. The job is idempotent (it only publishes posts whose
     # scheduledFor is due and still draft), so a second run costs nothing when
@@ -166,6 +174,31 @@ jobs:
               node scripts/tg.mjs --text "📝 The LinkedIn company announcement for '${SLUG}' could not be built automatically. Ask Claude to run: node scripts/generate-blog-announcement.mjs --slug ${SLUG}"
             fi
           done
+
+      # Both Vercel crons returned "CRON_SECRET is not configured" every day
+      # and nobody noticed, because a cron that fails silently looks exactly
+      # like a cron that had nothing to do. Check them where someone will see it.
+      - name: Check the Vercel crons are actually configured
+        if: always()
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          BROKEN=""
+          for p in seo-agent weekly-seo; do
+            CODE=$(curl -s -o /tmp/cron-body.txt -w "%{http_code}" "https://lulidigital.com/api/cron/$p")
+            # 401 is correct and healthy: the route is up and rejecting unauthorised
+            # callers. 500 means it cannot even read its own secret.
+            if [ "$CODE" = "500" ]; then
+              BROKEN="${BROKEN}\n  /api/cron/${p}: $(head -c 120 /tmp/cron-body.txt)"
+            fi
+            echo "/api/cron/$p -> $CODE"
+          done
+          if [ -n "$BROKEN" ]; then
+            MSG=$(printf "⚠️ Vercel cron jobs are misconfigured and have been failing silently:%b\n\nFix: add CRON_SECRET to the Vercel project env (any long random string). That revives the SEO agent, the weekly SEO run, and the on-time blog publish." "$BROKEN")
+            node scripts/tg.mjs --text "$MSG" --no-verify || true
+          fi
 
       - name: Telegram notification
         if: ${{ always() }}
