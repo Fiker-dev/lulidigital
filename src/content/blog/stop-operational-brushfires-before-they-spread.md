@@ -1,11 +1,10 @@
 ---
-scheduledFor: "2026-10-02"
 title: "The Brushfire Problem: How Small Operational Failures Burn Down Your Week"
 description: "Compounding operational failures don't stay small. Here's how to spot the pattern, stop the spread, and build systems that hold."
-pubDate: 2026-09-09
+pubDate: 2026-10-02
 category: "AI Automation"
 readingTime: "6 min read"
-draft: true
+draft: false
 ---
 
 One missed handoff turns into a delayed deliverable. The delayed deliverable turns into a client chase. The client chase pulls you out of a planning session. By Thursday, you're firefighting again, and the week you planned on Sunday is gone.
