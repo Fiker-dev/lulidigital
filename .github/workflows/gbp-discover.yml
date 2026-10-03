@@ -10,6 +10,13 @@ name: GBP Discover IDs
 
 on:
   workflow_dispatch:
+  # The project was approved for the Business Profile API on 2026-08-10, but the
+  # two My Business APIs were only enabled on 2026-10-03 and every call returns
+  # 429. Quota can take a while to follow enablement, so rather than have Fiker
+  # keep checking, retry twice a day and speak up only when something changes.
+  schedule:
+    - cron: '37 6 * * *'
+    - cron: '37 18 * * *'
 
 jobs:
   discover:
@@ -23,8 +30,29 @@ jobs:
           node-version: '24'
 
       - name: Discover account + location
+        id: discover
+        continue-on-error: true
         env:
           GBP_CLIENT_ID: ${{ secrets.GBP_CLIENT_ID }}
           GBP_CLIENT_SECRET: ${{ secrets.GBP_CLIENT_SECRET }}
           GBP_REFRESH_TOKEN: ${{ secrets.GBP_REFRESH_TOKEN }}
-        run: node scripts/gbp-discover.mjs
+        run: node scripts/gbp-discover.mjs | tee /tmp/gbp.txt
+
+      # Silent while it is still the known 429. A scheduled job that pings daily
+      # to say "still blocked" trains you to ignore it.
+      - name: Tell Fiker only when something changed
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          OUT=$(cat /tmp/gbp.txt 2>/dev/null || echo "")
+          if echo "$OUT" | grep -q "RESULT GBP_ACCOUNT_ID"; then
+            ACC=$(echo "$OUT" | sed -n 's/.*RESULT GBP_ACCOUNT_ID=\(.*\)/\1/p' | head -1)
+            LOC=$(echo "$OUT" | sed -n 's/.*RESULT GBP_LOCATION_ID=\(.*\)/\1/p' | head -1)
+            node scripts/tg.mjs --text "$(printf '🎉 Google Business Profile quota is live.\n\naccount: %s\nlocation: %s\n\nAsk Claude to set GBP_ACCOUNT_ID and GBP_LOCATION_ID and GBP posting goes live on the next blog.' "$ACC" "$LOC")"
+          elif echo "$OUT" | grep -q "429 (quota)"; then
+            echo "Still quota-blocked — staying quiet."
+          else
+            node scripts/tg.mjs --text "⚠️ GBP discovery failed for a NEW reason (not the usual quota 429). Ask Claude to look." --no-verify || true
+          fi
