@@ -82,11 +82,11 @@ jobs:
           DESCRIPTION=$(cat /tmp/published_description.txt)
           node scripts/publish-google-business-post.mjs "$TITLE" "$DESCRIPTION" "$SLUG"
         env:
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
-          GOOGLE_ACCOUNT_ID: ${{ secrets.GOOGLE_ACCOUNT_ID }}
-          GOOGLE_LOCATION_ID: ${{ secrets.GOOGLE_LOCATION_ID }}
+          GBP_CLIENT_ID: ${{ secrets.GBP_CLIENT_ID }}
+          GBP_CLIENT_SECRET: ${{ secrets.GBP_CLIENT_SECRET }}
+          GBP_REFRESH_TOKEN: ${{ secrets.GBP_REFRESH_TOKEN }}
+          GBP_ACCOUNT_ID: ${{ secrets.GBP_ACCOUNT_ID }}
+          GBP_LOCATION_ID: ${{ secrets.GBP_LOCATION_ID }}
 
       # publish-scheduled.yml sends the announcement but this path never did,
       # so anything published immediately went live with no LinkedIn caption or

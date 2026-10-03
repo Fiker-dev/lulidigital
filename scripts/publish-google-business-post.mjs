@@ -1,3 +1,14 @@
+// GBP credentials are their own namespace. The Business Profile lives on
+// Fiker's SECOND Google account, while Search Console and the indexing service
+// account live on the FIRST. Sharing the generic GOOGLE_CLIENT_* names across
+// both risks one account's OAuth client being handed the other account's
+// refresh token — which fails as invalid_client, a long way from here.
+// GOOGLE_* is still honoured as a fallback so nothing breaks mid-migration.
+for (const n of ["CLIENT_ID", "CLIENT_SECRET", "REFRESH_TOKEN", "ACCOUNT_ID", "LOCATION_ID"]) {
+  const scoped = process.env[`GBP_${n}`];
+  if (scoped) process.env[`GOOGLE_${n}`] = scoped;
+}
+
 const requiredEnv = [
   "GOOGLE_CLIENT_ID",
   "GOOGLE_CLIENT_SECRET",
