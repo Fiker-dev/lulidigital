@@ -39,6 +39,19 @@ if (!tok.access_token) {
   process.exit(1);
 }
 console.log(`✅ token valid (scope: ${tok.scope || "?"})`);
+
+// Which Google account actually consented? Fiker has two addresses differing by
+// one character, and a token minted by the wrong one looks identical here.
+// tokeninfo reports the email only when the openid/email scope was granted, so
+// absence is not proof of anything — but when present it settles the question.
+try {
+  const info = await fetch(
+    `https://oauth2.googleapis.com/tokeninfo?access_token=${encodeURIComponent(tok.access_token)}`,
+  ).then((r) => r.json());
+  console.log(`   token belongs to: ${info.email || "(email scope not granted — cannot tell)"}`);
+  if (info.aud) console.log(`   issued to client: ${String(info.aud).slice(0, 28)}…`);
+} catch { /* diagnostic only */ }
+
 const auth = { Authorization: `Bearer ${tok.access_token}` };
 
 let accounts = null;
