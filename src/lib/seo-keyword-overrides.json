@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-03T17:30:41.611Z",
-  "week": "2026-10-03",
+  "generatedAt": "2026-10-03T18:32:01.624Z",
+  "month": "2026-10",
   "pages": {
     "/denmark": {
       "primary": [
@@ -37,12 +37,6 @@
         "ai advertising service in switzerland"
       ],
       "source": "Search Console — 2026-10"
-    },
-    "/web-design-desk": {
-      "primary": [
-        "lilla digital"
-      ],
-      "source": "weekly Search Console refresh 2026-10-03"
     }
   }
 }
