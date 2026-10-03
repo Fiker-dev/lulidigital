@@ -184,6 +184,7 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_EVENT_SCHEDULE: ${{ github.event.schedule }}
         run: |
           BROKEN=""
           for p in seo-agent weekly-seo; do
@@ -195,6 +196,14 @@ jobs:
             fi
             echo "/api/cron/$p -> $CODE"
           done
+          # Warn at most once a week, on Monday's afternoon run. This check
+          # fired on all four daily runs, so a known, already-reported problem
+          # produced four identical messages a day — which is how you teach
+          # someone to ignore their alerts. It stops by itself once fixed.
+          if [ "$(date -u +%u)" != "1" ] || [ "${GITHUB_EVENT_SCHEDULE:-}" != "41 13 * * *" ]; then
+            [ -n "$BROKEN" ] && echo "Vercel crons still misconfigured — not the weekly slot, staying quiet."
+            BROKEN=""
+          fi
           if [ -n "$BROKEN" ]; then
             MSG=$(printf "⚠️ Vercel cron jobs are misconfigured and have been failing silently:%b\n\nFix: add CRON_SECRET to the Vercel project env (any long random string). That revives the SEO agent, the weekly SEO run, and the on-time blog publish." "$BROKEN")
             node scripts/tg.mjs --text "$MSG" --no-verify || true
