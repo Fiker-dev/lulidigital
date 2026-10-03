@@ -89,6 +89,10 @@ if (chosen.locs.length > 1) {
 
 for (const [k, v] of [["GBP_ACCOUNT_ID", chosen.id], ["GBP_LOCATION_ID", locationId]]) {
   try { execFileSync("gh", ["secret", "set", k, "--body", v], { stdio: "pipe" }); console.log(`  set ${k}`); }
-  catch (e) { console.error(`  FAILED ${k}: ${e.message.split("\n")[0]}`); }
+  catch {
+    // In CI the default token cannot write secrets. The IDs are identifiers,
+    // not credentials, so print them for whoever is watching to set.
+    console.log(`  RESULT ${k}=${v}`);
+  }
 }
 console.log("\n🎉 Business Profile is wired up.");

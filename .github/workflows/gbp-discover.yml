@@ -1,0 +1,30 @@
+name: GBP Discover IDs
+
+# Finds the Business Profile account + location IDs using the saved
+# GBP_REFRESH_TOKEN. It runs here rather than locally because GitHub secrets are
+# write-only — the token can be set from a laptop but never read back — and
+# re-authorising in a browser just to re-read it would waste Fiker's time.
+#
+# The account and location IDs are identifiers, not credentials, so printing
+# them to the log is fine; they get set as secrets afterwards.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: Discover account + location
+        env:
+          GBP_CLIENT_ID: ${{ secrets.GBP_CLIENT_ID }}
+          GBP_CLIENT_SECRET: ${{ secrets.GBP_CLIENT_SECRET }}
+          GBP_REFRESH_TOKEN: ${{ secrets.GBP_REFRESH_TOKEN }}
+        run: node scripts/gbp-discover.mjs
