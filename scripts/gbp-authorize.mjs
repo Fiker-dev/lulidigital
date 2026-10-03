@@ -75,13 +75,42 @@ const server = http.createServer(async (req, res) => {
   }
   console.log(`✅ refresh token obtained (scope: ${tok.scope || "?"})`);
 
-  const auth = { Authorization: `Bearer ${tok.access_token}` };
-  const accounts = await fetch("https://mybusinessaccountmanagement.googleapis.com/v1/accounts", { headers: auth })
-    .then((r) => r.json()).catch((e) => ({ error: String(e) }));
+  // Save it IMMEDIATELY. The consent click is the only part that needs a human,
+  // so losing the token because a later lookup failed costs another round trip
+  // for no reason — which is exactly what happened the first time, when the
+  // account lookup hit a 429 and the token went in the bin.
+  try {
+    execFileSync("gh", ["secret", "set", "GBP_REFRESH_TOKEN", "--body", tok.refresh_token], { stdio: "pipe" });
+    console.log("  saved GBP_REFRESH_TOKEN (before discovery, so a failure below costs nothing)");
+  } catch (e) {
+    console.error(`  could not save GBP_REFRESH_TOKEN: ${e.message.split("\n")[0]}`);
+    console.error(`  token: ${tok.refresh_token}`);
+  }
 
-  if (!accounts.accounts?.length) {
-    console.error(JSON.stringify(accounts).slice(0, 400));
-    return done(server, "✗ No Business Profile accounts visible — is the My Business Account Management API enabled, and did you sign in as the account that owns the profile?", 1);
+  const auth = { Authorization: `Bearer ${tok.access_token}` };
+
+  // Newly enabled Business Profile APIs are rate-limited hard, and a fresh
+  // project often starts at a very low per-minute quota, so one 429 is not a
+  // verdict. Back off and retry before concluding anything.
+  let accounts = null;
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    const res = await fetch("https://mybusinessaccountmanagement.googleapis.com/v1/accounts", { headers: auth });
+    const body = await res.json().catch(() => ({}));
+    if (res.ok) { accounts = body; break; }
+    const quota = res.status === 429;
+    console.log(`  accounts lookup ${res.status}${quota ? " (quota)" : ""} — attempt ${attempt}/4`);
+    if (!quota) { console.error(JSON.stringify(body).slice(0, 300)); break; }
+    if (attempt < 4) await new Promise((r) => setTimeout(r, 20000));
+  }
+
+  if (!accounts?.accounts?.length) {
+    return done(server,
+      "\n✗ Could not list Business Profile accounts.\n" +
+      "  The refresh token IS saved, so no need to re-authorise.\n" +
+      "  If this was a 429, the project's Business Profile API quota is likely still 0 —\n" +
+      "  Google grants that separately from enabling the API. Request it at:\n" +
+      "  https://developers.google.com/my-business/content/prereqs (Request API access)\n" +
+      "  Then re-run: node scripts/gbp-discover.mjs", 1);
   }
   console.log(`\nAccounts visible (${accounts.accounts.length}):`);
   accounts.accounts.forEach((a) => console.log(`  ${a.accountName || "(unnamed)"} — ${a.name}`));
@@ -104,7 +133,6 @@ const server = http.createServer(async (req, res) => {
   console.log(`✅ location: ${chosen.locs[0].title} (${locationId})`);
 
   for (const [k, v] of [
-    ["GBP_REFRESH_TOKEN", tok.refresh_token],
     ["GBP_ACCOUNT_ID", chosen.id],
     ["GBP_LOCATION_ID", locationId],
   ]) {
