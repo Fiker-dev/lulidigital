@@ -30,21 +30,35 @@ const expectedKey = getEnv("BLOG_PREVIEW_TOKEN");
 if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return notFound();
 if (!expectedKey || !key || !timingSafeEqual(key, String(expectedKey))) return notFound();
 
-// Pull the markdown from the repo (works for private repos via the same token
-// the Telegram handler already uses).
+// Pull the markdown from the repo. The token is only needed while the repo is
+// private; it is public, so an anonymous read works.
+//
+// That distinction matters because an EXPIRED token is worse than none: GitHub
+// rejects the request with 401 and this page falls through to notFound(), which
+// is exactly why every draft preview link returned "Not found" for weeks while
+// the same URL fetched fine without credentials. So a credential failure now
+// retries anonymously instead of taking the preview down with it.
 const ghToken = getEnv("GITHUB_WORKFLOW_TOKEN");
+const contentsUrl =
+  `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/src/content/blog/${slug}.md?ref=${REF}`;
+const baseHeaders = {
+  Accept: "application/vnd.github.raw+json",
+  "X-GitHub-Api-Version": "2022-11-28",
+};
+
 let raw = "";
 try {
-  const res = await fetch(
-    `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/src/content/blog/${slug}.md?ref=${REF}`,
-    {
-      headers: {
-        ...(ghToken ? { Authorization: `Bearer ${ghToken}` } : {}),
-        Accept: "application/vnd.github.raw+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
-    },
-  );
+  let res = ghToken
+    ? await fetch(contentsUrl, { headers: { ...baseHeaders, Authorization: `Bearer ${ghToken}` } })
+    : await fetch(contentsUrl, { headers: baseHeaders });
+
+  if (ghToken && (res.status === 401 || res.status === 403)) {
+    console.warn(
+      `GITHUB_WORKFLOW_TOKEN rejected (${res.status}) — falling back to an anonymous read. Replace that token in the Vercel project settings.`,
+    );
+    res = await fetch(contentsUrl, { headers: baseHeaders });
+  }
+
   if (!res.ok) return notFound();
   raw = await res.text();
 } catch {
