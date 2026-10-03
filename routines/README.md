@@ -155,6 +155,17 @@ Chatterbox (cloned voice) and Remotion, which live on Fiker's Mac:
 - The sender prefers `blog-announce-video.mp4` over the carousel over the card,
   so once the video lands in the pack it is what goes out.
 
+**Approval is in-session only (2026-10-03, Fiker's instruction).** Telegram
+notifies; it never asks. No inline buttons, no tap-links, anywhere:
+- Blog → `routines/auto-blog-routine.md` Step 2 asks; she replies "approve".
+- Social packs → `routines/social-team-routine.md` Step 4c asks; the routine
+  then runs `scripts/approve-pack.mjs`.
+- `scripts/request-pack-approvals.mjs` is notification-only.
+- `src/pages/api/approve-blog.ts` and `approve-pack.ts` still exist and are
+  token-guarded, but nothing links to them any more. The workflows they
+  dispatch (`schedule-draft.yml`, `approve-pack.yml`) are still used — the
+  routine calls them directly.
+
 **Punctual publishing (2026-10-02).** GitHub's scheduler is the reason posts
 land late: measured over ten consecutive runs, the 04:23 UTC cron fires
 10:02-10:59 and the 13:41 one 17:55-20:13 — a steady ~6h slip. Two earlier

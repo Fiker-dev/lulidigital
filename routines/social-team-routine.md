@@ -338,6 +338,24 @@ state — never carry a stale number.
    the HTML, and say so in the summary — the block is refreshed on the next run
    that can publish. Never fabricate numbers: the block must match the repo.
 
+## Step 4c — ASK FOR APPROVAL HERE (the only approval channel)
+
+Approval happens in this session. Telegram notifies Fiker that a pack is
+waiting; it carries no buttons and no action links, by her standing
+instruction. If you tell her to tap something in Telegram, you are wrong.
+
+Every run, list the packs whose STATUS state is `awaiting_approval`, oldest
+first, and ask her plainly: approve, change, or drop? For each, show the slug,
+the platform, and the caption as it would post.
+
+When she approves one in this session, run:
+`node scripts/approve-pack.mjs --slug <slug> --date <YYYY-MM-DD>`
+then commit and push. To drop it: the same command with `--discard`.
+`post-social.yml` publishes approved + due packs on its next weekday run.
+
+Never set a pack to `approved` on your own initiative, and never because it has
+been waiting a long time. Ask again instead.
+
 ## Step 5 — End the run with the review summary
 Final message format:
 ```
