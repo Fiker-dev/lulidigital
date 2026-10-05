@@ -1,4 +1,5 @@
 ---
+approved: "2026-10-05"
 title: "Your Munich SEO Isn't Failing. Your SEO System Is Just Built for Everywhere Else."
 description: "Generic SEO doesn't win local markets. Here's how Munich founders can build an AI-driven local SEO system that actually converts."
 pubDate: 2026-09-18
