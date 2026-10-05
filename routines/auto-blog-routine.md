@@ -40,6 +40,12 @@ verify the blog pipeline actually did its job, and you report to Fiker.
      `https://github.com/Fiker-dev/lulidigital/blob/main/src/content/blog/<slug>.md`,
      and the next free slot it would take.
 
+     **If today is a posting day and `blog-queue.mjs` lists today as free, offer
+     TODAY first.** Posts publish up to 13:41 UTC, so a morning approval still
+     makes the same day. On 2026-10-05 a draft was approved at 08:25, offered
+     Wednesday, and Monday went by with nothing published — five days between
+     posts when it should have been three.
+
      **Check the link before you send it.** Run
      `node scripts/verify-link.mjs <the link>` and only include it if that
      exits 0. Fiker has had enough dead links; a link you did not check is a

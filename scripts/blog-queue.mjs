@@ -20,9 +20,19 @@ const JSON_OUT = process.argv.includes("--json");
 const SLOTS = [1, 3, 5];               // Mon, Wed, Fri
 const CAP = 3;                          // drafting pauses above this
 
+// The last publish run of the day is 13:41 UTC, so a post approved this morning
+// on a Mon/Wed/Fri can still go out TODAY. Only offering future dates is why
+// Monday 2026-10-05 was skipped: the routine approved at 08:25, was handed
+// Wednesday as the earliest slot, and a publishing day went by empty.
+const LAST_PUBLISH_RUN_UTC = 13 * 60 + 41;
 const nextSlots = (n) => {
   const out = [];
-  const d = new Date();
+  const now = new Date();
+  const minutesNow = now.getUTCHours() * 60 + now.getUTCMinutes();
+  if (SLOTS.includes(now.getUTCDay()) && minutesNow < LAST_PUBLISH_RUN_UTC) {
+    out.push(now.toISOString().slice(0, 10));
+  }
+  const d = new Date(now);
   while (out.length < n) {
     d.setUTCDate(d.getUTCDate() + 1);
     if (SLOTS.includes(d.getUTCDay())) out.push(d.toISOString().slice(0, 10));
