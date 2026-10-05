@@ -61583,7 +61583,7 @@
     },
     "stop-operational-brushfires-before-they-spread": {
       "sig": "The Brushfire Problem: How Small Operational Failures Burn Down Your Week\nCompounding operational failures don't stay small. Here's how to spot the pattern, stop the spread, and build systems that hold.",
-      "live": false,
+      "live": true,
       "title": "The Brushfire Problem: How Small Operational Failures Burn Down Your Week",
       "vec": [
         -0.0033282773,

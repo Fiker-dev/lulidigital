@@ -25,6 +25,60 @@ const field = (fm, name) =>
 
 const published = [];
 
+// A standing queue, so the cadence stops depending on WHEN Fiker approves.
+//
+// Approving used to mean picking a date, which coupled the schedule to her
+// being available at the right moment: on 2026-10-05 she approved at 08:25, the
+// queue offered Wednesday as the earliest slot, and Monday went by empty —
+// five days between posts instead of three. Every missed day this month traces
+// to that, not to the pipeline.
+//
+// Now a draft can carry `approved: <date>` with no `scheduledFor`, meaning
+// "cleared to go, date not important". On a publishing day with nothing already
+// due, the publisher takes the oldest approved draft. Explicit scheduledFor
+// still wins when she does want a specific date.
+const SLOTS = [1, 3, 5]; // Mon, Wed, Fri
+const isPublishingDay = SLOTS.includes(new Date().getUTCDay());
+
+const readFm = (file) => {
+  const raw = readFileSync(join(BLOG_DIR, file), "utf8");
+  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  return m ? { raw, fm: m[1] } : null;
+};
+
+const mdFiles = readdirSync(BLOG_DIR).filter((f) => f.endsWith(".md"));
+
+const alreadyDueToday = mdFiles.some((f) => {
+  const p = readFm(f);
+  if (!p) return false;
+  const sched = field(p.fm, "scheduledFor");
+  return /^draft:\s*true\s*$/m.test(p.fm) && sched && sched <= today;
+});
+
+let promoted = null;
+if (isPublishingDay && !alreadyDueToday) {
+  const queued = mdFiles
+    .map((f) => ({ f, ...(readFm(f) || {}) }))
+    .filter((x) => x.fm && /^draft:\s*true\s*$/m.test(x.fm))
+    .filter((x) => !field(x.fm, "scheduledFor"))
+    .filter((x) => field(x.fm, "approved"))
+    .sort((a, b) => field(a.fm, "approved").localeCompare(field(b.fm, "approved")));
+
+  if (queued.length) {
+    promoted = queued[0];
+    const withDate = promoted.raw.replace(
+      /^---\r?\n/,
+      `---\nscheduledFor: "${today}"\n`,
+    );
+    writeFileSync(join(BLOG_DIR, promoted.f), withDate);
+    console.log(
+      `Publishing day with nothing due — promoted the oldest approved draft: ${promoted.f.replace(/\.md$/, "")} (approved ${field(promoted.fm, "approved")})`,
+    );
+  } else {
+    console.log("Publishing day with nothing due, and no approved drafts waiting.");
+  }
+}
+
 for (const file of readdirSync(BLOG_DIR)) {
   if (!file.endsWith(".md")) continue;
   const path = join(BLOG_DIR, file);
@@ -41,7 +95,8 @@ for (const file of readdirSync(BLOG_DIR)) {
 
   let updated = raw
     .replace(/^draft:\s*true\s*$/m, "draft: false")
-    .replace(/^scheduledFor:\s*.*$\r?\n?/m, "");
+    .replace(/^scheduledFor:\s*.*$\r?\n?/m, "")
+    .replace(/^approved:\s*.*$\r?\n?/m, "");
 
   if (/^pubDate:\s*.+$/m.test(updated)) {
     updated = updated.replace(/^pubDate:\s*.+$/m, `pubDate: ${scheduledFor}`);

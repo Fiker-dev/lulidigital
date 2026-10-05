@@ -58,6 +58,21 @@ verify the blog pipeline actually did its job, and you report to Fiker.
      through it; a raw curl to the Telegram API bypasses all of that. Ask plainly: approve, change, or drop it?
      Ask about the OLDEST unapproved draft first — those are the ones going stale.
 
+     **Check it is not a repeat before offering it.** Run
+     `node scripts/topic-memory.mjs --check "<title>" "<description>"`. If that
+     exits 1 the topic has effectively been published already — say so and move
+     to the next draft rather than offering it. Drafts written before the
+     semantic check existed keep resurfacing otherwise; one scored 0.892 against
+     a live post and reached a Friday slot before it was caught.
+
+   **Prefer the standing queue over picking a date.** When she approves, add
+   `approved: "<today>"` to the frontmatter and leave `scheduledFor` out. The
+   publisher then takes the oldest approved draft on any Mon/Wed/Fri that has
+   nothing else due. That way the cadence does not depend on her approving at
+   the right moment — which is what cost Monday 2026-10-05.
+
+   Only set an explicit `scheduledFor` when she asks for a specific date.
+
    Do not tell him to tap anything in Telegram. The Telegram tap-links are
    retired: they gated on a token that does not match on Vercel, so every tap
    returned a 9-byte "Not found" and six drafts piled up unpublished. Telegram
