@@ -87,19 +87,6 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: node scripts/send-announcement-telegram.mjs
 
-      - name: Report pending blog announcements
-        if: always()
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: |
-          OUT=$(node scripts/fetch-announcements.mjs --report 2>&1 || true)
-          echo "$OUT"
-          # Only ping when something is actually waiting to be posted.
-          if echo "$OUT" | grep -q "📣" && [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
-            node scripts/tg.mjs --text "${OUT}"
-          fi
-
       - name: Commit STATUS updates
         run: |
           if [ -z "$(git status --porcelain social/queue/ social/announcement-deliveries.json social/approval-requests.json)" ]; then
@@ -123,5 +110,12 @@ jobs:
             echo "No Telegram secrets — skipping notification."
             exit 0
           fi
-          MSG=$(cat /tmp/post-summary.txt 2>/dev/null || echo "Social poster ran (no summary).")
+          MSG=$(cat /tmp/post-summary.txt 2>/dev/null || echo "")
+          # Silent unless something actually went out. This used to send
+          # "17 pack(s) · 0 approved + due" every weekday — a daily message
+          # saying nothing happened.
+          if [ -z "$MSG" ] || echo "$MSG" | grep -qE "· 0 approved \+ due"; then
+            echo "Nothing posted — no summary sent."
+            exit 0
+          fi
           node scripts/tg.mjs --text "${MSG}"

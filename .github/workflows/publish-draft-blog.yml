@@ -149,3 +149,18 @@ jobs:
             node scripts/generate-blog-announcement.mjs --slug "$PUBLISH_SLUG" || true
           fi
           node scripts/send-announcement-telegram.mjs --for "$PUBLISH_SLUG" || true
+
+      # Remember that this announcement was sent. The dedupe log lives in the
+      # repo, and this workflow used to never commit it — so the record of the
+      # send died with the runner, and post-social later found no record and
+      # sent the same announcement AGAIN. Munich on 2026-10-05 went out at
+      # 10:02 with the blog, then again at 19:39.
+      - name: Record the announcement as delivered
+        if: always()
+        run: |
+          git config user.name "LuliDigital Bot"
+          git config user.email "bot@lulidigital.com"
+          git add social/announcement-deliveries.json 2>/dev/null || true
+          git diff --staged --quiet && { echo "Nothing new delivered."; exit 0; }
+          git commit -m "Record delivered blog announcement"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push -q origin main && break; sleep 5; done
