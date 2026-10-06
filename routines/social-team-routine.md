@@ -346,6 +346,22 @@ state — never carry a stale number.
    the HTML, and say so in the summary — the block is refreshed on the next run
    that can publish. Never fabricate numbers: the block must match the repo.
 
+## Step 4c-0 — CHECK MEMORY BEFORE OFFERING ANYTHING
+
+Fiker posts LinkedIn by hand, so a pack can be out in the world while its status
+still says awaiting_approval. On 2026-10-06 this routine offered her five packs
+she had already posted. Before listing ANY pack for approval, run:
+
+  node scripts/content-memory.mjs --pack <slug>
+
+Exit 1 means it has already gone out — do not offer it. That check covers its
+status, the posted ledger (social/posted-ledger.json), and whether its text
+means the same as anything she has posted OR any live blog post.
+
+When she tells you something was posted, record it so it is never offered again:
+
+  node scripts/approve-pack.mjs --slug <slug> --posted
+
 ## Step 4c — ASK FOR APPROVAL HERE (the only approval channel)
 
 Approval happens in this session. Telegram notifies Fiker that a pack is

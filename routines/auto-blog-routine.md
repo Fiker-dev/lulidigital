@@ -62,8 +62,11 @@ verify the blog pipeline actually did its job, and you report to Fiker.
      through it; a raw curl to the Telegram API bypasses all of that. Ask plainly: approve, change, or drop it?
      Ask about the OLDEST unapproved draft first — those are the ones going stale.
 
-     **Check it is not a repeat before offering it.** Run
-     `node scripts/topic-memory.mjs --check "<title>" "<description>"`. If that
+     **Check memory before offering it.** Run
+     `node scripts/content-memory.mjs --draft <slug>` — exit 1 means it is
+     already live or means the same as a live blog post or something Fiker has
+     posted; do not offer it. (This supersedes the older
+     `topic-memory.mjs --check`, which only compared against blogs.) If that
      exits 1 the topic has effectively been published already — say so and move
      to the next draft rather than offering it. Drafts written before the
      semantic check existed keep resurfacing otherwise; one scored 0.892 against

@@ -38,6 +38,9 @@ state.asked ??= [];
 
 if (!fs.existsSync(QUEUE)) { console.log("No social/queue."); process.exit(0); }
 
+const LEDGER = path.join(ROOT, "social", "posted-ledger.json");
+const posted = new Set(fs.existsSync(LEDGER) ? JSON.parse(fs.readFileSync(LEDGER, "utf8")).posted.map((e) => e.slug) : []);
+
 const pending = fs.readdirSync(QUEUE)
   .map((slug) => {
     const dir = path.join(QUEUE, slug);
@@ -48,6 +51,9 @@ const pending = fs.readdirSync(QUEUE)
     if (((first.match(/^\s*([a-z_]+)/) || [])[1] || "") !== "awaiting_approval") return null;
     if (/POSTED/i.test(raw)) return null;
     if (state.asked.includes(slug)) return null;
+    // Hand-posted packs keep awaiting_approval in their status until someone
+    // records otherwise; the ledger is that record.
+    if (posted.has(slug)) return null;
     return { slug, dir, mtime: fs.statSync(sp).mtimeMs };
   })
   .filter(Boolean)
