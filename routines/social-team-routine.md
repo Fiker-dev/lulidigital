@@ -164,11 +164,19 @@ one per run), prepare its LuliDigital company announcement in advance:
 
 Count the packs in `social/queue/` whose STATUS state is `awaiting_approval`.
 
-**If that count is 4 or more, do not write a new pack this run.** Report the
-backlog in your summary and stop after Step 0b. This rule exists because there
-was no cap before: packs were produced every weekday into an approval gate that
-could not be opened, and 24 piled up until they went stale and had to be
-deleted. Writing a 25th would not have helped. Unapproved work is not progress.
+**If that count is 4 or more, do not write a new pack this run — skip
+Steps 0d through 4b and go STRAIGHT TO STEP 4c.** Do not stop the run.
+
+Step 4c is where you ask Fiker to approve or drop the waiting packs, and that is
+the only thing that brings the count back down. This rule originally said "stop
+after Step 0b", which skipped 4c too — so a full queue stopped the routine from
+asking, nothing got approved, the queue stayed full, and the routine stopped
+again every run. From 2026-09-28 it produced nothing at all, and five packs sat
+waiting for three weeks. A cap on production must never block approval.
+
+The cap itself still exists for a reason: there was none before, packs were
+produced every weekday into an approval gate that could not be opened, and 24
+piled up. Writing a 25th would not have helped. Unapproved work is not progress.
 
 ## Step 0d — Take the next idea FROM THE VAULT
 

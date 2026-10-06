@@ -139,6 +139,36 @@ jobs:
             node scripts/request-indexing.mjs "$url" || true
           done
 
+      # GBP was only wired into auto-blog (manual "publish now" only) and
+      # publish-draft-blog — never into THIS workflow, which is the one every
+      # scheduled and queued post actually goes through. So no normal post would
+      # ever have reached the Business Profile, quota or not.
+      - name: Post each new blog to Google Business Profile
+        if: always()
+        continue-on-error: true
+        env:
+          GBP_CLIENT_ID: ${{ secrets.GBP_CLIENT_ID }}
+          GBP_CLIENT_SECRET: ${{ secrets.GBP_CLIENT_SECRET }}
+          GBP_REFRESH_TOKEN: ${{ secrets.GBP_REFRESH_TOKEN }}
+          GBP_ACCOUNT_ID: ${{ secrets.GBP_ACCOUNT_ID }}
+          GBP_LOCATION_ID: ${{ secrets.GBP_LOCATION_ID }}
+        run: |
+          if [ "$(cat /tmp/scheduled_changed.txt 2>/dev/null || echo false)" != "true" ]; then exit 0; fi
+          # Same rule as the announcement: never point a Business Profile post
+          # at a page that isn't reachable yet.
+          if [ "$(cat /tmp/all_live.txt 2>/dev/null || echo false)" != "true" ]; then
+            echo "Post isn't live; not posting it to the Business Profile."
+            exit 0
+          fi
+          for url in $(node -e "JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8')).forEach(p=>console.log(p.url))"); do
+            SLUG=$(basename "$url")
+            TITLE=$(node -e "const r=require('fs').readFileSync('src/content/blog/'+process.argv[1]+'.md','utf8');console.log((r.match(/^title:\s*\"?([^\"\n]+)\"?/m)||[])[1]||'')" "$SLUG")
+            DESC=$(node -e "const r=require('fs').readFileSync('src/content/blog/'+process.argv[1]+'.md','utf8');console.log((r.match(/^description:\s*\"?([^\"\n]+)\"?/m)||[])[1]||'')" "$SLUG")
+            # Exits 0 with "Skipping" while the account/location IDs are still
+            # missing (GBP quota pending), so this is quiet until it can work.
+            node scripts/publish-google-business-post.mjs "$TITLE" "$DESC" "$SLUG" || true
+          done
+
       - name: Send the LinkedIn company announcement for each new post
         if: ${{ always() }}
         env:
