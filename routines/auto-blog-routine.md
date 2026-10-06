@@ -72,6 +72,11 @@ verify the blog pipeline actually did its job, and you report to Fiker.
      semantic check existed keep resurfacing otherwise; one scored 0.892 against
      a live post and reached a Friday slot before it was caught.
 
+   **Approving IS the decision that it goes out.** Once she says "approve", the
+   draft is out of the offer list for good (content-memory treats approved and
+   scheduled drafts as out), it publishes on the next Mon/Wed/Fri, and its
+   announcement is marked posted when delivered. She never confirms "posted".
+
    **Prefer the standing queue over picking a date.** When she approves, add
    `approved: "<today>"` to the frontmatter and leave `scheduledFor` out. The
    publisher then takes the oldest approved draft on any Mon/Wed/Fri that has

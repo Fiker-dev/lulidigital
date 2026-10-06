@@ -104,6 +104,34 @@ const sendVideo = async (file, caption) => {
 
 if (!fs.existsSync(QUEUE)) { console.log("No social/queue."); process.exit(0); }
 
+// The blog was approved and has gone live; its announcement is now in Fiker's
+// hands. Approval means it goes out, so record the pack as posted right here.
+// Without this, a delivered announcement kept its old awaiting_approval status
+// and the social routine offered it to her again weeks later — which is how
+// she was re-offered German B2B and client onboarding after posting both.
+function markPosted(slug, dir, caption) {
+  try {
+    const statusPath = path.join(dir, "STATUS.md");
+    const today = new Date().toISOString().slice(0, 10);
+    if (fs.existsSync(statusPath)) {
+      const lines = fs.readFileSync(statusPath, "utf8").split("\n");
+      lines[0] = lines[0].replace(/^\s*[a-z_]+/, "posted");
+      fs.writeFileSync(statusPath, lines.join("\n"));
+    } else {
+      fs.writeFileSync(statusPath, `posted | ${slug} | blog announcement delivered ${today}\n`);
+    }
+    const ledgerPath = path.join(path.dirname(QUEUE), "posted-ledger.json");
+    const ledger = fs.existsSync(ledgerPath) ? JSON.parse(fs.readFileSync(ledgerPath, "utf8")) : { posted: [] };
+    if (!ledger.posted.some((e) => e.slug === slug)) {
+      ledger.posted.push({ slug, date: today, caption: String(caption || "").slice(0, 600) });
+      fs.writeFileSync(ledgerPath, JSON.stringify(ledger, null, 2) + "\n");
+    }
+  } catch (e) {
+    console.error(`${slug}: delivered, but could not mark posted (${e.message})`);
+  }
+}
+
+
 let sent = 0;
 
 for (const slug of fs.readdirSync(QUEUE)) {
@@ -175,6 +203,7 @@ for (const slug of fs.readdirSync(QUEUE)) {
     if (firstComment) await sendText(`FIRST COMMENT (post right after):\n${firstComment}`);
     state.delivered.push(slug);
     sent++;
+    markPosted(slug, dir, caption);
   } catch (e) {
     console.error(`FAILED ${slug}: ${e.message}`);
   }

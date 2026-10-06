@@ -240,7 +240,10 @@ jobs:
         run: |
           git config user.name "LuliDigital Bot"
           git config user.email "bot@lulidigital.com"
-          git add social/announcement-deliveries.json 2>/dev/null || true
+          # The delivered-log AND the posted marks: delivering an announcement
+          # now flips its pack to posted and writes the ledger. Uncommitted, both
+          # would die with the runner and the pack would be offered again.
+          git add social/announcement-deliveries.json social/posted-ledger.json social/queue/ 2>/dev/null || true
           git diff --staged --quiet && { echo "Nothing new delivered."; exit 0; }
           git commit -m "Record delivered blog announcement"
           for i in 1 2 3; do git pull --rebase -q origin main && git push -q origin main && break; sleep 5; done

@@ -358,7 +358,13 @@ Exit 1 means it has already gone out — do not offer it. That check covers its
 status, the posted ledger (social/posted-ledger.json), and whether its text
 means the same as anything she has posted OR any live blog post.
 
-When she tells you something was posted, record it so it is never offered again:
+**Approving IS posting — Fiker's rule.** Once she approves a pack it counts as
+out: `approve-pack.mjs` writes it to the ledger at approval, and a blog
+announcement is marked posted the moment it is delivered with its live blog.
+Never ask her to confirm "posted" for something she approved.
+
+Only for content she posts entirely outside this flow (something she wrote and
+put up herself) record it with:
 
   node scripts/approve-pack.mjs --slug <slug> --posted
 

@@ -62,7 +62,9 @@ lines.splice(1, 0, `<!-- ${target} by Fiker via Telegram tap on ${new Date().toI
 writeFileSync(statusPath, lines.join("\n"));
 
 // The posted ledger is the memory the routine checks before offering anything.
-if (posted) {
+// Approving counts: approve means it goes out, so it must never be offered
+// again — Fiker should not have to approve and then also say "posted".
+if (posted || target === "approved") {
   const ledgerPath = join(ROOT, "social", "posted-ledger.json");
   const ledger = existsSync(ledgerPath) ? JSON.parse(readFileSync(ledgerPath, "utf8")) : { posted: [] };
   const dir = join(ROOT, "social", "queue", slug);

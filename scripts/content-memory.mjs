@@ -63,6 +63,10 @@ if (packSlug) {
   const raw = fs.readFileSync(path.join(BLOG, `${draftSlug}.md`), "utf8");
   const fm = (raw.match(/^---\n([\s\S]*?)\n---/) || [])[1] || "";
   if (!/^draft:\s*true\s*$/m.test(fm)) verdict(false, "already live");
+  // Approving IS the decision that it goes out — Fiker's rule. An approved or
+  // scheduled draft is on its way, so it must not be offered again.
+  if (field(fm, "approved")) verdict(false, `approved ${field(fm, "approved")} — going out`);
+  if (field(fm, "scheduledFor")) verdict(false, `scheduled for ${field(fm, "scheduledFor")}`);
   text = `${field(fm, "title")}\n${field(fm, "description")}`;
 }
 
