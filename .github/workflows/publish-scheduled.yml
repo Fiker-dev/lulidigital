@@ -143,6 +143,28 @@ jobs:
       # publish-draft-blog — never into THIS workflow, which is the one every
       # scheduled and queued post actually goes through. So no normal post would
       # ever have reached the Business Profile, quota or not.
+      # FIRST, before the announcement: Fiker wants the live link, then the
+      # announcement assets, in that order. This step used to be the very last
+      # one — after the announcement and a cron health check — so she received
+      # a video and caption with no context, and the link they referred to
+      # arrived afterwards.
+      - name: Telegram notification
+        if: ${{ always() }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ "$(cat /tmp/scheduled_changed.txt 2>/dev/null || echo false)" != "true" ]; then exit 0; fi
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then exit 0; fi
+          ALL_LIVE=$(cat /tmp/all_live.txt 2>/dev/null || echo false)
+          if [ "$ALL_LIVE" = "true" ]; then
+            MSG=$(node -e "const p=JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8'));console.log('✅ Blog live + submitted to Google:\n\n'+p.map(x=>x.title+'\n'+x.url).join('\n\n')+'\n\n📍 Google Business Profile — paste as a new post, button Learn more → the link above:\n———\n'+p.map(x=>'New from LuliDigital: '+x.title+'.').join('\n')+'\n———')")
+          else
+            # Never claim live when it isn't — that is what sent a dead link on 2026-08-21.
+            MSG=$(node -e "const p=JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8'));console.log('⚠️ Blog published in git but NOT reachable yet — the Vercel deploy has probably failed. NOT submitted to Google.\n\n'+p.map(x=>x.title+'\n'+x.url).join('\n\n')+'\n\nCheck: vercel ls (an UNKNOWN status with no build duration means it never built).')")
+          fi
+          node scripts/tg.mjs --text "${MSG}"
+
       - name: Post each new blog to Google Business Profile
         if: always()
         continue-on-error: true
@@ -238,20 +260,3 @@ jobs:
             MSG=$(printf "⚠️ Vercel cron jobs are misconfigured and have been failing silently:%b\n\nFix: add CRON_SECRET to the Vercel project env (any long random string). That revives the SEO agent, the weekly SEO run, and the on-time blog publish." "$BROKEN")
             node scripts/tg.mjs --text "$MSG" --no-verify || true
           fi
-
-      - name: Telegram notification
-        if: ${{ always() }}
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: |
-          if [ "$(cat /tmp/scheduled_changed.txt 2>/dev/null || echo false)" != "true" ]; then exit 0; fi
-          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then exit 0; fi
-          ALL_LIVE=$(cat /tmp/all_live.txt 2>/dev/null || echo false)
-          if [ "$ALL_LIVE" = "true" ]; then
-            MSG=$(node -e "const p=JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8'));console.log('✅ Blog live + submitted to Google:\n\n'+p.map(x=>x.title+'\n'+x.url).join('\n\n')+'\n\n📍 Google Business Profile — paste as a new post, button Learn more → the link above:\n———\n'+p.map(x=>'New from LuliDigital: '+x.title+'.').join('\n')+'\n———')")
-          else
-            # Never claim live when it isn't — that is what sent a dead link on 2026-08-21.
-            MSG=$(node -e "const p=JSON.parse(require('fs').readFileSync('/tmp/published-scheduled.json','utf8'));console.log('⚠️ Blog published in git but NOT reachable yet — the Vercel deploy has probably failed. NOT submitted to Google.\n\n'+p.map(x=>x.title+'\n'+x.url).join('\n\n')+'\n\nCheck: vercel ls (an UNKNOWN status with no build duration means it never built).')")
-          fi
-          node scripts/tg.mjs --text "${MSG}"

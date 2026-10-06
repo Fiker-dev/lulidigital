@@ -70,6 +70,41 @@ jobs:
         env:
           GOOGLE_INDEXING_SA_KEY: ${{ secrets.GOOGLE_INDEXING_SA_KEY }}
 
+      # FIRST: the live link, then the announcement assets. It used to run
+      # last, so the video and caption arrived before the link they referred to.
+      - name: Send Telegram notification
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "ERROR: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set in GitHub secrets."
+            exit 1
+          fi
+          SLUG="$PUBLISH_SLUG"
+          DATE="$PUBLISH_DATE"
+          URL="https://lulidigital.com/blog/${SLUG}"
+          # This now runs FIRST, ahead of the announcement, so it has to do its
+          # own waiting — otherwise the link goes out before the deploy finishes
+          # and tg.mjs (rightly) refuses to send it.
+          if [ -z "$DATE" ]; then
+            for i in $(seq 1 12); do
+              CODE=$(curl -s -o /dev/null -w "%{http_code}" "$URL")
+              [ "$CODE" = "200" ] && break
+              echo "waiting for deploy (HTTP $CODE) $i/12"; sleep 20
+            done
+          fi
+          # Pull title + description for a ready-to-paste Google Business Profile update.
+          node -e "const fs=require('fs');const raw=fs.readFileSync('src/content/blog/'+process.argv[1]+'.md','utf8');const get=(k)=>raw.match(new RegExp('^'+k+':\\\\s*\"?([^\"\\\\n]+)\"?','m'))?.[1]||'';fs.writeFileSync('/tmp/gt.txt',get('title'));fs.writeFileSync('/tmp/gd.txt',get('description'));" "$SLUG" || true
+          TITLE=$(cat /tmp/gt.txt 2>/dev/null)
+          DESCRIPTION=$(cat /tmp/gd.txt 2>/dev/null)
+          if [ -z "$DATE" ]; then
+            TEXT=$(printf "✅ Approved & published\n%s\n\n📍 Post on Google Business Profile — paste this caption, set the button to \"Learn more\" → the link:\n———\nNew from LuliDigital: %s. %s\n———\nLink: %s" "$URL" "$TITLE" "$DESCRIPTION" "$URL")
+          else
+            TEXT=$(printf "🗓 Scheduled for %s\n%s\n\n(Post to Google Business Profile once it goes live that day.)" "$DATE" "$URL")
+          fi
+          node scripts/tg.mjs --text "${TEXT}"
+
       - name: Publish Google Business Profile post
         run: |
           if [ "$(cat /tmp/published_changed.txt 2>/dev/null || echo false)" != "true" ]; then
@@ -114,26 +149,3 @@ jobs:
             node scripts/generate-blog-announcement.mjs --slug "$PUBLISH_SLUG" || true
           fi
           node scripts/send-announcement-telegram.mjs --for "$PUBLISH_SLUG" || true
-
-      - name: Send Telegram notification
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: |
-          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
-            echo "ERROR: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set in GitHub secrets."
-            exit 1
-          fi
-          SLUG="$PUBLISH_SLUG"
-          DATE="$PUBLISH_DATE"
-          URL="https://lulidigital.com/blog/${SLUG}"
-          # Pull title + description for a ready-to-paste Google Business Profile update.
-          node -e "const fs=require('fs');const raw=fs.readFileSync('src/content/blog/'+process.argv[1]+'.md','utf8');const get=(k)=>raw.match(new RegExp('^'+k+':\\\\s*\"?([^\"\\\\n]+)\"?','m'))?.[1]||'';fs.writeFileSync('/tmp/gt.txt',get('title'));fs.writeFileSync('/tmp/gd.txt',get('description'));" "$SLUG" || true
-          TITLE=$(cat /tmp/gt.txt 2>/dev/null)
-          DESCRIPTION=$(cat /tmp/gd.txt 2>/dev/null)
-          if [ -z "$DATE" ]; then
-            TEXT=$(printf "✅ Approved & published\n%s\n\n📍 Post on Google Business Profile — paste this caption, set the button to \"Learn more\" → the link:\n———\nNew from LuliDigital: %s. %s\n———\nLink: %s" "$URL" "$TITLE" "$DESCRIPTION" "$URL")
-          else
-            TEXT=$(printf "🗓 Scheduled for %s\n%s\n\n(Post to Google Business Profile once it goes live that day.)" "$DATE" "$URL")
-          fi
-          node scripts/tg.mjs --text "${TEXT}"
