@@ -66,7 +66,16 @@ const readPosts = () =>
   fs.readdirSync(BLOG).filter((f) => f.endsWith(".md")).map((f) => {
     const raw = fs.readFileSync(path.join(BLOG, f), "utf8");
     const fm = (raw.match(/^---\n([\s\S]*?)\n---/) || [])[1] || "";
-    const g = (k) => (fm.match(new RegExp(`^${k}:\\s*["']?(.+?)["']?\\s*$`, "m")) || [])[1] || "";
+    // Quote-aware: titles can contain escaped quotes (e.g. Sold \"AI Marketing.\"),
+    // and the old pattern kept the backslashes. That made a draft's stored title
+    // differ from its clean title, so the self-exclusion below failed and a new
+    // draft matched ITSELF at 0.999 — clear-stale-drafts nearly deleted it.
+    const g = (k) => {
+      const raw = fm.match(new RegExp(`^${k}:[ \\t]*(.*)$`, "m"))?.[1]?.trim() ?? "";
+      if (raw.startsWith('"')) { const m = raw.match(/^"((?:[^"\\]|\\.)*)"/); return m ? m[1].replace(/\\(["\\])/g, "$1") : raw; }
+      if (raw.startsWith("'")) { const m = raw.match(/^'((?:[^']|'')*)'/); return m ? m[1].replace(/''/g, "'") : raw; }
+      return raw;
+    };
     return {
       slug: f.replace(/\.md$/, ""),
       title: g("title"),
@@ -133,8 +142,11 @@ if (args.includes("--check")) {
   // Exclude the post being checked: a draft already on disk matches itself at
   // 1.000, which would mask the neighbour that actually matters.
   const probe = `${title}\n${description}`;
+  // --exclude <slug> is the reliable way to skip the post being checked; the
+  // title comparison is a fallback that quoting differences can defeat.
+  const excludeSlug = args.includes("--exclude") ? args[args.indexOf("--exclude") + 1] : null;
   const scored = Object.entries(store.topics)
-    .filter(([, t]) => t.sig !== probe && t.title !== title)
+    .filter(([slug, t]) => slug !== excludeSlug && t.sig !== probe && t.title !== title)
     .map(([slug, t]) => ({ slug, title: t.title, live: t.live, s: cosine(vec, t.vec) }))
     .sort((a, b) => b.s - a.s);
   const top = scored[0];

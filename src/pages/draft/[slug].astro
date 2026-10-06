@@ -70,9 +70,23 @@ const fmMatch = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
 if (!fmMatch) return notFound();
 const [, frontmatter, body] = fmMatch;
 
+// Reads one frontmatter scalar, honouring YAML's three quoting styles. The old
+// pattern stopped at the first quote mark, so a headline like
+//   title: "Swiss SMBs Are Being Sold \"AI Marketing.\" Here's How..."
+// matched nothing and the preview fell back to showing the slug as its title.
+// Valid YAML, rendered fine live — only this page got it wrong.
 function field(name: string) {
-  const m = frontmatter.match(new RegExp(`^${name}:\\s*"?([^"\\n]+?)"?\\s*$`, "m"));
-  return m?.[1]?.trim() ?? "";
+  const raw = frontmatter.match(new RegExp(`^${name}:[ \\t]*(.*)$`, "m"))?.[1]?.trim() ?? "";
+  if (!raw) return "";
+  if (raw.startsWith('"')) {
+    const m = raw.match(/^"((?:[^"\\]|\\.)*)"/);
+    return m ? m[1].replace(/\\(["\\])/g, "$1") : raw.replace(/^"|"$/g, "");
+  }
+  if (raw.startsWith("'")) {
+    const m = raw.match(/^'((?:[^']|'')*)'/);
+    return m ? m[1].replace(/''/g, "'") : raw.replace(/^'|'$/g, "");
+  }
+  return raw;
 }
 
 const title = field("title") || slug;

@@ -36,9 +36,13 @@ verify the blog pipeline actually did its job, and you report to Fiker.
    List every post with `draft: true`:
    - Has a `scheduledFor` date → already approved and queued. Say when it goes live.
    - No date → **it is waiting on Fiker, and you must ask him in this session.**
-     Show the title, the one-line description, the first paragraph, the link
-     `https://github.com/Fiker-dev/lulidigital/blob/main/src/content/blog/<slug>.md`,
-     and the next free slot it would take.
+     Show the title, the one-line description, and **the on-site preview link**:
+     `https://lulidigital.com/draft/<slug>?key=<BLOG_PREVIEW_TOKEN>`
+     That page renders the draft exactly as it will look when live. **Never send
+     a GitHub link** — Fiker should only ever see the drafted page on her own
+     site. (The GitHub link was a stopgap while this preview was returning 404
+     from an expired token; that is fixed — the preview reads anonymously from
+     the public repo when the token is rejected.)
 
      **If today is a posting day and `blog-queue.mjs` lists today as free, offer
      TODAY first.** Posts publish up to 13:41 UTC, so a morning approval still
