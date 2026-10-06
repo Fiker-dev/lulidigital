@@ -12,6 +12,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { field } from "./frontmatter.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const BLOG = path.join(ROOT, "src", "content", "blog");
@@ -43,12 +44,13 @@ const nextSlots = (n) => {
 const posts = fs.readdirSync(BLOG).filter((f) => f.endsWith(".md")).map((f) => {
   const raw = fs.readFileSync(path.join(BLOG, f), "utf8");
   const fm = (raw.match(/^---\n([\s\S]*?)\n---/) || [])[1] || "";
-  const g = (k) => (fm.match(new RegExp(`^${k}:\\s*["']?(.+?)["']?\\s*$`, "m")) || [])[1];
+  const g = (k) => field(fm, k) || undefined;
   return {
     slug: f.replace(/\.md$/, ""),
     title: g("title") || f,
     draft: /^draft:\s*true\s*$/m.test(fm),
     scheduledFor: g("scheduledFor") || null,
+    approved: g("approved") || null,
     pubDate: g("pubDate") || null,
     words: raw.split(/\s+/).length,
   };
@@ -56,15 +58,20 @@ const posts = fs.readdirSync(BLOG).filter((f) => f.endsWith(".md")).map((f) => {
 
 const live      = posts.filter((p) => !p.draft).sort((a, b) => (b.pubDate || "").localeCompare(a.pubDate || ""));
 const scheduled = posts.filter((p) => p.draft && p.scheduledFor).sort((a, b) => a.scheduledFor.localeCompare(b.scheduledFor));
-const waiting   = posts.filter((p) => p.draft && !p.scheduledFor).sort((a, b) => (a.pubDate || "").localeCompare(b.pubDate || ""));
+// Approved with no date = in the standing queue, going out on the next free
+// Mon/Wed/Fri. It must NOT appear as waiting on Fiker: this view is what the
+// routine reads, and listing it there would ask her to approve it twice.
+const approvedQ = posts.filter((p) => p.draft && p.approved && !p.scheduledFor).sort((a, b) => a.approved.localeCompare(b.approved));
+const waiting   = posts.filter((p) => p.draft && !p.scheduledFor && !p.approved).sort((a, b) => (a.pubDate || "").localeCompare(b.pubDate || ""));
 
 const state = {
   live_latest: live.slice(0, 3),
   scheduled,
+  approved_queue: approvedQ,
   waiting_approval: waiting,
   cap: CAP,
   drafting_paused: waiting.length >= CAP,
-  next_free_slots: nextSlots(4).filter((d) => !scheduled.some((s) => s.scheduledFor === d)),
+  next_free_slots: nextSlots(4 + approvedQ.length).filter((d) => !scheduled.some((s) => s.scheduledFor === d)).slice(approvedQ.length),
 };
 
 if (JSON_OUT) { console.log(JSON.stringify(state, null, 2)); process.exit(0); }
@@ -74,6 +81,8 @@ console.log(`\nLIVE — most recent`);
 state.live_latest.forEach((p) => console.log(line(p, `  (${p.pubDate})`)));
 console.log(`\nSCHEDULED — will publish themselves (${scheduled.length})`);
 scheduled.length ? scheduled.forEach((p) => console.log(line(p, `  → ${p.scheduledFor}`))) : console.log("   (none)");
+console.log(`\nAPPROVED — goes out on the next free Mon/Wed/Fri (${approvedQ.length})`);
+approvedQ.length ? approvedQ.forEach((p) => console.log(line(p, `  approved ${p.approved}`))) : console.log("   (none)");
 console.log(`\nWAITING ON FIKER — approve in the Claude routine (${waiting.length}/${CAP})`);
 waiting.length ? waiting.forEach((p) => console.log(line(p, `  written ${p.pubDate}`))) : console.log("   (none)");
 console.log(`\nNext free slots: ${state.next_free_slots.join(", ")}`);

@@ -1,4 +1,5 @@
 ---
+approved: "2026-10-06"
 title: "Swiss SMBs Are Being Sold \"AI Marketing.\" Here's How to Tell If It's Real."
 description: "AI marketing pitches are everywhere in Switzerland. Here's a practical buyer's guide to evaluating agencies, spotting real AI use, and asking the right questions before you sign."
 pubDate: 2026-10-06

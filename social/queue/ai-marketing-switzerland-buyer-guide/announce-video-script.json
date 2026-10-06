@@ -1,0 +1,38 @@
+{
+  "slug": "ai-marketing-switzerland-buyer-guide",
+  "title": "Swiss SMBs Are Being Sold \"AI Marketing.\" Here's How to Tell If It's Real.",
+  "url": "https://lulidigital.com/blog/ai-marketing-switzerland-buyer-guide",
+  "note": "Render on the Mac: BlogAnnounce.tsx + the cloned voice. Output blog-announce-video.mp4 into this folder.",
+  "beats": [
+    {
+      "vo": "Every agency in Switzerland says they use AI now.",
+      "screen": "Everyone claims AI.",
+      "reaction": "story-phone"
+    },
+    {
+      "vo": "But most cannot tell you which part of the work it actually does.",
+      "screen": "What does it do?",
+      "reaction": "idea"
+    },
+    {
+      "vo": "Switzerland is also not a single-language market — that matters more than you think.",
+      "screen": "German. French. Italian.",
+      "reaction": "laptop"
+    },
+    {
+      "vo": "Ask: which tasks does AI handle, and what does a human review before it goes live?",
+      "screen": "One question. Real answers.",
+      "reaction": "idea"
+    },
+    {
+      "vo": "A genuine answer is fast and specific. Vague answers are the red flag.",
+      "screen": "Vague = no system.",
+      "reaction": "story-relax"
+    },
+    {
+      "vo": "The full buyer's guide is linked in the comments — go read it before you sign.",
+      "screen": "Link in comments.",
+      "reaction": "celebrate"
+    }
+  ]
+}
