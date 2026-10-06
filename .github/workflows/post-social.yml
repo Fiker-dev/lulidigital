@@ -72,14 +72,6 @@ jobs:
       # Without this nothing can ever reach `approved`, which is how 24 packs
       # went stale unposted. Rate-limited to 3/run so the backlog doesn't
       # arrive as a wall of messages that just gets ignored again.
-      - name: Ask Fiker to approve pending social packs
-        if: always()
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          BLOG_PREVIEW_TOKEN: ${{ secrets.BLOG_PREVIEW_TOKEN }}
-        run: node scripts/request-pack-approvals.mjs --max 3
-
       - name: Deliver pending blog announcements to Telegram
         if: always()
         env:

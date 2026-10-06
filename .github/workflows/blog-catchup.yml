@@ -63,12 +63,3 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run "Auto Blog Post" -f publish_status=draft -R "${{ github.repository }}"
-
-      - name: Notify Telegram if caught up
-        if: steps.check.outputs.missed == 'true'
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: |
-          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then exit 0; fi
-          node scripts/tg.mjs --text "Heads up: today's scheduled blog run didn't happen, so I triggered a catch-up draft. It'll arrive shortly for your approval."

@@ -68,12 +68,3 @@ jobs:
           git diff --staged --quiet && echo "No changes" && exit 0
           git commit -m "Schedule draft ${SCHEDULE_SLUG} for ${SCHEDULE_DATE}"
           git push
-
-      - name: Telegram confirmation
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: |
-          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then exit 0; fi
-          TEXT=$(printf "🗓 Scheduled: %s\n\nGoes live %s (around 04:30 UTC) and gets submitted to Google automatically.\n\nThe LinkedIn company announcement is written and waiting — caption + asset land here the moment the post is confirmed live." "$SCHEDULE_SLUG" "$SCHEDULE_DATE")
-          node scripts/tg.mjs --text "${TEXT}"

@@ -160,7 +160,9 @@ notifies; it never asks. No inline buttons, no tap-links, anywhere:
 - Blog → `routines/auto-blog-routine.md` Step 2 asks; she replies "approve".
 - Social packs → `routines/social-team-routine.md` Step 4c asks; the routine
   then runs `scripts/approve-pack.mjs`.
-- `scripts/request-pack-approvals.mjs` is notification-only.
+- No approval message of any kind goes to Telegram — not asks, not nudges, not
+  confirmations. `request-pack-approvals.mjs` was deleted 2026-10-06. Telegram
+  only says a blog went live, followed by its announcement.
 - `src/pages/api/approve-blog.ts` and `approve-pack.ts` still exist and are
   token-guarded, but nothing links to them any more. The workflows they
   dispatch (`schedule-draft.yml`, `approve-pack.yml`) are still used — the

@@ -115,5 +115,7 @@ jobs:
             exit 0
           fi
           COUNT=$(node -e "const p=JSON.parse(process.env.PLAN_JSON); process.stdout.write(String(Array.isArray(p) ? Math.min(p.length, 6) : 0));")
-          TEXT=$(printf "Blog plan saved.\n\n%s post(s) are queued for the next scheduled draft slots.\n\nIf you want one outside the schedule, tell Lana: draft this now for approval." "$COUNT")
+          # Only ever dispatched by the retired OpenClaw webhook. Kept silent:
+          # Telegram only says a blog went live.
+          echo "Blog plan saved: $COUNT post(s) queued."; exit 0
           node scripts/tg.mjs --text "${TEXT}"

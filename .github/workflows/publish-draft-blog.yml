@@ -99,9 +99,11 @@ jobs:
           TITLE=$(cat /tmp/gt.txt 2>/dev/null)
           DESCRIPTION=$(cat /tmp/gd.txt 2>/dev/null)
           if [ -z "$DATE" ]; then
-            TEXT=$(printf "✅ Approved & published\n%s\n\n📍 Post on Google Business Profile — paste this caption, set the button to \"Learn more\" → the link:\n———\nNew from LuliDigital: %s. %s\n———\nLink: %s" "$URL" "$TITLE" "$DESCRIPTION" "$URL")
+            TEXT=$(printf "✅ Blog live:\n%s\n\n📍 Post on Google Business Profile — paste this caption, set the button to \"Learn more\" → the link:\n———\nNew from LuliDigital: %s. %s\n———\nLink: %s" "$URL" "$TITLE" "$DESCRIPTION" "$URL")
           else
-            TEXT=$(printf "🗓 Scheduled for %s\n%s\n\n(Post to Google Business Profile once it goes live that day.)" "$DATE" "$URL")
+            # Scheduled for later: say nothing now. She hears about it when it
+            # actually goes live, from publish-scheduled.
+            echo "Scheduled for $DATE — no message until it goes live."; exit 0
           fi
           node scripts/tg.mjs --text "${TEXT}"
 

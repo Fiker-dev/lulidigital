@@ -57,16 +57,3 @@ jobs:
           git diff --staged --quiet && echo "No change" && exit 0
           git commit -m "Social pack ${PACK_SLUG}: status updated by Fiker"
           git push
-
-      - name: Telegram confirmation
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: |
-          if [ -z "$TELEGRAM_BOT_TOKEN" ]; then exit 0; fi
-          if [ "${{ github.event.inputs.discard }}" = "true" ]; then
-            TEXT=$(printf '🗑 Discarded social pack: %s' "$PACK_SLUG")
-          else
-            TEXT=$(printf '✅ Approved social pack: %s\n\nIt posts on the next Post Approved Social Packs run (weekdays 11:23 UTC).' "$PACK_SLUG")
-          fi
-          node scripts/tg.mjs --text "${TEXT}"
