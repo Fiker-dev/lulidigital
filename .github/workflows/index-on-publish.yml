@@ -75,7 +75,7 @@ jobs:
           fi
           if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then exit 0; fi
           if [ "$(cat /tmp/all_live.txt 2>/dev/null || echo true)" = "true" ]; then
-            MSG=$(node -e "const p=JSON.parse(require('fs').readFileSync('/tmp/newly-live.json','utf8'));console.log('✅ Blog live + submitted to Google:\n\n'+p.map(x=>x.title+'\n'+x.url).join('\n\n')+'\n\n📍 Google Business Profile — paste as a new post, button Learn more → the link above:\n———\n'+p.map(x=>'New from LuliDigital: '+x.title+'.').join('\n')+'\n———')")
+            MSG=$(node -e "const p=JSON.parse(require('fs').readFileSync('/tmp/newly-live.json','utf8'));console.log('✅ Blog live + submitted to Google:\n\n'+p.map(x=>x.title+'\n'+x.url).join('\n\n')+'\n\n📍 Google Business Profile — paste as a new post, button Learn more → the link above:\n———\n'+p.map(x=>'New from LuliDigital: '+x.title+(/[.!?]$/.test(x.title)?'':'.')).join('\n')+'\n———')")
           else
             MSG=$(node -e "const p=JSON.parse(require('fs').readFileSync('/tmp/newly-live.json','utf8'));console.log('⚠️ Blog published in git but NOT reachable yet — the Vercel deploy has probably failed. NOT submitted to Google.\n\n'+p.map(x=>x.title+'\n'+x.url).join('\n\n')+'\n\nCheck: vercel ls (UNKNOWN status with no build duration = it never built).')")
           fi
