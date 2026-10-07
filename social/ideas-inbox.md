@@ -9,8 +9,7 @@ Format — one per line:
 `- [ ] <the raw idea> — (optional: your hunch at bucket/format)`
 
 ## Inbox
-- [ ] A startup just raised $20M — with Marc Benioff backing it — to solve a problem most founders won't say out loud. — (was pack `ai-update-find-the-bottleneck-first`, returned to vault 2026-09-16)
-- [ ] Most founders, when they finally decide to automate something, reach for the exciting part first. Lead gen. Content. The sales sequence they've been meaning to  — (was pack `automate-the-task-you-dread-first`, returned to vault 2026-09-16)
+- [ ] A startup just raised $20M — with Marc Benioff backing it — to solve a problem most founders won't say out loud. — (was pack `ai-update-find-the-bottleneck-first`, returned to vault 2026-09-16) — ⚠️ STALE as an AI Update: the news is June/"June AI" $20M pre-seed led by Time Ventures, announced early Aug 2026 — ~2 months old now, so it can't lead a "this week's news" reaction. Either discard, or reframe the evergreen angle ("every enquiry queues behind one person — you") as a non-dated pillar post. Needs a one-line steer from Fiker.
 - [ ] Most B2B content is still built to explain more. — (was pack `buyers-need-confidence`, returned to vault 2026-09-16)
 - [ ] More posts. More detail. More reasons for someone to choose you. — (was pack `clarity-over-more-content-personal`, returned to vault 2026-09-16)
 - [ ] A year ago my Thursday was a to-do list I could see the bottom of. Answer the emails. Chase the invoice. Reformat the deck. Move the numbers from one sheet into — (was pack `day-in-the-life-work-changed-shape`, returned to vault 2026-09-16)
@@ -25,3 +24,4 @@ Format — one per line:
 ## Processed
 (moved here once a pack exists, with its slug)
 - [x] "using AI like a jet engine as a fan" → social/queue/using-ai-like-a-jet-engine/ (2026-08-11)
+- [x] "Most founders reach for the exciting automation first" → social/queue/automate-the-task-you-dread-first/ (2026-10-07, for Thu 2026-10-08 personal track)
