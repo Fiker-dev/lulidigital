@@ -1,11 +1,10 @@
 ---
-approved: "2026-10-06"
 title: "Swiss SMBs Are Being Sold \"AI Marketing.\" Here's How to Tell If It's Real."
 description: "AI marketing pitches are everywhere in Switzerland. Here's a practical buyer's guide to evaluating agencies, spotting real AI use, and asking the right questions before you sign."
-pubDate: 2026-10-06
+pubDate: 2026-10-07
 category: "Digital Marketing"
 readingTime: "6 min read"
-draft: true
+draft: false
 ---
 
 Every agency in Switzerland will tell you they use AI now. The pitch sounds the same: faster campaigns, smarter targeting, multilingual content at scale. What they rarely explain is what the AI actually does, who approves the output, or how any of it connects to your specific business.
