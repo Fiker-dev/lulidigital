@@ -1,0 +1,38 @@
+{
+  "slug": "idea-to-action-gap-ai-automation",
+  "title": "The Gap Between Your Best Ideas and Your Next Action Is Bigger Than You Think",
+  "url": "https://lulidigital.com/blog/idea-to-action-gap-ai-automation",
+  "note": "Render on the Mac: BlogAnnounce.tsx + the cloned voice. Output blog-announce-video.mp4 into this folder.",
+  "beats": [
+    {
+      "vo": "Your best ideas aren't stalling because they're bad.",
+      "screen": "It's not the idea.",
+      "reaction": "idea"
+    },
+    {
+      "vo": "They're stalling because the path from idea to action was never built.",
+      "screen": "No path, no progress.",
+      "reaction": "laptop"
+    },
+    {
+      "vo": "Every manual step between strategy and execution is friction — and friction compounds.",
+      "screen": "Friction adds up fast.",
+      "reaction": "coffee"
+    },
+    {
+      "vo": "Automate the path. Keep humans at the gate for anything that matters.",
+      "screen": "Automate the path.",
+      "reaction": "laptop"
+    },
+    {
+      "vo": "Start with one workflow, map every step, and build from there.",
+      "screen": "One workflow. Start there.",
+      "reaction": "idea"
+    },
+    {
+      "vo": "The full guide is linked in the comments — go build the system.",
+      "screen": "Link in comments.",
+      "reaction": "celebrate"
+    }
+  ]
+}
