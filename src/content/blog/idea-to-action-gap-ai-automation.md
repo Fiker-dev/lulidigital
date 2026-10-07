@@ -1,11 +1,10 @@
 ---
 title: "The Gap Between Your Best Ideas and Your Next Action Is Bigger Than You Think"
 description: "Great ideas stall in the space between thinking and doing. Here's how to close that gap with AI automation before another quarter slips by."
-pubDate: 2026-09-16
+pubDate: 2026-10-07
 category: "AI Automation"
 readingTime: "6 min read"
-draft: true
-scheduledFor: "2026-10-07"
+draft: false
 ---
 
 Most founders don't lack ideas. They lack the operating system to act on them fast enough. By the time a good idea clears the queue of meetings, follow-ups, manual reports, and inbox fires, the window has shifted.
