@@ -23,7 +23,8 @@
     "amsterdam-seo-system-for-founders",
     "operational-fuel-costs-ai-audit-founders",
     "operational-edge-ai-automation-founders",
-    "ai-marketing-switzerland-buyer-guide"
+    "ai-marketing-switzerland-buyer-guide",
+    "eu-market-entry-ai-operational-blueprint"
   ],
   "seo_opportunity_queue": [
     {
@@ -61,11 +62,11 @@
     "published_at": "2026-09-02"
   },
   "review_state": {
-    "slug": "ai-marketing-switzerland-buyer-guide",
-    "title": "Swiss SMBs Are Being Sold \"AI Marketing.\" Here's How to Tell If It's Real.",
-    "description": "AI marketing pitches are everywhere in Switzerland. Here's a practical buyer's guide to evaluating agencies, spotting real AI use, and asking the right questions before you sign.",
-    "preview_text": "Every agency in Switzerland will tell you they use AI now. The pitch sounds the same: faster campaigns, smarter targeting, multilingual content at scale. What they rarely explain is what the AI actually does, who approves the output, or how any of it connects to your specific business.",
-    "scheduled_for": "2026-10-07",
+    "slug": "eu-market-entry-ai-operational-blueprint",
+    "title": "Entering a New EU Market? Build the Operational Blueprint Before You Build the Campaign",
+    "description": "Expanding into Denmark, Norway, Switzerland, or Germany? Here's how AI workflows cut through the complexity of EU market entry before you waste budget.",
+    "preview_text": "Most founders entering a new European market do it backwards. They commission a translation, run some ads, and wait. Six months later they have data that says nothing useful, a budget that's half gone, and no clearer picture of why the market hasn't responded.",
+    "scheduled_for": "2026-10-09",
     "revision_count": 0,
     "status": "awaiting_approval"
   }
