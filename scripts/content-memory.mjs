@@ -55,7 +55,7 @@ if (packSlug) {
   const dir = path.join(QUEUE, packSlug);
   const status = fs.existsSync(path.join(dir, "STATUS.md")) ? fs.readFileSync(path.join(dir, "STATUS.md"), "utf8") : "";
   const state = (status.split("\n")[0].match(/^\s*([a-z_]+)/) || [])[1] || "";
-  if (state === "posted" || state === "discarded") verdict(false, `status is ${state}`);
+  if (["posted", "discarded", "awaiting_upload"].includes(state)) verdict(false, `status is ${state}`);
   if (/\b[a-z-]+ POSTED https?:\/\//.test(status)) verdict(false, "status file records a posted URL");
   if (ledger.some((e) => e.slug === packSlug)) verdict(false, "in the posted ledger");
   text = caption(dir);
