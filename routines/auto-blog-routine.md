@@ -35,11 +35,11 @@ verify the blog pipeline actually did its job, and you report to Fiker.
    because the queue is full. Do not reconstruct this by reading files.
    List every post with `draft: true`:
    - Has a `scheduledFor` date → already approved and queued. Say when it goes live.
-   - No date → **it is waiting on Fiker, and you must ask him in this session.**
+   - No date → **it is waiting on Fiker, and you must ask them in this session.**
      Show the title, the one-line description, and **the on-site preview link**:
      `https://lulidigital.com/draft/<slug>?key=<BLOG_PREVIEW_TOKEN>`
      That page renders the draft exactly as it will look when live. **Never send
-     a GitHub link** — Fiker should only ever see the drafted page on her own
+     a GitHub link** — Fiker should only ever see the drafted page on their own
      site. (The GitHub link was a stopgap while this preview was returning 404
      from an expired token; that is fixed — the preview reads anonymously from
      the public repo when the token is rejected.)
@@ -56,36 +56,37 @@ verify the blog pipeline actually did its job, and you report to Fiker.
      link you should not send. If it fails, say so plainly instead.
 
      **Never send Telegram yourself.** If something genuinely needs to reach
-     her phone, use `node scripts/tg.mjs --text "..."`. It refuses blank
+     their phone, use `node scripts/tg.mjs --text "..."`. It refuses blank
      messages, hollow ones (headings with nothing under them), and anything
      containing a link that does not return 200. Every workflow now goes
-     through it; a raw curl to the Telegram API bypasses all of that. Ask plainly: approve, change, or drop it?
+     through it; a raw curl to the Telegram API bypasses all of that.
+
+     Ask plainly: approve, change, or drop it?
      Ask about the OLDEST unapproved draft first — those are the ones going stale.
 
      **Check memory before offering it.** Run
-     `node scripts/content-memory.mjs --draft <slug>` — exit 1 means it is
-     already live or means the same as a live blog post or something Fiker has
-     posted; do not offer it. (This supersedes the older
-     `topic-memory.mjs --check`, which only compared against blogs.) If that
-     exits 1 the topic has effectively been published already — say so and move
-     to the next draft rather than offering it. Drafts written before the
-     semantic check existed keep resurfacing otherwise; one scored 0.892 against
-     a live post and reached a Friday slot before it was caught.
+     `node scripts/content-memory.mjs --draft <slug>`.
+     - Exit 0 → new. Offer it.
+     - Exit 1 → already out: live, approved, scheduled, or saying the same
+       thing as a live blog post or something Fiker has posted. Do not offer
+       it; say which, and move to the next draft.
+     Drafts written before this check existed kept resurfacing; one scored
+     0.892 against a live post and reached a Friday slot before it was caught.
 
-   **Approving IS the decision that it goes out.** Once she says "approve", the
+   **Approving IS the decision that it goes out.** Once they say "approve", the
    draft is out of the offer list for good (content-memory treats approved and
    scheduled drafts as out), it publishes on the next Mon/Wed/Fri, and its
-   announcement is marked posted when delivered. She never confirms "posted".
+   announcement is marked posted when delivered. They never confirm "posted".
 
-   **Prefer the standing queue over picking a date.** When she approves, add
+   **Prefer the standing queue over picking a date.** When they approve, add
    `approved: "<today>"` to the frontmatter and leave `scheduledFor` out. The
    publisher then takes the oldest approved draft on any Mon/Wed/Fri that has
-   nothing else due. That way the cadence does not depend on her approving at
+   nothing else due. That way the cadence does not depend on their approving at
    the right moment — which is what cost Monday 2026-10-05.
 
-   Only set an explicit `scheduledFor` when she asks for a specific date.
+   Only set an explicit `scheduledFor` when they ask for a specific date.
 
-   Do not tell him to tap anything in Telegram. The Telegram tap-links are
+   Do not tell them to tap anything in Telegram. The Telegram tap-links are
    retired: they gated on a token that does not match on Vercel, so every tap
    returned a 9-byte "Not found" and six drafts piled up unpublished. Telegram
    is now notification-only. **Approval is a reply in this session.**
@@ -112,7 +113,7 @@ retired — they returned "Not found" on every tap. Telegram only notifies.)*
 - **"publish it now"** → **only if today is a Monday, Wednesday or Friday.** Blog
   posts go out on those days only; publishing off-rhythm is what put a post live
   on Thursday 2026-08-20. If Fiker asks on any other day, say so and offer the
-  next Mon/Wed/Fri slot instead — publish off-rhythm only if he confirms after
+  next Mon/Wed/Fri slot instead — publish off-rhythm only if they confirm after
   that. When it is a publishing day: set `draft: false`, set `pubDate` to today, remove any `scheduledFor`, clear `review_state` (set to null), commit ("Publish: <slug>"), push. Vercel deploys; `index-on-publish.yml` requests Google indexing automatically. Confirm with the live URL.
 - **Edit requests** → revise the article writing (wording, structure, tone, headline, CTA, sections). Re-run `npm run test:blog-quality`, bump `review_state.revision_count`, commit ("Revise: <slug>"), push, and re-send the review summary. You cannot change layout/avatar/fonts from here — say so and offer writing changes instead.
 - **"reject" / scrap it** → delete the draft file, clear `review_state`, commit ("Remove draft: <slug>"), push, confirm.

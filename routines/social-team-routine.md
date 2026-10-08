@@ -52,7 +52,7 @@ this rule instead:
 - **Real-footage videos (Fiker on camera / `mini-irl`) follow the same rule** —
   still write the script + the shot list and bind them to this `file`; Fiker
   films to those beats and names the export exactly as `file`. The footage is
-  his; the script and caption are still the pack's, bound by the file name.
+  theirs; the script and caption are still the pack's, bound by the file name.
 - You never upload the video. In the summary, always pair them explicitly:
   `File <file> → paste caption from social/queue/<pack>/` so there is zero doubt
   which caption goes with which video. Use the entry's `produce` field to tell
@@ -118,7 +118,7 @@ one per run), prepare its LuliDigital company announcement in advance:
      Fiker REACTS with a different pose each beat (idea → spill → mop →
      coffee → celebrate). Branded `LuliDigital · The Blog`, closing on
      "Read it on the LuliDigital blog". It is an EXTENSION of the article,
-     not a trailer — the argument, condensed, in her voice. Rendering is
+     not a trailer — the argument, condensed, in their voice. Rendering is
      LOCAL (Remotion + Chatterbox); write the beat script and pose plan, and
      say plainly in the summary that Fiker renders it.
    - **Editorial card** — `node scripts/render-linkedin-minime-card.mjs`
@@ -128,14 +128,13 @@ one per run), prepare its LuliDigital company announcement in advance:
    strongest posts and keep the card for quick turnarounds.
 
 6. **Tell Fiker the asset is ready** in your run summary — name the file, the
-   format (carousel/card), the scheduled company date, and this one line so she
-   can collect it:
+   format (carousel/card), the scheduled company date, and this one line so they can collect it:
    `On your Mac: node scripts/fetch-announcements.mjs`
    That drops the asset + a copy-pastable caption into
    `~/Desktop/LuliDigital Announcements/` named by weekday
    (e.g. `Tuesday-blog-announcement.pdf` + `-caption.txt`). A daily GitHub
-   Action also pings her on Telegram whenever an announcement is waiting, so
-   she is told even when away from her Mac.
+   Action also pings them on Telegram whenever an announcement is waiting, so
+   they are told even when away from their Mac.
 
 1. List every post in `src/content/blog/` with `draft: false` whose
    `pubDate` has passed. **Catch up on ALL unannounced live posts, not just the
@@ -311,7 +310,7 @@ re-verify once; otherwise report the exact build error in your final message.
 
 ## Step 4b — Refresh the live dashboard
 The content playbook artifact carries a live status block that Fiker keeps on
-his phone. Update it at the end of every run so it reflects the run you just
+their phone. Update it at the end of every run so it reflects the run you just
 did. Source of truth: `social/content-playbook.html` (committed in the repo).
 
 This block is Fiker's CRM. It must refresh whenever the state changes: **when
@@ -349,36 +348,36 @@ state — never carry a stale number.
 ## Step 4c-0 — CHECK MEMORY BEFORE OFFERING ANYTHING
 
 Fiker posts LinkedIn by hand, so a pack can be out in the world while its status
-still says awaiting_approval. On 2026-10-06 this routine offered her five packs
-she had already posted. Before listing ANY pack for approval, run:
+still says awaiting_approval. On 2026-10-06 this routine offered them five packs
+they had already posted. Before listing ANY pack for approval, run:
 
   node scripts/content-memory.mjs --pack <slug>
 
 Exit 1 means it has already gone out — do not offer it. That check covers its
 status, the posted ledger (social/posted-ledger.json), and whether its text
-means the same as anything she has posted OR any live blog post.
+means the same as anything they have posted OR any live blog post.
 
-**Approving IS posting — Fiker's rule.** Once she approves a pack it counts as
+**Approving IS posting — Fiker's rule.** Once they approve a pack it counts as
 out: `approve-pack.mjs` writes it to the ledger at approval, and a blog
 announcement is marked posted the moment it is delivered with its live blog.
-Never ask her to confirm "posted" for something she approved.
+Never ask them to confirm "posted" for something they approved.
 
-Only for content she posts entirely outside this flow (something she wrote and
-put up herself) record it with:
+Only for content they post entirely outside this flow (something they wrote and
+put up themselves) record it with:
 
   node scripts/approve-pack.mjs --slug <slug> --posted
 
 ## Step 4c — ASK FOR APPROVAL HERE (the only approval channel)
 
 Approval happens in this session. Telegram notifies Fiker that a pack is
-waiting; it carries no buttons and no action links, by her standing
-instruction. If you tell her to tap something in Telegram, you are wrong.
+waiting; it carries no buttons and no action links, by their standing
+instruction. If you tell them to tap something in Telegram, you are wrong.
 
 Every run, list the packs whose STATUS state is `awaiting_approval`, oldest
-first, and ask her plainly: approve, change, or drop? For each, show the slug,
+first, and ask them plainly: approve, change, or drop? For each, show the slug,
 the platform, and the caption as it would post.
 
-When she approves one in this session, run:
+When they approve one in this session, run:
 `node scripts/approve-pack.mjs --slug <slug> --date <YYYY-MM-DD>`
 then commit and push. To drop it: the same command with `--discard`.
 `post-social.yml` publishes approved + due packs on its next weekday run.
@@ -489,7 +488,7 @@ Each run does two jobs, in this order:
    than 3 days. Surface them at the very top of your final summary as a
    short numbered list — slug, date, and its one-line hook — so Fiker can
    clear the backlog by replying (e.g. `approve 1 and 3`, or `discard 2`).
-   Do NOT approve or post them yourself; they are his call. If a swept pack
+   Do NOT approve or post them yourself; they are their call. If a swept pack
    references a blog post or news item that has since gone stale, say so and
    recommend discarding it.
 
@@ -562,7 +561,7 @@ Credentials are provided in the run prompt.
   for content that passed the quality gate, and only with this run's pack.
   LinkedIn additionally requires Fiker's explicit approve reply.
 - Video is NEVER posted by this routine. LinkedIn video upload stays manual
-  — Fiker posts those himself so he is present for the first hour.
+  — Fiker posts those themselves so they are present for the first hour.
 - **Cadence.** Personal track: one post every weekday. Company track: two or
   three a week only (Tue/Thu, plus Fri when there is genuinely something to
   show) — company pages get far less organic reach, so daily is effort for

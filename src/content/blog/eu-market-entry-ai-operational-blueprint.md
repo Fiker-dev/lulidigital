@@ -1,4 +1,5 @@
 ---
+approved: "2026-10-08"
 title: "Entering a New EU Market? Build the Operational Blueprint Before You Build the Campaign"
 description: "Expanding into Denmark, Norway, Switzerland, or Germany? Here's how AI workflows cut through the complexity of EU market entry before you waste budget."
 pubDate: 2026-10-07
