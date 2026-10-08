@@ -153,6 +153,10 @@ for (const slug of fs.readdirSync(QUEUE)) {
   const statusPath = path.join(dir, "STATUS.md");
   const status = fs.existsSync(statusPath) ? fs.readFileSync(statusPath, "utf8") : "";
   if (/linkedin-company\s+POSTED/i.test(status)) continue;
+  // Belt and braces: a pack already marked posted is never re-sent, even if the
+  // delivered-log record was lost. On 2026-10-07 that record failed to push and
+  // post-social sent the Swiss announcement a second time.
+  if (/^\s*posted\b/.test(status)) continue;
   if (!FORCE && state.delivered.includes(slug)) continue;
 
   const date =

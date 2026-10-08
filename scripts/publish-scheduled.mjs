@@ -13,6 +13,7 @@
 import { readFileSync, writeFileSync, readdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { field as fmField } from "./frontmatter.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -20,8 +21,10 @@ const BLOG_DIR = join(ROOT, "src", "content", "blog");
 const SITE = "https://lulidigital.com";
 const today = new Date().toISOString().slice(0, 10);
 
-const field = (fm, name) =>
-  fm.match(new RegExp(`^${name}:\\s*"?([^"\\n]+?)"?\\s*$`, "m"))?.[1]?.trim() ?? "";
+// Shared reader: the old pattern returned "" for titles containing quote marks,
+// so "Sold \"AI Marketing.\"" went out as a "Blog live" message with no title —
+// which the hollow-message guard then (correctly) refused to send.
+const field = (fm, name) => fmField(fm, name);
 
 const published = [];
 
@@ -55,8 +58,18 @@ const alreadyDueToday = mdFiles.some((f) => {
   return /^draft:\s*true\s*$/m.test(p.fm) && sched && sched <= today;
 });
 
+// Has anything ALREADY gone live today? Publishing runs four times a day. On
+// 2026-10-07 the 05:58 run published Wednesday's scheduled post; the 09:03 run
+// then saw "nothing due" — because that post was already live — and promoted the
+// Swiss post too. Two posts on Wednesday, and Friday's approved post gone early.
+// The question is "has today's slot been used", not "is anything due right now".
+const publishedToday = mdFiles.some((f) => {
+  const p = readFm(f);
+  return p && !/^draft:\s*true\s*$/m.test(p.fm) && field(p.fm, "pubDate") === today;
+});
+
 let promoted = null;
-if (isPublishingDay && !alreadyDueToday) {
+if (isPublishingDay && !alreadyDueToday && !publishedToday) {
   const queued = mdFiles
     .map((f) => ({ f, ...(readFm(f) || {}) }))
     .filter((x) => x.fm && /^draft:\s*true\s*$/m.test(x.fm))
@@ -77,6 +90,8 @@ if (isPublishingDay && !alreadyDueToday) {
   } else {
     console.log("Publishing day with nothing due, and no approved drafts waiting.");
   }
+} else if (isPublishingDay && publishedToday && !alreadyDueToday) {
+  console.log("Today's slot is already used — leaving the approved queue for the next Mon/Wed/Fri.");
 }
 
 for (const file of readdirSync(BLOG_DIR)) {

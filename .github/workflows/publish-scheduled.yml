@@ -246,7 +246,13 @@ jobs:
           git add social/announcement-deliveries.json social/posted-ledger.json social/queue/ 2>/dev/null || true
           git diff --staged --quiet && { echo "Nothing new delivered."; exit 0; }
           git commit -m "Record delivered blog announcement"
-          for i in 1 2 3; do git pull --rebase -q origin main && git push -q origin main && break; sleep 5; done
+          # --autostash: other files change during the run, and a plain rebase
+          # refuses ("You have unstaged changes"). The old loop then gave up
+          # SILENTLY — the step showed green, the record was lost, and post-social
+          # re-sent the announcement. Now it must actually push, or fail.
+          ok=0
+          for i in 1 2 3; do git pull --rebase --autostash -q origin main && git push -q origin main && { ok=1; break; }; sleep 5; done
+          [ "$ok" = 1 ] || { echo "ERROR: could not push the delivery record — the announcement may be re-sent."; exit 1; }
 
       - name: Check the Vercel crons are actually configured
         if: always()
