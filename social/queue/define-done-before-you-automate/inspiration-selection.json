@@ -1,0 +1,11 @@
+{
+  "platform": "linkedin",
+  "format": "static",
+  "describedTags": ["automation", "process-design", "define-done", "operations", "counter-intuitive", "ai-employees"],
+  "selected": "creased-paper-text-note",
+  "usable": true,
+  "score": 7,
+  "matchedTags": [],
+  "reason": "Highest-scoring active LinkedIn static inspiration (fallback — no direct tag overlap). Suits a single-glance personal lesson.",
+  "adaptation": "Delivered text-only this run (asset: none) so the post auto-posts on approve once egress permits. If Fiker wants a visual later, the creased-paper-text-note layout fits one reflective line ('If you can't say what \"done\" looks like, the tool can't either.') — borrow only the layout traits (black sender header, circular Fiker profile photo, creased off-white paper texture); never copy source wording, logos, handles, or invented metrics. A card renders locally and would make the post paste-only."
+}
