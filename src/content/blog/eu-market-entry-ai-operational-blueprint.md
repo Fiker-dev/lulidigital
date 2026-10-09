@@ -1,11 +1,10 @@
 ---
-approved: "2026-10-08"
 title: "Entering a New EU Market? Build the Operational Blueprint Before You Build the Campaign"
 description: "Expanding into Denmark, Norway, Switzerland, or Germany? Here's how AI workflows cut through the complexity of EU market entry before you waste budget."
-pubDate: 2026-10-07
+pubDate: 2026-10-09
 category: "AI Automation"
 readingTime: "7 min read"
-draft: true
+draft: false
 ---
 
 Most founders entering a new European market do it backwards. They commission a translation, run some ads, and wait. Six months later they have data that says nothing useful, a budget that's half gone, and no clearer picture of why the market hasn't responded.
