@@ -1,4 +1,5 @@
 ---
+scheduledFor: "2026-10-12"
 title: "The Operational Edge Most Growing Founders Haven't Touched Yet"
 description: "Irish founders and international operators are sitting on untapped AI automation gains. Here's the practical audit to find them and act on them this week."
 pubDate: 2026-10-05
