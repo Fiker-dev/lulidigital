@@ -1,11 +1,10 @@
 ---
-scheduledFor: "2026-10-12"
 title: "The Operational Edge Most Growing Founders Haven't Touched Yet"
 description: "Irish founders and international operators are sitting on untapped AI automation gains. Here's the practical audit to find them and act on them this week."
-pubDate: 2026-10-05
+pubDate: 2026-10-12
 category: "AI Automation"
 readingTime: "6 min read"
-draft: true
+draft: false
 ---
 
 The founders moving fastest right now aren't working harder. They've identified the repeatable, low-judgment tasks eating their week and replaced them with systems that run without supervision. The gap between those founders and everyone else isn't talent or budget. It's operational clarity.
