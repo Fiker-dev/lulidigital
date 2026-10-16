@@ -513,11 +513,23 @@ const querySearchConsole = async ({ dimensions = ["page", "query"], days = 28, r
   };
 };
 
+// Trending searches are mostly news and people. Words like "brand" or "global"
+// match them by accident: "russell brand" became the 2026-10-14 blog topic.
+// A trend only counts when it names at least one unambiguous service signal.
+const AMBIGUOUS_TREND_SIGNALS = new Set([
+  "brand", "branding", "digital", "content", "business", "companies",
+  "international", "global", "remote",
+]);
+const trendRelevance = (keyword) =>
+  serviceSignals.some((signal) => !AMBIGUOUS_TREND_SIGNALS.has(signal) && matchesSignal(keyword, signal))
+    ? relevanceScore(keyword)
+    : 0;
+
 const chooseKeyword = (trends, now = new Date(), geo = "GB") => {
   const rankedTrends = trends
     .map((trend) => ({
       ...trend,
-      relevance: relevanceScore(trend.keyword),
+      relevance: trendRelevance(trend.keyword),
     }))
     .filter((trend) => trend.relevance > 0)
     .sort((a, b) => b.relevance - a.relevance || b.traffic - a.traffic);

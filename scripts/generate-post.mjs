@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync, existsSync, readdirSync } from "fs";
 import { join, dirname } from "path";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "url";
 import { getBestRegionalSeoRecommendation, inferSeoCategory } from "../src/lib/seoAgent.js";
 import { generateGeminiText } from "../src/lib/geminiFallback.js";
@@ -304,7 +305,7 @@ HARD RULES — these are not style preferences:
 
 Make it easy and quick to read. Structure it with a strong opening hook (two short paragraphs, no heading), then 5 to 7 short H2 sections, and a brief closing section. Each section should be only a few short paragraphs or a list — never a long block. Use at least two bulleted or numbered lists across the article (for example: the signs, the steps, what to audit, what to automate, what a human still approves). Include exactly one short pull-quote blockquote for the single most important idea. Separate major sections with a --- rule. At least one section should teach the solution path clearly: what to audit, what to automate or systemise, what a human should still approve, and when to bring in support. Include a relevant internal link to the LuliDigital service page at the end (use markdown link format to either /ai-desk, /marketing-desk, or /va-desk depending on the topic). If a local landing page is provided, include exactly one natural internal link to that local page as well.`;
 
-const anthropicInit = {
+const buildAnthropicInit = (prompt) => ({
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -333,9 +334,9 @@ const anthropicInit = {
       },
     ],
     tool_choice: { type: "tool", name: "submit_blog_post" },
-    messages: [{ role: "user", content: userPrompt }],
+    messages: [{ role: "user", content: prompt }],
   }),
-};
+});
 
 const parseJsonObject = (raw) => {
   const cleaned = String(raw || "")
@@ -346,56 +347,57 @@ const parseJsonObject = (raw) => {
   return JSON.parse(jsonMatch?.[0] || cleaned);
 };
 
-// Retry on transient Anthropic overload / rate-limit / 5xx so a temporary blip
-// doesn't kill a scheduled blog run.
-let response;
-let finalAnthropicError = "";
-for (let attempt = 1; attempt <= 4; attempt++) {
-  try {
-    response = await fetch("https://api.anthropic.com/v1/messages", anthropicInit);
-  } catch (error) {
-    finalAnthropicError = `Anthropic request failed: ${error instanceof Error ? error.message : String(error)}`;
-    if (attempt < 4) {
+// Returns the post, or null when neither Anthropic nor the Gemini fallback
+// produced one.
+async function generateDraft(prompt) {
+  // Retry on transient Anthropic overload / rate-limit / 5xx so a temporary blip
+  // doesn't kill a scheduled blog run.
+  const anthropicInit = buildAnthropicInit(prompt);
+  let response;
+  let finalAnthropicError = "";
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    try {
+      response = await fetch("https://api.anthropic.com/v1/messages", anthropicInit);
+    } catch (error) {
+      finalAnthropicError = `Anthropic request failed: ${error instanceof Error ? error.message : String(error)}`;
+      if (attempt < 4) {
+        const waitMs = attempt * 8000;
+        console.log(`Anthropic request failed (attempt ${attempt}/4) — retrying in ${waitMs / 1000}s`);
+        await new Promise((r) => setTimeout(r, waitMs));
+        continue;
+      }
+      response = null;
+      break;
+    }
+    if (response.ok) break;
+    const err = await response.text();
+    const retryable = response.status === 429 || response.status >= 500 || /overloaded/i.test(err);
+    if (retryable && attempt < 4) {
       const waitMs = attempt * 8000;
-      console.log(`Anthropic request failed (attempt ${attempt}/4) — retrying in ${waitMs / 1000}s`);
+      console.log(`Anthropic ${response.status} (attempt ${attempt}/4) — retrying in ${waitMs / 1000}s`);
       await new Promise((r) => setTimeout(r, waitMs));
       continue;
     }
+    finalAnthropicError = `Anthropic API error (${response.status}): ${err}`;
     response = null;
     break;
   }
-  if (response.ok) break;
-  const err = await response.text();
-  const retryable = response.status === 429 || response.status >= 500 || /overloaded/i.test(err);
-  if (retryable && attempt < 4) {
-    const waitMs = attempt * 8000;
-    console.log(`Anthropic ${response.status} (attempt ${attempt}/4) — retrying in ${waitMs / 1000}s`);
-    await new Promise((r) => setTimeout(r, waitMs));
-    continue;
-  }
-  finalAnthropicError = `Anthropic API error (${response.status}): ${err}`;
-  response = null;
-  break;
-}
 
-let post;
-if (response?.ok) {
-  const data = await response.json();
-  // Structured tool output returns a validated JSON object — no fragile text parsing.
-  const toolUse = Array.isArray(data.content) ? data.content.find((block) => block.type === "tool_use") : null;
-
-  post = toolUse?.input;
-  if (!post) {
+  if (response?.ok) {
+    const data = await response.json();
+    // Structured tool output returns a validated JSON object — no fragile text parsing.
+    const toolUse = Array.isArray(data.content) ? data.content.find((block) => block.type === "tool_use") : null;
+    if (toolUse?.input) return toolUse.input;
     // Fallback for any text-only response.
     const raw = (data.content?.find((b) => b.type === "text")?.text || "").trim();
     try {
-      post = parseJsonObject(raw);
-    } catch (e) {
+      return parseJsonObject(raw);
+    } catch {
       console.error("Failed to get blog post from model response:", JSON.stringify(data).slice(0, 600));
-      process.exit(1);
+      return null;
     }
   }
-} else {
+
   console.error(finalAnthropicError || "Anthropic request failed before a response was available.");
   console.log("Trying Gemini fallback for blog generation.");
   const raw = await generateGeminiText({
@@ -404,7 +406,7 @@ if (response?.ok) {
 Return only a valid JSON object with these exact fields: title, description, slug, readingTime, content. Do not wrap it in markdown. Do not include frontmatter.`,
     messages: [{
       role: "user",
-      content: `${userPrompt}
+      content: `${prompt}
 
 Return the complete blog post as JSON only:
 {
@@ -421,69 +423,11 @@ Return the complete blog post as JSON only:
   });
 
   try {
-    post = parseJsonObject(raw);
+    return parseJsonObject(raw);
   } catch {
-    console.error("Gemini fallback failed to return valid blog JSON:", raw.slice(0, 600));
-    process.exit(1);
+    console.error("Gemini fallback failed to return valid blog JSON:", String(raw).slice(0, 600));
+    return null;
   }
-}
-
-if (titleLooksStuffed(post.title, topic.keyword)) {
-  console.error(`Generated title looks keyword-stuffed: ${post.title}`);
-  process.exit(1);
-}
-
-const seoPackagingReason = findSeoPackagingIssue({
-  title: post.title,
-  description: post.description,
-  slug: post.slug,
-  keyword: topic.keyword,
-  localLabel: topic.localTarget?.label,
-});
-if (seoPackagingReason) {
-  console.error(`Generated metadata looks keyword-stuffed: ${seoPackagingReason}`);
-  process.exit(1);
-}
-
-const keywordStuffingReason = findKeywordStuffing(post.content, topic.keyword);
-if (keywordStuffingReason) {
-  console.error(`Generated content looks keyword-stuffed: ${keywordStuffingReason}`);
-  process.exit(1);
-}
-
-// The target label is like "Amsterdam Studio" / "Africa Growth Desk"; pass the
-// bare place name so the guard matches how it actually reads in the body.
-const targetCity = (topic.localTarget?.label || "").replace(/\s+(Studio|Desk|Growth Desk)$/i, "").trim();
-const locationStuffingReason = findLocationStuffing(post.content, 6, [targetCity]);
-if (locationStuffingReason) {
-  console.error(`Generated content over-repeats a market: ${locationStuffingReason}`);
-  process.exit(1);
-}
-
-// Semantic duplicate check. The prompt is handed every published title and
-// told to be distinct, but that is a request — "Your Operations Are Running
-// You" still came back 0.892 similar to an already-published post, because two
-// pieces can share an idea while sharing almost no words. This compares
-// meaning, after the fact, where it can actually be measured.
-try {
-  const { execFileSync } = await import("node:child_process");
-  execFileSync("node", [
-    join(__dirname, "topic-memory.mjs"), "--check", post.title, post.description || "",
-  ], { stdio: "inherit", env: process.env });
-} catch (err) {
-  if (err.status === 1) {
-    console.error("Refusing to write a post that repeats one already published.");
-    process.exit(1);
-  }
-  // Exit 2 (no API key) or a network failure must not block the day's post —
-  // the check is a safeguard, not a dependency.
-  console.warn(`Duplicate check could not run (${err.message.split("\n")[0]}) — continuing.`);
-}
-
-const fabricatedPattern = contentLooksFabricated(post.content);
-if (fabricatedPattern) {
-  console.error(`Generated content appears to contain fabricated relatability: ${fabricatedPattern}`);
-  process.exit(1);
 }
 
 // The prompt forbids these, but a prompt is a request, not a guarantee — three
@@ -495,21 +439,94 @@ const FALSE_LOCALITY = [
   [/\bthe LuliDigital ([A-Z][\w ]*?) (?:studio|office)\b/g, "the $1 page"],
   [/\bour ([A-Z][\w ]*?) (?:studio|office)\b/g, "the $1 page"],
 ];
-let localityFixes = 0;
-for (const [re, rep] of FALSE_LOCALITY) {
-  const before = post.content;
-  post.content = post.content.replace(re, rep);
-  if (post.content !== before) localityFixes++;
-}
-if (localityFixes) {
-  console.log(`Removed ${localityFixes} false office/studio claim(s) from the generated post.`);
+
+// Every quality gate below used to process.exit(1) on the first bad draft, so
+// one "we" or one too-similar title cost the whole day's post (2026-10-07,
+// 10-09, 10-14 x2). They are all properties of a single generation, not of the
+// topic, so the draft is regenerated with the rejection reason instead.
+function findQualityIssue(post) {
+  if (titleLooksStuffed(post.title, topic.keyword)) {
+    return `the title looks keyword-stuffed ("${post.title}")`;
+  }
+
+  const seoPackagingReason = findSeoPackagingIssue({
+    title: post.title,
+    description: post.description,
+    slug: post.slug,
+    keyword: topic.keyword,
+    localLabel: topic.localTarget?.label,
+  });
+  if (seoPackagingReason) return `the metadata looks keyword-stuffed: ${seoPackagingReason}`;
+
+  const keywordStuffingReason = findKeywordStuffing(post.content, topic.keyword);
+  if (keywordStuffingReason) return `the content looks keyword-stuffed: ${keywordStuffingReason}`;
+
+  // The target label is like "Amsterdam Studio" / "Africa Growth Desk"; pass the
+  // bare place name so the guard matches how it actually reads in the body.
+  const targetCity = (topic.localTarget?.label || "").replace(/\s+(Studio|Desk|Growth Desk)$/i, "").trim();
+  const locationStuffingReason = findLocationStuffing(post.content, 6, [targetCity]);
+  if (locationStuffingReason) return `the content over-repeats a market: ${locationStuffingReason}`;
+
+  // Semantic duplicate check. The prompt is handed every published title and
+  // told to be distinct, but that is a request — "Your Operations Are Running
+  // You" still came back 0.892 similar to an already-published post, because two
+  // pieces can share an idea while sharing almost no words. This compares
+  // meaning, after the fact, where it can actually be measured.
+  try {
+    const output = execFileSync("node", [
+      join(__dirname, "topic-memory.mjs"), "--check", post.title, post.description || "",
+    ], { env: process.env, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
+    process.stdout.write(output);
+  } catch (err) {
+    process.stdout.write(`${err.stdout || ""}${err.stderr || ""}`);
+    if (err.status === 1) {
+      const closest = `${err.stdout || ""}${err.stderr || ""}`.match(/TOO CLOSE to "(.+?)"/)?.[1];
+      return `it repeats an already-published post${closest ? ` ("${closest}")` : ""}. Pick a clearly different angle and a different title`;
+    }
+    // Exit 2 (no API key) or a network failure must not block the day's post —
+    // the check is a safeguard, not a dependency.
+    console.warn(`Duplicate check could not run (${err.message.split("\n")[0]}) — continuing.`);
+  }
+
+  const fabricatedPattern = contentLooksFabricated(post.content);
+  if (fabricatedPattern) return `it contains fabricated relatability (${fabricatedPattern})`;
+
+  // First person implies staff. Fiker works alone; "we" is a factual error here.
+  // Capital "US" is the country, not the pronoun.
+  const teamHits = (post.content.match(/\b(we|our team|us)\s+\w+/gi) || [])
+    .filter((m) => !/^US\b/.test(m) && !/\bus\s+(dollars?|market|founders?|based|smbs?)\b/i.test(m));
+  if (teamHits.length) {
+    return `it uses team language (${teamHits.slice(0, 3).join(", ")}). LuliDigital is one person: never write "we", "us" or "our"`;
+  }
+
+  return null;
 }
 
-// First person implies staff. Fiker works alone; "we" is a factual error here.
-const teamHits = (post.content.match(/\b(we|our team|us)\s+\w+/gi) || [])
-  .filter((m) => !/\bus\s+(dollars?|market|founders?|based|smbs?)\b/i.test(m));
-if (teamHits.length) {
-  console.error(`Generated content uses team language (${teamHits.slice(0, 3).join(", ")}). LuliDigital is one person — aborting rather than publishing a false claim.`);
+const MAX_DRAFT_ATTEMPTS = 3;
+let post;
+let rejection = "";
+for (let attempt = 1; attempt <= MAX_DRAFT_ATTEMPTS; attempt++) {
+  const prompt = rejection
+    ? `${userPrompt}\n\nIMPORTANT: a previous draft was rejected because ${rejection}. Fix that in this version.`
+    : userPrompt;
+  const draft = await generateDraft(prompt);
+  if (!draft) process.exit(1);
+
+  for (const [re, rep] of FALSE_LOCALITY) {
+    const before = draft.content;
+    draft.content = draft.content.replace(re, rep);
+    if (draft.content !== before) console.log("Removed a false office/studio claim from the generated post.");
+  }
+
+  rejection = findQualityIssue(draft);
+  if (!rejection) {
+    post = draft;
+    break;
+  }
+  console.error(`Draft ${attempt}/${MAX_DRAFT_ATTEMPTS} rejected: ${rejection}`);
+}
+if (!post) {
+  console.error(`No draft passed the quality gates after ${MAX_DRAFT_ATTEMPTS} attempts — not publishing.`);
   process.exit(1);
 }
 
