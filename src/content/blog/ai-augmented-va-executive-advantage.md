@@ -1,11 +1,10 @@
 ---
 title: "Your VA Isn't the Problem. The Way You're Using Them Is."
 description: "Most executives use virtual assistants for reactive tasks. Here's how AI-augmented support flips that model into a proactive executive advantage."
-pubDate: 2026-10-09
+pubDate: 2026-10-23
 category: "Virtual Assistant"
 readingTime: "6 min read"
-draft: true
-approved: "2026-10-23"
+draft: false
 ---
 
 Most founders hire a virtual assistant to clear their inbox and book their calls. That's not wrong. But it's about as far from the real opportunity as you can get.
