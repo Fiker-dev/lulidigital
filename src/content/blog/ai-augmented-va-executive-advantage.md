@@ -5,6 +5,7 @@ pubDate: 2026-10-09
 category: "Virtual Assistant"
 readingTime: "6 min read"
 draft: true
+approved: "2026-10-23"
 ---
 
 Most founders hire a virtual assistant to clear their inbox and book their calls. That's not wrong. But it's about as far from the real opportunity as you can get.
