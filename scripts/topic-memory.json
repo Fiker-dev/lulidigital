@@ -107768,7 +107768,7 @@
     },
     "ai-augmented-va-executive-advantage": {
       "sig": "Your VA Isn't the Problem. The Way You're Using Them Is.\nMost executives use virtual assistants for reactive tasks. Here's how AI-augmented support flips that model into a proactive executive advantage.",
-      "live": false,
+      "live": true,
       "title": "Your VA Isn't the Problem. The Way You're Using Them Is.",
       "vec": [
         -0.005927426,
