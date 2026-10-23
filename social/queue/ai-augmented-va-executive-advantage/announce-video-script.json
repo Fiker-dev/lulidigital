@@ -1,0 +1,38 @@
+{
+  "slug": "ai-augmented-va-executive-advantage",
+  "title": "Your VA Isn't the Problem. The Way You're Using Them Is.",
+  "url": "https://lulidigital.com/blog/ai-augmented-va-executive-advantage",
+  "note": "Render on the Mac: BlogAnnounce.tsx + the cloned voice. Output blog-announce-video.mp4 into this folder.",
+  "beats": [
+    {
+      "vo": "Your VA isn't the problem. The way you're using them is.",
+      "screen": "Wrong model.",
+      "reaction": "idea"
+    },
+    {
+      "vo": "Most support runs like a ticket queue — nothing moves until you ask.",
+      "screen": "You're the bottleneck.",
+      "reaction": "laptop"
+    },
+    {
+      "vo": "Workflow ownership means the whole process runs without you touching it.",
+      "screen": "Own the process.",
+      "reaction": "story-relax"
+    },
+    {
+      "vo": "Anticipation is the layer above that — prep ready before you even open the invite.",
+      "screen": "One layer higher.",
+      "reaction": "coffee"
+    },
+    {
+      "vo": "Freeing your schedule is good. Freeing your thinking is the real advantage.",
+      "screen": "Better decisions.",
+      "reaction": "celebrate"
+    },
+    {
+      "vo": "Full breakdown is in the blog — link in the comments.",
+      "screen": "Read it. Link in comments.",
+      "reaction": "story-phone"
+    }
+  ]
+}
