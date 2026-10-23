@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-16T13:16:06.471Z",
-  "week": "2026-10-16",
+  "generatedAt": "2026-10-23T13:27:55.142Z",
+  "week": "2026-10-23",
   "pages": {
     "/denmark": {
       "primary": [
@@ -46,9 +46,10 @@
     },
     "/web-design-desk": {
       "primary": [
+        "li web design",
         "lilla digital"
       ],
-      "source": "weekly Search Console refresh 2026-10-16"
+      "source": "weekly Search Console refresh 2026-10-23"
     },
     "/va-desk": {
       "primary": [
