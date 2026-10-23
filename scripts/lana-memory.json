@@ -27,7 +27,8 @@
     "eu-market-entry-ai-operational-blueprint",
     "ai-augmented-va-executive-advantage",
     "uk-founders-stop-chasing-tasks-start-leading",
-    "fractional-executive-va-blueprint-ireland"
+    "fractional-executive-va-blueprint-ireland",
+    "ai-agents-eu-market-entry"
   ],
   "seo_opportunity_queue": [
     {
@@ -65,11 +66,11 @@
     "published_at": "2026-09-02"
   },
   "review_state": {
-    "slug": "fractional-executive-va-blueprint-ireland",
-    "title": "The Fractional Executive Blueprint: How Irish Teams Scale Without Overhiring",
-    "description": "Irish founders are drowning in admin while avoiding the hire that fixes it. Here's the fractional VA blueprint that scales operations without adding headcount.",
-    "preview_text": "The operational ceiling most Irish founders hit is not a strategy problem. It is a capacity problem dressed up as a strategy problem. The calendar is full, the inbox runs the day, and every decision that requires context sits with one person: you.",
-    "scheduled_for": "2026-10-19",
+    "slug": "ai-agents-eu-market-entry",
+    "title": "AI Agents: The Fastest Way Into a New EU Market Without a Local Team",
+    "description": "Expanding into Europe without a local team? Here's how AI agents can handle research, localisation, and early marketing execution so you move fast without burning cash.",
+    "preview_text": "Expanding into a new European market without a local team is a brutal coordination problem. You need cultural fluency, localised copy, the right channels, and a customer support layer that works in a language your core team probably doesn't speak — and you need all of it before your runway patience runs out.",
+    "scheduled_for": "2026-10-26",
     "revision_count": 0,
     "status": "awaiting_approval"
   }
