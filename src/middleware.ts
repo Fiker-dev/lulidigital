@@ -1,6 +1,10 @@
 import { defineMiddleware } from "astro:middleware";
 
 const canonicalHost = "lulidigital.com";
+// Client proposal subdomains: host -> page served at that host's root.
+const proposalHosts = new Map([
+  ["fikersvisionforalchemy.lulidigital.com", "/fikers-vision-for-alchemy"],
+]);
 const serviceRedirectPaths = new Map([
   ["/ai", "/ai-desk"],
   ["/marketing", "/marketing-desk"],
@@ -13,6 +17,16 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const trimmedPath = url.pathname === "/" ? "/" : url.pathname.replace(/\/+$/, "");
   const serviceRedirectPath = serviceRedirectPaths.get(trimmedPath.toLowerCase());
 
+  const proposalPath = proposalHosts.get(url.hostname);
+  if (proposalPath && url.pathname === "/") {
+    return withSecurityHeaders(await next(proposalPath), url);
+  }
+  if (url.hostname === canonicalHost) {
+    for (const [host, path] of proposalHosts) {
+      if (trimmedPath.toLowerCase() === path) return context.redirect(`https://${host}/`, 301);
+    }
+  }
+
   if (url.hostname === `www.${canonicalHost}`) {
     url.hostname = canonicalHost;
   }
@@ -23,7 +37,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect(url.toString(), 301);
   }
 
-  const response = await next();
+  return withSecurityHeaders(await next(), url);
+});
+
+function withSecurityHeaders(response: Response, url: URL) {
+  const isLocalHttpPreview = url.protocol === "http:"
+    && ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
   response.headers.set("X-Content-Type-Options", "nosniff");
   response.headers.set("X-Frame-Options", "DENY");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
@@ -51,4 +70,4 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   return response;
-});
+}

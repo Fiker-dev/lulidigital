@@ -47,7 +47,8 @@ export default defineConfig({
         // exclude internal/private pages from the sitemap
         !page.includes('/Fikerte') &&
         !page.includes('/Teshome') &&
-        !page.includes('/api/'),
+        !page.includes('/api/') &&
+        !page.includes('/fikers-vision-for-alchemy'),
       changefreq: 'weekly',
       priority: 0.8,
       serialize(item) {
