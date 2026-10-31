@@ -1,0 +1,714 @@
+---
+// Fiker's Vision for Alchemy — interactive proposal.
+// Served at https://fikersvisionforalchemy.lulidigital.com (host rewrite in middleware.ts).
+// Private prospect page: noindex, excluded from the sitemap.
+const bookingUrl = "https://cal.com/cal.com-lulidigitaldiscovery/30min";
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fiker's Vision for Alchemy</title>
+<meta name="description" content="A lean, AI-enabled operating model for sustainable growth. A proposal from Fiker Abate for Alchemy." />
+<meta name="robots" content="noindex, nofollow" />
+<meta property="og:title" content="Fiker's Vision for Alchemy" />
+<meta property="og:description" content="A lean, AI-enabled operating model for sustainable growth." />
+<meta name="theme-color" content="#FBF8F3" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" />
+<style is:inline>
+:root{
+  --bg:#FBF8F3; --ink:#1B1830; --muted:#5B5770; --line:#E7E1D6; --card:#FFFFFF;
+  /* the six vision families, straight from the operating-model diagram */
+  --team-bg:#E8E5FF; --team:#6558D3; --team-ink:#241D57;
+  --disc-bg:#DDF7FF; --disc:#168AAD; --disc-ink:#073B4C;
+  --found-bg:#FFF1C9; --found:#F4A261; --found-ink:#653B0B;
+  --fiker-bg:#FFD6E8; --fiker:#D1498B; --fiker-ink:#591334;
+  --people-bg:#E2F8DE; --people:#46A758; --people-ink:#173D20;
+  --out-bg:#D8F3EE; --out:#0F9D83; --out-ink:#073B32;
+  --rainbow:linear-gradient(90deg,var(--team),var(--disc),var(--out),var(--people),var(--found),var(--fiker));
+  --serif:'Playfair Display',Georgia,serif; --sans:'DM Sans',system-ui,sans-serif;
+  --r:22px; --shadow:0 1px 2px rgba(27,24,48,.04),0 12px 32px -12px rgba(27,24,48,.14);
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;overflow-x:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+:focus-visible{outline:3px solid var(--team);outline-offset:3px;border-radius:8px}
+.wrap{width:min(1120px,100% - 32px);margin-inline:auto}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em}
+h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:14px}
+h3{font-size:22px}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;margin-bottom:16px}
+.eyebrow::before{content:"";width:28px;height:3px;border-radius:3px;background:currentColor}
+.lede{font-size:clamp(17px,1.6vw,20px);color:var(--muted);max-width:62ch}
+section{padding:clamp(72px,10vw,120px) 0;position:relative}
+
+/* progress + nav */
+.progress{position:fixed;inset:0 0 auto 0;height:4px;z-index:60;background:var(--rainbow);transform-origin:0 50%;transform:scaleX(0)}
+.dots{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:12px}
+.dots a{width:12px;height:12px;border-radius:50%;border:2px solid var(--c);display:block;transition:transform .3s,background .3s;position:relative}
+.dots a.on{background:var(--c);transform:scale(1.35)}
+.dots a span{position:absolute;right:22px;top:50%;transform:translateY(-50%);white-space:nowrap;font-size:12px;font-weight:600;background:var(--ink);color:#fff;padding:3px 9px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity .2s}
+.dots a:hover span,.dots a:focus-visible span{opacity:1}
+@media (max-width:900px){.dots{display:none}}
+
+/* hero */
+.hero{position:relative;min-height:100svh;display:grid;align-items:center;padding:110px 0 80px;overflow:hidden;isolation:isolate}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.75;z-index:-1;animation:drift 18s ease-in-out infinite alternate}
+.b1{width:46vmax;height:46vmax;background:var(--team-bg);top:-14vmax;left:-12vmax}
+.b2{width:34vmax;height:34vmax;background:var(--fiker-bg);top:6vmax;right:-10vmax;animation-delay:-4s}
+.b3{width:30vmax;height:30vmax;background:var(--disc-bg);bottom:-12vmax;left:18vmax;animation-delay:-8s}
+.b4{width:24vmax;height:24vmax;background:var(--found-bg);bottom:4vmax;right:14vmax;animation-delay:-12s}
+.b5{width:20vmax;height:20vmax;background:var(--out-bg);top:30vmax;left:-6vmax;animation-delay:-6s}
+@keyframes drift{to{transform:translate(6vmax,4vmax) scale(1.12)}}
+.hero-top{display:flex;justify-content:space-between;align-items:center;position:absolute;top:24px;left:0;right:0}
+.brand{font-weight:700;font-size:14px;letter-spacing:.06em;text-decoration:none}
+.brand b{color:var(--fiker)}
+.badge{font-size:12px;font-weight:600;padding:6px 12px;border-radius:99px;background:rgba(255,255,255,.7);border:1px solid var(--line);backdrop-filter:blur(8px)}
+.hero h1{font-size:clamp(46px,8.4vw,108px);margin:8px 0 22px;max-width:14ch}
+.hero h1 .alch{font-style:italic;background:var(--rainbow);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 8s linear infinite}
+@keyframes shimmer{to{background-position:200% 0}}
+.hero .sub{font-family:var(--serif);font-size:clamp(20px,2.4vw,28px);font-style:italic;color:var(--team-ink);margin-bottom:28px}
+.vision{max-width:640px;background:rgba(255,255,255,.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.9);border-left:5px solid var(--fiker);border-radius:18px;padding:20px 24px;box-shadow:var(--shadow);margin-bottom:34px}
+.vision small{display:block;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--fiker);margin-bottom:6px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 24px;border-radius:99px;font-weight:600;text-decoration:none;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn-dark{background:var(--ink);color:#fff;box-shadow:0 10px 24px -10px rgba(27,24,48,.6)}
+.btn-light{background:#fff;border:1px solid var(--line)}
+.btn svg{width:18px;height:18px}
+.scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:6px}
+.scroll-cue i{width:2px;height:34px;background:linear-gradient(var(--ink),transparent);animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.stagger>*{transition-delay:calc(var(--i,0) * 90ms)}
+
+/* the idea — steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px;counter-reset:s}
+.step{background:var(--card);border-radius:var(--r);padding:26px;box-shadow:var(--shadow);border-top:6px solid var(--c);position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.step:hover{transform:translateY(-6px) rotate(-.4deg)}
+.step::after{content:"";position:absolute;inset:auto -30% -60% auto;width:160px;height:160px;border-radius:50%;background:var(--cb);transition:transform .5s}
+.step:hover::after{transform:scale(1.4)}
+.step .n{font-family:var(--serif);font-size:44px;font-weight:700;color:var(--c);line-height:1;margin-bottom:12px;position:relative;z-index:1}
+.step p{position:relative;z-index:1;font-weight:500}
+.punch{margin-top:34px;font-family:var(--serif);font-size:clamp(20px,2.4vw,28px);font-style:italic;max-width:30ch}
+.punch em{color:var(--fiker);font-style:italic}
+@media (max-width:820px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* operating model flow */
+.model{background:linear-gradient(180deg,var(--bg),#F4F1FF 40%,var(--bg))}
+.flow-shell{margin-top:40px;background:rgba(255,255,255,.6);border:1px solid var(--line);border-radius:28px;padding:clamp(16px,3vw,32px);box-shadow:var(--shadow)}
+.flow-bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
+.flow-bar p{font-size:14px;color:var(--muted)}
+.play{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:99px;background:var(--ink);color:#fff;font-weight:600;font-size:14px}
+.play svg{width:14px;height:14px}
+.flow{position:relative;display:grid;gap:44px 54px;grid-template-columns:repeat(4,1fr);grid-template-areas:"a b c d" "h f f e" "h g g e"}
+.flow svg.edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0}
+.edges path{fill:none;stroke-width:2.5;stroke-linecap:round}
+.edges .base{stroke:#CFC8DE}
+.edges .run{stroke:url(#gflow);stroke-dasharray:6 12;animation:dash 1.2s linear infinite}
+.edges .loop{stroke:var(--disc);stroke-dasharray:3 9;opacity:.8}
+.edges .lit{stroke:var(--fiker);stroke-width:4;stroke-dasharray:none;animation:none}
+@keyframes dash{to{stroke-dashoffset:-36}}
+.node{position:relative;z-index:1;text-align:left;background:var(--nb);color:var(--ni);border:2px solid var(--nc);border-radius:18px;padding:16px 16px 14px;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s;min-height:104px;display:flex;flex-direction:column;justify-content:center}
+.node:hover,.node.sel{transform:translateY(-4px) scale(1.02);box-shadow:0 18px 34px -16px var(--nc)}
+.node.sel{outline:3px solid var(--nc);outline-offset:4px}
+.node.pulse{animation:pop .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes pop{40%{transform:scale(1.08);box-shadow:0 0 0 10px color-mix(in srgb,var(--nc) 25%,transparent)}}
+.node b{font-family:var(--serif);font-size:18px;line-height:1.2;display:block;margin-bottom:4px}
+.node span{font-size:13.5px;opacity:.85}
+.node.thick{border-width:3px}
+.node .tag{position:absolute;top:-11px;right:12px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--nc);color:#fff;padding:3px 9px;border-radius:99px}
+.loop-label{position:absolute;z-index:1;font-size:12px;font-weight:600;color:var(--disc-ink);background:var(--disc-bg);border:1px dashed var(--disc);padding:3px 10px;border-radius:99px;white-space:nowrap;pointer-events:none}
+.detail{margin-top:26px;border-radius:20px;padding:22px 24px;background:var(--db,#fff);border:2px solid var(--dc,var(--line));color:var(--di,var(--ink));transition:background .4s,border-color .4s;min-height:92px}
+.detail h3{font-size:20px;margin-bottom:6px}
+.detail p{font-size:15.5px}
+[data-k=team]{--nb:var(--team-bg);--nc:var(--team);--ni:var(--team-ink)}
+[data-k=disc]{--nb:var(--disc-bg);--nc:var(--disc);--ni:var(--disc-ink)}
+[data-k=found]{--nb:var(--found-bg);--nc:var(--found);--ni:var(--found-ink)}
+[data-k=fiker]{--nb:var(--fiker-bg);--nc:var(--fiker);--ni:var(--fiker-ink)}
+[data-k=people]{--nb:var(--people-bg);--nc:var(--people);--ni:var(--people-ink)}
+[data-k=out]{--nb:var(--out-bg);--nc:var(--out);--ni:var(--out-ink)}
+@media (max-width:820px){
+  .flow{grid-template-columns:1fr;grid-template-areas:"a" "b" "c" "d" "e" "f" "g" "h";gap:34px;padding-right:56px}
+}
+
+/* role tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:10px;margin:36px 0 22px}
+.tab{padding:12px 18px;border-radius:99px;font-weight:600;font-size:15px;border:2px solid var(--nc);color:var(--ni);background:#fff;transition:background .25s,transform .25s;display:inline-flex;gap:10px;align-items:center}
+.tab i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;background:var(--nb)}
+.tab[aria-selected=true]{background:var(--nc);color:#fff}
+.tab[aria-selected=true] i{background:rgba(255,255,255,.25)}
+.tab:hover{transform:translateY(-2px)}
+.panel{background:var(--nb);color:var(--ni);border-radius:28px;padding:clamp(24px,4vw,44px);display:grid;grid-template-columns:1fr 1.4fr;gap:clamp(20px,4vw,48px);align-items:start;animation:fadeup .5s cubic-bezier(.2,.8,.2,1)}
+.panel[hidden]{display:none}
+@keyframes fadeup{from{opacity:0;transform:translateY(14px)}}
+.panel h3{font-size:clamp(26px,3vw,34px);margin-bottom:10px}
+.panel .big{font-family:var(--serif);font-size:96px;line-height:.9;font-weight:700;color:var(--nc);opacity:.9}
+.panel ul{list-style:none;display:grid;gap:10px}
+.panel li{background:rgba(255,255,255,.7);border-radius:14px;padding:12px 16px 12px 44px;position:relative;font-size:15.5px;animation:fadeup .5s both;animation-delay:calc(var(--i) * 60ms)}
+.panel li::before{content:"";position:absolute;left:16px;top:18px;width:12px;height:12px;border-radius:4px;background:var(--nc);transform:rotate(45deg)}
+.note{margin-top:14px;font-size:14.5px;background:rgba(255,255,255,.55);border-left:4px solid var(--nc);padding:12px 16px;border-radius:10px}
+@media (max-width:760px){.panel{grid-template-columns:1fr}.panel .big{font-size:64px}}
+
+/* human chain */
+.humans{background:var(--ink);color:#F4F1EA;overflow:hidden}
+.humans .lede{color:#BDB8CF}
+.humans .eyebrow{color:var(--found)}
+.chain{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:44px;position:relative}
+.chain::before{content:"";position:absolute;left:6%;right:6%;top:50%;height:3px;background:rgba(255,255,255,.12);border-radius:3px}
+.chain .spark{position:absolute;top:calc(50% - 7px);left:6%;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 18px 6px var(--fiker);animation:travel 5s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes travel{0%{left:6%;opacity:0}8%{opacity:1}92%{opacity:1}100%{left:92%;opacity:0}}
+.link{position:relative;z-index:1;background:var(--nb);color:var(--ni);border-radius:20px;padding:22px;border:2px solid var(--nc);transition:transform .3s}
+.link:hover{transform:translateY(-6px)}
+.link small{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--nc)}
+.link h3{font-size:20px;margin:6px 0 10px}
+.verbs{display:flex;flex-wrap:wrap;gap:6px}
+.verbs span{font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.75)}
+.humans .after{margin-top:40px;max-width:70ch;color:#D9D4E6}
+@media (max-width:820px){.chain{grid-template-columns:1fr 1fr}.chain::before,.chain .spark{display:none}}
+@media (max-width:480px){.chain{grid-template-columns:1fr}}
+
+/* specialists */
+.spec{display:grid;grid-template-columns:minmax(240px,.9fr) 1.6fr;gap:22px;margin-top:40px}
+.needs{display:grid;gap:10px;align-content:start}
+.need{text-align:left;padding:16px 18px;border-radius:16px;background:#fff;border:2px solid transparent;box-shadow:var(--shadow);font-weight:600;font-size:15px;display:flex;gap:12px;align-items:center;transition:border-color .25s,transform .25s}
+.need i{flex:none;width:12px;height:12px;border-radius:50%;background:var(--sc)}
+.need[aria-selected=true]{border-color:var(--sc);transform:translateX(6px)}
+.spec-card{border-radius:28px;padding:clamp(24px,4vw,40px);background:var(--sb);color:var(--si);position:relative;overflow:hidden;transition:background .4s}
+.spec-card .ring{position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:28px solid var(--sc);opacity:.18}
+.spec-card small{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.spec-card h3{font-size:clamp(24px,3vw,32px);margin:6px 0 22px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.split div{background:rgba(255,255,255,.72);border-radius:18px;padding:18px}
+.split b{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--sc);margin-bottom:6px}
+.swap{animation:fadeup .45s cubic-bezier(.2,.8,.2,1)}
+@media (max-width:760px){.spec{grid-template-columns:1fr}.split{grid-template-columns:1fr}.need[aria-selected=true]{transform:none}}
+
+/* phases */
+.phases{margin-top:40px}
+.track{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;position:relative;margin-bottom:22px}
+.ph{text-align:left;padding:18px 20px;border-radius:20px;background:#fff;box-shadow:var(--shadow);border-bottom:5px solid var(--pc);transition:transform .3s,background .3s}
+.ph small{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pc)}
+.ph b{display:block;font-family:var(--serif);font-size:19px;line-height:1.25;margin-top:4px}
+.ph[aria-selected=true]{background:var(--pb);transform:translateY(-5px)}
+.meter{height:8px;border-radius:8px;background:var(--line);overflow:hidden;margin-bottom:24px}
+.meter i{display:block;height:100%;width:33.3%;background:var(--rainbow);border-radius:8px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.ph-body{border-radius:28px;padding:clamp(24px,4vw,40px);background:var(--pb);color:var(--pi);display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.ph-body .purpose{grid-column:1/-1;font-family:var(--serif);font-size:clamp(20px,2.4vw,26px);font-style:italic}
+.ph-body h4{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pc);margin-bottom:10px}
+.ph-body ul{list-style:none;display:grid;gap:8px}
+.ph-body li{padding-left:26px;position:relative;font-size:15.5px}
+.ph-body li::before{content:"";position:absolute;left:0;top:7px;width:14px;height:14px;border-radius:50%;border:3px solid var(--pc)}
+.pill{display:inline-block;margin-top:4px;padding:10px 16px;border-radius:14px;background:rgba(255,255,255,.7);font-size:15px;font-weight:500}
+@media (max-width:760px){.track{grid-template-columns:1fr}.ph-body{grid-template-columns:1fr}}
+
+/* why tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px}
+.tile{border-radius:22px;padding:24px;background:var(--tb);color:var(--ti);min-height:190px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .4s cubic-bezier(.2,.8,.2,1);position:relative;overflow:hidden}
+.tile:hover{transform:translateY(-6px) rotate(.6deg)}
+.tile .ic{width:44px;height:44px;border-radius:14px;background:var(--tc);display:grid;place-items:center;margin-bottom:18px;transition:transform .5s}
+.tile:hover .ic{transform:rotate(-12deg) scale(1.1)}
+.tile .ic svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.tile h3{font-size:21px;margin-bottom:6px}
+.tile p{font-size:14.5px}
+.tile.wide{grid-column:span 2}
+@media (max-width:900px){.tiles{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.tiles{grid-template-columns:1fr}.tile.wide{grid-column:auto}}
+
+/* position */
+.position{display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,48px);align-items:center;background:linear-gradient(135deg,var(--fiker-bg),#FFE9F2 50%,var(--team-bg));border-radius:32px;padding:clamp(28px,5vw,56px);border:2px solid var(--fiker);position:relative;overflow:hidden}
+.monogram{width:clamp(110px,14vw,160px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-size:clamp(46px,6vw,68px);font-weight:700;color:#fff;background:conic-gradient(from 0deg,var(--team),var(--disc),var(--out),var(--people),var(--found),var(--fiker),var(--team));position:relative}
+.monogram::after{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--fiker-ink);z-index:0}
+.monogram span{position:relative;z-index:1}
+.monogram{animation:spin 16s linear infinite}
+.monogram span{animation:spin 16s linear infinite reverse;display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.position h2{color:var(--fiker-ink)}
+.position .role{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--fiker)}
+.position p{color:var(--fiker-ink);font-size:clamp(16px,1.6vw,19px);max-width:62ch}
+@media (max-width:640px){.position{grid-template-columns:1fr}}
+
+/* boundaries */
+.bounds{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:34px}
+.bound{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 18px 18px 54px;position:relative;font-size:15.5px}
+.bound::before{content:"";position:absolute;left:18px;top:20px;width:22px;height:22px;border-radius:7px;background:var(--bc);opacity:.18}
+.bound::after{content:"";position:absolute;left:25px;top:24px;width:6px;height:11px;border:solid var(--bc);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+
+/* next step */
+.next{background:linear-gradient(160deg,var(--out-bg),var(--disc-bg) 55%,var(--team-bg));border-radius:36px;padding:clamp(28px,5vw,60px);margin-bottom:30px}
+.next h2{color:var(--out-ink)}
+.checks{list-style:none;display:grid;gap:10px;margin:30px 0}
+.check{display:flex;gap:14px;align-items:flex-start;background:rgba(255,255,255,.8);border-radius:16px;padding:16px 18px;cursor:pointer;transition:background .3s,transform .3s;border:2px solid transparent;text-align:left;width:100%}
+.check:hover{transform:translateX(4px)}
+.check .box{flex:none;width:26px;height:26px;border-radius:8px;border:2.5px solid var(--out);display:grid;place-items:center;transition:background .25s}
+.check .box svg{width:14px;height:14px;stroke:#fff;stroke-width:3;fill:none;stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .35s .05s}
+.check[aria-pressed=true]{border-color:var(--out);background:#fff}
+.check[aria-pressed=true] .box{background:var(--out)}
+.check[aria-pressed=true] .box svg{stroke-dashoffset:0}
+.check span{font-weight:500}
+.tally{font-weight:600;color:var(--out-ink);margin-bottom:22px}
+.tally b{font-family:var(--serif);font-size:24px}
+.outcome{font-family:var(--serif);font-size:clamp(19px,2.2vw,24px);font-style:italic;color:var(--out-ink);max-width:56ch;margin-bottom:28px}
+footer{padding:30px 0 50px;font-size:13.5px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<nav class="dots" aria-label="Sections">
+  <a href="#top" style="--c:var(--fiker)"><span>Vision</span></a>
+  <a href="#idea" style="--c:var(--team)"><span>The idea</span></a>
+  <a href="#model" style="--c:var(--disc)"><span>Operating model</span></a>
+  <a href="#role" style="--c:var(--fiker)"><span>Fiker's role</span></a>
+  <a href="#humans" style="--c:var(--found)"><span>Human judgment</span></a>
+  <a href="#specialists" style="--c:var(--people)"><span>Specialists</span></a>
+  <a href="#phases" style="--c:var(--disc)"><span>Engagement</span></a>
+  <a href="#why" style="--c:var(--out)"><span>Why it works</span></a>
+  <a href="#next" style="--c:var(--out)"><span>Next step</span></a>
+</nav>
+
+<header class="hero" id="top">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div><div class="blob b5"></div>
+  <div class="wrap hero-top">
+    <a class="brand" href="https://lulidigital.com">LULI<b>DIGITAL</b></a>
+    <span class="badge">Proposal · Prepared for Alchemy</span>
+  </div>
+  <div class="wrap">
+    <p class="eyebrow reveal" style="color:var(--team)">An operating-model proposal</p>
+    <h1 class="reveal">Fiker's Vision for <span class="alch">Alchemy</span></h1>
+    <p class="sub reveal">A lean, AI-enabled operating model for sustainable growth.</p>
+    <div class="vision reveal">
+      <small>The vision</small>
+      Build a secure, practical operating foundation that helps Alchemy's current team work efficiently today and expand deliberately as the business grows.
+    </div>
+    <div class="cta-row reveal">
+      <a class="btn btn-dark" href="#model">Explore the model
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+      <a class="btn btn-light" href={bookingUrl} target="_blank" rel="noopener">Book the working session</a>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true">scroll<i></i></div>
+</header>
+
+<main>
+<!-- THE IDEA -->
+<section id="idea">
+  <div class="wrap">
+    <p class="eyebrow reveal" style="color:var(--team)">The idea</p>
+    <h2 class="reveal">Build capacity first.<br />Add people where judgment matters.</h2>
+    <p class="lede reveal">Alchemy is currently operated by a small team, with plans to bring in more people as the business develops. Instead of building disconnected tools or hiring a large team too early, Fiker proposes a structured approach.</p>
+    <div class="steps stagger">
+      <div class="step reveal" style="--i:0;--c:var(--team);--cb:var(--team-bg)"><div class="n">01</div><p>Learn how the team currently works.</p></div>
+      <div class="step reveal" style="--i:1;--c:var(--disc);--cb:var(--disc-bg)"><div class="n">02</div><p>Identify high-value AI and automation opportunities.</p></div>
+      <div class="step reveal" style="--i:2;--c:var(--found);--cb:var(--found-bg)"><div class="n">03</div><p>Build standardized operational workflows and systems.</p></div>
+      <div class="step reveal" style="--i:3;--c:var(--fiker);--cb:var(--fiker-bg)"><div class="n">04</div><p>Manage, monitor, document, troubleshoot and continuously improve those systems.</p></div>
+      <div class="step reveal" style="--i:4;--c:var(--people);--cb:var(--people-bg)"><div class="n">05</div><p>Introduce qualified professionals when human judgment or specialist expertise is required.</p></div>
+      <div class="step reveal" style="--i:5;--c:var(--out);--cb:var(--out-bg)"><div class="n">06</div><p>Give each new team member effective systems that help them perform their role efficiently.</p></div>
+    </div>
+    <p class="punch reveal">Operational capacity first. Then people, <em>exactly where their judgment creates the most value.</em></p>
+  </div>
+</section>
+
+<!-- OPERATING MODEL -->
+<section id="model" class="model">
+  <div class="wrap">
+    <p class="eyebrow reveal" style="color:var(--disc)">The operating model</p>
+    <h2 class="reveal">One connected system, not a pile of tools.</h2>
+    <p class="lede reveal">Tap any stage to see what happens there. Press play to watch work move through the model, and back round again as new needs appear.</p>
+    <div class="flow-shell reveal">
+      <div class="flow-bar">
+        <p id="flowHint">Select a stage, or play the flow.</p>
+        <button class="play" id="playFlow" type="button"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg><span>Play the flow</span></button>
+      </div>
+      <div class="flow" id="flow">
+        <svg class="edges" id="edges" aria-hidden="true">
+          <defs><linearGradient id="gflow" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="100%" y2="100%"><stop offset="0" stop-color="#6558D3"/><stop offset=".5" stop-color="#D1498B"/><stop offset="1" stop-color="#0F9D83"/></linearGradient></defs>
+        </svg>
+        <button class="node" type="button" style="grid-area:a" data-id="a" data-k="team"><b>Alchemy's current team</b><span>Three decision-makers</span></button>
+        <button class="node" type="button" style="grid-area:b" data-id="b" data-k="disc"><b>Business discovery</b><span>Learn how the team works</span></button>
+        <button class="node" type="button" style="grid-area:c" data-id="c" data-k="disc"><b>AI opportunity discovery</b><span>High-impact, low-risk use cases</span></button>
+        <button class="node" type="button" style="grid-area:d" data-id="d" data-k="found"><b>Standard operating foundation</b><span>Workflows, records, approvals, reporting</span></button>
+        <button class="node thick" type="button" style="grid-area:e" data-id="e" data-k="fiker"><em class="tag">Fiker</em><b>AI Operations &amp; Systems Lead</b><span>Manage · Monitor · Improve · Document</span></button>
+        <button class="node" type="button" style="grid-area:f" data-id="f" data-k="people"><b>Human professionals</b><span>Legal · Finance · HR · Investment Operations</span></button>
+        <button class="node" type="button" style="grid-area:g" data-id="g" data-k="people"><b>Specialist support when required</b><span>Engineers · Cybersecurity · Compliance</span></button>
+        <button class="node thick" type="button" style="grid-area:h" data-id="h" data-k="out"><b>Scalable Alchemy</b><span>Controlled cost · Clear oversight · Better execution</span></button>
+        <span class="loop-label" id="loopLabel">new needs &amp; feedback</span>
+      </div>
+      <div class="detail" id="detail" aria-live="polite">
+        <h3>Start with the people who run Alchemy.</h3>
+        <p>Every stage builds on the one before it. Select a stage above to see its role in the model.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FIKER'S ROLE -->
+<section id="role">
+  <div class="wrap">
+    <p class="eyebrow reveal" style="color:var(--fiker)">Fiker's role</p>
+    <h2 class="reveal">Four responsibilities, one owner.</h2>
+    <p class="lede reveal">Fiker learns how Alchemy works, builds around those realities, and stays to keep it all running well.</p>
+    <div class="tabs reveal" role="tablist" aria-label="Fiker's responsibilities">
+      <button class="tab" role="tab" data-k="disc" aria-selected="true" aria-controls="p1" id="t1"><i>1</i>Business &amp; AI discovery</button>
+      <button class="tab" role="tab" data-k="found" aria-selected="false" aria-controls="p2" id="t2"><i>2</i>Standard workflows</button>
+      <button class="tab" role="tab" data-k="fiker" aria-selected="false" aria-controls="p3" id="t3"><i>3</i>Ongoing systems management</button>
+      <button class="tab" role="tab" data-k="team" aria-selected="false" aria-controls="p4" id="t4"><i>4</i>Early-stage support</button>
+    </div>
+    <div class="panel" role="tabpanel" id="p1" aria-labelledby="t1" data-k="disc">
+      <div><div class="big">01</div><h3>Business and AI discovery</h3><p>Understand the real work before automating any of it.</p></div>
+      <ul>
+        <li style="--i:0">Learn how Alchemy's team handles decisions, information, documents, communication, approvals and follow-ups.</li>
+        <li style="--i:1">Map existing processes and find bottlenecks, duplicated effort, missing controls and repetitive work.</li>
+        <li style="--i:2">Rank opportunities by business impact, implementation effort, security and risk.</li>
+        <li style="--i:3">Recommend which processes should be automated, AI-assisted, redesigned or kept human-led.</li>
+      </ul>
+    </div>
+    <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2" data-k="found" hidden>
+      <div><div class="big">02</div><h3>Standard workflow development</h3><p>A clean foundation, tailored to how Alchemy actually operates.</p></div>
+      <ul>
+        <li style="--i:0">Build a clean operational foundation based on the standard capabilities an investment business needs.</li>
+        <li style="--i:1">Tailor the workflows to Alchemy's actual operating model and priorities.</li>
+        <li style="--i:2">Introduce consistent intake, task management, document organization, approval, reporting and escalation.</li>
+        <li style="--i:3">Design human-review checkpoints for sensitive or externally published outputs.</li>
+        <li style="--i:4">Document the systems so future team members can use them consistently.</li>
+      </ul>
+    </div>
+    <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3" data-k="fiker" hidden>
+      <div><div class="big">03</div><h3>Ongoing systems management</h3><p>Day-to-day stewardship of the whole operating environment.</p></div>
+      <ul>
+        <li style="--i:0">Monitoring workflows and automations.</li>
+        <li style="--i:1">Troubleshooting operational issues.</li>
+        <li style="--i:2">Maintaining documentation and standard operating procedures.</li>
+        <li style="--i:3">Improving prompts, workflows, integrations and quality controls.</li>
+        <li style="--i:4">Reviewing system performance and identifying new opportunities.</li>
+        <li style="--i:5">Coordinating user access and appropriate security controls.</li>
+        <li style="--i:6">Training and supporting new team members.</li>
+        <li style="--i:7">Escalating specialist work when engineering, cybersecurity, legal, compliance or financial expertise is required.</li>
+      </ul>
+    </div>
+    <div class="panel" role="tabpanel" id="p4" aria-labelledby="t4" data-k="team" hidden>
+      <div><div class="big">04</div><h3>Operational support in the early stage</h3><p>Help close the operational gap while the team is small.</p></div>
+      <div>
+        <ul>
+          <li style="--i:0">While the team remains small, Fiker can also support clearly defined operational activities that fit within the systems being managed.</li>
+          <li style="--i:1">This helps address part of the operational gap while Alchemy develops its long-term staffing structure.</li>
+        </ul>
+        <p class="note">The scope of this support is agreed in advance, so systems leadership, implementation work and general administrative responsibilities stay clear and measurable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HUMAN JUDGMENT -->
+<section id="humans" class="humans">
+  <div class="wrap">
+    <p class="eyebrow reveal">Human accountability</p>
+    <h2 class="reveal">AI prepares. Qualified people decide.</h2>
+    <p class="lede reveal">The goal is not to replace legal, financial, HR, compliance, investment or cybersecurity professionals. The systems help qualified people work faster and more consistently, while accountability stays human.</p>
+    <div class="chain stagger">
+      <span class="spark" aria-hidden="true"></span>
+      <div class="link reveal" style="--i:0" data-k="disc"><small>Step 1</small><h3>AI-enabled system</h3><div class="verbs"><span>Collects</span><span>Organizes</span><span>Drafts</span><span>Flags</span><span>Tracks</span></div></div>
+      <div class="link reveal" style="--i:1" data-k="fiker"><small>Step 2</small><h3>Fiker's oversight</h3><div class="verbs"><span>Quality control</span><span>Workflow management</span><span>Escalation</span></div></div>
+      <div class="link reveal" style="--i:2" data-k="found"><small>Step 3</small><h3>Qualified professional</h3><div class="verbs"><span>Reviews</span><span>Decides</span><span>Approves</span><span>Signs off</span></div></div>
+      <div class="link reveal" style="--i:3" data-k="out"><small>Result</small><h3>Business outcome</h3><div class="verbs"><span>Faster execution</span><span>Accountable judgment</span></div></div>
+    </div>
+    <p class="after reveal">As Alchemy grows, it can appoint one suitable professional for each judgment-heavy function instead of building large departments too early. Those professionals step straight into the systems, templates, records and workflows already in place.</p>
+  </div>
+</section>
+
+<!-- SPECIALISTS -->
+<section id="specialists">
+  <div class="wrap">
+    <p class="eyebrow reveal" style="color:var(--people)">External specialists</p>
+    <h2 class="reveal">The right expert, brought in at the right moment.</h2>
+    <p class="lede reveal">Fiker oversees the operational system but does not claim every specialist discipline. Choose a need to see who handles it and what Fiker owns.</p>
+    <div class="spec reveal">
+      <div class="needs" role="tablist" aria-label="Specialist needs" id="needs"></div>
+      <div class="spec-card" id="specCard" aria-live="polite"><span class="ring"></span><div id="specInner"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PHASES -->
+<section id="phases" class="model">
+  <div class="wrap">
+    <p class="eyebrow reveal" style="color:var(--disc)">Suggested engagement</p>
+    <h2 class="reveal">Three phases. Each one earns the next.</h2>
+    <p class="lede reveal">Discovery comes before any commitment to a final solution. Building is milestone-based. Ongoing management keeps the system useful as Alchemy grows.</p>
+    <div class="phases reveal">
+      <div class="track" role="tablist" aria-label="Engagement phases" id="track"></div>
+      <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+      <div class="ph-body" id="phBody" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="wrap">
+    <p class="eyebrow reveal" style="color:var(--out)">Why this model works</p>
+    <h2 class="reveal">Built for a business that intends to grow.</h2>
+    <div class="tiles stagger">
+      <div class="tile wide reveal" style="--i:0;--tb:var(--team-bg);--tc:var(--team);--ti:var(--team-ink)"><div><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div><h3>Lean growth</h3></div><p>Build operational capacity before adding unnecessary headcount.</p></div>
+      <div class="tile reveal" style="--i:1;--tb:var(--fiker-bg);--tc:var(--fiker);--ti:var(--fiker-ink)"><div><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></div><h3>Clear ownership</h3></div><p>One person oversees how the systems connect and perform.</p></div>
+      <div class="tile reveal" style="--i:2;--tb:var(--found-bg);--tc:var(--found);--ti:var(--found-ink)"><div><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Human accountability</h3></div><p>Professional judgment stays with qualified people.</p></div>
+      <div class="tile reveal" style="--i:3;--tb:var(--disc-bg);--tc:var(--disc);--ti:var(--disc-ink)"><div><div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></div><h3>Controlled risk</h3></div><p>Sensitive work includes review, approval, access and escalation controls.</p></div>
+      <div class="tile reveal" style="--i:4;--tb:var(--people-bg);--tc:var(--people);--ti:var(--people-ink)"><div><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M9 12h6M9 16h6M9 8h3"/></svg></div><h3>Continuity</h3></div><p>Processes are documented instead of living only in someone's memory.</p></div>
+      <div class="tile reveal" style="--i:5;--tb:var(--out-bg);--tc:var(--out);--ti:var(--out-ink)"><div><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0114-5l2 2"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 01-14 5l-2-2"/><path d="M4 20v-5h5"/></svg></div><h3>Adaptability</h3></div><p>The systems evolve as Alchemy's priorities and team change.</p></div>
+      <div class="tile reveal" style="--i:6;--tb:#F1ECFF;--tc:var(--team-ink);--ti:var(--team-ink)"><div><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1.1-1.8 2.5-1.8s2.5.8 2.5 1.8-1 1.6-2.5 2-2.5 1-2.5 2 1.1 1.8 2.5 1.8 2.5-.8 2.5-1.8"/></svg></div><h3>Cost visibility</h3></div><p>Ongoing management, new development and specialist support are separated clearly.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- POSITION -->
+<section id="position" style="padding-top:0">
+  <div class="wrap">
+    <div class="position reveal">
+      <div class="monogram" aria-hidden="true"><span>F</span></div>
+      <div>
+        <p class="role">Proposed position</p>
+        <h2>Fiker, AI Operations &amp; Systems Lead</h2>
+        <p>A role that combines forward-deployed AI implementation with ongoing operational ownership. Rather than delivering an isolated tool, Fiker learns how Alchemy works, builds the operational foundation around those realities, manages the environment, supports adoption, and coordinates the specialist expertise the business needs as it grows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOUNDARIES -->
+<section id="boundaries" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow reveal" style="color:var(--muted)">Important boundaries</p>
+    <h2 class="reveal" style="font-size:clamp(26px,3.4vw,36px)">Clear lines, agreed up front.</h2>
+    <div class="bounds stagger">
+      <div class="bound reveal" style="--i:0;--bc:var(--team)">This proposal is an operating-model concept and remains subject to discovery.</div>
+      <div class="bound reveal" style="--i:1;--bc:var(--fiker)">No AI system independently provides final legal, investment, financial, HR, compliance or cybersecurity judgment.</div>
+      <div class="bound reveal" style="--i:2;--bc:var(--disc)">Access to confidential information follows approved security, confidentiality and data-handling requirements.</div>
+      <div class="bound reveal" style="--i:3;--bc:var(--found)">Production deployment includes testing, human review, logging, backup, recovery and appropriate access controls.</div>
+      <div class="bound reveal" style="--i:4;--bc:var(--people)">Final scope, pricing, timelines, ownership, support expectations and specialist costs are documented in a separate agreement.</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT -->
+<section id="next" style="padding-top:0">
+  <div class="wrap">
+    <div class="next reveal">
+      <p class="eyebrow" style="color:var(--out)">Recommended next step</p>
+      <h2>One working session with all three of you.</h2>
+      <p class="lede" style="color:var(--out-ink)">Complete the outstanding discovery questions, then meet together. Tick off what that session should confirm.</p>
+      <ul class="checks" id="checks">
+        <li><button class="check" type="button" aria-pressed="false"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7"/></svg></span><span>Which existing materials or systems can be reused.</span></button></li>
+        <li><button class="check" type="button" aria-pressed="false"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7"/></svg></span><span>Which business area should be addressed first.</span></button></li>
+        <li><button class="check" type="button" aria-pressed="false"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7"/></svg></span><span>Which workflows create the greatest immediate value.</span></button></li>
+        <li><button class="check" type="button" aria-pressed="false"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7"/></svg></span><span>What information, access and professional judgment each workflow requires.</span></button></li>
+        <li><button class="check" type="button" aria-pressed="false"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7"/></svg></span><span>Whether the first implementation continues from the existing work or begins with a clean foundation.</span></button></li>
+      </ul>
+      <p class="tally" id="tally"><b>0</b> of 5 agenda items confirmed</p>
+      <p class="outcome">The result: a focused first project that shows value quickly, while setting the standards for Alchemy's wider operating system.</p>
+      <div class="cta-row">
+        <a class="btn btn-dark" href={bookingUrl} target="_blank" rel="noopener">Book the working session
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-light" href="#top">Back to the vision</a>
+      </div>
+    </div>
+    <footer>
+      <span>Prepared by Fiker Abate · LuliDigital</span>
+      <span>An operating-model concept, subject to discovery.</span>
+    </footer>
+  </div>
+</section>
+</main>
+
+<script is:inline>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* scroll reveal */
+  var io = new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  /* progress bar + section dots */
+  var bar=document.getElementById('progress');
+  var dots=[].slice.call(document.querySelectorAll('.dots a'));
+  var secs=dots.map(function(d){return document.querySelector(d.getAttribute('href'));});
+  function onScroll(){
+    var h=document.documentElement; var p=h.scrollTop/((h.scrollHeight-h.clientHeight)||1);
+    bar.style.transform='scaleX('+p+')';
+    var mid=window.innerHeight*.45, idx=0;
+    secs.forEach(function(s,i){if(s && s.getBoundingClientRect().top<mid) idx=i;});
+    dots.forEach(function(d,i){d.classList.toggle('on',i===idx);});
+  }
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  /* ---------- operating model ---------- */
+  var info={
+    a:['Alchemy’s current team','Three decision-makers. Everything starts with how the people running Alchemy work today.'],
+    b:['Business discovery','Learn how the team handles decisions, information, documents, communication, approvals and follow-ups.'],
+    c:['AI opportunity discovery','Find the high-impact, low-risk use cases, ranked by impact, effort, security and risk.'],
+    d:['Standard operating foundation','Consistent workflows, records, approvals and reporting, tailored to Alchemy’s real operating model.'],
+    e:['Fiker: AI Operations & Systems Lead','The single owner who manages, monitors, improves and documents the operating environment, and knows when to escalate.'],
+    f:['Human professionals','Legal, finance, HR and investment operations. Qualified people keep professional judgment and sign-off.'],
+    g:['Specialist support when required','Engineers, cybersecurity and compliance experts, engaged when the work needs specialist depth.'],
+    h:['Scalable Alchemy','Controlled cost, clear oversight and better execution. New needs and feedback loop back into discovery.']
+  };
+  var edges=[['a','b'],['b','c'],['c','d'],['d','e'],['e','f'],['e','g'],['f','h'],['g','h']];
+  var order=['a','b','c','d','e','f','g','h'];
+  var flow=document.getElementById('flow'), svg=document.getElementById('edges');
+  var nodes={}; flow.querySelectorAll('.node').forEach(function(n){nodes[n.dataset.id]=n;});
+  var NS='http://www.w3.org/2000/svg', paths={};
+  var loopLabel=document.getElementById('loopLabel');
+
+  function box(id){var f=flow.getBoundingClientRect(),r=nodes[id].getBoundingClientRect();return{l:r.left-f.left,t:r.top-f.top,r:r.right-f.left,b:r.bottom-f.top,cx:(r.left+r.right)/2-f.left,cy:(r.top+r.bottom)/2-f.top};}
+  function curve(s,t,mobile){
+    var A=box(s),B=box(t);
+    if(mobile){
+      var x1=A.r-24,y1=A.b,x2=B.r-24,y2=B.t;
+      if(y2-y1>60){var bx=A.r+38;return 'M'+(A.r)+' '+A.cy+' C'+bx+' '+A.cy+' '+bx+' '+B.cy+' '+B.r+' '+B.cy;}
+      return 'M'+x1+' '+y1+' L'+x2+' '+y2;
+    }
+    if(Math.abs(A.cy-B.cy)<20){ // same row
+      if(B.cx>A.cx) return 'M'+A.r+' '+A.cy+' L'+B.l+' '+B.cy;
+      return 'M'+A.l+' '+A.cy+' L'+B.r+' '+B.cy;
+    }
+    if(B.t>=A.b-2 && Math.abs(A.cx-B.cx)<40) return 'M'+A.cx+' '+A.b+' L'+B.cx+' '+B.t;
+    // diagonal fan: horizontal-ish S curve
+    var sx=B.cx<A.cx?A.l:A.r, ex=B.cx<A.cx?B.r:B.l, mx=(sx+ex)/2;
+    return 'M'+sx+' '+A.cy+' C'+mx+' '+A.cy+' '+mx+' '+B.cy+' '+ex+' '+B.cy;
+  }
+  function draw(){
+    var mobile=innerWidth<=820;
+    [].slice.call(svg.querySelectorAll('path')).forEach(function(p){p.remove();});
+    edges.forEach(function(e){
+      var d=curve(e[0],e[1],mobile);
+      ['base','run'].forEach(function(cls){var p=document.createElementNS(NS,'path');p.setAttribute('d',d);p.setAttribute('class',cls);svg.appendChild(p);if(cls==='run')paths[e.join('')]=p;});
+    });
+    // feedback loop H -> C
+    var H=box('h'),C=box('c'),d,lx,ly;
+    if(mobile){var x=H.r+46;d='M'+H.r+' '+H.cy+' C'+x+' '+H.cy+' '+x+' '+C.cy+' '+C.r+' '+C.cy;lx=null;}
+    else{d='M'+H.cx+' '+H.t+' L'+H.cx+' '+(H.t-18)+' C'+H.cx+' '+(C.b+10)+' '+C.cx+' '+(C.b+40)+' '+C.cx+' '+C.b;
+      lx=(H.cx+C.cx)/2; ly=(H.t+C.b)/2;}
+    var lp=document.createElementNS(NS,'path');lp.setAttribute('d',d);lp.setAttribute('class','loop');svg.appendChild(lp);paths.loop=lp;
+    if(lx!==null){loopLabel.style.display='';loopLabel.style.left=(lx-loopLabel.offsetWidth/2)+'px';loopLabel.style.top=(ly-12)+'px';}
+    else loopLabel.style.display='none';
+  }
+  draw(); addEventListener('resize',function(){clearTimeout(draw.t);draw.t=setTimeout(draw,80);});
+  if(document.fonts) document.fonts.ready.then(draw);
+
+  var detail=document.getElementById('detail');
+  function select(id){
+    order.forEach(function(k){nodes[k].classList.toggle('sel',k===id);});
+    var k=nodes[id].dataset.k;
+    detail.style.setProperty('--db','var(--'+k+'-bg)');detail.style.setProperty('--dc','var(--'+k+')');detail.style.setProperty('--di','var(--'+k+'-ink)');
+    detail.innerHTML='<h3>'+info[id][0].replace(/&/g,'&amp;')+'</h3><p>'+info[id][1]+'</p>';
+    Object.keys(paths).forEach(function(key){var lit=key.indexOf(id)>-1&&key!=='loop';paths[key].classList.toggle('lit',lit);});
+  }
+  order.forEach(function(id){nodes[id].addEventListener('click',function(){stop();select(id);});});
+
+  var timer=null, playBtn=document.getElementById('playFlow');
+  function stop(){if(timer){clearInterval(timer);timer=null;playBtn.querySelector('span').textContent='Play the flow';}}
+  playBtn.addEventListener('click',function(){
+    if(timer){stop();return;}
+    var i=0; playBtn.querySelector('span').textContent='Pause';
+    var step=function(){var id=order[i%order.length];select(id);nodes[id].classList.remove('pulse');void nodes[id].offsetWidth;nodes[id].classList.add('pulse');i++;if(i>order.length){stop();select('c');detail.querySelector('p').textContent='New needs and feedback flow back into AI opportunity discovery, so the system keeps improving as Alchemy grows.';}};
+    step(); timer=setInterval(step,reduce?2200:1500);
+  });
+  // autoplay once when the model scrolls into view
+  var auto=new IntersectionObserver(function(es){if(es[0].isIntersecting){auto.disconnect();if(!reduce)setTimeout(function(){if(!timer && !flow.querySelector('.sel'))playBtn.click();},600);}},{threshold:.5});
+  auto.observe(flow);
+
+  /* ---------- role tabs ---------- */
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  function activate(t){tabs.forEach(function(x){var on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;document.getElementById(x.getAttribute('aria-controls')).hidden=!on;});}
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){activate(t);});
+    t.addEventListener('keydown',function(e){var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){var n=tabs[(i+d+tabs.length)%tabs.length];n.focus();activate(n);}});
+  });
+  activate(tabs[0]);
+
+  /* ---------- specialists ---------- */
+  var specs=[
+    {k:'disc',need:'Complex integrations or production engineering',who:'Software or integration engineer',fiker:'Define requirements, coordinate delivery, test the workflow and manage adoption.'},
+    {k:'team',need:'Security architecture, penetration testing or incident response',who:'Cybersecurity professional',fiker:'Coordinate access, requirements, remediation and ongoing operational controls.'},
+    {k:'fiker',need:'Legal interpretation or legal-agent review',who:'Qualified legal professional',fiker:'Build the supporting workflow and make sure human review and sign-off are included.'},
+    {k:'found',need:'Investment, commodities or financial judgment',who:'Qualified domain professional',fiker:'Organize information, automate preparation and preserve decision checkpoints.'},
+    {k:'people',need:'HR policy, employment compliance or sensitive people decisions',who:'HR or employment specialist',fiker:'Build repeatable administrative workflows and support implementation.'}
+  ];
+  var needs=document.getElementById('needs'), card=document.getElementById('specCard'), inner=document.getElementById('specInner');
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+  function showSpec(i){
+    var s=specs[i];
+    [].slice.call(needs.children).forEach(function(b,j){b.setAttribute('aria-selected',j===i);b.tabIndex=j===i?0:-1;});
+    card.style.setProperty('--sb','var(--'+s.k+'-bg)');card.style.setProperty('--sc','var(--'+s.k+')');card.style.setProperty('--si','var(--'+s.k+'-ink)');
+    inner.className='';void inner.offsetWidth;inner.className='swap';
+    inner.innerHTML='<small>The need</small><h3>'+esc(s.need)+'</h3><div class="split"><div><b>Specialist</b>'+esc(s.who)+'</div><div><b>Fiker’s responsibility</b>'+esc(s.fiker)+'</div></div>';
+  }
+  specs.forEach(function(s,i){
+    var b=document.createElement('button');b.type='button';b.className='need';b.setAttribute('role','tab');
+    b.style.setProperty('--sc','var(--'+s.k+')');b.innerHTML='<i></i>'+esc(s.need);
+    b.addEventListener('click',function(){showSpec(i);});
+    b.addEventListener('keydown',function(e){var d=e.key==='ArrowDown'?1:e.key==='ArrowUp'?-1:0;if(d){e.preventDefault();var n=(i+d+specs.length)%specs.length;needs.children[n].focus();showSpec(n);}});
+    needs.appendChild(b);
+  });
+  showSpec(0);
+
+  /* ---------- phases ---------- */
+  var phases=[
+    {k:'disc',tag:'Phase 1',title:'Paid discovery and roadmap',purpose:'Understand Alchemy’s operations before committing to the final solution.',
+     a:['Team interviews and working sessions','Review of the available extracts, FDDs, current tools and processes','Workflow and information mapping','AI opportunity assessment','Security, risk and human-review assessment','Prioritized implementation roadmap'],
+     bt:'Deliverables',b:['Current-state workflow map','Prioritized opportunity register','Recommended system architecture','Build-versus-reuse recommendation','Scope, milestones, dependencies and specialist requirements']},
+    {k:'found',tag:'Phase 2',title:'Foundation and implementation',purpose:'Build the agreed operational foundation and deploy the first high-value workflows.',
+     a:['Configure core systems and records','Build standardized workflows and automations','Add review, approval, logging and escalation controls','Test with real but appropriately protected use cases','Train the team and document operating procedures'],
+     bt:'Delivery model',pill:'Milestone-based. Each workflow is accepted before the next expansion.'},
+    {k:'fiker',tag:'Phase 3',title:'Ongoing AI operations and systems management',purpose:'Keep the environment reliable, useful, secure and aligned with the growing business.',
+     a:['System monitoring and troubleshooting','Workflow maintenance and continuous improvement','New AI opportunity discovery','Documentation and training','Performance and quality reporting','Coordination with engineers, cybersecurity experts and professional advisers','Support for onboarding future team members into the operating model'],
+     bt:'Commercial model',pill:'Monthly retainer with a defined scope, service expectations, and separate approval for specialist costs or major new builds.'}
+  ];
+  var track=document.getElementById('track'), body=document.getElementById('phBody'), meter=document.getElementById('meter');
+  function li(arr){return '<ul>'+arr.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>';}
+  function showPh(i){
+    var p=phases[i];
+    [].slice.call(track.children).forEach(function(b,j){b.setAttribute('aria-selected',j===i);b.tabIndex=j===i?0:-1;});
+    body.style.setProperty('--pb','var(--'+p.k+'-bg)');body.style.setProperty('--pc','var(--'+p.k+')');body.style.setProperty('--pi','var(--'+p.k+'-ink)');
+    meter.style.width=((i+1)/3*100)+'%';
+    body.classList.remove('swap');void body.offsetWidth;body.classList.add('swap');
+    body.innerHTML='<p class="purpose">'+esc(p.purpose)+'</p><div><h4>Activities</h4>'+li(p.a)+'</div><div><h4>'+p.bt+'</h4>'+(p.b?li(p.b):'<span class="pill">'+esc(p.pill)+'</span>')+'</div>';
+  }
+  phases.forEach(function(p,i){
+    var b=document.createElement('button');b.type='button';b.className='ph';b.setAttribute('role','tab');
+    b.style.setProperty('--pc','var(--'+p.k+')');b.style.setProperty('--pb','var(--'+p.k+'-bg)');
+    b.innerHTML='<small>'+p.tag+'</small><b>'+esc(p.title)+'</b>';
+    b.addEventListener('click',function(){showPh(i);});
+    b.addEventListener('keydown',function(e){var d=e.key==='ArrowRight'||e.key==='ArrowDown'?1:e.key==='ArrowLeft'||e.key==='ArrowUp'?-1:0;if(d){e.preventDefault();var n=(i+d+3)%3;track.children[n].focus();showPh(n);}});
+    track.appendChild(b);
+  });
+  showPh(0);
+
+  /* ---------- next-step checklist ---------- */
+  var checks=[].slice.call(document.querySelectorAll('.check')), tally=document.getElementById('tally');
+  checks.forEach(function(c){c.addEventListener('click',function(){
+    c.setAttribute('aria-pressed',c.getAttribute('aria-pressed')!=='true');
+    var n=checks.filter(function(x){return x.getAttribute('aria-pressed')==='true';}).length;
+    tally.innerHTML=n===5?'<b>5</b> of 5. That’s a working session worth booking.':'<b>'+n+'</b> of 5 agenda items confirmed';
+  });});
+})();
+</script>
+</body>
+</html>
