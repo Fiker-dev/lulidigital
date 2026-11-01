@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-30T15:03:08.433Z",
-  "week": "2026-10-30",
+  "generatedAt": "2026-11-01T15:15:12.261Z",
+  "month": "2026-11",
   "pages": {
     "/denmark": {
       "primary": [
@@ -9,7 +9,7 @@
         "danish online marketing agency",
         "digital marketing agency for danish markets"
       ],
-      "source": "Search Console — 2026-10"
+      "source": "Search Console — 2026-11"
     },
     "/munich": {
       "primary": [
@@ -18,7 +18,7 @@
         "digital agency münchen",
         "it marketing in munich"
       ],
-      "source": "Search Console — 2026-10"
+      "source": "Search Console — 2026-11"
     },
     "/norway": {
       "primary": [
@@ -27,34 +27,16 @@
         "ai digital marketing company in norway",
         "ai digital marketing services in norway"
       ],
-      "source": "Search Console — 2026-10"
+      "source": "Search Console — 2026-11"
     },
     "/switzerland": {
       "primary": [
-        "ai digital marketing service in switzerland",
-        "ai digital marketing services in switzerland",
         "ai digital marketing agencies in switzerland",
-        "ai advertising service in switzerland"
+        "ai digital marketing service in switzerland",
+        "ai digital marketing service in lausanne",
+        "ai digital marketing services in switzerland"
       ],
-      "source": "Search Console — 2026-10"
-    },
-    "/ai-desk": {
-      "primary": [
-        "ai assisted workflow workstation"
-      ],
-      "source": "weekly Search Console refresh 2026-10-30"
-    },
-    "/web-design-desk": {
-      "primary": [
-        "li web design"
-      ],
-      "source": "weekly Search Console refresh 2026-10-30"
-    },
-    "/va-desk": {
-      "primary": [
-        "live secretary service"
-      ],
-      "source": "weekly Search Console refresh 2026-10-16"
+      "source": "Search Console — 2026-11"
     }
   }
 }

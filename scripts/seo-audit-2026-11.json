@@ -1,0 +1,346 @@
+{
+  "generatedAt": "2026-11-01T15:15:12.261Z",
+  "property": "sc-domain:lulidigital.com",
+  "periods": {
+    "current": "2026-09-29 to 2026-10-29",
+    "previous": "2026-08-30 to 2026-09-29",
+    "wide90d": "2026-07-31 to 2026-10-29"
+  },
+  "summary": {
+    "totalClicks": 0,
+    "totalImpressions": 88,
+    "pagesWithData": 12,
+    "lowVisibilityCount": 11
+  },
+  "topQueries": [
+    {
+      "query": "luli",
+      "clicks": 0,
+      "impressions": 4,
+      "avgPosition": 51.8,
+      "avgCtr": 0
+    },
+    {
+      "query": "luli ai",
+      "clicks": 0,
+      "impressions": 13,
+      "avgPosition": 9,
+      "avgCtr": 0
+    },
+    {
+      "query": "luli daily",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 49,
+      "avgCtr": 0
+    },
+    {
+      "query": "luli dayli",
+      "clicks": 0,
+      "impressions": 3,
+      "avgPosition": 22.7,
+      "avgCtr": 0
+    },
+    {
+      "query": "luli studio",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 62,
+      "avgCtr": 0
+    },
+    {
+      "query": "luli_aq",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 28,
+      "avgCtr": 0
+    },
+    {
+      "query": "lulisign",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 20,
+      "avgCtr": 0
+    },
+    {
+      "query": "webmail luli",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 9,
+      "avgCtr": 0
+    },
+    {
+      "query": "ai assisted workflow workstation",
+      "clicks": 0,
+      "impressions": 4,
+      "avgPosition": 3.8,
+      "avgCtr": 0
+    },
+    {
+      "query": "branded seo tools from litescroll com",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 18,
+      "avgCtr": 0
+    }
+  ],
+  "opportunities": [
+    {
+      "query": "digital agency munich",
+      "clicks": 0,
+      "impressions": 115,
+      "avgPosition": 20.2,
+      "avgCtr": 0
+    },
+    {
+      "query": "digital marketing agency munich",
+      "clicks": 0,
+      "impressions": 98,
+      "avgPosition": 19.2,
+      "avgCtr": 0
+    },
+    {
+      "query": "digital agency münchen",
+      "clicks": 0,
+      "impressions": 95,
+      "avgPosition": 18.4,
+      "avgCtr": 0
+    },
+    {
+      "query": "it marketing in munich",
+      "clicks": 0,
+      "impressions": 83,
+      "avgPosition": 45.8,
+      "avgCtr": 0
+    },
+    {
+      "query": "conversational ai consultancy munich",
+      "clicks": 0,
+      "impressions": 57,
+      "avgPosition": 45.8,
+      "avgCtr": 0
+    },
+    {
+      "query": "online marketing agency for danish b2b",
+      "clicks": 0,
+      "impressions": 50,
+      "avgPosition": 26,
+      "avgCtr": 0
+    },
+    {
+      "query": "digital marketing munich",
+      "clicks": 0,
+      "impressions": 48,
+      "avgPosition": 29,
+      "avgCtr": 0
+    },
+    {
+      "query": "digital marketing agency in denmark",
+      "clicks": 0,
+      "impressions": 44,
+      "avgPosition": 23.9,
+      "avgCtr": 0
+    },
+    {
+      "query": "danish online marketing agency",
+      "clicks": 0,
+      "impressions": 39,
+      "avgPosition": 21.8,
+      "avgCtr": 0
+    },
+    {
+      "query": "digital marketing agency for danish markets",
+      "clicks": 0,
+      "impressions": 38,
+      "avgPosition": 22.1,
+      "avgCtr": 0
+    }
+  ],
+  "pageStats": [
+    {
+      "path": "/stockholm",
+      "clicks": 0,
+      "impressions": 20,
+      "avgPosition": 38.5,
+      "avgCtr": 0,
+      "previousAvgPosition": 24,
+      "positionChange": -14.5
+    },
+    {
+      "path": "/",
+      "clicks": 0,
+      "impressions": 16,
+      "avgPosition": 31.6,
+      "avgCtr": 0,
+      "previousAvgPosition": 18.6,
+      "positionChange": -13
+    },
+    {
+      "path": "/work",
+      "clicks": 0,
+      "impressions": 11,
+      "avgPosition": 15.6,
+      "avgCtr": 0,
+      "previousAvgPosition": 16.9,
+      "positionChange": 1.3
+    },
+    {
+      "path": "/munich",
+      "clicks": 0,
+      "impressions": 10,
+      "avgPosition": 12.3,
+      "avgCtr": 0,
+      "previousAvgPosition": 40.4,
+      "positionChange": 28.1
+    },
+    {
+      "path": "/web-design-desk",
+      "clicks": 0,
+      "impressions": 10,
+      "avgPosition": 61.6,
+      "avgCtr": 0,
+      "previousAvgPosition": 62,
+      "positionChange": 0.4
+    },
+    {
+      "path": "/united-states",
+      "clicks": 0,
+      "impressions": 8,
+      "avgPosition": 50.4,
+      "avgCtr": 0,
+      "previousAvgPosition": 51.2,
+      "positionChange": 0.8
+    },
+    {
+      "path": "/ai-desk",
+      "clicks": 0,
+      "impressions": 7,
+      "avgPosition": 6,
+      "avgCtr": 0,
+      "previousAvgPosition": 78,
+      "positionChange": 72
+    },
+    {
+      "path": "/united-kingdom",
+      "clicks": 0,
+      "impressions": 2,
+      "avgPosition": 67.5,
+      "avgCtr": 0,
+      "previousAvgPosition": 30.3,
+      "positionChange": -37.2
+    },
+    {
+      "path": "/blog/ai-powered-seo-beyond-keywords-into-conversion",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 18,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    },
+    {
+      "path": "/blog/how-to-hire-virtual-assistant-guide-founders-ceos",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 4,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    },
+    {
+      "path": "/founder",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 1,
+      "avgCtr": 0,
+      "previousAvgPosition": null,
+      "positionChange": null
+    },
+    {
+      "path": "/va-desk",
+      "clicks": 0,
+      "impressions": 1,
+      "avgPosition": 68,
+      "avgCtr": 0,
+      "previousAvgPosition": 48,
+      "positionChange": -20
+    }
+  ],
+  "lowVisibilityPages": [
+    {
+      "path": "/marketing-desk",
+      "impressions": 0
+    },
+    {
+      "path": "/africa",
+      "impressions": 0
+    },
+    {
+      "path": "/amsterdam",
+      "impressions": 0
+    },
+    {
+      "path": "/denmark",
+      "impressions": 0
+    },
+    {
+      "path": "/switzerland",
+      "impressions": 0
+    },
+    {
+      "path": "/ireland",
+      "impressions": 0
+    },
+    {
+      "path": "/belgium",
+      "impressions": 0
+    },
+    {
+      "path": "/norway",
+      "impressions": 0
+    },
+    {
+      "path": "/va-desk",
+      "impressions": 1
+    },
+    {
+      "path": "/founder",
+      "impressions": 1
+    },
+    {
+      "path": "/united-kingdom",
+      "impressions": 2
+    }
+  ],
+  "lowCtrPages": [
+    {
+      "path": "/stockholm",
+      "clicks": 0,
+      "impressions": 20,
+      "avgPosition": 38.5,
+      "avgCtr": 0,
+      "previousAvgPosition": 24,
+      "positionChange": -14.5
+    }
+  ],
+  "improvedPages": [
+    {
+      "path": "/ai-desk",
+      "clicks": 0,
+      "impressions": 7,
+      "avgPosition": 6,
+      "avgCtr": 0,
+      "previousAvgPosition": 78,
+      "positionChange": 72
+    },
+    {
+      "path": "/munich",
+      "clicks": 0,
+      "impressions": 10,
+      "avgPosition": 12.3,
+      "avgCtr": 0,
+      "previousAvgPosition": 40.4,
+      "positionChange": 28.1
+    }
+  ]
+}
