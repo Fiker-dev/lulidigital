@@ -259,11 +259,12 @@ h2{font-size:clamp(38px,5.6vw,72px);max-width:17ch;margin-bottom:16px}
 .rules li::before{content:counter(r);width:34px;height:34px;border-radius:12px;display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--c);background:color-mix(in srgb,var(--c) 12%,#fff)}
 
 /* ---------- next ---------- */
-.moves{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.moves{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:48px}
 .move.yours .in-core{box-shadow:0 0 0 2px var(--t),0 26px 50px -24px var(--t)}
 .move .tag{display:inline-block;margin-bottom:12px;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:99px;color:#fff;background:var(--t)}
 .moves-wrap{position:relative}
-.moves-wrap .perch{right:auto;left:calc(66% + 40px);transform:translateY(-78%)}
+.moves-wrap .perch{right:40px;transform:translateY(-78%)}
+@media (min-width:861px){.moves-wrap .pbub{right:0;top:auto;bottom:100%;margin:0 0 6px;transform-origin:100% 100%}}
 @media (max-width:860px){.moves{grid-template-columns:1fr}.moves-wrap .perch{left:auto;right:10px}}
 
 /* ---------- finish ---------- */
@@ -357,7 +358,7 @@ h2{font-size:clamp(38px,5.6vw,72px);max-width:17ch;margin-bottom:16px}
 
   <!-- L3 WHERE WE BEGIN -->
   <section class="lvl" data-level="3" data-name="Where we begin" data-color="#FFB23F" data-pose="thinking"
-    data-say="Our first quest is the prototype. Once you share it, I'll look closely and choose our path">
+    data-say="Our first quest is the prototype. I'll look closely at what's been built and choose our path">
     <div class="wrap">
       <p class="chip" data-r><b>Level 03</b>Where we begin</p>
       <h2 data-r style="--i:1">The role is set, <span class="it">now we build</span></h2>
@@ -367,7 +368,7 @@ h2{font-size:clamp(38px,5.6vw,72px);max-width:17ch;margin-bottom:16px}
           <div><span class="k">Achievement unlocked</span><h3>AI Lead</h3><p>The title Alchemy has given me, and the responsibility I'm stepping into</p></div>
         </div></div>
         <div class="tile fork" data-r style="--i:3;--t:var(--sun)"><div class="in-core">
-          <span class="k">Starting point</span><h3>A working prototype already exists</h3><p>I've asked for it to be shared. I'll review it, then choose one of two paths</p>
+          <span class="k">Starting point</span><h3>A working prototype already exists</h3><p>I'll review it, then choose one of two paths</p>
           <div class="paths">
             <div class="path" style="--t:var(--blue)"><small>Path A</small><b>Build on what's there</b></div>
             <div class="or" aria-hidden="true">or</div>
@@ -513,16 +514,15 @@ h2{font-size:clamp(38px,5.6vw,72px);max-width:17ch;margin-bottom:16px}
   </section>
 
   <!-- L11 NEXT (perch) -->
-  <section class="lvl" data-level="11" data-name="Your move" data-color="#FF7A6B" data-perch="1">
+  <section class="lvl" data-level="11" data-name="Next moves" data-color="#FF7A6B" data-perch="1">
     <div class="wrap">
       <p class="chip" data-r><b>Level 11</b>What happens next</p>
-      <h2 data-r style="--i:1">Your move, <span class="it">then mine</span></h2>
+      <h2 data-r style="--i:1">Review, decide, <span class="it">then build together</span></h2>
       <div class="moves-wrap">
-        <div class="perch" id="perch11"><span class="pbub">Laptop open, ready for the prototype</span><img src={A + "sitting-laptop.webp"} alt="" loading="lazy" /></div>
+        <div class="perch" id="perch11"><span class="pbub">Laptop open, ready to start building</span><img src={A + "sitting-laptop.webp"} alt="" loading="lazy" /></div>
         <div class="moves">
-          <div class="tile move yours" data-r style="--i:2;--t:var(--coral)"><div class="in-core"><span class="tag">Your move</span><h3>Share the prototype</h3><p>So I can see exactly what has been built so far</p></div></div>
-          <div class="tile move" data-r style="--i:3;--t:var(--blue)"><div class="in-core"><span class="tag">My move</span><h3>Review and decide</h3><p>Continue where it left off, or begin from a clean foundation</p></div></div>
-          <div class="tile move" data-r style="--i:4;--t:var(--mint)"><div class="in-core"><span class="tag">Together</span><h3>One working session</h3><p>With all three of you, to confirm the first area, the highest-value workflows, and the access and judgment each one needs</p></div></div>
+          <div class="tile move yours" data-r style="--i:2;--t:var(--blue)"><div class="in-core"><span class="tag">My move</span><h3>Review and decide</h3><p>Review the working prototype, then continue where it left off or begin from a clean foundation</p></div></div>
+          <div class="tile move" data-r style="--i:3;--t:var(--mint)"><div class="in-core"><span class="tag">Together</span><h3>One working session</h3><p>With all three of you, to confirm the first area, the highest-value workflows, and the access and judgment each one needs</p></div></div>
         </div>
       </div>
     </div>
