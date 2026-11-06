@@ -753,6 +753,23 @@ export const getDailySeoRecommendation = async ({ forceRefresh = false, geo, mar
     }
   }
 
+  // Google Trends only accepts ISO-3166-1 alpha-2 country codes. Pseudo-geos
+  // like "AFRICA" (used only as an internal /africa targeting label, never a
+  // real Trends region) return HTTP 400, which threw on every scheduled run and
+  // poisoned that day's SEO slot. Serve non-ISO geos from their fallback
+  // keyword rotation directly instead of firing a request we know will 400.
+  if (!/^[A-Z]{2}$/.test(selectedGeo.toUpperCase())) {
+    const keyword = fallbackForToday(new Date(), selectedGeo);
+    const recommendation = buildRecommendation(keyword, "LuliDigital fallback rotation (non-ISO geo)", selectedGeo);
+
+    cachedRecommendations.set(cacheKey, {
+      expiresAt: Date.now() + CACHE_TTL,
+      value: recommendation,
+    });
+
+    return recommendation;
+  }
+
   try {
     const response = await fetch(`https://trends.google.com/trending/rss?geo=${encodeURIComponent(selectedGeo)}`, {
       headers: {

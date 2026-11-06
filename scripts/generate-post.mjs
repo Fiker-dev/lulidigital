@@ -200,16 +200,53 @@ let topic = customTitle
 const blogDir = join(ROOT, "src", "content", "blog");
 const slugTaken = (title) => existsSync(join(blogDir, `${normalizeBlogSlug(slugify(title))}.md`));
 
-if (!customTitle && slugTaken(topic.title)) {
-  // Walk the rotation from the current index; wrap once.
-  const rotation = topicsData.topics;
-  const alt = Array.from({ length: rotation.length }, (_, i) => rotation[(index + i) % rotation.length])
-    .find((t) => !slugTaken(t.title));
-  if (alt) {
-    console.log(`Topic "${topic.title}" already exists — using "${alt.title}" instead.`);
-    topic = alt;
-  } else {
-    console.log(`Topic "${topic.title}" already exists and every rotation topic is used too — letting it run; the overwrite guard is the backstop.`);
+// Semantic pre-check. An exact-slug match is not the only way a topic repeats.
+// On 2026-11-04 the SEO fallback keyword steered the run into "US Founders:
+// Automate Client Onboarding & Retention" — a free slug, but 0.95 similar to
+// the published "Onboarding Gap" post. The 3-attempt draft loop then re-prompts
+// the SAME title, so every draft stayed a near-duplicate, all three were
+// rejected, and the whole run hard-failed (exit 1) — the blog stopped. Catch
+// the collision here, at topic selection, before a single draft is generated.
+// Returns the colliding published title, or null. Non-blocking: if the check
+// cannot run (no API key, network), the post-gen gate and overwrite guard are
+// the real backstops, so we never let it stop topic selection.
+const topicCollision = (title, hint = "") => {
+  try {
+    execFileSync("node", [join(__dirname, "topic-memory.mjs"), "--check", title, hint], {
+      env: process.env,
+      stdio: ["ignore", "pipe", "pipe"],
+      encoding: "utf8",
+    });
+    return null;
+  } catch (err) {
+    if (err.status === 1) {
+      return `${err.stdout || ""}${err.stderr || ""}`.match(/TOO CLOSE to "(.+?)"/)?.[1] || "a published post";
+    }
+    return null;
+  }
+};
+
+// slugTaken is checked first (cheap fs stat) so a taken-slug candidate never
+// triggers an embedding call.
+const topicUnusable = (t) => slugTaken(t.title) || Boolean(topicCollision(t.title, t.angle || t.pain_point || ""));
+
+if (!customTitle) {
+  const collision = slugTaken(topic.title)
+    ? null
+    : topicCollision(topic.title, topic.angle || seoAgentTopic?.angle || customPainPoint || "");
+  if (slugTaken(topic.title) || collision) {
+    const reason = slugTaken(topic.title) ? "its slug already exists" : `it repeats the published "${collision}"`;
+    // Walk the rotation from the current index; wrap once. Pick the first topic
+    // that is neither slug-taken nor a semantic duplicate of a published post.
+    const rotation = topicsData.topics;
+    const alt = Array.from({ length: rotation.length }, (_, i) => rotation[(index + i) % rotation.length])
+      .find((t) => !topicUnusable(t));
+    if (alt) {
+      console.log(`Topic "${topic.title}" skipped (${reason}) — using "${alt.title}" instead.`);
+      topic = alt;
+    } else {
+      console.log(`Topic "${topic.title}" skipped (${reason}) but every rotation topic is taken or a duplicate too — letting it run; the draft gate and overwrite guard are the backstop.`);
+    }
   }
 }
 
