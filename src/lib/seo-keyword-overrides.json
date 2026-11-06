@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-01T15:15:12.261Z",
-  "month": "2026-11",
+  "generatedAt": "2026-11-06T15:56:00.327Z",
+  "week": "2026-11-06",
   "pages": {
     "/denmark": {
       "primary": [
@@ -37,6 +37,19 @@
         "ai digital marketing services in switzerland"
       ],
       "source": "Search Console — 2026-11"
+    },
+    "/ai-desk": {
+      "primary": [
+        "ai assisted workflow workstation",
+        "luli ai"
+      ],
+      "source": "weekly Search Console refresh 2026-11-06"
+    },
+    "/web-design-desk": {
+      "primary": [
+        "li web design"
+      ],
+      "source": "weekly Search Console refresh 2026-11-06"
     }
   }
 }
