@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-06T15:56:00.327Z",
-  "week": "2026-11-06",
+  "generatedAt": "2026-11-13T16:26:57.663Z",
+  "week": "2026-11-13",
   "pages": {
     "/denmark": {
       "primary": [
@@ -40,16 +40,15 @@
     },
     "/ai-desk": {
       "primary": [
-        "ai assisted workflow workstation",
         "luli ai"
       ],
-      "source": "weekly Search Console refresh 2026-11-06"
+      "source": "weekly Search Console refresh 2026-11-13"
     },
     "/web-design-desk": {
       "primary": [
         "li web design"
       ],
-      "source": "weekly Search Console refresh 2026-11-06"
+      "source": "weekly Search Console refresh 2026-11-13"
     }
   }
 }
